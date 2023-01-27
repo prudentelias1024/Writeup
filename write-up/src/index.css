@@ -1,0 +1,27 @@
+body
+{
+    background-color: #f7f7f7;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: Pacifico;
+    src: url('./fonts/Pacifico-Regular.ttf');
+}
+@font-face {
+    font-family: BebasNeue;
+    src: url('./fonts/BebasNeue-Regular.ttf');
+}
+@font-face {
+    font-family: Lobster;
+    src: url('./fonts/Lobster-Regular.ttf');
+}
+@font-face {
+    font-family: Mulish;
+    src: url('./fonts/Mulish.ttf');
+}
+@font-face {
+    font-family: Museo;
+    src: url('./fonts/Museo.ttf');
+}
