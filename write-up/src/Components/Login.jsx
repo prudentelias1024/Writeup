@@ -1,25 +1,46 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import NavBar from './NavBar';
 import Button from './Navbar/Button';
 import {FcGoogle} from 'react-icons/fc'
 import {BsTwitter} from 'react-icons/bs'
 import { AiFillInstagram } from "react-icons/ai";
 import { HiOutlineMail  } from "react-icons/hi";
-import { Link } from 'react-router-dom';
+import { Link, Navigate,  } from 'react-router-dom';
+import {  useGoogleLogin } from '@react-oauth/google';
 
+import axios from 'axios'
+import {userContext} from '../Contexts/userContext';
 const Login = () => {
+  
+    const {setUser, user} = useContext(userContext);
+     const loginWithGoogle = useGoogleLogin({
+    onSuccess: async tokenResponse => 
+       setUser(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+        headers: {
+            "Authorization": `Bearer ${tokenResponse.access_token}`
+        }
+       })),
+      
+       
+    
+        
+    
+})
+ 
+console.log(user)
     return (
         <div className='bg-white flex flex-col  '>
         <div className="ml-14">
       <p className="font-[Pacifico] mt-5 text-3xl font-extrabold text-center">Ink Up</p>
   </div>
           <div className='flex flex-col place-self-center mB-12'>
-          <button className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[6em] h-[4em]" type="submit">
-              <FcGoogle className='text-4xl ml-3'/>
+      
+          <button onClick={() => loginWithGoogle()} className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <FcGoogle className='text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Google</p>
 
           </button>
-          <button className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button onClick={() => loginWithGoogle()} className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
               <BsTwitter className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Twitter</p>
 

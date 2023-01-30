@@ -3,7 +3,7 @@ import Posts from './Posts';
 import SideNavBar from './SideNavBar';
 import TagTopics from './TagTopics';
 
-export default function Home(){
+export default function Home({loggedIn}){
     return(
         <>
         <NavBar showAuthAction={true} showSearchBar={true}/>

@@ -3,15 +3,24 @@ import {Routes, Route} from 'react-router-dom'
 import Home from './Components/Home';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
+import CreatePosts from './Components/createPosts';
+
+import {userContext} from './Contexts/userContext';
+import { useState } from 'react';
+
 function App() {
+  const [user,setUser] = useState()
   return (
     <>
+      <userContext.Provider value={{user,setUser} }>
     <Routes>
 
       <Route path='/' element={<Home/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>
+      <Route path='/create' element={<CreatePosts/>}/>
     </Routes>
+      </userContext.Provider>
 
     </>
    
