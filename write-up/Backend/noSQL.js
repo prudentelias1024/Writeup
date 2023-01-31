@@ -5,5 +5,6 @@ const connectMongooseDB = () => {
         useNewUrlParser: true
     },)
 }
+mongoose.set('strictQuery',true)
 
 module.exports = connectMongooseDB

@@ -1,10 +1,9 @@
-export default function Search({hidden}) {
+export default function Search() {
     return(
         <>
-        {
-            hidden && hidden == true ?         <input className="h-12 w-auto mt-4 border rounded-3xl ml-12 font-[Mulish] pl-5 font-bold placeholder:font-[Mulish] placeholder:font-bold placeholder:ml-5" type="text" placeholder="  Search for Articles" name="search"  />
-: null
-        }
+             <input className="h-12 w-auto mt-4 border rounded-3xl ml-12 font-[Mulish] pl-5 font-bold placeholder:font-[Mulish] placeholder:font-bold placeholder:ml-5" type="text" placeholder="  Search for Articles" name="search"  />
+
+        
         </>
 
     );
