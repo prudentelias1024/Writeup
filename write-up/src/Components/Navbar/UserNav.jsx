@@ -20,7 +20,7 @@ export default function UserNav({user}){
             
             <Button to="/create" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
             <IoIosNotifications className="text-4xl mt-1"/>
-            <img src={user.user.data.picture} alt={user.user.data.name} className='rounded-full h-14 w-14 -mt-2'  />
+            <img src={user.user.public_picture} alt={user.user.name} className='rounded-full h-14 w-14 -mt-2'  />
           
            
             </div>

@@ -10,6 +10,10 @@ body
     src: url('./fonts/Pacifico-Regular.ttf');
 }
 @font-face {
+    font-family: Montserrat;
+    src: url('./fonts/Montserrat-VariableFont_wght.ttf');
+}
+@font-face {
     font-family: BebasNeue;
     src: url('./fonts/BebasNeue-Regular.ttf');
 }

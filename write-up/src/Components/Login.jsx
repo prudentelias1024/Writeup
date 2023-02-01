@@ -17,15 +17,14 @@ const Login = () => {
     const {login, status, isLoading, error} = useLogin({access_token: token})
     const {profile} = useProfile()
     const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
     const [userInfo,setUserInfo] = useState({})
     const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-       setUser(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+       setUser(await(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
         headers: {
             "Authorization": `Bearer ${tokenResponse.access_token}`
         }
-       }));
+       })).data);
        navigate('/')
       
        
@@ -53,10 +52,11 @@ const Login = () => {
         data.preventDefault()
        let formData = {
         email : email,
-        password : password
+      
        };
          setUserInfo(formData)
-      await axios.post('http://localhost:5000/login',{userInfo},{withCredentials:true})
+      const res = await(await axios.post('http://localhost:5000/login',{userInfo},{withCredentials:true})).response
+       console.log(res);
      }
 
 
@@ -93,12 +93,7 @@ console.log(user)
                    onChange={(e) => {setEmail(e.target.value); console.log(email)}} className="rounded-md  border font-[Museo] text-xl w-full font-bold placeholder:font-[Museo] placeholder:font-bold placeholder:ml-12 h-[3em]" />
             
             </div>
-            <div>
-            <label htmlFor="Password" className=" font-[Museo] text-2xl mb-5">Password</label>
-                <input 
-                 onChange={(e) => {setPassword(e.target.value)}}   className="rounded-md  border font-[Museo] text-xl w-full font-bold placeholder:font-[Museo] placeholder:font-bold placeholder:ml-12 h-[3em]" />
-            
-            </div>
+
             <button className="bg-blue-500 text-white  rounded-lg w-[50em] mt-[2em] h-[4em] -ml-5" type="submit">
               <HiOutlineMail className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-7 '>Login with Email</p>
