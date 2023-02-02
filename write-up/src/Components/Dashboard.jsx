@@ -18,7 +18,7 @@ const Dashboard = () => {
     return (
         <>
             <NavBar/>
-            <div className="top-32 relative">
+            <div className="top-32 relative flex-col">
                <p className="flex flex-col font-[Montserrat] font-semibold ml-44 text-4xl">Dashboard</p>
                <div className="flex flex-row pt-[4em] gap-6  pl-[10em]">
                 <DetailsCard/>
