@@ -12,20 +12,38 @@ import {userContext} from '../Contexts/userContext';
 import axios  from 'axios';
 const Login = () => {
    const navigate = useNavigate()
-    const {setUser, user} = useContext(userContext);
-    const [token,setToken] = useState()
+      const [token,setToken] = useState()
     const {login, status, isLoading, error} = useLogin({access_token: token})
     const {profile} = useProfile()
     const [email, setEmail] = useState()
     const [userInfo,setUserInfo] = useState({})
     const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-       setUser(await(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+       setUserInfo(await(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
         headers: {
             "Authorization": `Bearer ${tokenResponse.access_token}`
         }
        })).data);
-       navigate('/')
+       console.log(userInfo);
+       const res = await(await axios.post('http://localhost:5000/api/login',{email:userInfo.email,account_type: 'google'},{withCredentials:true}))
+       if (res.message =='User Doesn\t Exists') {
+          let res = await (await axios.post('http://localhost:5000/api/signup', {
+       name:userInfo.name, email:userInfo.email, public_picture: userInfo.picture, username: userInfo.email, joined_on:
+       new Date, account_type: 'google' ,joined_on: new Date, account_type:'google'}
+        ,{withCredentials:true})).data;
+        if(res.message == 'User Created'){
+            let res   = await (await axios.post('http://localhost:5000/api/login', {username: userInfo.email, account_type: 'google'})).data
+            console.log(res)
+          
+          }
+       } 
+        localStorage.setItem("token",res.data.Authorization);
+        navigate('/')
+       
+       
+
+
+    
       
        
     
@@ -48,20 +66,11 @@ const Login = () => {
      const loginWihTwitter = () => {
 
      }
-     const handleLocalLogin  = async  (data) => {
-        data.preventDefault()
-       let formData = {
-        email : email,
-      
-       };
-         setUserInfo(formData)
-      const res = await(await axios.post('http://localhost:5000/login',{userInfo},{withCredentials:true})).response
-       console.log(res);
-     }
+  
+        
 
 
 
-console.log(user)
     return (
         <div className='bg-white flex flex-col  '>
         <div className="ml-14">
@@ -86,7 +95,7 @@ console.log(user)
 
           </button>
         
-          <form className='flex flex-col gap-10 ml-2 mt-10' onSubmit={(event)=> {handleLocalLogin(event)}} >
+          <form className='flex flex-col gap-10 ml-2 mt-10'  >
             <div>
             <label htmlFor="Email" className=" font-[Museo] text-2xl mb-5">Email</label>
                 <input 

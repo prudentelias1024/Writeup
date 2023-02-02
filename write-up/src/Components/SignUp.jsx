@@ -24,21 +24,15 @@ const SignUp = () => {
             }
         })).data);
       
-      let res = await (await axios.post('http://localhost:5000/signup', {
+      let res = await (await axios.post('http://localhost:5000/api/signup', {
        name:userInfo.name, email:userInfo.email, public_picture: userInfo.picture, username: userInfo.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google'}
     ,{withCredentials:true})).data;
     console.log(res)
-    if(res == 'User Created'){
-      let res   = await (await axios.post('http://localhost:5000/login', {username: userInfo.email.toString().split('@')[0], account_type: 'google'})).data
+    if(res.message == 'User Created' || res.message == 'User Exists'){
+      let res   = await (await axios.post('http://localhost:5000/api/login', {username: userInfo.email, account_type: 'google'})).data
       console.log(res)
-        if(res.message == 'User Exists'){
-            setUser(res.data)
-            navigate('/')
-        }
-    } else if(res.message == "User Exists"){
-        setUser(res.data)
-        navigate('/')
+   
     }
     }
    }) 

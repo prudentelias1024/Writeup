@@ -4,15 +4,11 @@ const mongoose= require('mongoose');
 const app = express()
 const connectToMongooseDB = require("./noSQL")
 const pool = require("./mysql")
-const cookieParser = require('cookie-parser')
-const passport = require('passport')
-const passportLocal = require('passport-local')
-const bcrypt = require('bcryptjs')
 const expressSession = require('express-session')
 const bodyParser = require('body-parser');
-const loginAPI = require('./loginAPI')
 const cors = require('cors')
 const User = require('./usersSchema')
+const jwt = require('jsonwebtoken')
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -26,40 +22,40 @@ app.use(cors({
     credentials: true
 }))
 
-app.use(cookieParser("inkware"))
-app.use(passport.initialize())
-app.use(passport.session())
-require('./passportConfig')(passport)
-
 //Routes Middlewares
+const verify = (req,res,next) => {
+    const authHeader = req.headers.authorization
+    if(authHeader){
+        let token = authHeader.toString().split(' ')[1]
+     jwt.verify(token,'Inkware Non-Member', (err,user) => {
+            if(err){res.status(401).json("Token is invalid")}
+            if(user){
+                User.findOne({username: user}, (err,user) => {
+                    if(err){throw err}
+                    
+                    req.user = user;
+                    next();
+                })
+            }
+        })
+    } else {
+        res.status(403).json("You are not authenticated")
+    }
+}
 
-
-app.post('/login' ,(req,res, next) => {
+app.post('/api/login' ,(req,res) => {
     User.findOne({email: req.body.email},(err,user) => {
         if(err){throw err}
         if(!user){
-            res.send('https://localhost:3000/signup')
+          res.send({message: 'User Doesn\t Exists'})
         }
-        if(user){ res.send(user)}
+        if(user){
+                      let access_token = jwt.sign(user.username,'Inkware Non-Member')
+            res.send({Authorization: `Bearer ${access_token}`})
+        }
     })
-//    passport.authenticate("local",(err,user,info) => {
-//     if (err) {
-//         throw err;
-//     }
-//     if (!user) {
-//         res.send("No User Exists")
-//     } else {
-//         req.logIn(user, err => {
-//             if(err) throw err;
-//             res.send("Successfully Authenticated");
-//             console.log(req.user);
-//           res.send(req.user);
-//         })
-//     }
-    
-//    })(req,res,next);
 })
-app.post('/signup' ,async(req,res) => {
+app.post('/api/signup' ,async(req,res) => {
     
     // req.body = req.body.userInfo
     console.log(req.body)
@@ -69,7 +65,7 @@ app.post('/signup' ,async(req,res) => {
             throw err
         }
         if(doc){
-            res.send({message: "User Exists", data:doc})
+            res.send({message: "User Exists"})
         }
        if(!doc){
         const newUser = new User({
@@ -81,12 +77,14 @@ app.post('/signup' ,async(req,res) => {
             account_type: req.body.account_type
         })
         await newUser.save()
-        res.send("User Created")
+        res.send({message: "User Created"})
        }
     })
 })
-app.get('/user' ,(req,res) => {
- 
+
+app.get('/api/user' , verify, (req,res) => {
+    // console.log(req.user)
+  res.send(req.user)
 })
 
 

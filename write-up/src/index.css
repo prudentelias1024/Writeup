@@ -9,6 +9,7 @@ body
     font-family: Pacifico;
     src: url('./fonts/Pacifico-Regular.ttf');
 }
+
 @font-face {
     font-family: Montserrat;
     src: url('./fonts/Montserrat-VariableFont_wght.ttf');
