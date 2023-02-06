@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose= require('mongoose');
 const app = express()
 const connectToMongooseDB = require("./noSQL")
-const pool = require("./mysql")
 const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const cors = require('cors')
