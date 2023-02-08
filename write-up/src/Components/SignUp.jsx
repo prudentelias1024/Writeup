@@ -13,30 +13,28 @@ import { userContext } from '../Contexts/userContext';
 
 const SignUp = () => {
     const navigate = useNavigate()
-    const [userInfo, setUserInfo] = useState({});
-    const {setUser} = useContext(userContext)
    const signUpWithGoogle = useGoogleLogin({
     onSuccess: async(response) => {
         console.log(response)
-        setUserInfo(await (await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+        let  user = await (await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
             headers:{
                 Authorization: `Bearer ${response.access_token}`
             }
-        })).data);
+        })).data;
       
       let res = await (await axios.post('http://localhost:5000/api/signup', {
-       name:userInfo.name, email:userInfo.email, public_picture: userInfo.picture, username: userInfo.email, joined_on:
+       name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google'}
     ,{withCredentials:true})).data;
     console.log(res)
     if(res.message == 'User Created' || res.message == 'User Exists'){
-      let res   = await (await axios.post('http://localhost:5000/api/login', {username: userInfo.email, account_type: 'google'})).data
+      let res   = await (await axios.post('http://localhost:5000/api/login', {username: user.email, account_type: 'google'})).data
       console.log(res)
-   
+      localStorage.setItem("token",res.Authorization);
+      navigate('/')
     }
     }
    }) 
- console.log(userInfo)
  
     return (
         <div className='bg-white flex flex-col  '>

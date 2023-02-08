@@ -33,7 +33,7 @@ const Profile = () => {
             <NavBar/>
             
             <div className=" bg-white  border rounded-xl top-32 relative flex-col w-4/5 ml-[14em] text-center pt-[3em]">
-            <Link>
+            <Link to="/settings">
             <button className='bg-blue-600 text-white p-3 rounded-lg w-[10em] mr-[5em] absolute right-0 '>Edit Profile</button>
             </Link>
              <img className='rounded-full w-[7em] h-[7em]  ml-auto mr-auto' src={user.public_picture} alt={user.name}  />

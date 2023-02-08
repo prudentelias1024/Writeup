@@ -2,11 +2,12 @@ export default function AuthorInfo({image}){
     return(
         <div className='flex flex-row gap-2'>
 
-        <img src={image} alt="Author" className='rounded-full h-8 w-8'  />
-        <div className='-mt-1'>
-        <p className='font-[Mulish] font-bold text-base'>Prudent Elias</p>
-        <p className="font-[Mulish] text-xs -mt-1">Jul 23</p>
-        </div>
+        <img src={image} className='w-[3em] h-[3em] rounded-full object-cover' /> 
+
+        <div className=''>
+                <p className="author_title font-extrabold  text-[#171717] text-xl font-[Montserrat]"> Prudent Elias</p>
+                <p className="font-medium text-base -mt-[.3em] text-[#717171] font-[montserrat]">Posted on Jan 23</p>
+                </div>
         </div>
         
     )

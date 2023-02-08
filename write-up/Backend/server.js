@@ -6,6 +6,7 @@ const connectToMongooseDB = require("./noSQL")
 const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const cors = require('cors')
+const BlogPosts = require('./blogSchema')
 const User = require('./usersSchema')
 const jwt = require('jsonwebtoken')
 //Middleware
@@ -43,7 +44,9 @@ const verify = (req,res,next) => {
 }
 
 app.post('/api/login' ,(req,res) => {
-    User.findOne({email: req.body.email},(err,user) => {
+    console.log(req.body)
+     User.findOne({email: String(req.body.email)},(err,user) => {
+        console.log(user)
         if(err){throw err}
         if(!user){
           res.send({message: 'User Doesn\t Exists'})
@@ -86,7 +89,17 @@ app.get('/api/user' , verify, (req,res) => {
   res.send(req.user)
 })
 
-
+app.post('/api/user/edit', verify, (req,res) => {
+    const changes = req.body
+    console.log(changes)
+    
+    User.findByIdAndUpdate(req.user._id, {changes}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            console.log(doc)
+        }
+    })
+})
 
 
 

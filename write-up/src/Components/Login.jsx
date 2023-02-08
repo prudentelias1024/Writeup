@@ -10,34 +10,47 @@ import {  useGoogleLogin } from '@react-oauth/google';
 import {  useFacebook, useLogin, useProfile} from "react-facebook";
 import {userContext} from '../Contexts/userContext';
 import axios  from 'axios';
+import { useDispatch } from 'react-redux';
+import { actions } from '../store';
 const Login = () => {
    const navigate = useNavigate()
-      const [token,setToken] = useState()
+    
+   const [token,setToken] = useState()
+
     const {login, status, isLoading, error} = useLogin({access_token: token})
+   
     const {profile} = useProfile()
+   
     const [email, setEmail] = useState()
-    const [userInfo,setUserInfo] = useState({})
+   
+    const dispatch = useDispatch()
     const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-       setUserInfo(await(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+       let user =   await(await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
         headers: {
             "Authorization": `Bearer ${tokenResponse.access_token}`
         }
-       })).data);
-       console.log(userInfo);
-       const res = await(await axios.post('http://localhost:5000/api/login',{email:userInfo.email,account_type: 'google'},{withCredentials:true}))
+       })).data;
+     
+       console.log(user);
+    
+       const res = await(await axios.post('http://localhost:5000/api/login',{email:user.email,account_type: 'google'},{withCredentials:true}))
        if (res.message =='User Doesn\t Exists') {
           let res = await (await axios.post('http://localhost:5000/api/signup', {
-       name:userInfo.name, email:userInfo.email, public_picture: userInfo.picture, username: userInfo.email, joined_on:
+       name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google'}
         ,{withCredentials:true})).data;
         if(res.message == 'User Created'){
-            let res   = await (await axios.post('http://localhost:5000/api/login', {username: userInfo.email, account_type: 'google'})).data
+            let res   = await (await axios.post('http://localhost:5000/api/login', {username: user.email, account_type: 'google'})).data
             console.log(res)
           
           }
        } 
+       console.log(res)
         localStorage.setItem("token",res.data.Authorization);
+        const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+        )).data;
+        dispatch(actions.updateUser(info))
         navigate('/')
        
        
