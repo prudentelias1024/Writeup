@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import '../../node_modules/react-quill/dist/quill.bubble.css'
 
 import mock from './mock.jpg'
+import { useEffect } from 'react';
 const CreatePosts = () => {
-    const titleImage = useRef()
+   
+     const titleImage = useRef()
     const [tempImage, setTempImage] = useState(null)
     const handleUploadImage = () =>{
         titleImage.current.click()
@@ -22,6 +24,7 @@ const CreatePosts = () => {
 }
     const user = useSelector((state) => state.user)
     let modules = {
+        syntax: true,
         toolbar: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline'],
@@ -88,7 +91,8 @@ const handlePostTags = (event) => {
                     className="rounded-md pl-[2.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-bold text-3xl h-[3em]" />
         <input onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
                     className="rounded-md pl-[3em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-extralight text-xl text-gray-400 h-[3em]" />
- 
+
+            
         <ReactQuill modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
       
         </div>

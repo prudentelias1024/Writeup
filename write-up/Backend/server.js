@@ -43,7 +43,7 @@ const verify = (req,res,next) => {
     }
 }
 
-app.post('/api/login' ,(req,res) => {
+    app.post('/api/login' ,(req,res) => {
     console.log(req.body)
      User.findOne({googleId: req.body.googleId},(err,user) => {
         console.log(user)
