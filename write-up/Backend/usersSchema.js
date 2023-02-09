@@ -13,5 +13,8 @@ const user = new mongoose.Schema({
     hobby: {type:String,default :() => ''},
     webUrl: {type:String, required:false},
     location: {type:String,default :() => ''},
+    googleId: {type:String},
+    twitterId: {type:String},
+    githubId: {type:String}
 })
 module.exports = mongoose.model("Users", user)

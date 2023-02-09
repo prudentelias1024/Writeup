@@ -24,11 +24,11 @@ const SignUp = () => {
       
       let res = await (await axios.post('http://localhost:5000/api/signup', {
        name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
-       new Date, account_type: 'google' ,joined_on: new Date, account_type:'google'}
+       new Date, account_type: 'google' ,joined_on: new Date, account_type:'google',googleId: user.sub}
     ,{withCredentials:true})).data;
     console.log(res)
     if(res.message == 'User Created' || res.message == 'User Exists'){
-      let res   = await (await axios.post('http://localhost:5000/api/login', {username: user.email, account_type: 'google'})).data
+      let res   = await (await axios.post('http://localhost:5000/api/login', {googleId: user.googleId, account_type: 'google'})).data
       console.log(res)
       localStorage.setItem("token",res.Authorization);
       navigate('/')

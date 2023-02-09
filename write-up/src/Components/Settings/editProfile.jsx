@@ -1,26 +1,24 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { actions } from '../../store';
 import Input from '../Input';
 import  NavBar  from "../NavBar";
 const EditProfile = () => {
-    const [ profileChanges, setProfileChanges] = useState({
-      name:'',
-      email:'',
-      username:'',
-      public_picture:'',
-      work:'',
-      education:'',
-      hobby: '',
-      websiteUrl:'',
-      location: '',
-      bio:''
-
-
-    })
+  const user = useSelector((state) => state.user)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+   useEffect(() => {
+    console.log(user)
+    setProfileChanges({name: user.name,email: user.email,username: user.username,work : user.work,education: user.education,hobby: user.hobby,websiteUrl: user.websiteUrl,location: user.location,bio:user.bio})
+    console.log(profileChanges)
+   }
+   ,[user])
+    const [ profileChanges, setProfileChanges] = useState({})
     
-    const user = useSelector((state) => state.user)
-
+  
     const handleChanges = (event) => {
      if (event.target.name == 'Name') {
        setProfileChanges({...profileChanges, name: event.target.value})
@@ -29,7 +27,7 @@ const EditProfile = () => {
        setProfileChanges({...profileChanges, email: event.target.value})
        console.log(profileChanges)
       } else if(event.target.name == 'Username'){
-       setProfileChanges({...profileChanges, email: event.target.value})
+       setProfileChanges({...profileChanges, username: event.target.value})
        console.log(profileChanges)
       } else if(event.target.name == 'Work'){
        setProfileChanges({...profileChanges, work: event.target.value})
@@ -56,10 +54,16 @@ const EditProfile = () => {
        console.log(profileChanges)
      }
     }
-    const submitChanges = (event) => {
+    const submitChanges = async(event) => {
       event.preventDefault()
       console.log(profileChanges)
-      axios.post('http://localhost:5000/api/user/edit', {profileChanges}, {withCredentials:true, headers:{Authorization: localStorage.getItem('token') }})
+     let res =  await (await axios.post('http://localhost:5000/api/user/edit', {profileChanges}, {withCredentials:true, headers:{Authorization: localStorage.getItem('token') }})).data
+     localStorage.removeItem("token")
+      localStorage.setItem("token", res.Authorization)
+      dispatch(actions.updateUser(res.user))
+      navigate('/')
+      
+   
     }
     return (
         <>
@@ -70,12 +74,12 @@ const EditProfile = () => {
             <div className="user w-3/4 ml-[1.5em] pt-5 p-4 rounded-lg bg-white">
             <p className="text-2xl font-bold">User</p>    
             <br></br>
-             <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={user.name}/>
+             <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={profileChanges.name }/>
              <br></br>
-             <Input handleChanges={handleChanges} label="Email" placeholder="Update Name" value={user.email}/>
+             <Input handleChanges={handleChanges} label="Email" placeholder="Update Name" value={profileChanges.email}/>
 
              <br></br>
-             <Input handleChanges={handleChanges}  label="Username" placeholder="Update Name" value={user.username}/>
+             <Input handleChanges={handleChanges}  label="Username" placeholder="Update Name" value={profileChanges.username}/>
              <br></br>
              <div>
              <p className='font-[mulish] font-bold mb-[2.5em] text-xl'>Public Pic</p>

@@ -45,14 +45,14 @@ const verify = (req,res,next) => {
 
 app.post('/api/login' ,(req,res) => {
     console.log(req.body)
-     User.findOne({email: String(req.body.email)},(err,user) => {
+     User.findOne({googleId: req.body.googleId},(err,user) => {
         console.log(user)
         if(err){throw err}
         if(!user){
           res.send({message: 'User Doesn\t Exists'})
         }
         if(user){
-                      let access_token = jwt.sign(user.username,'Inkware Non-Member')
+                      let access_token = jwt.sign(user.username,process.env.INKUP_SECRET_KEY)
             res.send({Authorization: `Bearer ${access_token}`})
         }
     })
@@ -76,7 +76,8 @@ app.post('/api/signup' ,async(req,res) => {
             public_picture: req.body.public_picture,
             username: req.body.email.toString().split('@')[0],
             joined_on: req.body.joined_on,
-            account_type: req.body.account_type
+            account_type: req.body.account_type,
+            googleId: req.body.googleId
         })
         await newUser.save()
         res.send({message: "User Created"})
@@ -90,13 +91,19 @@ app.get('/api/user' , verify, (req,res) => {
 })
 
 app.post('/api/user/edit', verify, (req,res) => {
-    const changes = req.body
-    console.log(changes)
-    
-    User.findByIdAndUpdate(req.user._id, {changes}, (err,doc) => {
+    changes = req.body.profileChanges
+    console.log(req.body)
+    console.log(req.user)
+   
+  console.log(changes)
+    //we'll find difference and if any changes is made we update it in the Db
+    User.findByIdAndUpdate(req.user._id, {username: String(changes.username)},{new:true}, (err,doc) => {
         if(err){throw err}
         if(doc){
             console.log(doc)
+           let access_token =  jwt.sign(doc.username,process.env.INKUP_SECRET_KEY )
+           console.log(access_token)
+           res.send({user:doc, Authorization: `Bearer ${access_token}` })
         }
     })
 })
