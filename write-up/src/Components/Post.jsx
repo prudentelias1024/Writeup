@@ -19,7 +19,7 @@ export default function Post({img}) {
             }
             <div>        
                   <AuthorInfo image={mock}/>
-                 <p className='font-[Mulish] px-[1em] text-start mx-[1.25em] whitespace-normal font-bold text-md w-full mt-[1em] lg:text-3xl lg:mb-[.5em]  lg:ml-auto'>100 Days of Coding Experience</p>
+                 <p className='font-[Mulish] px-[1em] text-start mx-[1.25em] whitespace-normal font-bold text-md w-full my-[.5em] lg:text-3xl lg:mb-[.5em]  lg:ml-auto'>100 Days of Coding Experience</p>
                 <div className="tags w-full flex-wrap  flex flex-row ml-[1em] m-auto gap-2 lg:pl-[3em]  lg:gap-[.5em] lg:ml-[-.3em] ">
                 <Tag  name="Programminglanguage"/>
                   <Tag  name="Lorem"/>
