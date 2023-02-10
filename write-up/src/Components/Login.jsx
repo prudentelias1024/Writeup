@@ -91,7 +91,7 @@ const Login = () => {
   </div>
           <div className='flex flex-col place-self-center mB-12'>
       
-          <button onClick={() => {loginWithGoogle()}} className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button onClick={() => {loginWithGoogle()}} className="bg-black text-white lg:ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
           <FcGoogle className='text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Google</p>
 
