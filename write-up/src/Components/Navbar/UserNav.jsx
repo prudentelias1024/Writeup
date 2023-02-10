@@ -12,13 +12,13 @@ export default function UserNav(){
     const navigate = useNavigate()
    const [toggled, setToggled] = useState(true) 
     const helperRef   = useRef()
-     const toggleHelper = () => {
+    const toggleHelper = () => {
          setToggled(!toggled)
         if (toggled == false) {
             helperRef.current.className = 'hidden'
         }
         if (toggled == true) {
-            helperRef.current.className = "dropdown fixed right-32 mt-16 bg-white flex flex-col  border gap-2 w-[17em] py-4 rounded-lg"
+            helperRef.current.className = "dropdown fixed right-5 mt-16 bg-white flex flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32"
         }
      }
    
@@ -39,7 +39,9 @@ export default function UserNav(){
             <Button to="/create" additionalStyles="hidden lg:block" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
             <IoIosSearch className="lg:hidden text-4xl mt-[.125em]"/>  
         
+           <Link to="create">
             <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
+           </Link>
             <Link to="/notifications">
             <IoIosNotificationsOutline className="text-4xl mt-1"/>
             </Link>
@@ -47,7 +49,7 @@ export default function UserNav(){
 
             <img src={user.public_picture} alt={user.name} className='rounded-full h-12 w-12 -mt-2'  />
             </button >
-            <div ref={helperRef} className="hidden dropdown fixed right-32 mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg">
+            <div ref={helperRef} className="hidden dropdown fixed left-32  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
                 <Link to='/profile' className=" block px-2 py-3 ml-4 font-[mulish] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><p>{user.name}</p> <p>@{user.username}</p></Link>
                 <hr />
                 <Link to='/Dashboard' className="block px-2  py-3 ml-4 font-[mulish] font-semibold  hover:bg-gray-100 hover:underline">Dashboard</Link>

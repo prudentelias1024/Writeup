@@ -1,6 +1,6 @@
 export default function SideNavTags(){
     return(
-        <a className="hover:bg-white-500 hover:border hover:border-pink-600 hover:px-10 hover:rounded-md hover:text-pink-600 block p-1.5" href="#">#Webdev</a>
+        <a className="hover:bg-[#f7f9f9] hover:rounded-3xl block w-[20em] ml-[-7em]  text-xl text-center p-3 px-6 font-semibold" href="#">#Programming</a>
          
         )
 

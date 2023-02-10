@@ -71,17 +71,17 @@ const handlePostTags = (event) => {
     }
     
     return (
-        <div className="create">
- <div className="ml-14">
-      <p className="font-[Pacifico] mt-5 text-3xl font-extrabold ml-52 ">Ink Up</p>
-  </div>
-        <div className='text-editor bg-white text-black w-3/5 h-/5 flex flex-col border ml-[20em] mt-[5em] rounded-xl'>
+        <div className="create ">
+ {/* <div className=" fixed border w-full top-0 pb-4 lg:ml-14">
+      <p className="font-[Pacifico]   text-3xl mt-4 ml-4 font-extrabold lg:mt-5  lg:ml-52 ">Ink Up</p>
+  </div> */}
+        <div className='text-editor bg-white text-black  flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
         {
             tempImage !== null ? <>  
-            <img src={tempImage} className='w-full h-[30em] object-cover' /> 
+            <img src={tempImage} className='w-full h-full lg:h-[30em] object-cover' /> 
            <div className='flex place-content-center'>
-            <button onClick={handleUploadImage} type='button' className='font-[Mulish] rounded-md bg-yellow-500 text-white w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Change</button>
-            <button onClick={handleRemoveImage} type='button' className='font-[Mulish] rounded-md bg-red-500 text-white w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Remove</button>
+            <button onClick={handleUploadImage} type='button' className='font-[Mulish] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
+            <button onClick={handleRemoveImage} type='button' className='font-[Mulish] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
             </div>
             </>
             : 
@@ -92,17 +92,17 @@ const handlePostTags = (event) => {
        
         <input onChange={handleImageSelection} ref={titleImage} type="file" className='opacity-0' />
           <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
-                    className="rounded-md pl-[2.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-bold text-3xl h-[3em]" />
+                    className="rounded-md pl-[.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" />
         <input onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                    className="rounded-md pl-[3em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-extralight text-xl text-gray-400 h-[3em]" />
+                    className="rounded-md pl-[.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 
             
-        <ReactQuill modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+        <ReactQuill modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'grey', paddingLeft: '.5em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
       
         </div>
-        <div  className='-ml-24 mb-12'  >
-        <button onClick={handlePostSubmission} className="bg-black text-white ml-[30em] rounded-lg w-[15em] mt-[2em] h-[4em]" type="submit">
-               <p className='font-[Museo] text-xl font-semibol'>Publish</p>
+        <div  className=' lg:-ml-24 lg:mb-12'  >
+        <button onClick={handlePostSubmission} className="bg-black text-white mt-[2em] w-[12em] ml-[1em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
+               <p className='font-[Mulish] text-xl font-semibold'>Publish</p>
 
           </button>
          <button type='submit' className='font-[Mulish] ml-8 font-bold'>Save as draft</button>

@@ -4,8 +4,6 @@ import NavBar from './NavBar';
 import Posts from './Posts';
 import SideNavBar from './SideNavBar';
 import TagTopics from './TagTopics';
-import { actions } from "../store/index";
-import { useSelector, useDispatch } from "react-redux";
 export default function Home(){
    
     return(

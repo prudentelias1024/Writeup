@@ -11,7 +11,7 @@ import {  useFacebook, useLogin, useProfile} from "react-facebook";
 import {userContext} from '../Contexts/userContext';
 import axios  from 'axios';
 import { useDispatch } from 'react-redux';
-import { actions } from '../store';
+import { user } from '../store';
 const Login = () => {
    const navigate = useNavigate()
     
@@ -50,7 +50,7 @@ const Login = () => {
         localStorage.setItem("token",res.data.Authorization);
         const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
         )).data;
-        dispatch(actions.updateUser(info))
+        dispatch(user.updateUser(info))
         navigate('/')
        
        

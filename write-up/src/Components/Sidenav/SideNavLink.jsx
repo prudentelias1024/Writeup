@@ -1,9 +1,8 @@
-export default function SideNavLink({icon, name}){
+export default function SideNavLink({additionalStyles,icon, name}){
     return(
-        <a href="#" className="flex flex-row gap-2 hover:px-10
- hover:bg-white-500 hover:border hover:border-pink-600 p-2 hover:rounded-md hover:text-pink-600">
+        <a href="#" className={additionalStyles +" "+  " hover:bg-[#f7f9f9] hover:rounded-3xl block w-[10em]  lg:-[-.5em] text-xl text-center py-2 px-6 font-semibold "}>
            {icon}
-            <p className="font-[Museo] text-xl">{name}</p>
+            <p className="font-[Mulish] text-xl mt-[-1.25em] ml-[-.5em]">{name}</p>
         </a>
     );
 }
