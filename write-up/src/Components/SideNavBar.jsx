@@ -7,7 +7,7 @@ import PopularTags from "./Sidenav/PopularTags";
 
 export default function SideNavBar(){
     return(
-        <div className="flex flex-col gap-3 ml-96 mt-32 fixed">
+        <div className="hidden lg:flex lg:flex-col lg:gap-3 lg:ml-96 lg:mt-32 lg:fixed">
             <SideNavLink icon={<IoIosHome className="text-2xl"/>} name="Home"/>
             <SideNavLink icon={<FaHashtag className="text-2xl"/>} name=" Tags"/>
             <SideNavLink icon={<AiFillBulb className="text-2xl"/>} name="FAQ"/>

@@ -1,5 +1,7 @@
 export default function Tag({name}){
     return(
-        <a  className="ml-8 text-purple-500">#{name}</a>
-    )
+        
+            <a  className="lg:ml-8 text-sm text-purple-500">#{name}</a>
+      
+        )
 }

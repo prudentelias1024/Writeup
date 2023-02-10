@@ -1,12 +1,11 @@
 import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
+import { IoIosAddCircleOutline, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../Contexts/userContext";
 import Button from "./Button";
 import { useSelector } from "react-redux";
-
 export default function UserNav(){
 
     const user = useSelector((state) => state.user)
@@ -30,13 +29,17 @@ export default function UserNav(){
        ( user == undefined || user.name == undefined) 
        ? <div className="">
         
-            <Button to="/login" name="Login" borderColor="border-none" textColor="text-blue-500"/>
+            <Button additionalStyles=" hidden lg:block" to="/login" name="Login" borderColor="border-none" textColor="text-blue-500"/>
      
             <Button to="/signup" name="Create an account" borderColor="border-pink-500" textColor="text-pink-500"/>
-            </div> : <div className="profile flex flex-row gap-5 mt-2 ml-[50em]">
+          
+            </div> :
+             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[50em]">
             
-            <Button to="/create" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
-            
+            <Button to="/create" additionalStyles="hidden lg:block" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
+            <IoIosSearch className="lg:hidden text-4xl mt-[.125em]"/>  
+        
+            <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
             <Link to="/notifications">
             <IoIosNotificationsOutline className="text-4xl mt-1"/>
             </Link>

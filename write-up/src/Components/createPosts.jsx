@@ -5,6 +5,10 @@ import '../../node_modules/react-quill/dist/quill.bubble.css'
 
 import mock from './mock.jpg'
 import { useEffect } from 'react';
+//TODO: 
+    //Make Blog Postable on Inkup
+    //cREATE mOBILE vERSION
+
 const CreatePosts = () => {
    
      const titleImage = useRef()

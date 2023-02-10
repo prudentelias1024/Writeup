@@ -5,10 +5,10 @@ import UserNav from "./Navbar/UserNav";
 
 export default function NavBar() {
  return(
-    <div className="flex flex-row justify-around z-50 fixed w-full  bg-white pt-4 pb-4">
-    <div className="flex flex-row -ml-20">
+    <div className=" w-full gap-1 lg:justify-around flex flex-row z-50 fixed bg-white lg:pt-4 lg:pb-4">
+    <div className="flex flex-row -ml-20 sm">
     
-    <Logo/>
+    <Logo />
   <Search   />
     </div>
     <UserNav  />

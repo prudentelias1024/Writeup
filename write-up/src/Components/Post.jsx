@@ -5,24 +5,32 @@ import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
 export default function Post({img}) {
     return (
-        <Card  className='rounded-sm' sx={{maxWidth: 650}}>
-
-
-            <CardActionArea>
-           {
-            img&&img !== null ?            
-             <CardMedia  sx={{ height: 240}} component="img" image={img} className="h-1/2" alt="" />
-                : null
         
-           }
-            <CardContent>
-            <AuthorInfo image={mock}/>
-                <p className='font-[Museo] text-3xl font-bold mt-3 ml-9'>100 Days of Coding Experience</p>
-               <Tag  name="Lorem"/>
-               <Reactions/>
-                
-            </CardContent>
-            </CardActionArea>
-        </Card>
+           
+            <div  className='w-full ml-[-.5em] rounded-lg border' >
+
+
+           
+            {
+             img&&img !== null ?            
+              <img src={img} className="w-full rounded-sm" alt="" />
+                 : null
+         
+            }
+            <div>        
+                  <AuthorInfo image={mock}/>
+                 <p className='font-[Mulish] px-[1em] text-start mx-[1.25em] whitespace-normal font-bold text-md w-full mt-[1em] lg:text-3xl lg:mt-3 lg:ml-9'>100 Days of Coding Experience</p>
+                <div className="tags w-full flex-wrap mt-[.5em] flex flex-row ml-[2em] gap-2 ">
+                <Tag  name="Programminglanguage"/>
+                  <Tag  name="Lorem"/>
+                <Tag  name="Lorem"/>
+                <Tag  name="Lorem"/>
+
+                </div>
+                <Reactions/>
+                </div>
+                 
+ 
+         </div>
     )
 }
