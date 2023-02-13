@@ -69,9 +69,9 @@ const EditProfile = () => {
         <>
         <NavBar/>
         <div className='edit top-32 relative '>
-            <form className="flex flex-col gap-[3em]  ml-[20em] ">
+            <form className="flex flex-col gap-[3em]  lg:ml-[20em] ">
                 
-            <div className="user w-3/4 ml-[1.5em] pt-5 p-4 rounded-lg bg-white">
+            <div className="user ml-[1.5em] pt-5 p-4 rounded-lg bg-white  lg:w-3/4">
             <p className="text-2xl font-bold">User</p>    
             <br></br>
              <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={profileChanges.name }/>
@@ -94,7 +94,7 @@ const EditProfile = () => {
              </div>
             </div>
 
-            <div className="user w-3/4 ml-[1.5em] pt-5 p-4 rounded-lg bg-white">
+            <div className="user pt-5 p-4 rounded-lg bg-white lg:w-3/4 lg:ml-[1.5em]">
             <p className="text-2xl font-bold">Outworld Profile</p>    
             <br></br>
             <Input handleChanges={handleChanges} label="Work" placeholder="What do you like to decribe you work like?" />
@@ -105,7 +105,7 @@ const EditProfile = () => {
              <br></br>
            </div>
            
-            <div className="user w-3/4 ml-[1.5em] pt-5 p-4 rounded-lg bg-white">
+            <div className="user pt-5 p-4 rounded-lg bg-white lg:w-3/4 lg:ml-[1.5em] ">
             <p className="text-2xl font-bold">Personal</p>    
             <br></br>
             <Input handleChanges={handleChanges} label="Website URL" placeholder="Add your Website Link" />
@@ -116,7 +116,7 @@ const EditProfile = () => {
              <br></br>
            </div>
            
-         <button onClick={submitChanges} className='w-3/4 ml-[1em] rounded-md py-[.5em] font-bold bg-blue-500 text-white '>Save Profile </button>
+         <button onClick={submitChanges} className='w-full fixed bottom-0 rounded-md py-[.5em] font-bold bg-blue-500 text-white lg:w-3/4  lg:ml-[1em]  '>Save Profile </button>
             </form>
         </div>
         </>

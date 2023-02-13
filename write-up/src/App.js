@@ -16,6 +16,8 @@ import Settings from './Components/settings';
 import Notifications from './Components/Notifications';
 import MyPosts from './Components/PreviewPosts/MyPosts';
 import Logout from './Components/logout';
+import Followers from './Components/Dashboard/children/Followers';
+import Following from './Components/Dashboard/children/Following';
 function App() {
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
@@ -44,7 +46,9 @@ function App() {
       <Route path='/login'  element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/create' element={<CreatePosts/>}/>
-      <Route path='/Dashboard' element={<Dashboard/>}/>
+      <Route path='/Dashboard'  element={<Dashboard/>}/>
+      <Route path='/Dashboard/followers'  element={<Followers/>}/>
+      <Route path='/Dashboard/following'  element={<Following/>}/>
       <Route path='/Profile' element={<Profile/>}/>
       <Route path='/logout' element={<Logout/>}/>
      

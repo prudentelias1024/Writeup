@@ -1,15 +1,14 @@
 import { useRef, useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
 import { IoIosAddCircleOutline, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import { userContext } from "../../Contexts/userContext";
 import Button from "./Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
+import { useEffect } from "react";
 export default function UserNav(){
-
-    const user = useSelector((state) => state.user)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { user} = useSelector((state) => state)
    const [toggled, setToggled] = useState(true) 
     const helperRef   = useRef()
     const toggleHelper = () => {
@@ -32,22 +31,22 @@ export default function UserNav(){
             <Button additionalStyles=" hidden lg:block" to="/login" name="Login" borderColor="border-none" textColor="text-blue-500"/>
      
             <Button to="/signup" name="Create an account" borderColor="border-pink-500" textColor="text-pink-500"/>
-          
+        
             </div> :
-             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[50em]">
+             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[64em]">
             
             <Button to="/create" additionalStyles="hidden lg:block" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
-            <IoIosSearch className="lg:hidden text-4xl mt-[.125em]"/>  
+            <IoIosSearch    className="lg:hidden text-4xl mt-[.125em]"/>  
         
            <Link to="create">
             <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
            </Link>
             <Link to="/notifications">
-            <IoIosNotificationsOutline className="text-4xl mt-1"/>
+            <IoIosNotificationsOutline className="text-4xl mt-0"/>
             </Link>
             <button onClick={toggleHelper}>
 
-            <img src={user.public_picture} alt={user.name} className='rounded-full h-12 w-12 -mt-2'  />
+            <img src={user.public_picture} alt={user.name} className='rounded-full h-12 w-12 -mt-4 mr-[1em] '  />
             </button >
             <div ref={helperRef} className="hidden dropdown fixed left-32  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
                 <Link to='/profile' className=" block px-2 py-3 ml-4 font-[mulish] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><p>{user.name}</p> <p>@{user.username}</p></Link>
