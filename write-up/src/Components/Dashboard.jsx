@@ -35,7 +35,7 @@ const Dashboard = () => {
                         <li className='block hover:bg-orange-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Analytics <div className='bg-orange-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
                     </ul>
                 </div>
-                <div className="filterer relative top-[-24em]">
+                <div className="filterer lg:hidden relative top-[-24em]">
                    
                         <select onChange={handleChange}  ref={ref} className='w-[95%] rounded-sm outline-blue-600
                          h-[2.5em] ml-[.75em] border'>

@@ -21,7 +21,7 @@ export default function NavBar() {
     <div className="flex flex-row m-auto ">
     <RxHamburgerMenu onClick={() => {dispatch(actions.updateMobileNavStatus(!navStatus))}} className="text-4xl -ml-4 mt-[.5em] lg:hidden" />
     <Logo />
-       <MobileNav />
+       {/* <MobileNav /> */}
         </div>
   <Search  
    />
