@@ -2,14 +2,12 @@ import React, { useRef, useState } from 'react';
 import ReactQuill from 'react-quill'
 import { useSelector } from 'react-redux';
 import '../../node_modules/react-quill/dist/quill.bubble.css'
-
 import mock from './mock.jpg'
 import { useEffect } from 'react';
-//TODO: 
-    //Make Blog Postable on Inkup
-    //cREATE mOBILE vERSION
+import {ImageHandler} from './ImageHandler';
 
 const CreatePosts = () => {
+     const quillRef = useRef()
    
      const titleImage = useRef()
     const [tempImage, setTempImage] = useState(null)
@@ -25,14 +23,17 @@ const CreatePosts = () => {
         }
         reader.readAsDataURL(event.target.files[0])
 
-}
+}  
+ 
     const user = useSelector((state) => state.user)
     let modules = {
-        syntax: true,
-        toolbar: [
-          [{ header: [1, 2, false] }],
-          ['bold', 'italic', 'underline'],
-          ['image', 'code-block']
+       
+         toolbar: [
+            [{ "header": [1, 2,3,4,5, false] }],
+            ['image', 'code-block'],
+            ['bold', 'italic', 'underline'],
+            [ { 'list': 'bullet' }],
+            ["link"]
         ]
       }
     const [post, setPost] = useState({
@@ -48,7 +49,7 @@ const CreatePosts = () => {
     setPost({
         ...post, body: value
     })
-    console.log(post)
+   
 }
 const handlePostTitle = (event) => {
     setPost({
@@ -63,6 +64,7 @@ const handlePostTags = (event) => {
     console.log(post)
     }
     const handlePostSubmission = () => {
+        console.log(post)
 
     }
     const handleRemoveImage = () => {
@@ -97,7 +99,7 @@ const handlePostTags = (event) => {
                     className="rounded-md pl-[.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 
             
-        <ReactQuill modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'grey', paddingLeft: '.5em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+        <ReactQuill hanlders={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'grey', paddingLeft: '.5em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
       
         </div>
         <div  className=' lg:-ml-24 lg:mb-12'  >

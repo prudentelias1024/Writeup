@@ -89,20 +89,20 @@ const Login = () => {
         <div className="ml-14">
       <p className="font-[Pacifico] mt-5 text-3xl font-extrabold text-center">Ink Up</p>
   </div>
-          <div className='flex flex-col place-self-center mB-12'>
+          <div className='flex flex-col lg:place-self-center mB-12'>
       
-          <button onClick={() => {loginWithGoogle()}} className="bg-black text-white lg:ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button onClick={() => {loginWithGoogle()}} className="bg-black w-[95%] ml-3 text-white lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
           <FcGoogle className='text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Google</p>
 
           </button>
-         <button onClick={loginWithFacebook} disabled={isLoading} className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+         <button onClick={loginWithFacebook} disabled={isLoading} className="bg-black w-[95%] ml-3 text-white lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
               <BsFacebook className='text-[1d9bf0]  text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Facebook</p>
 
           </button>
          
-          <button onClick={loginWihTwitter} className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button onClick={loginWihTwitter} className="bg-black text-white  w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
               <BsTwitter className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Twitter</p>
 
@@ -110,13 +110,13 @@ const Login = () => {
         
           <form className='flex flex-col gap-10 ml-2 mt-10'  >
             <div>
-            <label htmlFor="Email" className=" font-[Museo] text-2xl mb-5">Email</label>
+            <label htmlFor="Email" className=" font-[Museo] text-2xl ml-3 mb-5">Email</label>
                 <input 
-                   onChange={(e) => {setEmail(e.target.value); console.log(email)}} className="rounded-md  border font-[Museo] text-xl w-full font-bold placeholder:font-[Museo] placeholder:font-bold placeholder:ml-12 h-[3em]" />
+                   onChange={(e) => {setEmail(e.target.value); console.log(email)}} className=" ml-3  w-[95%] rounded-md  border font-[Museo] text-xl lg:w-full font-bold placeholder:font-[Museo] placeholder:font-bold placeholder:ml-12 h-[3em]" />
             
             </div>
 
-            <button className="bg-blue-500 text-white  rounded-lg w-[50em] mt-[2em] h-[4em] -ml-5" type="submit">
+            <button className="bg-blue-500 text-white w-[95%] ml-3  rounded-lg lg:w-[50em] mt-[2em] h-[4em] lg:-ml-5" type="submit">
               <HiOutlineMail className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-7 '>Login with Email</p>
 

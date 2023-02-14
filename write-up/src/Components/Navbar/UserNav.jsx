@@ -38,7 +38,7 @@ export default function UserNav(){
             <Button to="/create" additionalStyles="hidden lg:block" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
             <IoIosSearch    className="lg:hidden text-4xl mt-[.125em]"/>  
         
-           <Link to="create">
+           <Link to="/create">
             <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
            </Link>
             <Link to="/notifications">

@@ -1,0 +1,62 @@
+// //TODO: 
+        // Task                             Status
+        //Create Mobile Versions of Inkup   Done
+    //Make Blog Postable on Inkup
+    //Create Various Algorithm
+    // -Top post by page views
+    // Top posts by page views:
+    // This algorithm sorts your blog posts by the number of page views they have received and presents a list of the top posts to readers.
+
+    // Related posts by category or tags: This algorithm analyzes the category or tags associated with a blog post and presents a list of related posts to readers.
+
+    // Personalized recommendations: This algorithm uses data on a reader's behavior, such as the posts they've read or the amount of time they've spent on your site, to suggest other posts they might like.
+
+    // Trending posts: This algorithm analyzes which posts are currently receiving a lot of traffic or engagement and presents them to readers.
+
+    // Fresh posts: This algorithm presents readers with the latest posts on your blog, sorted by publication date.
+
+    // Most commented posts: This algorithm sorts posts by the number of comments they have received and presents a list of the most commented posts to readers.
+
+    // Posts by author: This algorithm groups posts by author and presents them to readers in a list or grid.
+
+    // Popular posts by social shares: This algorithm sorts posts by the number of social shares they have received and presents a list of the most popular posts on social media.
+
+    // Seasonal or holiday posts: This algorithm presents readers with posts that are relevant to the current season or holiday.
+
+    // Random posts: This algorithm presents readers with a random post from your blog, which can help promote content that might otherwise be overlooked.
+
+    // Evergreen posts: This algorithm presents readers with posts that continue to be relevant and popular, even months or years after they were published.
+
+    // Best posts by category: This algorithm presents readers with the best posts in each category on your blog.
+
+    // Most read posts by week/month: This algorithm presents readers with the most read posts on your blog in a given time period.
+
+    // Most shared posts by week/month: This algorithm presents readers with the most shared posts on your blog in a given time period.
+
+    // Posts with multimedia content: This algorithm presents readers with posts that include multimedia content, such as videos, images, or infographics.
+
+    // Beginner-friendly posts: This algorithm presents readers with posts that are easy to understand and catered to beginner readers.
+
+    // Advanced-level posts: This algorithm presents readers with posts that are more technical and catered to advanced readers.
+
+    // Posts for mobile readers: This algorithm presents readers with posts that are optimized for mobile devices, such as those with a responsive design or mobile-specific formatting.
+
+    // Posts by location: This algorithm presents readers with posts that are relevant to their geographic location.
+
+    // Cross-posted content: This algorithm presents readers with content that has been cross-posted from your blog to other platforms, such as social media or Medium.
+
+    // Featured posts: This algorithm highlights a specific post or set of posts on your blog, typically on the homepage or in a prominent section of your site.
+
+    // Posts with a specific keyword: This algorithm presents readers with posts that contain a specific keyword or phrase.
+
+    // Guest posts: This algorithm presents readers with posts written by guest authors on your blog.
+
+    // Posts based on user search queries: This algorithm presents readers with posts that match their search query.
+
+    // Long-form content: This algorithm presents readers with posts that are longer than a certain word count, typically 1,000 words or more.
+
+    // Short-form content: This algorithm presents readers with posts that are shorter than a certain word count, typically 500 words or less.
+
+    // Series posts: This algorithm presents readers with a series of related posts on a particular topic, presented in order.
+
+    // Posts by date: This algorithm presents readers with posts from a specific date

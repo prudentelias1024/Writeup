@@ -17,7 +17,7 @@ const Dashboard = () => {
     return (
         <>
             <NavBar/>
-            <div className="top-32 relative flex-col">
+            <div className="top-32 relative flex-col ">
                <p className="flex flex-col font-[Montserrat] font-semibold text-2xl ml-[1em] mb-[1em] lg:ml-44 lg:text-4xl">Dashboard</p>
                <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6  lg:pl-[14em]">
                 <DetailsCard text="Total Posts" amount={1} color="bg-pink-500"/>
@@ -35,7 +35,7 @@ const Dashboard = () => {
                         <li className='block hover:bg-orange-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Analytics <div className='bg-orange-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
                     </ul>
                 </div>
-                <div className="filterer lg:hidden relative top-[-24em]">
+                <div className="filterer lg:hidden relative top-[-25em]">
                    
                         <select onChange={handleChange}  ref={ref} className='w-[95%] rounded-sm outline-blue-600
                          h-[2.5em] ml-[.75em] border'>

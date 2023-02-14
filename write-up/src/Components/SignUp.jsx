@@ -43,17 +43,17 @@ const SignUp = () => {
   </div>
           <div className='flex flex-col place-self-center mb-12'>
          
-          <button onClick={() => {signUpWithGoogle()}} className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[6em] h-[4em]" type="submit">
+          <button onClick={() => {signUpWithGoogle()}} className="bg-black text-white w-[95%] ml-2 lg:ml-12 rounded-lg lg:w-[45em] mt-[6em] h-[4em]" type="submit">
               <FcGoogle className='text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Continue With Google</p>
 
           </button>
-          <button className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button className="bg-black text-white w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
               <BsTwitter className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Continue With Twitter</p>
 
           </button>
-          <button className="bg-black text-white ml-12 rounded-lg w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button className="bg-black text-white w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
               <AiFillInstagram className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-7 '>Continue With Instagram</p>
 
