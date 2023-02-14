@@ -57,6 +57,11 @@ const verify = (req,res,next) => {
         }
     })
 })
+app.post('/post/create', verify, (req,res) => {
+    const {title,body,tags,image,coverImageUrl, postUrl,user} = req.body
+    console.log(req.body)
+})
+
 app.post('/api/signup' ,async(req,res) => {
     
     // req.body = req.body.userInfo

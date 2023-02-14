@@ -3,9 +3,10 @@ import ReactQuill from 'react-quill'
 import { useSelector } from 'react-redux';
 import '../../node_modules/react-quill/dist/quill.bubble.css'
 import mock from './mock.jpg'
-import { useEffect } from 'react';
-import {ImageHandler} from './ImageHandler';
-
+import  axios  from "axios";
+import { v4 } from "uuid";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase";
 const CreatePosts = () => {
      const quillRef = useRef()
    
@@ -15,13 +16,17 @@ const CreatePosts = () => {
         titleImage.current.click()
       
     } 
-    const handleImageSelection = (event) => {
+    const handleImageSelection = async(event) => {
      setPost({...post, image: event.target.files[0]});
-      let reader = new FileReader()
-       reader.onloadend = () => {
-        setTempImage(reader.result)
-        }
-        reader.readAsDataURL(event.target.files[0])
+      const imgRef = ref(storage,`coverImages/${v4()}`)
+     uploadBytes(imgRef, event.target.files[0]).then(() => {
+         getDownloadURL(imgRef).then((url) => {
+            console.log(url)
+            setPost({...post, imageURL: url})
+         })
+    })
+        
+     
 
 }  
  
@@ -41,7 +46,7 @@ const CreatePosts = () => {
         body: '',
         tags: '',
         image: '',
-        imageURL: '',
+        coverImageURL: '',
         postURL: '',
         user: user
     })
@@ -65,6 +70,7 @@ const handlePostTags = (event) => {
     }
     const handlePostSubmission = () => {
         console.log(post)
+        axios.post('http://localhost:5000/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})
 
     }
     const handleRemoveImage = () => {
@@ -79,8 +85,8 @@ const handlePostTags = (event) => {
   </div> */}
         <div className='text-editor bg-white text-black  flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
         {
-            tempImage !== null ? <>  
-            <img src={tempImage} className='w-full h-full lg:h-[30em] object-cover' /> 
+            post.coverImageURL !== '' ? <>  
+            <img src={post.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
            <div className='flex place-content-center'>
             <button onClick={handleUploadImage} type='button' className='font-[Mulish] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
             <button onClick={handleRemoveImage} type='button' className='font-[Mulish] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>

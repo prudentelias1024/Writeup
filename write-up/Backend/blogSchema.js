@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
 const BlogPosts = new mongoose.Schema({
+    postId: {
+        type:String,
+        required:true
+    },
     title: {
         type:String,
         required:true
