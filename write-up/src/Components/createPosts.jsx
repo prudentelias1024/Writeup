@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill'
 import { useSelector } from 'react-redux';
 import '../../node_modules/react-quill/dist/quill.bubble.css'
@@ -7,22 +7,53 @@ import  axios  from "axios";
 import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
+// import { CustomImageHandler } from './CustomImageHandler';
+import { useNavigate } from "react-router-dom";
+
 const CreatePosts = () => {
+    const navigate = useNavigate()
+
+    const  CustomImageHandler = () => {
+        const input =  document.createElement("input")
+          input.setAttribute("type","file");
+          input.setAttribute("accept","image/*")
+          input.click();
+          input.onchange = async() => {
+             const file = input.files[0]
+             const range = quillRef.current.getEditor().getSelection(true)
+             const imgRef = ref(storage, `blogImage/${v4()}`)
+             uploadBytes(imgRef,file).then(()=> {
+                getDownloadURL(imgRef).then((url) => {
+                    console.log(url)
+                 quillRef.current.getEditor().insertEmbed(range.index,'image',url)
+                })
+             })
+          }}
      const quillRef = useRef()
-   
+      const excerptRef = useRef()
+
+     useEffect(() => {
+        const toolbar = quillRef.current.getEditor().getModule('toolbar')
+        toolbar.addHandler('image',CustomImageHandler)
+    }, [quillRef])
+
      const titleImage = useRef()
     const [tempImage, setTempImage] = useState(null)
     const handleUploadImage = () =>{
         titleImage.current.click()
       
     } 
+
+  
+
+
     const handleImageSelection = async(event) => {
      setPost({...post, image: event.target.files[0]});
       const imgRef = ref(storage,`coverImages/${v4()}`)
      uploadBytes(imgRef, event.target.files[0]).then(() => {
          getDownloadURL(imgRef).then((url) => {
             console.log(url)
-            setPost({...post, imageURL: url})
+            setPost({...post, coverImageURL: url})
          })
     })
         
@@ -32,7 +63,7 @@ const CreatePosts = () => {
  
     const user = useSelector((state) => state.user)
     let modules = {
-       
+          syntax:true,
          toolbar: [
             [{ "header": [1, 2,3,4,5, false] }],
             ['image', 'code-block'],
@@ -45,10 +76,11 @@ const CreatePosts = () => {
         title: '',
         body: '',
         tags: '',
-        image: '',
+        withExcerpt: '',
         coverImageURL: '',
-        postURL: '',
-        user: user
+        postId: v4(),
+        draftId: v4()
+       
     })
     const handlePostBody = (value) => {
     setPost({
@@ -60,7 +92,21 @@ const handlePostTitle = (event) => {
     setPost({
         ...post, title: event.target.value
     })
-    console.log(post)
+   
+}
+const handleExcerpt = () => {
+    
+    
+    if (excerptRef.current.checked == true) {
+        setPost({
+            ...post, withExcerpt: true
+        })
+          } else {
+        setPost({
+            ...post,  withExcerpt: false
+        })
+        }
+   
 }
 const handlePostTags = (event) => {
     setPost({
@@ -68,9 +114,18 @@ const handlePostTags = (event) => {
     })
     console.log(post)
     }
-    const handlePostSubmission = () => {
+    const handlePostSubmission = async() => {
         console.log(post)
-        axios.post('http://localhost:5000/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})
+      let res = await (await axios.post('http://localhost:5000/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})).data
+      console.log(res)
+      if(res.message == 'Published'){
+         navigate('/')
+      }
+
+    }
+    const handlePostDraft = async() => {
+        console.log(post)
+        axios.post('http://localhost:5000/post/draft', post,{headers: {Authorization: localStorage.getItem('token')}})
 
     }
     const handleRemoveImage = () => {
@@ -105,48 +160,21 @@ const handlePostTags = (event) => {
                     className="rounded-md pl-[.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 
             
-        <ReactQuill hanlders={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'grey', paddingLeft: '.5em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+        <ReactQuill hanlders={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', paddingLeft: '.5em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
       
+        </div>
+        <div className='ml-4 mt-4 flex gap-4'>
+        <input ref={excerptRef} onChange={handleExcerpt} type="checkbox"/>
+        <p className="font-[Mulish] font-bold">With Excerpt</p>
         </div>
         <div  className=' lg:-ml-24 lg:mb-12'  >
         <button onClick={handlePostSubmission} className="bg-black text-white mt-[2em] w-[12em] ml-[1em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
                <p className='font-[Mulish] text-xl font-semibold'>Publish</p>
 
           </button>
-         <button type='submit' className='font-[Mulish] ml-8 font-bold'>Save as draft</button>
+         <button onClick={handlePostDraft} type='submit' className='font-[Mulish] ml-8 font-bold'>Save as draft</button>
         </div>
         </div>
     );
 }
-   
-
-// CreatePosts.modules = {
-//     toolbar: [
-//         [{header: "1"},{header: "2"},{font: []}],
-//         [{size: []}],
-//         ["bold","italic", "underline", "strike", "blockquote"],
-//         [{list:"ordered"}, {list: "bullet"}],
-//         ["link", "image", "video"],
-//         ["clean"],
-//         ["code-block"]
-//     ]
-// }
-// CreatePosts.formats = [
-//     "header",
-//     "font",
-//     "size",
-//     "bold",
-//     "italic",
-//     "underline",
-//     "strike",
-//     "blockquote",
-//     "list",
-//     "bullet",
-//     "link",
-//     "image",
-//     "video",
-//     "color",
-//     "indent",
-//     "code block"
-// ]
 export default CreatePosts;

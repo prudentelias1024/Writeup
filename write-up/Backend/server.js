@@ -6,9 +6,12 @@ const connectToMongooseDB = require("./noSQL")
 const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-const BlogPosts = require('./blogSchema')
+const PublishedPosts = require('./publishedPostSchema')
+const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
 const jwt = require('jsonwebtoken')
+const moment = require('moment');
+const { populate } = require('./usersSchema');
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -57,11 +60,55 @@ const verify = (req,res,next) => {
         }
     })
 })
-app.post('/post/create', verify, (req,res) => {
-    const {title,body,tags,image,coverImageUrl, postUrl,user} = req.body
-    console.log(req.body)
+app.post('/post/create', verify, async(req,res) => {
+    
+    let {title,body,tags,coverImageURL,withExcerpt, postId} = req.body
+     tags  = tags.split(' ')
+    const publishedPosts = new PublishedPosts({
+        postId: postId,
+        title: title,
+        body:  body,
+        tags:tags,
+         coverImageURL: coverImageURL,
+        author: req.user._id,
+        created: moment(),
+        withExcerpt: withExcerpt
+        
+    })
+   await  publishedPosts.save()
+    res.send({message:"Published"})
+
+})
+app.post('/post/draft', verify, (req,res) => {
+    let {title,body,tags,coverImageURL,withExcerpt, postId} = req.body
+     tags  = tags.split(' ')
+    const draftPosts = new DraftPosts({
+        postId: postId,
+        title: title,
+        body:  body,
+        tags:tags,
+        coverImageURL: coverImageURL,
+        userId: req.user._id,
+        withExcerpt: withExcerpt
+        
+    })
+     draftPosts.save()
+     res.send({message:"Saved as Draft"})
+
+
 })
 
+app.get('/posts', verify, (req,res) => {
+    PublishedPosts.find().populate('author').exec((err,doc) => {
+        if (err) {
+            throw err
+        }
+        if(doc){
+            console.log(doc)
+            res.send(doc)
+        }
+    })
+})
 app.post('/api/signup' ,async(req,res) => {
     
     // req.body = req.body.userInfo

@@ -1,6 +1,13 @@
 const mongoose = require('mongoose')
-const BlogPosts = new mongoose.Schema({
+const PublishedPosts = new mongoose.Schema({
+    author: {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+        required:true
+    },
+    
     postId: {
+
         type:String,
         required:true
     },
@@ -8,30 +15,32 @@ const BlogPosts = new mongoose.Schema({
         type:String,
         required:true
     },
-    
-    image: {
-        type:String,
+    tags: {
+        type: [String],
         required:true
     },
     body: {
         type:String,
-        required:true},
-    excerpt:
-     {
-        type:String,
+        required:true
+    },
+  
+    
+    withExcerpt: {
+        type:Boolean,
         required:true
      },
     created: {
         type:Date,
         required:true
     },
-    excerpt: {
+    coverImageURL: {
         type:String,
-        required:true
+        required:false
     },
+   
     views: {
         type:Number,
-        required:true
+        required:false
     },
     comments: [
          {
@@ -48,4 +57,4 @@ const BlogPosts = new mongoose.Schema({
         }]
 })
 
-module.exports =  mongoose.model('BlogPosts',BlogPosts)
+module.exports =  mongoose.model('PublishedPosts',PublishedPosts)

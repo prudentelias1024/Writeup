@@ -9,7 +9,7 @@ export default function Home(){
     return(
         <>
         <NavBar />
-        <div className='flex flex-row gap-2 ml-4'>
+        <div className=' flex flex-row gap-3 overflow-x-hidden lg:ml-4'>
         <SideNavBar/>
      <Posts/>
      <TagTopics/>

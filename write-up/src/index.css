@@ -2,7 +2,7 @@
 
 body
 {
-    background-color: #fff;
+    background-color: #f6f6f6;
 }
 @tailwind base;
 @tailwind components;
