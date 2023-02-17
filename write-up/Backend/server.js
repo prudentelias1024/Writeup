@@ -98,6 +98,25 @@ app.post('/post/draft', verify, (req,res) => {
 
 })
 
+app.get('/post/:username/:postId',  (req,res) => {
+    let {username,postId} = req.params
+    username = username.split('@')[1]
+     PublishedPosts.find({postId: postId}).populate('author').exec((err,doc) => {
+        if (err) {
+            throw err
+        }
+        if(doc){
+        if (doc[0].author.username == username) {
+            
+        }
+                  res.send(doc[0])
+              
+        
+        }
+    })
+})
+
+
 app.get('/posts', verify, (req,res) => {
     PublishedPosts.find().populate('author').exec((err,doc) => {
         if (err) {

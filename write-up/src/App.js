@@ -28,8 +28,14 @@ function App() {
            dispatch(actions.updateUser(info))
            
        }
+       const getPosts = async() => {
+        let  res_posts = await(await axios.get('http://localhost:5000/posts',{headers: {Authorization: localStorage.getItem('token')}})).data
+        console.log(res_posts)
+       dispatch(actions.updatePosts(res_posts))
+     }
       useEffect(() => {
-          loadUser()
+          loadUser();
+          getPosts();
       }
       , []);
   
@@ -40,7 +46,7 @@ function App() {
 
       <Route path='*' element={<Page404/>}/>
       <Route path='/notifications' element={<Notifications/>}/>
-      <Route path='/myposts' element={<MyPosts/>}/>
+      <Route path='/p/:username/:postId' element={<MyPosts/>}/>
       <Route path='/' element={<Home/>}/>
       <Route path='/settings' element={<Settings/>}/>
       <Route path='/login'  element={<Login/>}/>

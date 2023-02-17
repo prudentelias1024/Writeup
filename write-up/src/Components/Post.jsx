@@ -3,11 +3,12 @@ import AuthorInfo from './Post/AuthorInfo'
 import mock from './mock.jpg'
 import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
+import {  Link} from "react-router-dom";
 export default function Post({post}) {
     return (
         
            
-            <div  className='bg-white w-full border  rounded-lg   lg:p-[1em]' >
+            <Link to={`p/@${post.author.username}/${post.postId}`} state={post} className='bg-white w-full border  rounded-lg   lg:p-[1em]' >
 
 
            
@@ -41,6 +42,6 @@ export default function Post({post}) {
                 </div>
                  
  
-         </div>
+         </Link>
     )
 }

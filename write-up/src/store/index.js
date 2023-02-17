@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {user:{},navStatus:false,showMobileSearch:false},
+    initialState: {user:{},navStatus:false,showMobileSearch:false,posts:[]},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
@@ -12,7 +12,11 @@ const userSlice = createSlice({
       },
       showMobileSearch(state,action){
         state.showMobileSearch = action.payload
-      }
+      },
+      updatePosts(state,action){
+        state.posts = action.payload
+      },
+    
     }
 })
 

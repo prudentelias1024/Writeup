@@ -23,6 +23,7 @@
     "express-session": "^1.17.3",
     "firebase": "^9.17.1",
     "highlight.js": "^11.7.0",
+    "html-react-parser": "^3.0.9",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "markdown-to-jsx": "^7.1.8",
