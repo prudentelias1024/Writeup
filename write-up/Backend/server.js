@@ -100,12 +100,14 @@ app.post('/post/draft', verify, (req,res) => {
 
 app.get('/post/:username/:postId',  (req,res) => {
     let {username,postId} = req.params
+    console.log(postId)
     username = username.split('@')[1]
-     PublishedPosts.find({postId: postId}).populate('author').exec((err,doc) => {
+     PublishedPosts.find({postId: postId}).populate([{path:'author',model: 'Users'}, {path: 'likes', model: 'Users'}]).exec((err,doc) => {
         if (err) {
             throw err
         }
         if(doc){
+           
         if (doc[0].author.username == username) {
             
         }
@@ -115,7 +117,17 @@ app.get('/post/:username/:postId',  (req,res) => {
         }
     })
 })
-
+app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
+    PublishedPosts.find({username: req.params.username, postId: {$ne: req.params.postId}}).populate('author').exec((err,doc) => {
+        if (err) {
+            throw err
+        }
+        if (doc) {
+            console.log(doc)
+            res.send(doc)
+        }
+    })
+})
 
 app.get('/posts', verify, (req,res) => {
     PublishedPosts.find().populate('author').exec((err,doc) => {
@@ -128,6 +140,29 @@ app.get('/posts', verify, (req,res) => {
         }
     })
 })
+
+app.post('/post/like', verify, (req,res) => {
+    console.log(req.body.postId);
+    console.log(req.user._id);
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{likes: req.user._id}, {new:false}, (err,doc) => {
+        if (err) {
+            throw err
+        }
+         if(doc){
+           
+       PublishedPosts.find({postId: req.body.postId}).exec((err,populatedDoc) => {
+        if (err) {
+            throw err;
+        } if(populatedDoc){
+        res.send(populatedDoc)
+        }
+       })
+    }
+    })
+})
+
+
+
 app.post('/api/signup' ,async(req,res) => {
     
     // req.body = req.body.userInfo
@@ -155,6 +190,7 @@ app.post('/api/signup' ,async(req,res) => {
        }
     })
 })
+ 
 
 app.get('/api/user' , verify, (req,res) => {
     // console.log(req.user)

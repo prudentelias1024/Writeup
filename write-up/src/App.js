@@ -26,7 +26,7 @@ function App() {
           const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
            dispatch(actions.updateUser(info))
-           
+           console.log(info)
        }
        const getPosts = async() => {
         let  res_posts = await(await axios.get('http://localhost:5000/posts',{headers: {Authorization: localStorage.getItem('token')}})).data

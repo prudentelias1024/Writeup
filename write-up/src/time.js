@@ -42,3 +42,7 @@ export const time = (date) => {
     }
      return text
 }
+export const  format = (dateTime) => {
+    
+   return moment(dateTime).format('DD/MM/YYYY')
+} 

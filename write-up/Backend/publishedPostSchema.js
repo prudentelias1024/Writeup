@@ -44,17 +44,31 @@ const PublishedPosts = new mongoose.Schema({
     },
     comments: [
          {
-            user:mongoose.SchemaTypes.ObjectId,
-             message: String
+            user : { type: mongoose.Schema.Types.ObjectId,  ref: 'Users',
+            likes: [{
+                                user:{ type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Users',
+
+            }}],
+            replies: [{type:mongoose.Schema.Types.ObjectId,  ref: 'Users'}]        
+        },
+            message: String
         } ],
     likes: 
     [{
-            user:mongoose.SchemaTypes.ObjectId
+            
+             type: mongoose.Schema.Types.ObjectId,
+                ref: 'Users',
+            
         }],
     bookmarks: [
-        {user:mongoose.SchemaTypes.ObjectId
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Users'
+                },
+         
         
-        }]
+        ]
 })
 
 module.exports =  mongoose.model('PublishedPosts',PublishedPosts)

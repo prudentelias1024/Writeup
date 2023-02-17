@@ -9,10 +9,11 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 // import { CustomImageHandler } from './CustomImageHandler';
 import { useNavigate } from "react-router-dom";
+import ReactLoading from 'react-loading';
 
 const CreatePosts = () => {
     const navigate = useNavigate()
-
+    const [loading,setLoading] = useState(false)
     const  CustomImageHandler = () => {
         const input =  document.createElement("input")
           input.setAttribute("type","file");
@@ -119,7 +120,11 @@ const handlePostTags = (event) => {
       let res = await (await axios.post('http://localhost:5000/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
       if(res.message == 'Published'){
-         navigate('/')
+        setTimeout(() => {
+            setLoading(true)
+            navigate('/')
+        }, 
+        2000);
       }
 
     }
@@ -135,6 +140,9 @@ const handlePostTags = (event) => {
     
     return (
         <div className="create ">
+            {loading == true ?  
+                      <ReactLoading className='fixed bg-white z-10' type="bubbles" color="#512bd4" height={'100%'} width={'100%'} />: ''
+}
  {/* <div className=" fixed border w-full top-0 pb-4 lg:ml-14">
       <p className="font-[Pacifico]   text-3xl mt-4 ml-4 font-extrabold lg:mt-5  lg:ml-52 ">Ink Up</p>
   </div> */}
