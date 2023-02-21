@@ -12,6 +12,8 @@ const User = require('./usersSchema')
 const jwt = require('jsonwebtoken')
 const moment = require('moment');
 const { populate } = require('./usersSchema');
+const axios = require('axios')
+const firebase = require('firebase-admin')
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -33,10 +35,11 @@ const verify = (req,res,next) => {
      jwt.verify(token,'Inkware Non-Member', (err,user) => {
             if(err){res.status(401).json("Token is invalid")}
             if(user){
-                User.findOne({username: user}, (err,user) => {
-                    if(err){throw err}
-                    
-                    req.user = user;
+              
+                User.findOne({username: user}).populate('followers').populate('following').exec((err,userDoc) => {
+                    if(err){throw err} 
+                  
+                    req.user = userDoc;
                     next();
                 })
             }
@@ -45,6 +48,90 @@ const verify = (req,res,next) => {
         res.status(403).json("You are not authenticated")
     }
 }
+  
+ app.post('/api/follow', verify,  (req,res) => {
+    let {user,author} = req.body;
+    let followers = [],following = [];
+
+    //get list of followers for the author
+    User.find({username:author.username},(err,doc) =>{
+    if(err){throw err}
+    if (doc) {
+        followers = doc[0].followers
+        followers.push(req.user._id)
+        console.log(followers, 'followers')
+    }
+    })
+
+    //get the list of following for the user
+    User.find({username:user.username}, (err,doc) =>{
+    if(err){throw err}
+    if (doc) {
+        following = doc[0].following
+        following.push(author._id)
+        console.log(following, 'following')
+    }
+    })
+
+    //add user to the author followers list
+    User.findOneAndUpdate({username:author.username}, {followers: followers}, {new:true},(err,doc) => {
+        if(err){throw err} else{
+       
+      
+            //Add the author the  user following list
+        User.findOneAndUpdate({username:user.username}, {following: following}, {new: true}, (err,doc1) => {
+            if(err){throw err}
+            
+        })
+    }
+        
+    })
+   
+
+ })
+
+ app.post('/api/unfollow', verify,  (req,res) => {
+    let {user,author} = req.body;
+    let followers = [],following = [];
+    //get list of followers for the author
+    User.find({username:author.username} ,(err,doc) =>{
+    if(err){throw err}
+    if (doc) {
+        followers = doc[0].followers
+    }
+    })
+    //remove user from the list of followers followers and return new list of followers
+    followers = followers.filter((follower) => {
+        return  user._id  !==  follower
+    })
+    //get the list of following for the user
+    User.find({username:user.username},(err,doc) =>{
+    if(err){throw err}
+    if (doc) {
+        following = doc[0].following
+    }
+    })
+
+     following = following.filter((followinguser) => {
+        return followinguser !== author._id
+     })
+
+    //add user to the author followers list
+    User.findOneAndUpdate({username:author.username}, {followers: followers}, (err,doc) => {
+        if(err){throw err} else{
+        
+      
+            
+            //Add the author the  user following list
+        User.findOneAndUpdate({username:user.username}, {following: following}, {new: true}, (err,doc1) => {
+            if(err){throw err}
+
+        })
+  
+    }
+    })
+   
+ })
 
     app.post('/api/login' ,(req,res) => {
     console.log(req.body)
@@ -102,7 +189,7 @@ app.get('/post/:username/:postId',  (req,res) => {
     let {username,postId} = req.params
     console.log(postId)
     username = username.split('@')[1]
-     PublishedPosts.find({postId: postId}).populate([{path:'author',model: 'Users'}, {path: 'likes', model: 'Users'}]).exec((err,doc) => {
+     PublishedPosts.find({postId: postId}).populate('author').populate('likes').populate('bookmarks').exec((err,doc) => {
         if (err) {
             throw err
         }
@@ -129,16 +216,20 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
     })
 })
 
-app.get('/posts', verify, (req,res) => {
-    PublishedPosts.find().populate('author').exec((err,doc) => {
-        if (err) {
-            throw err
-        }
-        if(doc){
-            console.log(doc)
-            res.send(doc)
-        }
-    })
+
+app.get('/posts',  (req,res) => {
+     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').exec((err,doc) => {
+       if (err) {
+           throw err
+       }
+       if(doc){
+         res.send(doc)
+       
+       }
+   })
+    
+   
+  
 })
 
 app.post('/post/like', verify, (req,res) => {
@@ -148,24 +239,84 @@ app.post('/post/like', verify, (req,res) => {
         if (err) {
             throw err
         }
-         if(doc){
-           
-       PublishedPosts.find({postId: req.body.postId}).exec((err,populatedDoc) => {
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('author').exec((err,populatedDoc) => {
         if (err) {
-            throw err;
-        } if(populatedDoc){
-        res.send(populatedDoc)
+            throw err
         }
-       })
-    }
+        if (populatedDoc) {
+            res.send(populatedDoc[0])
+        }
+        
+    })
+    })
+})
+app.post('/post/unlike', verify, (req,res) => {
+    console.log(req.body.postId);
+    console.log(req.user._id);
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{likes: []}, {new:false}, (err,doc) => {
+        if (err) {
+            throw err
+        }
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('author').exec((err,populatedDoc) => {
+        if (err) {
+            throw err
+        }
+        if (populatedDoc) {
+            res.send(populatedDoc[0])
+        }
+        
+    })
     })
 })
 
+app.post('/post/bookmark', verify, (req,res) => {
+    console.log(req.body.postId);
+    console.log(req.user._id);
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{bookmarks: req.user._id}, {new:false}, (err,doc) => {
+        if (err) {
+            throw err
+        }
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').exec((err,populatedDoc) => {
+        if (err) {
+            throw err
+        }
+        if (populatedDoc) {
+            res.send(populatedDoc[0])
+        }
+        
+    })
+    })
+})
+app.post('/post/unbookmark', verify, (req,res) => {
+    console.log(req.body.postId);
+    console.log(req.user._id);
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{bookmarks: []}, {new:false}, (err,doc) => {
+        if (err) {
+            throw err
+        }
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').exec((err,populatedDoc) => {
+        if (err) {
+            throw err
+        }
+        if (populatedDoc) {
+            res.send(populatedDoc[0])
+        }
+        
+    })
+    })
+})
 
+app.post('/api/publicPicture', async(req,res) => {
+    let pictureBuffer = await (await axios.get(req.body.public_picture,{ responseType: 'blob',
+       
+    })).data
+     
+        res.send(pictureBuffer)
+})
 
 app.post('/api/signup' ,async(req,res) => {
-    
-    // req.body = req.body.userInfo
+   
+   
     console.log(req.body)
     User.findOne({email: req.body.email}, async(err,doc) => {
         console.log(doc)
@@ -214,7 +365,51 @@ app.post('/api/user/edit', verify, (req,res) => {
         }
     })
 })
-
+app.get('/api/user/posts', verify, (req,res) => {
+    PublishedPosts.find({author: req.user._id}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            console.log(doc)
+            res.send(doc)
+        }
+    })
+})
+app.get('/api/user/posts/totalLikes', verify, (req,res) => {
+    let totalLikes = 0;
+    PublishedPosts.find({author: req.user._id}, (err,posts) => {
+        if(err){throw err}
+        if(posts){
+          posts.forEach((post) => {
+            totalLikes += post.likes.length 
+          })
+          res.send({totalLikes})
+        }
+    })
+})
+app.get('/api/user/posts/totalComments', verify, (req,res) => {
+    let totalComments = 0;
+    PublishedPosts.find({author: req.user._id}, (err,posts) => {
+        if(err){throw err}
+        if(posts){
+          posts.forEach((post) => {
+            totalComments += post.comments.length 
+          })
+          res.send({totalComments})
+        }
+    })
+})
+app.get('/api/user/posts/totalBookmarks', verify, (req,res) => {
+    let totalBookmarks = 0;
+    PublishedPosts.find({author: req.user._id}, (err,posts) => {
+        if(err){throw err}
+        if(posts){
+          posts.forEach((post) => {
+            totalBookmarks += post.bookmarks.length 
+          })
+          res.send({totalBookmarks})
+        }
+    })
+})
 
 
 

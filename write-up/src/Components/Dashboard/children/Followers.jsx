@@ -39,7 +39,7 @@ const Followers = () => {
               
            </div>
 
-        <FollowersAndFollowing/>
+        <FollowersAndFollowing />
 
         </div>
         </>

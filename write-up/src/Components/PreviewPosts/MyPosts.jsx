@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import { FaHeart, FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { FaBookmark, FaHeart, FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import NavBar from '../NavBar';
 import tempImage from "../../mock.jpg";
 import AuthorInfo from '../Post/AuthorInfo';
@@ -7,7 +7,7 @@ import Tag from '../Post/Tag';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './comment';
 import ReactQuill from 'react-quill';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { format } from "../../time";
 import { BsHeartFill } from 'react-icons/bs';
@@ -17,8 +17,9 @@ const MyPosts = () => {
   
   
  const {user} =  useSelector(state => state)
- const {posts} = useSelector(state => state)
- const [liked,setLiked] = useState(false)
+ const [liked,setLiked] = useState()
+ const [followed,setFollowed] = useState(false)
+ const [bookmarked,setBookmarked] = useState()
   const params = useParams()
   const likeRef = useRef()
   const bookmarkRef = useRef()
@@ -34,40 +35,61 @@ const MyPosts = () => {
  
   const getPost = async() => {
     let  res_post = await(await axios.get(`http://localhost:5000/post/${params.username}/${params.postId}`)).data
-    console.log(res_post)
     setPost(res_post)
+      checkLiked(res_post.likes,user.username)
+      checkBookmarked(res_post.bookmarks,user.username)
+      
+      
+   
+    console.log(res_post)
   
  }
-  const  checkLiked = (post,user) => {
-    let liked = post.likes.filter((like => {
-      return like.username = user.username
-     }))
-     console.log(liked)
-     if(liked !== undefined || liked !== null){
+  const  checkLiked = (likers,username) => {
+    console.log(username)
+     if ( likers ) {
+   
+    let currentUser = likers.filter((liker) => {
+      return liker.username == username
+     })
+     console.log(currentUser)
+     if( currentUser.length > 0 ){
       setLiked(true)
      }
+    }
+
   }
+  const  checkBookmarked = (bookmarkers,username) => {
+   
+    if (bookmarkers) {
+   
+    let currentUser = bookmarkers.filter((bookmarker) => {
+      return bookmarker.username == username
+     })
+      console.log(currentUser)
+     if(currentUser.length > 0){
+      setBookmarked(true)
+     }
+  }
+}
     const likePost = async(postId) => {
       let  res = await(await axios.post(`http://localhost:5000/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      setPost(res)
+      setLiked(true)
+         
+      } 
+    const unlikePost = async(postId) => {
+      let  res = await(await axios.post(`http://localhost:5000/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
-      console.log(posts)
-      let index  = posts.findIndex((post) => {
-        return post.title == res.title
-      })
-      console.log(index)
-      posts = posts.splice(index,1, res)
-      console.log(posts)
-      //  dispatch(actions.updateUser())
+      setPost(res)
+      setLiked(false)
          
       } 
     
     useEffect(() => {
       getPost();
       getOtherAuthorPost();
-      setTimeout(() => {
-        
-        checkLiked(post,user)
-      }, 3500);
+       
+     
     }, [])
  
    const [comment,setComment] = useState('')
@@ -86,12 +108,31 @@ const MyPosts = () => {
   
      const commentPost = async(user,postId, commentWords) => {
       let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, id:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      console.log(res)
+      
       } 
-     const bookmarkPost = async(user,postId, commentWords) => {
-      let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, id:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+     const bookmarkPost = async(postId) => {
+      let  res = await(await axios.post(`http://localhost:5000/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
+      setPost(res)
+      setBookmarked(true)
       } 
+      
+     const unbookmarkPost = async(postId) => {
+      let  res = await(await axios.post(`http://localhost:5000/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+      console.log(res)
+      setPost(res)
+      setBookmarked(false)
+      } 
+     const follow = async(user,author) => {
+       axios.post(`http://localhost:5000/api/follow`,{ user:user, author: post.author }, {headers: {Authorization: localStorage.getItem('token')}})
+       setFollowed(true)
+       
+      }
+      const unfollow = async(user,author) => {
+        axios.post(`http://localhost:5000/api/unfollow`,{ user:user, author: post.author }, {headers: {Authorization: localStorage.getItem('token')}})
+        setFollowed(false )
+
+     }
 
     if (post !== null) {
    
@@ -104,7 +145,7 @@ const MyPosts = () => {
                 {
                 liked == true ?
                             
-                <button className='rounded-full flex lg:flex-col gap-[1em]'>
+                <button  onClick={(event) => unlikePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <BsHeartFill className='text-2xl lg:text-3xl text-red-500'/>
                     <p className="font-[Mulish] text-black text-xl">{post.likes.length}</p>
                 </button> :  <button  onClick={(event) => likePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
@@ -116,10 +157,22 @@ const MyPosts = () => {
                     <FaRegComment className='text-2xl lg:text-3xl text-black'/>
                     <p className="font-[Mulish] text-black text-xl">{post.comments.length}</p>
                 </button>
-                <button ref={bookmarkRef} className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <FaRegBookmark className='text-2xl lg:text-3xl text-black'/>
+                {
+                bookmarked == true ?
+                            
+                <button  onClick={(event) => unbookmarkPost(post.postId)} className='rounded-full flex  lg:flex-col gap-[1em]'>
+                <FaBookmark className='text-2xl lg:text-3xl text-black'/>
+                <p className="font-[Mulish] text-black text-xl">{post.bookmarks.length}</p>
+            </button>:
+            
+            <button className='rounded-full flex  lg:flex-col gap-[1em]'>
+                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId)} className='text-2xl flex  lg:text-3xl text-black'/>
                     <p className="font-[Mulish] text-black text-xl">{post.bookmarks.length}</p>
                 </button>
+                }
+
+             
+                
             </div>
 
             <div className="post lg:ml-[40em] -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
@@ -192,15 +245,21 @@ const MyPosts = () => {
                     <p className='text-[#717171] font-bold ml-[.5em] mt-[.25em]'>{format(post.author.joined_on)}</p>
           </div>
          {
-          post.author.username !== user.username ?
-          <button  className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
+          post.author.username !== user.username   ?(
+              followed == false ?
+          <button onClick={(event) => {follow(user,post.author)}} className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
           Follow
-
-     </button>: <button  className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
+          </button> : <button onClick={(event) => {unfollow(user,post.author)}} className="bg-[white] text-black rounded-lg w-full mb-[4em] border border-black  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
+          Following
+          </button>
+          )
+     : <button  className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
+          <Link to='/settings'>
           Edit Profile
+          </Link>
 
      </button>
-         }
+         }{}
             </div>
             {
               otherAuthorPost !== null &&  otherAuthorPost.length > 0  ?   <div className="more_posts w-full py-7 lg:-bottom-1 lg:fixed lg:right-[1em] lg:p-7 bg-white lg:w-[23em]  text-[#171717]">

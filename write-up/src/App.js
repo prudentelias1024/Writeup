@@ -29,13 +29,16 @@ function App() {
            console.log(info)
        }
        const getPosts = async() => {
-        let  res_posts = await(await axios.get('http://localhost:5000/posts',{headers: {Authorization: localStorage.getItem('token')}})).data
+        let  res_posts = await(await axios.get('http://localhost:5000/posts')).data
         console.log(res_posts)
        dispatch(actions.updatePosts(res_posts))
      }
       useEffect(() => {
+        getPosts();
+        if (localStorage.getItem('token') !== null) {
           loadUser();
-          getPosts();
+          
+        }
       }
       , []);
   

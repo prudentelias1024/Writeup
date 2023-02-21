@@ -5,7 +5,8 @@ import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
 import {  Link} from "react-router-dom";
 export default function Post({post}) {
-    return (
+  
+     return (
         
            
             <Link to={`p/@${post.author.username}/${post.postId}`} state={post} className='bg-white w-full border  rounded-lg   lg:p-[1em]' >
@@ -38,7 +39,7 @@ export default function Post({post}) {
                   
 
                 </div>
-                <Reactions/>
+                <Reactions post={post}/>
                 </div>
                  
  

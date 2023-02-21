@@ -11,7 +11,7 @@ import {  useFacebook, useLogin, useProfile} from "react-facebook";
 import {userContext} from '../Contexts/userContext';
 import axios  from 'axios';
 import { useDispatch } from 'react-redux';
-import { user } from '../store';
+import { actions } from '../store';
 const Login = () => {
    const navigate = useNavigate()
     
@@ -31,11 +31,12 @@ const Login = () => {
             "Authorization": `Bearer ${tokenResponse.access_token}`
         }
        })).data;
-     
-       console.log(user);
     
+       console.log(user);
+       
        const res = await(await axios.post('http://localhost:5000/api/login',{googleId:user.sub,account_type: 'google'},{withCredentials:true}))
        if (res.message =='User Doesn\t Exists') {
+      
           let res = await (await axios.post('http://localhost:5000/api/signup', {
        name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google', googleId: user.sub}
@@ -50,7 +51,7 @@ const Login = () => {
         localStorage.setItem("token",res.data.Authorization);
         const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
         )).data;
-        dispatch(user.updateUser(info))
+        dispatch(actions.updateUser(info))
         navigate('/')
        
        
