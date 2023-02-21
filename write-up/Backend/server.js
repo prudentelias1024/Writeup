@@ -49,44 +49,26 @@ const verify = (req,res,next) => {
     }
 }
   
- app.post('/api/follow', verify,  (req,res) => {
+ app.post('/api/follow', verify,  (req,res) => {    
     let {user,author} = req.body;
-    let followers = [],following = [];
 
-    //get list of followers for the author
-    User.find({username:author.username},(err,doc) =>{
-    if(err){throw err}
-    if (doc) {
-        followers = doc[0].followers
-        followers.push(req.user._id)
-        console.log(followers, 'followers')
-    }
-    })
-
-    //get the list of following for the user
-    User.find({username:user.username}, (err,doc) =>{
-    if(err){throw err}
-    if (doc) {
-        following = doc[0].following
-        following.push(author._id)
-        console.log(following, 'following')
-    }
-    })
-
+    let authorid = mongoose.Types.ObjectId(author._id)
+   
     //add user to the author followers list
-    User.findOneAndUpdate({username:author.username}, {followers: followers}, {new:true},(err,doc) => {
-        if(err){throw err} else{
-       
+    User.findOneAndUpdate({username:author.username}, {$push: {followers: req.user._id} }, {new:true},(err,doc) => {
+        if(err){throw err} 
+       console.log(doc)
       
+    })
             //Add the author the  user following list
-        User.findOneAndUpdate({username:user.username}, {following: following}, {new: true}, (err,doc1) => {
+        User.findOneAndUpdate({username:user.username}, {$push: {following: authorid} }, {new: true}, (err,doc1) => {
             if(err){throw err}
             
-        })
-    }
+            console.log(doc1)
         
     })
-   
+   followers = []
+   following = []
 
  })
 
