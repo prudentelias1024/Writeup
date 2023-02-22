@@ -58,7 +58,7 @@ const Dashboard = () => {
                  <DetailsCard text="Total Posts" amount={numberOfPosts} color="bg-pink-500"/>
                 <DetailsCard text="Total Likes" amount={totalLikes} color="bg-green-500"/>
                 <DetailsCard text="Total Comments" amount={totalComments} color="bg-orange-500"/>
-                <DetailsCard text="Total Bookmarks Receieved" amount={totalBookmark} color="bg-purple-500"/></> : ''
+                <DetailsCard text="Total Bookmarks Receieved" amount={totalBookmark} color="bg-purple-500"/></> : 'null'
                }
                </div>
                <div className=" lg:flex lg:flex-row lg:gap-3 lg:ml-[11em] mt-[3em]">
@@ -71,7 +71,7 @@ const Dashboard = () => {
                         <li className='block hover:bg-orange-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Analytics <div className='bg-orange-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
                     </ul>
                 </div>
-                <div className="filterer lg:hidden relative top-[-25em]">
+                <div className="filterer lg:hidden relative top-[-26.5em]">
                    
                         <select onChange={handleChange}  ref={ref} className='w-[95%] rounded-sm outline-blue-600
                          h-[2.5em] ml-[.75em] border'>

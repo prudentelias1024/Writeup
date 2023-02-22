@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../NavBar';
 import FollowersAndFollowing from '../FollowersAndFollowing';
@@ -6,6 +7,7 @@ import FollowersAndFollowing from '../FollowersAndFollowing';
 const Following = () => {
     const ref = useRef()
     const navigate = useNavigate()
+    const {user}  = useSelector(state=> state)
     const handleChange = () => {
      navigate(ref.current.value)
  
@@ -13,7 +15,7 @@ const Following = () => {
     return (
       <>
        <NavBar/>   
-        <div>
+        <div className='flex flex-col gap-[6em]'>
                 <div className="filterer relative top-[5em]">
                    
                    <select onChange={handleChange}  ref={ref} className='w-[95%] rounded-sm outline-blue-600
@@ -37,7 +39,14 @@ const Following = () => {
                    </select>
               
            </div>
-           <FollowersAndFollowing/>
+           {
+        user && user.following.length > 0 ? user.following.map(user => {
+           
+         return     <FollowersAndFollowing key={user._id} user={user} />
+     
+        }) : <p className='text-center font-[Mulish] '>You don't follow any user</p>
+        } 
+          
         </div>
         
       </>

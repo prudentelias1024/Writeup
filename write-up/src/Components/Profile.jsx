@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BsCalendarWeek, BsEnvelope } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -14,6 +14,7 @@ import { actions } from "../store/index";
     
 const Profile = () => {
     const user = useSelector((state) => state.user)
+    const [myPosts, setMyPosts] = useState(null)
     const dispatch = useDispatch()
    const loadUser = async() => {
         const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
@@ -21,11 +22,21 @@ const Profile = () => {
          dispatch(actions.updateUser(info))
          
      }
+     const  getMyPosts = async() => {
+        let res = await (await axios.get('http://localhost:5000/api/user/posts', {headers: {Authorization:  localStorage.getItem('token')}})).data
+       console.log(res)
+       setMyPosts(res)
+       
+     }
     useEffect(() => {
         loadUser()
+        getMyPosts()
        
     }
     , []);
+    if (user) {
+        
+    
     return (
         
         <div className='flex flex-col'>
@@ -69,14 +80,18 @@ const Profile = () => {
                 </div>
             </div>
             <div className=' flex flex-col gap-4  lg:mt-[10em] lg:mr-[20em]'>
-
-            <DashboardPosts />
-            <DashboardPosts />
-            <DashboardPosts />
+            {
+             myPosts !== null && myPosts.map((myPost) => {
+                return <DashboardPosts key={myPost._id} post={myPost} />
+             })
+            }
+            
             </div>
         </div>
         </div>
-    );
+    )} else {
+        return ''
+    }
 }
 
 export default Profile;

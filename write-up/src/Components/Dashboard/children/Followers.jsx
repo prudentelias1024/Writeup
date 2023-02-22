@@ -41,7 +41,7 @@ const Followers = () => {
               
            </div>
         {
-        user.followers.length > 0 ? user.followers.map(follower => {
+         user.followers.length > 0 ? user.followers.map(follower => {
            
          return     <FollowersAndFollowing key={follower._id} user={follower} />
      

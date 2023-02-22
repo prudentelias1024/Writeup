@@ -1,13 +1,10 @@
 import { useRef, useState } from "react";
 import { IoIosAddCircleOutline, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
+import { VscBellDot } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../store";
-import { useEffect } from "react";
+import {  useSelector } from "react-redux";
 export default function UserNav(){
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
     const { user} = useSelector((state) => state)
    const [toggled, setToggled] = useState(true) 
     const helperRef   = useRef()
@@ -42,7 +39,10 @@ export default function UserNav(){
             <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
            </Link>
             <Link to="/notifications">
+           
+               {/* <VscBellDot className="text-4xl mt-0" /> */}
             <IoIosNotificationsOutline className="text-4xl mt-0"/>
+           
             </Link>
             <button onClick={toggleHelper}>
 

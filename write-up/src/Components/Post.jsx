@@ -1,4 +1,4 @@
-import {Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material'
+
 import AuthorInfo from './Post/AuthorInfo'
 import mock from './mock.jpg'
 import { Reactions } from './Post/Reactions'

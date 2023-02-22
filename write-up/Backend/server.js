@@ -14,6 +14,22 @@ const moment = require('moment');
 const { populate } = require('./usersSchema');
 const axios = require('axios')
 const firebase = require('firebase-admin')
+const http = require('http')
+const server = http.createServer(app)
+const io  = require('socket.io')(server, {
+    cors:{
+    origin: 'http://localhost:3000',
+    method: ["GET", "POST"],
+    credentials: true
+}
+})
+const notifications = require('./notificationsSchema')
+//sockets 
+
+io.on('connection',(socket) => {
+    console.log(`Connected : ${socket.id}`)
+})
+
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -401,6 +417,6 @@ mongoose.connection.once("open", () => {
 })
 
 
-app.listen("5000",() => {
+server.listen("5000",() => {
     console.log("Server is listening at PORT 5000")
 })
