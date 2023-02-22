@@ -1,15 +1,17 @@
 
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../NavBar';
 import FollowersAndFollowing from '../FollowersAndFollowing';
 
 const Followers = () => {
     const ref = useRef()
+    const {user}  =   useSelector(state => state)
+    console.log(user)
     const navigate = useNavigate()
     const handleChange = () => {
      navigate(ref.current.value)
- 
     }
     return (
         <>
@@ -38,8 +40,13 @@ const Followers = () => {
                    </select>
               
            </div>
-
-        <FollowersAndFollowing />
+        {
+        user.followers.length > 0 ? user.followers.map(follower => {
+           
+         return     <FollowersAndFollowing key={follower._id} user={follower} />
+     
+        }) : <p className='text-center font-[Mulish]'>You have 0 Followers</p>
+        } 
 
         </div>
         </>

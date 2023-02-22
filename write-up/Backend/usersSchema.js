@@ -6,8 +6,14 @@ const user = new mongoose.Schema({
     email:{type:String, required:true},
     public_picture:{type:String, required:true},
     joined_on: {type:Date, required:true},
-    followers: [{user:mongoose.SchemaTypes.ObjectId}],
-    following: [{user:mongoose.SchemaTypes.ObjectId}],
+    followers: [
+      {type:mongoose.Schema.Types.ObjectId,
+      ref: 'Users'
+      }
+    ],
+    following: [
+      {type:mongoose.Schema.Types.ObjectId,
+      ref: 'Users'}],
     bio: {type:String,default :() => ''},
     work: {type:String,default :() => ''},
     hobby: {type:String,default :() => ''},

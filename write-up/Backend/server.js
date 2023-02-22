@@ -38,8 +38,7 @@ const verify = (req,res,next) => {
               
                 User.findOne({username: user}).populate('followers').populate('following').exec((err,userDoc) => {
                     if(err){throw err} 
-                  
-                    req.user = userDoc;
+                     req.user = userDoc;
                     next();
                 })
             }
@@ -51,17 +50,17 @@ const verify = (req,res,next) => {
   
  app.post('/api/follow', verify,  (req,res) => {    
     let {user,author} = req.body;
-
-    let authorid = mongoose.Types.ObjectId(author._id)
-   
-    //add user to the author followers list
+    
+    
+  
+    // add user to the author followers list
     User.findOneAndUpdate({username:author.username}, {$push: {followers: req.user._id} }, {new:true},(err,doc) => {
         if(err){throw err} 
        console.log(doc)
       
     })
-            //Add the author the  user following list
-        User.findOneAndUpdate({username:user.username}, {$push: {following: authorid} }, {new: true}, (err,doc1) => {
+            // Add the author the  user following list
+        User.findOneAndUpdate({username:user.username}, {$push: {following: mongoose.Types.ObjectId(author._id)} }, {new: true}, (err,doc1) => {
             if(err){throw err}
             
             console.log(doc1)
