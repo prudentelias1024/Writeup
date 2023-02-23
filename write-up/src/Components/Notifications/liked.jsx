@@ -11,7 +11,7 @@ const Liked = () => {
         <div className='-ml-[2.5em] w-[85%] font-[Mulish]'>
 
         
-         <p><Link to='/' className='font-bold font-[Mulish]'>Jace  </Link> liked Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> 
+         <p><Link to='/' className='font-bold font-[Mulish]'>Jace  </Link> liked <Link className='text-blue-600 font-bold' to="/">Lorem ipsum dolor sit amet consectetur adipisicing elit.</Link> </p> 
          
         </div>
   </div>

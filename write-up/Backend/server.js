@@ -20,7 +20,7 @@ const io  = require('socket.io')(server, {
     cors:{
     origin: 'http://localhost:3000',
     method: ["GET", "POST"],
-    credentials: true
+    
 }
 })
 const notifications = require('./notificationsSchema')
@@ -28,6 +28,10 @@ const notifications = require('./notificationsSchema')
 
 io.on('connection',(socket) => {
     console.log(`Connected : ${socket.id}`)
+    
+    socket.on('like', (data) => {
+     console.log(data)
+ })
 })
 
 //Middleware
@@ -215,7 +219,7 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
 
 
 app.get('/posts',  (req,res) => {
-     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').exec((err,doc) => {
+     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments').exec((err,doc) => {
        if (err) {
            throw err
        }
@@ -230,8 +234,7 @@ app.get('/posts',  (req,res) => {
 })
 
 app.post('/post/like', verify, (req,res) => {
-    console.log(req.body.postId);
-    console.log(req.user._id);
+  
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{likes: req.user._id}, {new:false}, (err,doc) => {
         if (err) {
             throw err
@@ -247,9 +250,23 @@ app.post('/post/like', verify, (req,res) => {
     })
     })
 })
+app.post('/post/comment', verify, (req,res) => {
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {comments: [{user: req.user._id},{message: req.body.comment}] }}, {new:true}, (err,doc) => {
+        if (err) {
+            throw err
+        } 
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('author').populate("comments").exec((err,populatedDoc) => {
+        if (err) {
+            throw err
+        }
+        if (populatedDoc) {
+          res.send(populatedDoc)
+        }
+        
+    })
+    })
+})
 app.post('/post/unlike', verify, (req,res) => {
-    console.log(req.body.postId);
-    console.log(req.user._id);
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{likes: []}, {new:false}, (err,doc) => {
         if (err) {
             throw err

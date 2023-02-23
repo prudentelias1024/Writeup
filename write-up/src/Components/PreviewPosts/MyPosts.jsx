@@ -107,8 +107,10 @@ const MyPosts = () => {
       }
   
      const commentPost = async(user,postId, commentWords) => {
-      let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, id:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      
+      let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, postId:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      console.log(res)
+        // setPost(res)
+        // setComment('')
       } 
      const bookmarkPost = async(postId) => {
       let  res = await(await axios.post(`http://localhost:5000/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
@@ -217,11 +219,16 @@ const MyPosts = () => {
               
                 <ReactQuill modules={modules} onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
      
-                <button className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
+                <button onClick={(event) => {commentPost(user._id,post.postId,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
 
 
                 </div>
-                 {/* <Comment image={tempImage}/> */}
+                {
+                  post.comments && post.comments.length > 0  && post.comments.map(comment => 
+                  <Comment key={comment._id} commenter={comment.user} timestamp={comment.createdAt} body={comment.message}/>
+                 
+                  )
+                }
                 
                 </div>           
                        

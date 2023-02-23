@@ -13,9 +13,16 @@ const notificationsSchema = new mongoose.Schema({
         message: {
             type: String,
             required:false
-        }
+        },
+        post: {
+            type:mongoose.Schema.Types.ObjectId,
+        ref: 'PublishedPosts'
+    }
         }],
-      
+       link: {
+        type: String,
+        required: true
+       },
       type: {
         type: String,
         required: true,
