@@ -18,6 +18,8 @@ import MyPosts from './Components/PreviewPosts/MyPosts';
 import Logout from './Components/logout';
 import Followers from './Components/Dashboard/children/Followers';
 import Following from './Components/Dashboard/children/Following';
+import Tags from './Components/Tags';
+import TagTemplate from './Components/Tag/TagTemplate';
 function App() {
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
@@ -49,6 +51,7 @@ function App() {
 
       <Route path='*' element={<Page404/>}/>
       <Route path='/notifications' element={<Notifications/>}/>
+      <Route path='/tag/:name' element={<TagTemplate/>}/>
       <Route path='/p/:username/:postId' element={<MyPosts/>}/>
       <Route path='/' element={<Home/>}/>
       <Route path='/settings' element={<Settings/>}/>
@@ -60,6 +63,7 @@ function App() {
       <Route path='/Dashboard/following'  element={<Following/>}/>
       <Route path='/Profile' element={<Profile/>}/>
       <Route path='/logout' element={<Logout/>}/>
+      <Route path='/tags' element={<Tags/>}/>
      
     </Routes>
     

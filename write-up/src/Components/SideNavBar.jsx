@@ -25,7 +25,7 @@ export default function SideNavBar(){
   )
     
     return(
-        <div ref={navRef} className=" hidden overflow-y-auto  pt-[8em]  text-center  z-30  pl-[em] fixed bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-80 lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">
+        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto  pt-[8em]  text-center  z-30  pl-[em] fixed bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-80 lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">
             <div className=" border pt-3 -ml-9 lg:hidden ">
             <p className="font-[Pacifico] text-3xl text-center ">Inkup Community</p>
             <p className="font[Mulish] -mt-4 text-lg leading-9 tracking-wide p-6 text-center">We allow content creators, developers and bloggers content to share their contents and grow in our community</p>
@@ -34,11 +34,11 @@ export default function SideNavBar(){
             
             </div>
                 
-        <div className="flex flex-col gap-3">
+        <div className="flex  flex-col gap-3">
 
-            <SideNavLink additionalStyles="m-auto mt-6"  icon={<AiOutlineHome className="text-2xl"/>} name="Home"/>
-            <SideNavLink additionalStyles="m-auto" icon={<HiOutlineHashtag className="text-2xl"/>} name=" Tags"/>
-            <SideNavLink additionalStyles="m-auto mb-[5em]" icon={<AiOutlineBulb className="text-2xl"/>} name="FAQ"/>
+            <SideNavLink link="/" additionalStyles="m-auto mt-6"  icon={<AiOutlineHome className="text-2xl"/>} name="Home"/>
+            <SideNavLink link='/tags' additionalStyles="m-auto" icon={<HiOutlineHashtag className="text-2xl"/>} name=" Tags"/>
+            <SideNavLink link='/' additionalStyles="m-auto mb-[5em]" icon={<AiOutlineBulb className="text-2xl"/>} name="FAQ"/>
   
         </div>
             <TrendingTags/>

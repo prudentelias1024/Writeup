@@ -1,8 +1,9 @@
-import SideNavTags from "./SideNavTags";
-import axios  from "axios";
-import { useEffect, useState } from "react";
-export default function TrendingTags(){
-     const [tags, setTags] = useState([]);
+import React, { useEffect, useState } from 'react';
+import NavBar from './NavBar';
+import Tag from './tags/tag';
+import axios from 'axios';
+const Tags = () => {
+      const [tags, setTags] = useState([]);
     const getTags = async() => {
      let res = await (await axios.get('http://localhost:5000/api/tags')).data
      //Contains all tags without their title
@@ -34,24 +35,22 @@ export default function TrendingTags(){
        getTags()
        
     }, [])
-    return(
+    return (
         <>
-        <div className=" hidden bg-[#f6f6f6] lg:block h-[40em] overflow-x-hidden lg:ml-[-3em]">
-
-        <p className=" text-lg font-bold font-[Mulish] mb-3 mt-3">Trending Tags</p>
-        <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] px-10 ">
-        {tags && tags.map((tag,index) => 
+        <NavBar/>
+        <div className="top-32 relative grid grid-cols-1  lg:grid-cols-3 gap-[2em] lg:mx-[10em] ">
+           {tags && tags.map((tag,index) => 
           
            
-          {return <SideNavTags  tag={tag.tag} key={index}/>
+          {return <Tag  tag={tag.tag} key={index}/>
            }
  
            
            )}
-      
-        </div>
         </div>
         </>
-    )
-
+        
+    );
 }
+
+export default Tags;

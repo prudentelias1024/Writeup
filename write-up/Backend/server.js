@@ -217,7 +217,27 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
     })
 })
 
-
+app.get('/api/tags', (req,res) => {
+    PublishedPosts.find().select('tags title').exec((err,doc) => {
+        if (err) {
+            throw err
+        }   
+        if (doc) {
+            res.send(doc)
+        }
+    })
+})
+app.get('/api/tags/:name', (req,res) => {
+    console.log(req.params.name)
+    PublishedPosts.find({tags: {$in: `#${req.params.name}`}}).populate('author').exec((err,doc) => {
+      if(err){
+        throw err
+      } if (doc) {
+        res.send(doc)
+       
+      }
+    })
+})
 app.get('/posts',  (req,res) => {
      PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
        if (err) {

@@ -9,7 +9,7 @@ export default function Post({post}) {
      return (
         
            
-            <Link to={`p/@${post.author.username}/${post.postId}`} state={post} className='bg-white w-full border  rounded-lg   lg:p-[1em]' >
+            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className='bg-white w-full border  rounded-lg   lg:p-[1em]' >
 
 
            
