@@ -109,7 +109,7 @@ const MyPosts = () => {
      const commentPost = async(user,postId, commentWords) => {
       let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, postId:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
-        // setPost(res)
+        setPost(res)
         // setComment('')
       } 
      const bookmarkPost = async(postId) => {
@@ -142,34 +142,34 @@ const MyPosts = () => {
         <>
         <NavBar/>
         <div className='flex flex-col gap-[1em] lg:top-32 lg:relative lg:flex lg:gap-[30em]'>
-            <div className=" fixed flex impressions  z-10 border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:ml-[30em] lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
+            <div className=" fixed flex impressions  z-10 border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[30em] lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
            
                 {
                 liked == true ?
                             
                 <button  onClick={(event) => unlikePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <BsHeartFill className='text-2xl lg:text-3xl text-red-500'/>
-                    <p className="font-[Mulish] text-black text-xl">{post.likes.length}</p>
+                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.likes.length}</p>
                 </button> :  <button  onClick={(event) => likePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <FaRegHeart className='text-2xl lg:text-3xl text-black'/>
-                    <p className="font-[Mulish] text-black text-xl">{post.likes.length}</p>
+                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.likes.length}</p>
                 </button>
                 }
                 <button className='rounded-full flex lg:flex-col gap-[1em]'>
                     <FaRegComment className='text-2xl lg:text-3xl text-black'/>
-                    <p className="font-[Mulish] text-black text-xl">{post.comments.length}</p>
+                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.comments.length}</p>
                 </button>
                 {
                 bookmarked == true ?
                             
                 <button  onClick={(event) => unbookmarkPost(post.postId)} className='rounded-full flex  lg:flex-col gap-[1em]'>
                 <FaBookmark className='text-2xl lg:text-3xl text-black'/>
-                <p className="font-[Mulish] text-black text-xl">{post.bookmarks.length}</p>
+                <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
             </button>:
             
             <button className='rounded-full flex  lg:flex-col gap-[1em]'>
                     <FaRegBookmark onClick={(event) => bookmarkPost(post.postId)} className='text-2xl flex  lg:text-3xl text-black'/>
-                    <p className="font-[Mulish] text-black text-xl">{post.bookmarks.length}</p>
+                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
                 </button>
                 }
 
@@ -178,16 +178,16 @@ const MyPosts = () => {
             </div>
 
             <div className="post lg:ml-[40em] -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
-            <img src={post.coverImageURL} className='w-full lg:h-[25em] object-cover' /> 
+            <img src={post.coverImageURL} className='w-full lg:h-[100%] object-cover' /> 
             <div className="author flex lg:gap-[1em] lg:my-[3em] lg:ml-[4.5em]">
              
              <AuthorInfo author={post.author} timestamp={post.created}/>
             </div>
             <div className='pl-[1em]'>
-                <p className='text-2xl leading-8 font-black w-fit px-[.75em] lg:px-[2em] mb-[.25em] lg:text-4xl '>
+                <p className='text-2xl leading-8 font-black w-fit px-[.75em] lg:px-[1.5em] mb-[.25em] lg:text-4xl '>
                   {post.title}
                   </p>
-                <div className='font-[Mulish] flex flex-row gap-3 pl-3 lg:ml-[2.75em]'>
+                <div className='font-[Mulish] flex flex-row gap-3 pl-3 lg:ml-[2.5em]'>
                   {
                 
                 post.tags.toString().split(',').map((tag,index) => {
@@ -203,7 +203,7 @@ const MyPosts = () => {
                   }
 
 </div>
-                <ReactQuill className='z-0'
+                <ReactQuill className='z-0 p-7'
                   value={post.body}
                   readOnly={true}
                   theme={"bubble"}
@@ -217,7 +217,7 @@ const MyPosts = () => {
                 <div className='flex flex-row'>
                </div>
               
-                <ReactQuill modules={modules} onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
+                <ReactQuill modules={modules} defaultValue='' onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
      
                 <button onClick={(event) => {commentPost(user._id,post.postId,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
 

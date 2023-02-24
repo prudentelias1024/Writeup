@@ -42,9 +42,9 @@ const Profile = () => {
         <div className='flex flex-col'>
             <NavBar/>
             
-            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[95%] ml-[.75em] rounded-xl top-[4.5em] relative flex-col lg:w-4/5 lg:ml-[14em]  lg:pt-[3em]">
+            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[95%] ml-[.75em] rounded-xl top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5 lg:ml-[14em]  lg:pt-[4em]">
             <Link to="/settings">
-            <button className='bg-blue-600 text-white w-[7em] h-[3em] font-bold text-sm absolute top-4 right-6 lg:right-0  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
+            <button className='bg-blue-600 text-white w-[7em] h-[3em] font-bold text-sm absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
             </Link>
              <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em] ml-auto mr-auto' src={user.public_picture} alt={user.name}  />
              <p className=" text-lg font-bold font-[Montserrat] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>

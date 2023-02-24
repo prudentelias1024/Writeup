@@ -190,7 +190,7 @@ app.get('/post/:username/:postId',  (req,res) => {
     let {username,postId} = req.params
     console.log(postId)
     username = username.split('@')[1]
-     PublishedPosts.find({postId: postId}).populate('author').populate('likes').populate('bookmarks').exec((err,doc) => {
+     PublishedPosts.find({postId: postId}).populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
         if (err) {
             throw err
         }
@@ -219,7 +219,7 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
 
 
 app.get('/posts',  (req,res) => {
-     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments').exec((err,doc) => {
+     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
        if (err) {
            throw err
        }
@@ -251,7 +251,7 @@ app.post('/post/like', verify, (req,res) => {
     })
 })
 app.post('/post/comment', verify, (req,res) => {
-    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {comments: [{user: req.user._id},{message: req.body.comment}] }}, {new:true}, (err,doc) => {
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {comments: [{user: req.user._id, message: req.body.comment}] }}, {new:true}, (err,doc) => {
         if (err) {
             throw err
         } 
