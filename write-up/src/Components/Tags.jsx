@@ -3,38 +3,97 @@ import NavBar from './NavBar';
 import Tag from './tags/tag';
 import axios from 'axios';
 const Tags = () => {
-      const [tags, setTags] = useState([]);
+    useEffect(() => {
+        getTags()
+        
+     }, [])
+    const elementCount = {}
+      const [tags, setTags] = useState([[]]);
+       const contructTagAndPublished = (tags,publishedCount) => {
+        let  temp = []
+       let keys = Object.keys(publishedCount)
+       console.log(keys)
+           tags.map((tag,i) => {
+            keys.map((key,j) => {
+               if(tag.tag === key){
+                    temp.push({tag:tag.tag, publishedPosts: publishedCount[key]})
+               }
+            })
+          })
+        
+          
+          console.log(temp)
+         setTags(temp)
+       }
     const getTags = async() => {
      let res = await (await axios.get('http://localhost:5000/api/tags')).data
      //Contains all tags without their title
      let tagsArray = []
+     //temprary array
+     let temp = []
      //contains all tags with their title with uniqueness
      let tagArray = []
-     console.log(res)
-     //This is strip the array elements of their title
-     res.map(tags => { tagsArray = tags.tags
+   
+    res.map(tag => {
+        temp.push(tag.tags)
+       
+    })
+    console.log(temp)
+   //Extract all tags
+    temp.map((tag) => {
+        for (let i = 0; i < temp.length + 2; i++){
+         tagsArray.push(tag[i])
+       }
+      
+    })
 
-        //this filter method will ensure the tags are all unique in order not to render a tag twice
-        tagsArray = tagsArray.filter((words, index,array) => {
-            return array.indexOf(words) === index;
-        })
+   
+     tagsArray.map((tag) => {
+        if(elementCount[tag]){
+            elementCount[tag] += 1
+          } else {
+           elementCount[tag] = 1
+          }
 
-        tagsArray.map(tag => {     
-            //this map method with create get each tag and their title with it as an object looks like something that this {tag: 'hi', title: 'How to'}
-          tagArray.push({tag:tag})
-          console.log(tagArray)
-        } 
-        )
+     })
+      
+ 
+    
+    
       
     
-    })
-     setTags(tagArray)
+      //  this filter method will ensure the tags are all unique in order not to render a tag twice
+      temp = []
+        tagsArray = tagsArray.map((words) => {
+            if (temp.indexOf(words) === -1) {
+                temp.push(words)
+            }
+           
+          
+        })
+       
+         
+       
+      
+        temp.map(tag => {     
+           
+         //this map method with create get each tag and their title with it as an object looks like something that this {tag: 'hi', title: 'How to'}
+          tagArray.push({tag:tag})
+        } 
+        )
+        
+        
+        
+        console.log(tagArray)
+        console.log(elementCount)
+
+
+     contructTagAndPublished(tagArray, elementCount)
+   
+
     }
    
-    useEffect(() => {
-       getTags()
-       
-    }, [])
+   
     return (
         <>
         <NavBar/>
@@ -42,7 +101,7 @@ const Tags = () => {
            {tags && tags.map((tag,index) => 
           
            
-          {return <Tag  tag={tag.tag} key={index}/>
+          {return <Tag  tag={tag.tag} key={index} count={tag.publishedPosts}/>
            }
  
            
