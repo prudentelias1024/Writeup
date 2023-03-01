@@ -10,7 +10,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
    <GoogleOAuthProvider clientId='39584522765-krc4letrddkk8p1qk1fdknkbjnck871c.apps.googleusercontent.com'>
    <FacebookProvider appId='1179176856069103'>
@@ -22,7 +22,7 @@ root.render(
      
    </GoogleOAuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
   
 
 );

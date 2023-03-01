@@ -2,29 +2,52 @@ import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
 import Tag from './tags/tag';
 import axios from 'axios';
+
 const Tags = () => {
+    const [tags, setTags] = useState([[]]);
+    const [publishedCount,setPublishedCount ] = useState({
+    })
     useEffect(() => {
-        getTags()
-        
+       getTags()
+        setPublishedCount({})
      }, [])
-    const elementCount = {}
-      const [tags, setTags] = useState([[]]);
-       const contructTagAndPublished = (tags,publishedCount) => {
+       const constructTagAndPublished = (tags,publishedCount) => {
         let  temp = []
        let keys = Object.keys(publishedCount)
-       console.log(keys)
+       console.log(publishedCount)
            tags.map((tag,i) => {
             keys.map((key,j) => {
                if(tag.tag === key){
-                    temp.push({tag:tag.tag, publishedPosts: publishedCount[key]})
+                    temp.push({tag:tag.tag.split('#')[1], publishedPosts: publishedCount[key]})
                }
             })
           })
         
           
           console.log(temp)
-         setTags(temp)
+        return temp
+      
        }
+
+       const rankTags = (tags) => {
+        let temp;
+         for (let i = 0; i < tags.length; i++) {
+            let currentTag = tags[i];
+            for (let j = 0; j < tags.length; j++) {
+                if(currentTag.publishedPosts < tags[j].publishedPosts){
+                   temp = tags[i]
+                   tags[i] = tags[j]
+                   tags[j] = temp
+                } 
+                
+            }
+           
+         }
+         tags.reverse()
+         setTags(tags)
+       
+       }
+
     const getTags = async() => {
      let res = await (await axios.get('http://localhost:5000/api/tags')).data
      //Contains all tags without their title
@@ -49,17 +72,16 @@ const Tags = () => {
 
    
      tagsArray.map((tag) => {
-        if(elementCount[tag]){
-            elementCount[tag] += 1
-          } else {
-           elementCount[tag] = 1
-          }
-
-     })
-      
+        if (publishedCount[tag]){
+          
+            publishedCount[tag] +=1 
+        } else {
+        publishedCount[tag] = 1
+           
  
-    
-    
+        }
+    })
+     
       
     
       //  this filter method will ensure the tags are all unique in order not to render a tag twice
@@ -85,11 +107,11 @@ const Tags = () => {
         
         
         console.log(tagArray)
-        console.log(elementCount)
+        console.log(publishedCount)
+    
 
-
-     contructTagAndPublished(tagArray, elementCount)
-   
+     rankTags(constructTagAndPublished(tagArray, publishedCount))
+     
 
     }
    
@@ -99,7 +121,6 @@ const Tags = () => {
         <NavBar/>
         <div className="top-32 relative grid grid-cols-1  lg:grid-cols-3 gap-[2em] lg:mx-[10em] ">
            {tags && tags.map((tag,index) => 
-          
            
           {return <Tag  tag={tag.tag} key={index} count={tag.publishedPosts}/>
            }

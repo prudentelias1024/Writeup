@@ -2,8 +2,9 @@ import SideNavTags from "./SideNavTags";
 import axios  from "axios";
 import { useEffect, useState } from "react";
 export default function TrendingTags(){
-    let elementCount = {}
-    const contructTagAndPublished = (tags,publishedCount) => {
+    const [tagCount, setTagCount] = useState({})
+    const [tags,setTags] = useState([])
+    const constructTagAndPublished = (tags,publishedCount) =>{
         let  temp = []
        let keys = Object.keys(publishedCount)
            tags.map((tag,i) => {
@@ -14,31 +15,34 @@ export default function TrendingTags(){
                }
             })
           })
+          console.log(temp)
           return temp;
        }
 
-       const rankTag = (tagsArray) => {
-        let temp = []
-          for (let i = 0; i < tagsArray.length + 1; i++) {
-            const currentTag = tagsArray[i];
-           
-            for (let j = 1; j < tagsArray.length + 1; j++) {
-              if(currentTag.publishedPosts > tagsArray[j].publishedPosts) {
-                    temp.push(currentTag)
-                }
+       const rankTags = (tagsArray) => {
+        let temp;
+          for (let i = 0; i < tagsArray.length; i++) {
+            let currentTag = tagsArray[i];
+             for (let j = 0; j < tagsArray.length; j++) {
+               if(currentTag.publishedPosts < tagsArray[j].publishedPosts){
+                  temp = tagsArray[i]
+                  tagsArray[i] = tagsArray[j]
+                  tagsArray[j] = temp
+               }  
             }
             
           }
-          console.log(temp)
+          tagsArray.reverse()
+          console.log(tagsArray)
+        setTags(tagsArray)
        }
-     const [tags, setTags] = useState([]);
-    const getTags = async() => {
+       const getTags = async() => {
      let res = await (await axios.get('http://localhost:5000/api/tags')).data
      //Contains all tags without their title
      let tagsArray = []
      //contains all tags with their title with uniqueness
      let tagArray = []
-     //TEMPARRAY
+    
      let temp = []
      console.log(res)
      //This is strip the array elements of their title
@@ -53,38 +57,45 @@ export default function TrendingTags(){
       
     })
 
-    console.log(tagsArray)
-    for (let i = 0; i < tagsArray.length ; i++){
-       let currentTag = tagsArray[i]
-      
-       if(elementCount[currentTag]){
-         elementCount[currentTag] += 1
-       } else {
-        elementCount[currentTag] = 1
-       }
-    }
+    tagsArray.map((tag) => {
+      if (tagCount[tag]){
+        
+          tagCount[tag] +=1 
+      } else {
+      tagCount[tag] = 1
+         
+
+      }
+  })
   
+  temp = []
 
     //this filter method will ensure the tags are all unique in order not to render a tag twice
-    tagsArray = tagsArray.filter((words, index,array) => {
-        return array.indexOf(words) === index;
-    })
-    console.log(temp)
+  
+        tagsArray = tagsArray.map((words) => {
+            if (temp.indexOf(words) === -1) {
+                temp.push(words)
+            }
+           
+          
+        })
+   
 
     //this map method will help push all tags into tagArray
-        tagsArray.map(tag => {     
+        temp.map(tag => {     
           tagArray.push({tag:tag})
           } 
         )
       
     
    
-     rankTag(contructTagAndPublished(tagArray,elementCount))
-     setTags(tagArray)
+     rankTags(constructTagAndPublished(tagArray,tagCount))
+    
     }
    
     useEffect(() => {
        getTags()
+       setTagCount({})
        
     }, [])
     return(

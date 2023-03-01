@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {user:{},navStatus:false,showMobileSearch:false,posts:[],newNotifications: []},
+    initialState: {user:{},navStatus:false,showMobileSearch:false,posts:[],newNotifications: [], publishedCount: {}},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
@@ -18,6 +18,9 @@ const userSlice = createSlice({
       },
       updateNewNotifications(state,action){
         state.newNotifications = action.payload
+      },
+      updatePublishedTagCount(state,action){
+        state.publishedCount = action.payload
       }
     
     }

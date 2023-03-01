@@ -6,6 +6,7 @@ import Post from '../Post';
 
 const TagCard = () => {
     const {name} = useParams()
+    console.log(name)
     const navigate = useNavigate()
     const [tagPosts, setTagPosts] = useState([])
    const getTagPosts = async() =>{
