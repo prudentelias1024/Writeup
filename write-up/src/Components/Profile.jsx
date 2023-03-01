@@ -63,7 +63,7 @@ const Profile = () => {
             </div>
 
 
-        <div className=' w-full lg:flex lg:flex-row justify-between '>
+        <div className=' w-full lg:flex lg:mt-[-9em] lg:flex-row justify-between '>
             <div className='hidden bg-white px-7 py-9 font-[Mulish] rounded-xl ml-[14em] mt-[10em] h-fit w-[20em] justify-start lg:flex lg:flex-col lg:gap-5 border '>
               
                 <div className='flex gap-2'>

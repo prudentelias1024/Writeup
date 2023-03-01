@@ -205,6 +205,24 @@ app.get('/post/:username/:postId',  (req,res) => {
         }
     })
 })
+app.post('/post/viewed', verify, (req,res) => {
+    let viewers = [], views;
+   PublishedPosts.find({postId: req.body.postId}).select('views viewedBy').exec((err,doc) => {
+     viewers = doc[0].viewedBy
+     views = doc[0].views
+     views += 1;
+     if(viewers.indexOf(req.user._id) == -1){
+            PublishedPosts.findOneAndUpdate({postId: req.body.postId}, {$push: {viewedBy: req.user._id}, views: views}, {new: true}, (err,doc) => {
+          if(err){
+            throw err
+          }
+            })
+     }
+     
+   }) 
+
+})
+
 app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
     PublishedPosts.find({username: req.params.username, postId: {$ne: req.params.postId}}).populate('author').exec((err,doc) => {
         if (err) {
@@ -227,6 +245,7 @@ app.get('/api/tags', (req,res) => {
         }
     })
 })
+
 app.get('/api/tags/:name', (req,res) => {
     console.log(req.params.name)
     PublishedPosts.find({tags: {$in: `#${req.params.name}`}}).populate('author').exec((err,doc) => {
@@ -255,7 +274,7 @@ app.get('/posts',  (req,res) => {
 
 app.post('/post/like', verify, (req,res) => {
   
-    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{likes: req.user._id}, {new:false}, (err,doc) => {
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {likes: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
         }
@@ -287,7 +306,7 @@ app.post('/post/comment', verify, (req,res) => {
     })
 })
 app.post('/post/unlike', verify, (req,res) => {
-    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{likes: []}, {new:false}, (err,doc) => {
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$pull:{likes: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
         }
@@ -306,7 +325,7 @@ app.post('/post/unlike', verify, (req,res) => {
 app.post('/post/bookmark', verify, (req,res) => {
     console.log(req.body.postId);
     console.log(req.user._id);
-    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{bookmarks: req.user._id}, {new:false}, (err,doc) => {
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
         }
@@ -324,7 +343,7 @@ app.post('/post/bookmark', verify, (req,res) => {
 app.post('/post/unbookmark', verify, (req,res) => {
     console.log(req.body.postId);
     console.log(req.user._id);
-    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{bookmarks: []}, {new:false}, (err,doc) => {
+    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$pull: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
         }

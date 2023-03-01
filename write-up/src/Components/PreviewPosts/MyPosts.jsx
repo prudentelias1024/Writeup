@@ -26,6 +26,10 @@ const MyPosts = () => {
   const [post,setPost] = useState(null)
   const  dispatch = useDispatch()
   const [otherAuthorPost,setOtherAuthorPost] = useState(null)
+  const increasePostView = async() => {
+    let res = await (await axios.post(`http://localhost:5000/post/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+  }
+
   const getOtherAuthorPost = async() => {
     let  res = await(await axios.get(`http://localhost:5000/post/getAuthorPosts/${params.username}/${params.postId}`)).data
     console.log(res)
@@ -86,6 +90,9 @@ const MyPosts = () => {
       } 
     
     useEffect(() => {
+     setTimeout(() => {
+      increasePostView()
+     }, 5000);
       getPost();
       getOtherAuthorPost();
        

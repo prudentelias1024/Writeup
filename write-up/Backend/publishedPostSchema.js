@@ -40,8 +40,12 @@ const PublishedPosts = new mongoose.Schema({
    
     views: {
         type:Number,
-        required:false
+         default: 0,
+        required:true
     },
+    viewedBy :[{
+        type: mongoose.Schema.Types.ObjectId,
+    }],
     comments: [
          {
             id: {

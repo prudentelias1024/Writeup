@@ -29,7 +29,7 @@ const DashboardPosts = ({post}) => {
                 </div>
                 <div className='flex flex-row gap-1'>
                 <FaRegEye  className='text-gray-500 text-2xl'/>
-                <p className="total"></p>
+                <p className="total">{post.views}</p>
                 </div>
 
                 <div className="post_actions flex flex-row gap-3 -mt-2.5">
