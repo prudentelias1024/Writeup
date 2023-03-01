@@ -246,8 +246,7 @@ app.get('/api/tags', (req,res) => {
     })
 })
 app.post('/api/tags/follow', verify, (req,res) => {
-    console.log(req.body.tag)
-   User.findOneAndUpdate({email: req.user.email}, {$push: {followingTags: req.body.tag}},{new:true},(err,doc) => {
+    User.findOneAndUpdate({email: req.user.email}, {$push: {followingTags: req.body.tag}},{new:true},(err,doc) => {
     if(err){
         throw err;
     }else {
@@ -256,7 +255,6 @@ app.post('/api/tags/follow', verify, (req,res) => {
    })
 })
 app.post('/api/tags/unfollow', verify, (req,res) => {
-    console.log(req.user.email)
    User.findOneAndUpdate({email: req.user.email}, {$pull: {followingTags: req.body.tag}},{new: true},(err,doc) => {
     if(err){
         throw err;

@@ -2,9 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector} from "react-redux";
+import { actions } from '../../store';
+import { useDispatch } from "react-redux";
 const Tag = ({tag, count}) => {
     const [followed, setFollowed] = useState(false)
+    const dispatch = useDispatch()  
     const {user} = useSelector(state => state)
+
     const checkFollowed = () => {
         if (user && user.followingTags.includes(tag)) {
             setFollowed(true)
@@ -18,13 +22,14 @@ const Tag = ({tag, count}) => {
     
     const followTag = async() => {
         setFollowed(true)
-        const res = await(await axios.post(`http://localhost:5000/api/tags/follow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}}))
-        console.log(res)
+        const res = await(await axios.post(`http://localhost:5000/api/tags/follow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        dispatch(actions.updateUser(res))
     }
     const unfollowTag = async() => {
         setFollowed(false)
-        const res = await(await axios.post(`http://localhost:5000/api/tags/unfollow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}}))
-        console.log(res)
+        const res = await(await axios.post(`http://localhost:5000/api/tags/unfollow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
+       
+        dispatch(actions.updateUser(res))
     }
     return (
         <div className='  border border-t-[1em] bg-white  border-t-red-500 p-[1em] lg:rounded-xl leading-8 '>
