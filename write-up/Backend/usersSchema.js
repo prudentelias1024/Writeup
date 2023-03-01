@@ -15,8 +15,7 @@ const user = new mongoose.Schema({
       {type:mongoose.Schema.Types.ObjectId,
       ref: 'Users'}],
     followingTags: [
-      {type:String,
-     required:false}],
+      {type:String, required:false }],
     bio: {type:String,default :() => ''},
     work: {type:String,default :() => ''},
     hobby: {type:String,default :() => ''},

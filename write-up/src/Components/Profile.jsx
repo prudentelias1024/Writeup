@@ -68,11 +68,11 @@ const Profile = () => {
               
                 <div className='flex gap-2'>
                     <SlNote className='text-2xl' />
-                    <p className='font-[Mulish] font-semibold text-xl'> 0 Posts published</p>
+                    <p className='font-[Mulish] font-semibold text-xl'> {myPosts? myPosts.length : 0} Posts published</p>
                 </div>
                 <div className='flex gap-2'>
                     <HiHashtag className='text-2xl' />
-                    <p className='font-[Mulish] font-semibold text-xl'> 0 Tags Followed</p>
+                    <p className='font-[Mulish] font-semibold text-xl'> {user ?user.followingTags.length : 0} Tags Followed</p>
                 </div>
                 <div className='flex gap-2 '>
                     <FaRegComment className='text-2xl' />
