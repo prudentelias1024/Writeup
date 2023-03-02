@@ -5,9 +5,9 @@ import { useSelector} from "react-redux";
 import { actions } from '../../store';
 import { useDispatch } from "react-redux";
 const Tag = ({tag, count}) => {
-    const [followed, setFollowed] = useState(false)
-    const dispatch = useDispatch()  
     const {user} = useSelector(state => state)
+    const [followed, setFollowed] = useState(true)
+    const dispatch = useDispatch()  
 
     const checkFollowed = () => {
         if (user && user.followingTags.includes(tag)) {
@@ -18,6 +18,10 @@ const Tag = ({tag, count}) => {
     }
     useEffect(() => {
      checkFollowed()
+     setTimeout(() => {
+        
+         checkFollowed()
+     }, 10);
     },[])
     
     const followTag = async() => {
@@ -38,7 +42,8 @@ const Tag = ({tag, count}) => {
                <p className='font-[Mulish] ml-3 font-bold mt-2'>{count} Posts Published</p> 
            
            {followed == true ? 
-                   <button onClick={(event) => {unfollowTag()}}  className='text-blue-500 rounded-lg px-6 border-2 ml-3 mt-[1.5em] border-blue-500 mb-4'>Followed</button>:   <button onClick={(event) => {followTag()}}  className='text-red-500 rounded-full px-6 border-2 ml-3 mt-[1.5em] border-red-500 mb-4'>Follow</button>
+                   <button onClick={(event) => {unfollowTag()}}  className='text-blue-500 rounded-lg px-6 border-2 ml-3 mt-[1.5em] border-blue-500 mb-4'>Followed</button>:  
+                    <button onClick={(event) => {followTag()}}  className='text-red-500 rounded-full px-6 border-2 ml-3 mt-[1.5em] border-red-500 mb-4'>Follow</button>
 
         }
         </div> 

@@ -14,6 +14,8 @@ import ReactLoading from 'react-loading';
 const CreatePosts = () => {
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
+ 
+
     const  CustomImageHandler = () => {
         const input =  document.createElement("input")
           input.setAttribute("type","file");
@@ -80,7 +82,8 @@ const CreatePosts = () => {
         withExcerpt: '',
         coverImageURL: '',
         postId: v4(),
-        draftId: v4()
+        draftId: v4(),
+        readingTime: ''
        
     })
     const handlePostBody = (value) => {
@@ -115,7 +118,15 @@ const handlePostTags = (event) => {
     })
     console.log(post)
     }
+
+    const estimateReadingTime = () => {
+        const avgWPM = 250;
+        const words = post.split(' ').length
+        const minutes = Math.ceil(words/avgWPM)
+         setPost({...post, readingTime: `${minutes} mins read`})
+      }
     const handlePostSubmission = async() => {
+        estimateReadingTime()
         console.log(post)
       let res = await (await axios.post('http://localhost:5000/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)

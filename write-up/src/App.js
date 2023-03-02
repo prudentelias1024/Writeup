@@ -20,6 +20,8 @@ import Followers from './Components/Dashboard/children/Followers';
 import Following from './Components/Dashboard/children/Following';
 import Tags from './Components/Tags';
 import TagTemplate from './Components/Tag/TagTemplate';
+import ReadLater from './Components/ReadLater';
+import SearchPage from './Components/Search/SearchPage';
 function App() {
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
@@ -28,15 +30,22 @@ function App() {
           const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
            dispatch(actions.updateUser(info))
-           console.log(info)
+       
        }
        const getPosts = async() => {
         let  res_posts = await(await axios.get('http://localhost:5000/posts')).data
-        console.log(res_posts)
+  
        dispatch(actions.updatePosts(res_posts))
+     }
+
+     const getBookmarkedPosts = async() => {
+      let bookmarked_post = await (await axios.get('http://localhost:5000/api/bookmarked',{headers: {Authorization: localStorage.getItem('token')}})).data
+      console.log(bookmarked_post)
+       dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
         getPosts();
+        getBookmarkedPosts();
         if (localStorage.getItem('token') !== null) {
           loadUser();
           
@@ -64,6 +73,8 @@ function App() {
       <Route path='/Profile' element={<Profile/>}/>
       <Route path='/logout' element={<Logout/>}/>
       <Route path='/tags' element={<Tags/>}/>
+      <Route path='/readlater' element={<ReadLater/>}/>
+      <Route path='/search' element={<SearchPage/>}/>
      
     </Routes>
     

@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../store/index";
-
+import {format} from '../time'
     
 const Profile = () => {
     const user = useSelector((state) => state.user)
@@ -52,7 +52,7 @@ const Profile = () => {
                 <div className="flex flex-row gap-4 mb-[1em] ml-[1.2em] lg:ml-[33em] lg:pb-[2em]">
                 <div className='joined flex flex-row text-[#acaaaa] font-[Montserrat] font-bold gap-2'>
                     <BsCalendarWeek className=' text-base lg:text-xl'/>
-                    <p className='font-[Mulish] text-xs'>{user.joined_on}</p>
+                    <p className='font-[Mulish] text-xs'>{format(user.joined_on)}</p>
                 </div>
                 <div className='joined flex flex-row text-[#acaaaa] font-bold gap-2'>
                     <BsEnvelope className='text-base lg:text-xl'/>

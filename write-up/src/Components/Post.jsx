@@ -4,7 +4,7 @@ import mock from './mock.jpg'
 import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
 import {  Link} from "react-router-dom";
-export default function Post({post}) {
+export default function Post({post, removeReactions}) {
   
      return (
         
@@ -39,7 +39,7 @@ export default function Post({post}) {
                   
 
                 </div>
-                <Reactions post={post}/>
+                <Reactions post={post} remove={removeReactions}/>
                 </div>
                  
  

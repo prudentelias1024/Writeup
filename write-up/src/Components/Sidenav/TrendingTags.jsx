@@ -1,9 +1,11 @@
 import SideNavTags from "./SideNavTags";
 import axios  from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 export default function TrendingTags(){
     const [tagCount, setTagCount] = useState({})
     const [tags,setTags] = useState([])
+    const {user} = useSelector(state => state)
     const constructTagAndPublished = (tags,publishedCount) =>{
         let  temp = []
        let keys = Object.keys(publishedCount)
@@ -33,7 +35,9 @@ export default function TrendingTags(){
             
           }
           tagsArray.reverse()
-          console.log(tagsArray)
+          //Display only top 10 trending tags at all time
+          tagsArray = tagsArray.slice(0,10)
+          
         setTags(tagsArray)
        }
        const getTags = async() => {
@@ -101,8 +105,7 @@ export default function TrendingTags(){
     return(
         <>
         <div className=" hidden bg-[#f6f6f6] lg:block h-[40em] overflow-x-hidden lg:ml-[-3em]">
-
-        <p className=" text-lg font-bold font-[Mulish] mb-3 mt-3">Trending Tags</p>
+        <p className=" text-lg font-bold font-[Mulish] mb-3  ">Trending Tags</p>
         <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] px-10 ">
         {tags && tags.map((tag,index) => 
           
@@ -114,6 +117,29 @@ export default function TrendingTags(){
            )}
       
         </div>
+        {user && user.followingTags.length > 0 ? 
+       
+         <>
+         <p className=" text-lg font-bold font-[Mulish] ml-[-1em] mb-3 mt-[4em]">My Tags</p>
+          <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] px-10 ">
+          { user.followingTags.map((tag,index) => 
+            
+            
+            {return <SideNavTags  tag={"#"+tag} key={index}/>
+          }
+          
+          
+          )}
+        
+          </div>
+      
+         
+          </>
+        
+      : ''
+      
+      }
+        
         </div>
         </>
     )

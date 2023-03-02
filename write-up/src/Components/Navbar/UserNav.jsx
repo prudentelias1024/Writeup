@@ -53,7 +53,7 @@ export default function UserNav(){
                 <hr />
                 <Link to='/Dashboard' className="block px-2  py-3 ml-4 font-[mulish] font-semibold  hover:bg-gray-100 hover:underline">Dashboard</Link>
                 <Link to='/create' className="block px-2 py-3  ml-4 font-[mulish] font-semibold hover:bg-gray-100 hover:underline">Create Post</Link>
-                <Link to='/' className="block px-2 py-3  ml-4 font-[mulish] font-semibold hover:bg-gray-100 hover:underline">Read Later</Link>
+                <Link to='/readlater' className="block px-2 py-3  ml-4 font-[mulish] font-semibold hover:bg-gray-100 hover:underline">Read Later</Link>
                 <Link to='/settings' className="block px-2 py-3  ml-4 font-[mulish] font-semibold hover:bg-gray-100 hover:underline">Settings</Link>
                 <hr />
                 <Link to='/logout'  className="block px-2 py-2  text-start ml-4 font-[mulish]  font-semibold hover:bg-gray-100 hover:underline">Logout</Link >

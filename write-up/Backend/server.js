@@ -245,6 +245,21 @@ app.get('/api/tags', (req,res) => {
         }
     })
 })
+
+app.get('/api/search', (req,res) => {
+    // PublishedPosts.find()
+})
+
+app.get('/api/bookmarked',verify, (req,res) => {
+    PublishedPosts.find().select('bookmarks title tags comments likes created  author postId').where('bookmarks').equals(req.user._id).populate('author').exec((err,doc) => {
+        if (err) {
+            throw err
+        }   
+        if (doc) {
+            res.send(doc)
+        }
+    })
+})
 app.post('/api/tags/follow', verify, (req,res) => {
     User.findOneAndUpdate({email: req.user.email}, {$push: {followingTags: req.body.tag}},{new:true},(err,doc) => {
     if(err){

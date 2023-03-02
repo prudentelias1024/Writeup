@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useRef, useState } from 'react';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { userContext } from '../Contexts/userContext';
 import DashboardPosts from './Dashboard/DashboardPosts';
@@ -12,6 +13,7 @@ const Dashboard = () => {
     const [ totalLikes, setTotalLikes] = useState(null)
     const [ totalComments, setTotalComments] = useState(null)
     const [ totalBookmark, setTotalBookmark] = useState(null)
+    const {user} = useSelector(state => state)
    const ref = useRef()
    const navigate = useNavigate()
    const handleChange = () => {
@@ -40,9 +42,9 @@ const Dashboard = () => {
   console.log(res)
   setTotalBookmark(res.totalBookmarks)
 }
+  
     useEffect(() => {
         setMyPosts(getMyPosts())
-        
         getTotalLikes()
       getTotalComments()
         getTotalBookmarks()
@@ -64,10 +66,10 @@ const Dashboard = () => {
                <div className=" lg:flex lg:flex-row lg:gap-3 lg:ml-[11em] mt-[3em]">
                 <div className="dashboard_navs hidden lg:block">
                     <ul >
-                        <li className='block hover:bg-green-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Posts <div className='bg-green-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
-                        <li className='block hover:bg-red-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Followers <div className='bg-red-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
-                        <li className='block hover:bg-yellow-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Following users <div className='bg-yellow-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
-                        <li className='block hover:bg-purple-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Following tags <div className='bg-purple-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
+                        <li className='block hover:bg-green-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Posts <div className='bg-green-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{numberOfPosts}</div> </Link></li>
+                        <li className='block hover:bg-red-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Followers <div className='bg-red-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ?user.followers.length : '0'}</div> </Link></li>
+                        <li className='block hover:bg-yellow-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Following users <div className='bg-yellow-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ?user.following.length : '0'}</div> </Link></li>
+                        <li className='block hover:bg-purple-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Following tags <div className='bg-purple-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ? user.followingTags.length: '0'}</div> </Link></li>
                         <li className='block hover:bg-orange-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Analytics <div className='bg-orange-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
                     </ul>
                 </div>

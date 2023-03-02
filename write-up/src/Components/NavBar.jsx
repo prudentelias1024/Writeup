@@ -1,6 +1,6 @@
 import Logo from "./Navbar/Logo";
 import Posts from "./Posts";
-import Search from "./Navbar/Search";
+import Search from "./Search/Search";
 import UserNav from "./Navbar/UserNav";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
