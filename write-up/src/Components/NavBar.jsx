@@ -9,7 +9,7 @@ import {  actions } from "../store/index";
 import { useSelector } from "react-redux";
 import MobileNav from "./Navbar/mobileNav";
 import { useEffect } from "react";
-export default function NavBar() {
+export default function NavBar({searchWords}) {
   const dispatch =   useDispatch()
 
   const {navStatus, showMobileSearch} =  useSelector((state) => state)
@@ -23,7 +23,7 @@ export default function NavBar() {
     <Logo />
        {/* <MobileNav /> */}
         </div>
-  <Search  
+  <Search  content={searchWords}
    />
     <UserNav  />
     </div>

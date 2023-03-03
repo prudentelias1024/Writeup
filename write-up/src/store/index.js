@@ -24,7 +24,8 @@ const userSlice = createSlice({
       },
       updateBookmarkedPosts(state,action){
         state.bookmarkedPosts = action.payload
-      }
+      },
+    
     
     }
 })

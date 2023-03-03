@@ -4,18 +4,18 @@ import mock from './mock.jpg'
 import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
 import {  Link} from "react-router-dom";
-export default function Post({post, removeReactions}) {
+export default function Post({post, removeReactions, showCoverImage, additionalStyles}) {
   
      return (
         
            
-            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className='bg-white w-full border  rounded-lg   lg:p-[1em]' >
+            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border  rounded-lg   lg:p-[1em]'} >
 
 
            
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
-              <img src={post.coverImageURL} className="w-full  rounded-sm ml-[.5em]" alt="" />
+              <img src={post.coverImageURL} className={ showCoverImage + " w-full rounded-sm ml-[.5em]"} alt="" />
                  : null
          
             }

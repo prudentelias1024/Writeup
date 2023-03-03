@@ -246,8 +246,29 @@ app.get('/api/tags', (req,res) => {
     })
 })
 
-app.get('/api/search', (req,res) => {
-    // PublishedPosts.find()
+app.post('/api/search', (req,res) => {
+   
+
+    let query = new RegExp(req.body.query,'i')
+    PublishedPosts.find({title : {$regex:query}}).populate('author').exec((err,post) => {
+      if(err){ 
+        throw err
+      } if(post) {
+        User.find({name : {$regex:query}}, (err,user) => {
+            if(err){ 
+              throw err
+            } if(user){
+             
+             res.send({post:post,user:user})
+           
+            }
+          })
+      
+      }
+    })
+  
+ 
+  
 })
 
 app.get('/api/bookmarked',verify, (req,res) => {
