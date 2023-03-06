@@ -249,16 +249,17 @@ app.get('/api/tags', (req,res) => {
 app.post('/api/search', (req,res) => {
    
 
-    let query = new RegExp(req.body.query,'i')
-    PublishedPosts.find({title : {$regex:query}}).populate('author').exec((err,post) => {
+    
+   
+    PublishedPosts.find({title : {$regex: '^'+ req.body.query, $options: 'i'}}).populate('author').exec((err,post) => {
       if(err){ 
         throw err
       } if(post) {
-        User.find({name : {$regex:query}}, (err,user) => {
+        User.find({name : {$regex:'^'+ req.body.query, $options: 'i'}}, (err,user) => {
             if(err){ 
               throw err
             } if(user){
-             
+           
              res.send({post:post,user:user})
            
             }
