@@ -17,7 +17,6 @@ const Tag = ({tag, count}) => {
         }
     }
     useEffect(() => {
-     checkFollowed()
      setTimeout(() => {
         
          checkFollowed()

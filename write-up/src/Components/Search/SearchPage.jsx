@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useParams, useSearchParams, } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams, } from 'react-router-dom';
 import NavBar from '../NavBar';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -11,6 +11,7 @@ import ProfileSearchResult from './ProfileSearchResult';
 import Post from '../Post';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Tag from '../tags/tag';
 
 const SearchPage = () => {
     
@@ -27,6 +28,7 @@ const SearchPage = () => {
  
     const search = async(searchWords) => {
     let res =  await (await axios.post('http://localhost:5000/api/search', {query:  searchWords})).data
+    console.log(res)
    setSearchResult(res)
    setTimeout(()=>
 { 
@@ -67,7 +69,7 @@ const SearchPage = () => {
    setFilteredView({data : searchResult.user, type: 'people'})
 
    }
-   const underline3 = () => {
+   const filterTag = () => {
     if(tab2Ref.current.classList.contains('underline')){
         tab2Ref.current.classList.remove('underline')
         tab2Ref.current.classList.remove('underline-offset-[1.5em]')
@@ -78,6 +80,7 @@ const SearchPage = () => {
     tab1Ref.current.classList.remove('underline')
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
    }
+   setFilteredView({data : searchResult.tags, type: 'tags'})
    }
 //    const underline4 = () => {
 //     if(tab3Ref.current.classList.contains('underline')){
@@ -96,7 +99,7 @@ const SearchPage = () => {
     return (
         <>
         <NavBar searchWords={query}/>
-        <div className="top-32 relative w-full lg:bg-white pb-[23%] flex flex-row gap-[5em]">
+        <div className="top-32 relative w-full lg:bg-white pb-[33%] flex flex-row gap-[5em]">
             <div className='flex flex-col'>
             <div className='lg:ml-[9em] mt-[1em] flex gap-2 text-3xl lg:text-4xl font-bold text-gray-500 font-[Museo] ml-[1em]'><p> Results for</p> <p className='font-extrabold text-black'>{query}</p> </div>
         <div className='flex flex-col lg:w-2/3 lg:gap-[1em]'>
@@ -104,32 +107,54 @@ const SearchPage = () => {
             <ul className='flex flex-row ml-[0.3em] gap-[5em] lg:gap-[7em] w-full p-0 h-[2.6em] border-gray-300 border-b-[2px] mt-[3em] lg:ml-[20em]'>
                 <li onClick={filterPost} ref={tabRef} className='block font-[mulish]  h-min text-gray-500 cursor-pointer'>Post</li>
                 <li onClick={filterPeople} ref={tab1Ref} className='block font-[mulish]  h-min text-gray-500 cursor-pointer'>People</li>
-                <li onClick={underline3} ref={tab2Ref} className='block font-[mulish]  h-min text-gray-500 cursor-pointer'>Tags</li>
+                <li onClick={filterTag} ref={tab2Ref} className='block font-[mulish]  h-min text-gray-500 cursor-pointer'>Tags</li>
               
             </ul>
-                
-            {filteredView !== null  ?
-             filteredView.type == 'post' ?
+             
+            {filteredView !== null &&  filteredView.data.length !== 0 ?
+             filteredView.type == 'post'  ?
              filteredView.data.map((post,index) => {
                 return <Post key={index} post={post} showCoverImage="hidden" additionalStyles="lg:ml-[20em] mt-[1em]" removeReactions={true} />
-            }) :'': <p className='font-bold text-center lg:ml-[14em] w-full border rounded-md py-[2em] text-2xl'>No result found</p> }
-
-            {filteredView !== null   ? 
-             filteredView.type == 'people'?
-                filteredView.data.map((user,index) => {
-                              return <ProfileSearchResult user={user} key={index}/>
-                }):'':  <p className='font-bold text-center lg:ml-[14em] w-full border rounded-md py-[2em] text-2xl'>No result found</p>   }
-            
+            }): filteredView !== null &&  filteredView.data.length !== 0 &&   filteredView.type == 'people'  ? 
+            filteredView.data.map((user,index) => {
+                          return <ProfileSearchResult user={user} key={index}/>
+            }): filteredView !== null && filteredView.data.length !== 0 && filteredView.type == 'tags' ? 
            
+                <div className='flex gap-5 flex-auto flex-wrap w-full mt-[1em]  ml-[20em] '>
+                         { filteredView.data.map((tag,index) => {
+                         return <Link to={`/tag/${tag.split('#')[1]}`} key={index} className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">{tag}</Link>
+                         }
+                         )
+                         }
+                    </div>  
+                           
+          
+            
+            : ''
+            
+            
+            :
+            <p className='font-bold text-center lg:ml-[14em] w-full  rounded-md py-[2em] text-2xl text-gray-400'>No result found</p>
+             }
+
+           
+           
+            
           </div>   
         </div>
 
         <div className="hidden others lg:fixed lg:right-1 lg:mr-[.25em] lg:w-1/3 lg:flex lg:flex-col">
             <div className="tags">
-            <p className='font-[Mulish] font-bold mb-7 ml-[1em] mt-[2em]'>Other Posts Matching {query}</p>
-            <div className='flex gap-5 flex-auto flex-wrap ml-[1em]'>
-
-            <div className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">#React</div>
+            <p className='font-[Mulish] font-bold mb-7 ml-[1em] mt-[2em]'>Tags Matching {query}</p>
+            <div className='flex gap-5 flex-auto flex-wrap ml-[1em] mr-[8em]'>
+            {
+               searchResult !== null && searchResult.tags.length !== 0  ? 
+               searchResult.tags.map((tag,index) => {
+                return <Link to={`/tag/${tag.split('#')[1]}`} key={index} className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">{tag}</Link>
+            }): ''
+            } 
+           
+            {/* <div className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">#React</div> */}
             
             </div>
 

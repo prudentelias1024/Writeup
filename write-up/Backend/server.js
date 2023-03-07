@@ -250,7 +250,7 @@ app.post('/api/search', (req,res) => {
    
 
     
-   
+   let tags = []
     PublishedPosts.find({title : {$regex: '^'+ req.body.query, $options: 'i'}}).populate('author').exec((err,post) => {
       if(err){ 
         throw err
@@ -259,8 +259,20 @@ app.post('/api/search', (req,res) => {
             if(err){ 
               throw err
             } if(user){
-           
-             res.send({post:post,user:user})
+           PublishedPosts.find({tags:  {$in : `#${req.body.query}`} },(err,doc) => {
+               if(err){throw err}
+               if(doc){
+                doc.forEach((post) => {
+                  post.tags.map(tag=> {
+                    if(tags.indexOf(tag) == -1){
+                        tags.push(tag)
+                    }
+                  })
+                })
+                res.send({post:post,user:user,tags:tags})
+            }
+           })
+            
            
             }
           })
