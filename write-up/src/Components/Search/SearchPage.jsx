@@ -5,7 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import axios from 'axios';
 import { actions } from '../../store';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchType from './SearchType';
 import ProfileSearchResult from './ProfileSearchResult';
 import Post from '../Post';
@@ -20,15 +20,34 @@ const SearchPage = () => {
    const [filteredView, setFilteredView] = useState(null)
    const [searchResult, setSearchResult] = useState(null)
     const dispatch= useDispatch()
-   const query = new URLSearchParams(location.search).get('search')
+    const [searchType, setSearchType] = useState(null)
+    const [followed, setFollowed] = useState(false)
+     const query = new URLSearchParams(location.search).get('search')
+   const {user} = useSelector(state => state)
    const tabRef = useRef()
    const tab1Ref = useRef()
    const tab2Ref = useRef()
    const tab3Ref = useRef()
- 
+   const checkFollowed = (username) => {
+    if (user.following !== null || user.following !== undefined) {
+        return user.following.some((followee)=> username == followee.username)
+    }
+   }
+//    const follow = async(author) => {
+//     axios.post(`http://localhost:5000/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+  
+//     setFollowed(true)
+    
+//    }
+//    const unfollow = async(author) => {
+//      axios.post(`http://localhost:5000/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+//     setFollowed(false)
+
+//   }
+  
     const search = async(searchWords) => {
     let res =  await (await axios.post('http://localhost:5000/api/search', {query:  searchWords})).data
-    console.log(res)
+   console.log(user)
    setSearchResult(res)
    setTimeout(()=>
 { 
@@ -64,7 +83,7 @@ const SearchPage = () => {
     tab2Ref.current.classList.remove('underline')
     tab2Ref.current.classList.remove('underline-offset-[1.5em]')
   
-    console.log(tab1Ref.current)
+  
    }
    setFilteredView({data : searchResult.user, type: 'people'})
 
@@ -92,6 +111,7 @@ const SearchPage = () => {
 //    }
 //    }
    useEffect(()=> {
+
     console.log(query)
    
         search(query);
@@ -117,7 +137,7 @@ const SearchPage = () => {
                 return <Post key={index} post={post} showCoverImage="hidden" additionalStyles="lg:ml-[20em] mt-[1em]" removeReactions={true} />
             }): filteredView !== null &&  filteredView.data.length !== 0 &&   filteredView.type == 'people'  ? 
             filteredView.data.map((user,index) => {
-                          return <ProfileSearchResult user={user} key={index}/>
+                          return <ProfileSearchResult  people={user} key={index}/>
             }): filteredView !== null && filteredView.data.length !== 0 && filteredView.type == 'tags' ? 
            
                 <div className='flex gap-5 flex-auto flex-wrap w-full mt-[1em]  ml-[20em] '>
@@ -143,15 +163,15 @@ const SearchPage = () => {
           </div>   
         </div>
 
-        <div className="hidden others lg:fixed lg:right-1 lg:mr-[.25em] lg:w-1/3 lg:flex lg:flex-col">
+        <div className="hidden others lg:fixed lg:right-1 lg:mr-[.25em] lg:pl-[2em] lg:w-1/3 lg:flex lg:flex-col">
             <div className="tags">
-            <p className='font-[Mulish] font-bold mb-7 ml-[1em] mt-[2em]'>Tags Matching {query}</p>
+            <p className='font-[Mulish] font-bold mb-7 ml-[1.5em] mt-[2em]'>Tags Matching {query}</p>
             <div className='flex gap-5 flex-auto flex-wrap ml-[1em] mr-[8em]'>
             {
                searchResult !== null && searchResult.tags.length !== 0  ? 
                searchResult.tags.map((tag,index) => {
                 return <Link to={`/tag/${tag.split('#')[1]}`} key={index} className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">{tag}</Link>
-            }): ''
+            }): <p className='font-[Mulish] font-bold ml-[1em] text-gray-400'>No Results Found</p>
             } 
            
             {/* <div className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">#React</div> */}
@@ -167,7 +187,7 @@ const SearchPage = () => {
                      searchResult.post.slice(searchResult.length - 4 , searchResult.length - 1).map((post,index) => {
                         return( <><div className="flex flex-row gap-[1em] pl-[1em]">
              <img className='h-[2em] w-[2em]  rounded-full' src="https://lh3.googleusercontent.com/a/AGNmyxYcBZqfBtl7dK4_13tr941uuw-1XpLhOPzrpKpJCw=s96-c" alt="" />
-             <p className='font-[Mulish] w-full text-md font-bold '>{post.author.name}</p>
+             <p className='font-[Mulish] w-full text-md font-bold '>{  post.author.username !== user.username ? post.author.name: 'You'}</p>
              </div>
               <p className='font-bold w-3/4 ml-[4em] font-[Mulish]'>{post.title}</p>
 
@@ -185,7 +205,7 @@ const SearchPage = () => {
            
                          <div className='flex flex-row gap-[1em] mt-2 ml-[1em] '>
                            <p className='text-gray-400 ml-[3em]'>Mar 2 2012</p>
-                           <p className='text-gray-400 '>8 mins read</p>
+                           <p className='text-gray-400 '>7 mins read</p>
                          </div>
                          </>)
                     })
@@ -206,22 +226,31 @@ const SearchPage = () => {
                             <p className="font-[Mulish] w-full text-md font-bold">{people.name}</p>
                             <p  className="font-[Mulish] text-ellipsis h w-[390px] overflow-hidden whitespace-nowrap">{people.bio}</p>
                         </div>
-                            <button className='font-[Mulish] m-auto text-green-500 px-[1em] ml-[1em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>
-                      
+                          
+                                         {people.username !== user.username?
+                          user.following.length !==  0 && user.following.some((followee)=> people.username == followee.username) 
+                           ? (<button  className='font-[Mulish] m-auto text-green-500 px-[1em]  ml-[0em] mt-[-.751em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>)
+                            : (<button className='font-[Mulish] m-auto text-red-500 px-[1em]  ml-[0em] mt-[-1.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-red-500 hover:border'>Following</button>): ''
+                     }
                     </div>)
                     }) : searchResult.user.map((people,index) => {
                         return( <div className='flex flex-row pl-[1em]' key={index}>
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
                             <p className="font-[Mulish] w-full text-md font-bold">{people.name}</p>
-                            <p  className="font-[Mulish] text-ellipsis h w-[390px] overflow-hidden whitespace-nowrap">{people.bio}</p>
+                            <p  className="font-[Mulish] text-ellipsis w-[240px] overflow-hidden whitespace-nowrap">{people.bio}</p>
                         </div>
-                            <button className='font-[Mulish] m-auto text-green-500 px-[1em] ml-[1em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>
+                        {
+                            people.username !== user.username?
+                           user.following && user.following.length == 0 &&  user.following.some((followee)=> user.username == followee.username) == false 
+                           ? (<button  className='font-[Mulish] m-auto text-green-500 px-[1em] ml-[0em] mt-[-.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>)
+                            : (<button className='font-[Mulish] m-auto text-red-500 px-[1em] ml-[0em] mt-[-.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-red-500 hover:border'>Following</button>): ''
+                     }
                       
                     </div>)
                     })
                    
-                 :  <p className='font-[Mulish] font-bold ml-[1em] text-gray-400'>No Results Found</p>
+                 :  <p className='font-[Mulish] font-bold ml-[1em] text-gray-400'>No Result Found</p>
             }
                 
            

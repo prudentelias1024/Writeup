@@ -70,8 +70,6 @@ const verify = (req,res,next) => {
   
  app.post('/api/follow', verify,  (req,res) => {    
     let {user,author} = req.body;
-    
-    
   
     // add user to the author followers list
     User.findOneAndUpdate({username:author.username}, {$push: {followers: req.user._id} }, {new:true},(err,doc) => {
