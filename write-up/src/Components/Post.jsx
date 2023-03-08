@@ -9,7 +9,7 @@ export default function Post({post, removeReactions, showCoverImage, additionalS
      return (
         
            
-            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border  rounded-lg   lg:p-[1em]'} >
+            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-[full] border  rounded-lg   lg:p-[1em]'} >
 
 
            

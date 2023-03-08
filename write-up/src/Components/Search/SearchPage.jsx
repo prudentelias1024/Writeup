@@ -140,9 +140,9 @@ const SearchPage = () => {
                           return <ProfileSearchResult  people={user} key={index}/>
             }): filteredView !== null && filteredView.data.length !== 0 && filteredView.type == 'tags' ? 
            
-                <div className='flex gap-5 flex-auto flex-wrap w-full mt-[1em]  ml-[20em] '>
+                <div className='flex gap-2 lg:gap-5 flex-auto flex-wrap w-full mt-[1em]  lg:ml-[20em] '>
                          { filteredView.data.map((tag,index) => {
-                         return <Link to={`/tag/${tag.split('#')[1]}`} key={index} className="tags bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">{tag}</Link>
+                         return <Link to={`/tag/${tag.split('#')[1]}`} key={index} className="tags bg-white lg:bg-[#f2f2f2] w-fit text-[#2d2d2d]  px-[1em] py-[.5em] rounded-2xl font-bold border">{tag}</Link>
                          }
                          )
                          }
