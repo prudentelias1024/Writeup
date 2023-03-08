@@ -186,8 +186,8 @@ const SearchPage = () => {
                      searchResult.post.length > 4 ?
                      searchResult.post.slice(searchResult.length - 4 , searchResult.length - 1).map((post,index) => {
                         return( <><div className="flex flex-row gap-[1em] pl-[1em]">
-             <img className='h-[2em] w-[2em]  rounded-full' src="https://lh3.googleusercontent.com/a/AGNmyxYcBZqfBtl7dK4_13tr941uuw-1XpLhOPzrpKpJCw=s96-c" alt="" />
-             <p className='font-[Mulish] w-full text-md font-bold '>{  post.author.username !== user.username ? post.author.name: 'You'}</p>
+             <img className='h-[2em] w-[2em]  rounded-full' src={post.author.public_picture} alt={post.author.public_picture} />
+             <p className='font-[Mulish] w-full text-md font-bold '>{  post.author.name !== user.name ? post.author.name: 'You'}</p>
              </div>
               <p className='font-bold w-3/4 ml-[4em] font-[Mulish]'>{post.title}</p>
 
@@ -198,8 +198,8 @@ const SearchPage = () => {
               </>)
                     }) : searchResult.post.map((post,index) => {
                         return( <><div className="flex flex-row gap-[1em] pl-[1em]">
-                        <img className='h-[2em] w-[2em]  rounded-full' src="https://lh3.googleusercontent.com/a/AGNmyxYcBZqfBtl7dK4_13tr941uuw-1XpLhOPzrpKpJCw=s96-c" alt="" />
-                        <p className='font-[Mulish] w-full text-md font-bold '>{post.author.name}</p>
+                        <img className='h-[2em] w-[2em]  rounded-full'  src={post.author.public_picture} alt={post.author.public_picture}  />
+                        <p className='font-[Mulish] w-full text-md font-bold '>{ post.author.name !== user.name ? post.author.name: 'You'}</p>
                         </div>
                          <p className='font-bold w-3/4 ml-[4em] font-[Mulish]'>{post.title}</p>
            
