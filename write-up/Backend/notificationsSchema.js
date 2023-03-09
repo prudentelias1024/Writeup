@@ -7,22 +7,38 @@ const notificationsSchema = new mongoose.Schema({
       },
       message: [
         {
-        user:{type: mongoose.Schema.Types.ObjectId,
-             ref: 'Users'    
-        }, 
-        message: {
-            type: String,
-            required:false
+        user: [
+          {
+            
+       name:
+          {
+          type:String,
+             }, 
+
+        public_picture: {
+          type:String
         },
-        post: {
-            type:mongoose.Schema.Types.ObjectId,
-        ref: 'PublishedPosts'
-    }
+          link: {
+            type:String,
+            
+          }
+        }], 
+        
+       post: [
+          {
+
+          name:
+          {
+          type:String,
+         
+          }, 
+          link: {
+            type:String,
+           
+          }
+        }]
         }],
-       link: {
-        type: String,
-        required: true
-       },
+       
       type: {
         type: String,
         required: true,
@@ -32,8 +48,10 @@ const notificationsSchema = new mongoose.Schema({
         default: false,
       },
       createdAt: {
-        type: Date,
-        default: Date.now,
+       
+          type:Date,
+           required:true,
+            default:() => new Date   
       },
      
 })

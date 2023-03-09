@@ -6,9 +6,12 @@ const connectToMongooseDB = require("./noSQL")
 const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const cors = require('cors')
+//Schemas
 const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
+const notifications   = require('./notificationsSchema')
+
 const jwt = require('jsonwebtoken')
 const moment = require('moment');
 const { populate } = require('./usersSchema');
@@ -23,7 +26,6 @@ const io  = require('socket.io')(server, {
     
 }
 })
-const notifications = require('./notificationsSchema')
 //sockets 
 
 io.on('connection',(socket) => {
@@ -67,7 +69,75 @@ const verify = (req,res,next) => {
         res.status(403).json("You are not authenticated")
     }
 }
+app.get('/api/notifications', verify, async(req,res) => {
+notifications.find({userId: req.user._id},(err,doc) => {
+    if(err){throw err}
+    if(doc) {
+        res.send(doc)
+    }
+})
+})
+
+app.post('/api/notification/like',verify, async(req,res) => {
+    const {postId, author,post_name} = req.body
+   console.log(author)
+    const newNotification = new notifications({
+        userId: author._id,
+        message: [
+            {
+
+            user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}]
+        
+            ,
+            post: [{name: post_name }, {link: `p/@${author.username}/${postId}`}]
+        }
+         ],
+        type: 'like'
+       
+
+    })
+    await newNotification.save()
   
+})
+app.post('/api/notification/comment',verify, async(req,res) => {
+    const {postId, author,post_name} = req.body
+    const newNotification = new notifications({
+        userId: author._id,
+        message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}],
+                   post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
+        type: 'comment'
+       
+
+    })
+    await newNotification.save()
+
+})
+app.post('/api/notification/bookmark',verify, async(req,res) => {
+    const {postId, author,post_name} = req.body
+    const newNotification = new notifications({
+        userId: author._id,
+        message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}],post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
+        type: 'bookmark'
+       
+    })
+    await newNotification.save()
+
+})
+app.post('/api/notification/welcome',verify, (req,res) => {
+
+})
+app.post('/api/notification/follow',verify, async(req,res) => {
+    const {postId, author,post_name} = req.body
+    const newNotification = new notifications({
+        userId: author._id,
+        message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}]} ],
+        type: 'follow'
+       
+
+    })
+    await newNotification.save()
+})
+
  app.post('/api/follow', verify,  (req,res) => {    
     let {user,author} = req.body;
   

@@ -75,8 +75,10 @@ const MyPosts = () => {
      }
   }
 }
-    const likePost = async(postId) => {
+    const likePost = async(postId,name,author) => {
       let  res = await(await axios.post(`http://localhost:5000/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let likeNotification = await(await axios.post('http://localhost:5000/api/notification/like', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
+     
       setPost(res)
       setLiked(true)
          
@@ -113,14 +115,16 @@ const MyPosts = () => {
         console.log(comment);
       }
   
-     const commentPost = async(user,postId, commentWords) => {
+     const commentPost = async(user,postId,name,author, commentWords) => {
       let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, postId:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let commentNotification = await(await axios.post('http://localhost:5000/api/notification/comment', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
         setPost(res)
         // setComment('')
       } 
-     const bookmarkPost = async(postId) => {
+     const bookmarkPost = async(postId,name,author) => {
       let  res = await(await axios.post(`http://localhost:5000/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let bookmarkNotification = await(await axios.post('http://localhost:5000/api/notification/bookmark', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
       setPost(res)
       setBookmarked(true)
@@ -157,7 +161,7 @@ const MyPosts = () => {
                 <button  onClick={(event) => unlikePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <BsHeartFill className='text-2xl lg:text-3xl text-red-500'/>
                     <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.likes.length}</p>
-                </button> :  <button  onClick={(event) => likePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
+                </button> :  <button  onClick={(event) => likePost(post.postId,post.title,post.author)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <FaRegHeart className='text-2xl lg:text-3xl text-black'/>
                     <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.likes.length}</p>
                 </button>
@@ -175,7 +179,7 @@ const MyPosts = () => {
             </button>:
             
             <button className='rounded-full flex  lg:flex-col gap-[1em]'>
-                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId)} className='text-2xl flex  lg:text-3xl text-black'/>
+                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.name,post.author)} className='text-2xl flex  lg:text-3xl text-black'/>
                     <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
                 </button>
                 }
@@ -226,7 +230,7 @@ const MyPosts = () => {
               
                 <ReactQuill modules={modules} defaultValue='' onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
      
-                <button onClick={(event) => {commentPost(user._id,post.postId,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
+                <button onClick={(event) => {commentPost(user._id,post.postId,post.name,post.author,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
 
 
                 </div>

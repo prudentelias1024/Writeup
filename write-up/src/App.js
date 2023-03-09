@@ -37,6 +37,11 @@ function App() {
   
        dispatch(actions.updatePosts(res_posts))
      }
+       const getNotifications = async() => {
+        let  notifications = await(await axios.get('http://localhost:5000/api/notifications',{headers: {Authorization: localStorage.getItem('token')}})).data
+  
+       dispatch(actions.updateNotifications(notifications))
+     }
 
      const getBookmarkedPosts = async() => {
       let bookmarked_post = await (await axios.get('http://localhost:5000/api/bookmarked',{headers: {Authorization: localStorage.getItem('token')}})).data
@@ -48,6 +53,7 @@ function App() {
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== null) {
           loadUser();
+          getNotifications()
           
         }
       }
