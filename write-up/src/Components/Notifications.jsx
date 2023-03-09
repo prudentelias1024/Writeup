@@ -19,7 +19,7 @@ const Notifications = () => {
     return (
         <>
         <NavBar/>
-        <div className='pt-[6em] flex flex-col gap-[.5em]'>
+        <div className='pt-[6em] lg:pt-[8em] w-[100%]  flex flex-col gap-[.75em]'>
             <Followed/>
             <Liked/>
             <Bookmarked/>

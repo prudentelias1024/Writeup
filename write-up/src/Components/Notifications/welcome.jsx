@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 const Welcome = () => {
     return (
         
-        <div className='flex flex-row gap-3 bg-white p-[1em] ml-0 justify-between'>
-    <div className=' w-[85%] font-[Mulish]'>
+        <div className='flex flex-col lg:flex-row gap-3 w-[115%] lg:w-1/2 lg:m-auto bg-white p-[1em] ml-0 justify-between hover:scale-110'>
+            <p className='lg:ml-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>New </p>
+    <div className=' w-[85%] font-[Mulish] lg:m-auto font-semibold leading-8 mb-[1em]'>
 
-    <p className='text-3xl text-center mb-[1em] mt-[1em]'>🎈🎉🎁</p>
+    <p className='text-3xl text-center mb-[1em] mt-[1em] m-auto'>🎈🎉🎁</p>
      <p className='w-[95%] ml-[1em]'>Welcome to Inkup! 👏👏👏. We offer Writers of all kind, the platform to showcase their writing and menthorship ability to others </p> 
      
     </div>
