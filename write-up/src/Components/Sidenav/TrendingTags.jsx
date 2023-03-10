@@ -98,6 +98,7 @@ export default function TrendingTags(){
     }
    
     useEffect(() => {
+    
        getTags()
        setTagCount({})
        
@@ -117,7 +118,8 @@ export default function TrendingTags(){
            )}
       
         </div>
-        {user && user.followingTags.length > 0 ? 
+        { user !== null ?
+        user.followingTags !== undefined && user.followingTags.length > 0 ? 
        
          <>
          <p className=" text-lg font-bold font-[Mulish] ml-[-1em] mb-3 mt-[4em]">My Tags</p>
@@ -134,7 +136,7 @@ export default function TrendingTags(){
           </div>
       
          
-          </>
+          </> : ''
         
       : ''
       

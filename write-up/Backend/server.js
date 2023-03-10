@@ -78,6 +78,14 @@ notifications.find({userId: req.user._id},(err,doc) => {
     }
 })
 })
+app.get('/api/notifications/length', verify, async(req,res) => {
+notifications.find({userId: req.user._id},(err,doc) => {
+    if(err){throw err}
+    if(doc) {
+        res.send({length: doc.length})
+    }
+})
+})
 app.post('/api/notification/read', verify, async(req,res) => {
     notifications.findByIdAndUpdate(req.body._id, {read:true},{new:true}, (err,doc) => {
         if(err){throw err}
@@ -90,6 +98,7 @@ app.post('/api/notification/read', verify, async(req,res) => {
 app.post('/api/notification/like',verify, async(req,res) => {
     const {postId, author,post_name} = req.body
    console.log(author)
+   if(author._id !== req.user._id){
     const newNotification = new notifications({
         userId: author._id,
         message: [
@@ -106,10 +115,12 @@ app.post('/api/notification/like',verify, async(req,res) => {
 
     })
     await newNotification.save()
-  
+}
 })
 app.post('/api/notification/comment',verify, async(req,res) => {
     const {postId, author,post_name} = req.body
+    if(author._id !== req.user._id){
+   
     const newNotification = new notifications({
         userId: author._id,
         message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}],
@@ -119,10 +130,13 @@ app.post('/api/notification/comment',verify, async(req,res) => {
 
     })
     await newNotification.save()
+}
 
 })
 app.post('/api/notification/bookmark',verify, async(req,res) => {
     const {postId, author,post_name} = req.body
+    if(author._id !== req.user._id){
+   
     const newNotification = new notifications({
         userId: author._id,
         message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}],post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
@@ -130,7 +144,7 @@ app.post('/api/notification/bookmark',verify, async(req,res) => {
        
     })
     await newNotification.save()
-
+    }
 })
 app.post('/api/notification/welcome',verify, (req,res) => {
 

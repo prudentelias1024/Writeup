@@ -1,13 +1,43 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoIosAddCircleOutline, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import { VscBellDot } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
-import {  useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
+import axios from "axios";
 export default function UserNav(){
+   
     const { user} = useSelector((state) => state)
-   const [toggled, setToggled] = useState(true) 
-    const helperRef   = useRef()
+    const [toggled, setToggled] = useState(true) 
+    const [allRead, setAllRead] = useState(true) 
+    const {notifications} = useSelector(state => state)
+    const dispatch = useDispatch()
+    const [newNotification, setNewNotification] = useState(false)
+     const helperRef   = useRef()
+    useEffect(() => {
+       setInterval(() => {
+           pollNotifications()
+       }, 300000);
+       pollNotifications()
+    })
+    const pollNotifications = async() => {
+     const oldNotificationsLength = notifications.length
+   
+     const newNotificationsLength = await( await axios.get('http://localhost:5000/api/notifications/length',{headers:{Authorization: localStorage.getItem('token')}})).data.length
+     if(newNotificationsLength > oldNotificationsLength) { 
+        let newNotifications = await(await axios.get('http://localhost:5000/api/notifications',{headers:{Authorization: localStorage.getItem('token')}})).data
+        dispatch(actions.updateNotifications(newNotifications))
+
+         setNewNotification(true)
+         const result =  notifications.filter((notification) => {
+            return notification.read == true
+         })
+       if(result.length == notifications.length) {
+         setAllRead(true)
+       }
+     }
+    }
     const toggleHelper = () => {
          setToggled(!toggled)
         if (toggled == false) {
@@ -39,10 +69,12 @@ export default function UserNav(){
             <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
            </Link>
             <Link to="/notifications">
-           
-               {/* <VscBellDot className="text-4xl mt-0" /> */}
+           {
+            newNotification == true && allRead == false ?
+            <VscBellDot className="text-4xl mt-0" />:
             <IoIosNotificationsOutline className="text-4xl mt-0"/>
-           
+        }
+            
             </Link>
             <button onClick={toggleHelper}>
 

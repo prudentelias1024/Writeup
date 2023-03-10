@@ -21,7 +21,7 @@ const Liked = ({notification}) => {
        }
     useEffect(() => {
       
-
+      
         setTimeout(() => {
             markAsRead(notification._id)
         }, 3000);
@@ -44,7 +44,7 @@ const Liked = ({notification}) => {
         <div className=' w-[80%] font-[Mulish] m-auto lg:ml-[-2em]'>
 
         
-         <p className=' text-xl font-[Mulish] -mt-[1.6em] lg:ml-[-.5em] lg:mt-[.5em]'><Link to={"/"+ notification.message[0].user[1].link} className='font-bold font-[Mulish] text-xl'>{notification.message[0].user[0].name}  </Link> liked <Link className='text-blue-600 font-bold text-xl' to={"/"+notification.message[0].post[1].link}>{notification.message[0].post[0].name}</Link> </p> 
+         <p className=' text-xl font-[Mulish] -mt-[1.6em] lg:ml-[-.5em] lg:mt-[.5em]'><Link className='font-bold font-[Mulish] text-xl' to={notification.message[0].user[1].link}>{notification.message[0].user[0].name}  </Link> liked <Link className='text-blue-600 font-bold text-xl' to={"/"+notification.message[0].post[1].link}>{notification.message[0].post[0].name}</Link> </p> 
          
         </div>
         <p className=" font-[Mulish] relative top-0 text-gray-400 my-auto m-auto lg:ml-[-1em] font-bold">{timeCreated}</p>
