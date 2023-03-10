@@ -53,11 +53,11 @@ export default function UserNav(){
        {
       
        ( user == undefined || user.name == undefined) 
-       ? <div className="">
+       ? <div className="flex lg:flex-row ">
         
             <Button additionalStyles=" hidden lg:block" to="/login" name="Login" borderColor="border-none" textColor="text-blue-500"/>
      
-            <Button to="/signup" name="Create an account" borderColor="border-pink-500" textColor="text-pink-500"/>
+            <Button to="/signup" name="Create an account" borderColor="border-pink-500" textColor=" text-pink-500"/>
         
             </div> :
              <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[64em]">
