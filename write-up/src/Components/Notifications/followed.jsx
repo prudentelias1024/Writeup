@@ -4,8 +4,8 @@ import   img  from "../../mock.jpg";
 const Followed = ({notification}) => {
     return (
         <div className='flex flex-col lg:flex-row gap-3 w-[115%] lg:w-[57.6%] lg:m-auto bg-white p-[1em] ml-0 justify-between lg:px-[1em] hover:scale-110'>
-          <p className=' bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg lg:ml-[0em]'>New </p>
-            {/* <p className='lg:ml-[0em] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Old </p> */}
+          <p className=' bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg lg:ml-[0em]'>Unread </p>
+            {/* <p className='lg:ml-[0em] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Read </p> */}
         <img src={img} className='h-[3em] w-[3em] rounded-full m-auto lg:ml-[2em]' />
           <div className='text-left w-[50%] font-[Mulish] m-auto  lg:ml-[7em] lg:mt-2 lg:flex lg:flex-row '>
 

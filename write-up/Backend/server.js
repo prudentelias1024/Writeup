@@ -73,11 +73,20 @@ app.get('/api/notifications', verify, async(req,res) => {
 notifications.find({userId: req.user._id},(err,doc) => {
     if(err){throw err}
     if(doc) {
+       
         res.send(doc)
     }
 })
 })
-
+app.post('/api/notification/read', verify, async(req,res) => {
+    notifications.findByIdAndUpdate(req.body._id, {read:true},{new:true}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            
+            res.send(doc)
+        }
+    })
+})
 app.post('/api/notification/like',verify, async(req,res) => {
     const {postId, author,post_name} = req.body
    console.log(author)

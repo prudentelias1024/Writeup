@@ -6,8 +6,8 @@ const Bookmarked = ({notification}) => {
     return (
         <div>
             <div className='flex flex-col lg:flex-row lg:gap-3 w-[115%] lg:w-[57.6%] lg:m-auto bg-white p-[1em] ml-auto justify-between lg:pl-[7em] hover:scale-110'>
-                <p className='lg:ml-[-6em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>New </p>
-                            {/* <p className='lg:ml-[0em] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Old </p> */}
+                <p className='lg:ml-[-6em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Unread </p>
+                            {/* <p className='lg:ml-[-6em] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Read </p> */}
         <img src={img} className='h-[3em] w-[3em] rounded-full m-auto lg:m-0 ' />
        <p className='relative left-[.5em] m-auto lg:left-[-1.6em] lg:top-3  -top-8 text-gray-600 text-3xl'>📌</p>
         <div className='m-auto lg:-ml-[2.5em] lg:mt-[.25em] w-[85%] font-[Mulish] mt-[-1.5em]'>
