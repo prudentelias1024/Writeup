@@ -10,9 +10,9 @@ export function Reactions({post, remove}){
         <div className={remove +  " flex flex-row justify-between ml-[3em] mt-5 mb-[1em] lg:mt-3 lg:ml-8 lg:mb-4"}>
        <div className="flex flex-row gap-3">
         
-        <Like likes={post.likes} postId={post.postId} username={user.username}/>
-        <Comments comments={post.comments} postId={post.postId} username={user.username} />
-        <Bookmark bookmarks={post.bookmarks} postId={post.postId} username={user.username}/>
+        <Like likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>
+        <Comments comments={post.comments} postId={post.postId} username={user !== null ?user.username :''} />
+        <Bookmark bookmarks={post.bookmarks} postId={post.postId} username={user !== null ?user.username :''}/>
        </div>
        </div>
     )

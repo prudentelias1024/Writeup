@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null},
+    initialState: {user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
@@ -24,6 +24,9 @@ const userSlice = createSlice({
       },
       updateBookmarkedPosts(state,action){
         state.bookmarkedPosts = action.payload
+      },
+      setShowModal(state,action){
+        state.showModal = action.payload
       },
     
     

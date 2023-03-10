@@ -33,8 +33,8 @@ function App() {
        
        }
        const getPosts = async() => {
-        let  res_posts = await(await axios.get('http://localhost:5000/posts')).data
-  
+        let  res_posts = await(await axios.get('http://localhost:5000/api/posts')).data
+         console.log(res_posts)
        dispatch(actions.updatePosts(res_posts))
      }
        const getNotifications = async() => {
@@ -49,9 +49,10 @@ function App() {
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
+        console.log(localStorage.getItem('token'))
         getPosts();
         getBookmarkedPosts();
-        if (localStorage.getItem('token') !== null) {
+        if (localStorage.getItem('token') !== undefined) {
           loadUser();
           getNotifications()
           

@@ -12,11 +12,11 @@ import axios from 'axios';
 import { format } from "../../time";
 import { BsHeartFill } from 'react-icons/bs';
 import { actions } from '../../store';
-
+import LoginModal from '../loginModal';
 const MyPosts = () => {
   
   
- const {user} =  useSelector(state => state)
+ const {user,showModal} =  useSelector(state => state)
  const [liked,setLiked] = useState()
  const [followed,setFollowed] = useState(false)
  const [bookmarked,setBookmarked] = useState()
@@ -25,7 +25,7 @@ const MyPosts = () => {
   const bookmarkRef = useRef()
   const [post,setPost] = useState(null)
   const  dispatch = useDispatch()
-  const [otherAuthorPost,setOtherAuthorPost] = useState(null)
+   const [otherAuthorPost,setOtherAuthorPost] = useState(null)
   const increasePostView = async() => {
     let res = await (await axios.post(`http://localhost:5000/post/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
   }
@@ -40,8 +40,14 @@ const MyPosts = () => {
   const getPost = async() => {
     let  res_post = await(await axios.get(`http://localhost:5000/post/${params.username}/${params.postId}`)).data
     setPost(res_post)
+    if(user !== null){
       checkLiked(res_post.likes,user.username)
       checkBookmarked(res_post.bookmarks,user.username)
+      
+    } else {
+      setLiked(false)
+      setBookmarked(false)
+    }
       
       
    
@@ -76,12 +82,15 @@ const MyPosts = () => {
   }
 }
     const likePost = async(postId,name,author) => {
+      if (user == null) {
+        dispatch(actions.setShowModal(true))
+      }else{
       let  res = await(await axios.post(`http://localhost:5000/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
       let likeNotification = await(await axios.post('http://localhost:5000/api/notification/like', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
      
       setPost(res)
       setLiked(true)
-         
+      }
       } 
     const unlikePost = async(postId) => {
       let  res = await(await axios.post(`http://localhost:5000/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
@@ -123,12 +132,15 @@ const MyPosts = () => {
         // setComment('')
       } 
      const bookmarkPost = async(postId,name,author) => {
+      if (user == null) {
+        dispatch(actions.setShowModal(true))
+      }else{
       let  res = await(await axios.post(`http://localhost:5000/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
       let bookmarkNotification = await(await axios.post('http://localhost:5000/api/notification/bookmark', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
       setPost(res)
       setBookmarked(true)
-      } 
+      } }
       
      const unbookmarkPost = async(postId) => {
       let  res = await(await axios.post(`http://localhost:5000/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
@@ -137,12 +149,15 @@ const MyPosts = () => {
       setBookmarked(false)
       } 
      const follow = async(user,author) => {
-       axios.post(`http://localhost:5000/api/follow`,{ user:user, author: post.author }, {headers: {Authorization: localStorage.getItem('token')}})
+         if (user == null) {
+          dispatch(actions.setShowModal(true))
+        }else {
+       axios.post(`http://localhost:5000/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
        setFollowed(true)
-       
+        }
       }
       const unfollow = async(user,author) => {
-        axios.post(`http://localhost:5000/api/unfollow`,{ user:user, author: post.author }, {headers: {Authorization: localStorage.getItem('token')}})
+        axios.post(`http://localhost:5000/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
         setFollowed(false )
 
      }
@@ -150,7 +165,8 @@ const MyPosts = () => {
     if (post !== null) {
    
     return (
-        <>
+      <>
+      {showModal == true ? <LoginModal /> : ''}
         <NavBar/>
         <div className='flex flex-col gap-[1em] lg:top-32 lg:relative lg:flex lg:gap-[30em]'>
             <div className=" fixed flex impressions  z-10 border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[30em] lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
@@ -220,7 +236,7 @@ const MyPosts = () => {
                   theme={"bubble"}
                 />
               </div>
-            
+           {user !== null ?
             <div className="comments">
                 <p className='ml-[2em] lg:ml-[3.75em] font-bold text-xl mb-[3em]'>Add Comment</p>
                 <div className='add_comment m-auto rounded-lg pt-[1em] pl-[1em]  shadow-md w-4/5  flex flex-col mb-[5em] lg:ml-[5em]'>
@@ -241,8 +257,9 @@ const MyPosts = () => {
                   )
                 }
                 
-                </div>           
+                </div> :''          
                        
+                      }
              </div>
             <div className="author_Profile w-full lg:fixed lg:right-[1em] p-7 bg-white lg:w-[23em] text-[#171717] rounded-lg">
                 <div className='flex gap-[1em]'>
@@ -262,7 +279,7 @@ const MyPosts = () => {
             <p className='font-[Mulish] text-[#171717] font-extrabold mt-[1em] uppercase ml-2'>Joined On</p>
                     <p className='text-[#717171] font-bold ml-[.5em] mt-[.25em]'>{format(post.author.joined_on)}</p>
           </div>
-         {
+         {user !== null ?
           post.author.username !== user.username   ?(
               followed == false ?
           <button onClick={(event) => {follow(user,post.author)}} className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
@@ -276,7 +293,11 @@ const MyPosts = () => {
           Edit Profile
           </Link>
 
-     </button>
+     </button> : <button onClick={(event) => {follow(user,post.author)}} className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
+          Follow
+          </button>
+
+    
          }{}
             </div>
             {

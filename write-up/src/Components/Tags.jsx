@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import Tag from './tags/tag';
 import axios from 'axios';
 
+import { actions } from '../store';
 const Tags = () => {
     const [tags, setTags] = useState([[]]);
     const [publishedCount,setPublishedCount ] = useState({

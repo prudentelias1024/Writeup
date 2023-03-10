@@ -415,7 +415,7 @@ app.get('/api/tags/:name', (req,res) => {
       }
     })
 })
-app.get('/posts',  (req,res) => {
+app.get('/api/posts',  (req,res) => {
      PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
        if (err) {
            throw err
