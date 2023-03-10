@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useParams, useSearchParams, } from 'react-router-dom';
 import NavBar from '../NavBar';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
 import axios from 'axios';
 import { actions } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
