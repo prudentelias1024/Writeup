@@ -14,8 +14,11 @@ import { userContext } from '../Contexts/userContext';
 import { getDownloadURL,ref,uploadBytes } from "firebase/storage";
 import {storage } from "../firebase";
 import {v4} from 'uuid'
+import { useDispatch } from 'react-redux';
+import { actions } from '../store';
 const SignUp = () => {
-    const navigate = useNavigate()
+     const navigate = useNavigate()
+     const dispatch = useDispatch()
    const signUpWithGoogle = useGoogleLogin({
     onSuccess: async(response) => {
         console.log(response)
@@ -25,7 +28,7 @@ const SignUp = () => {
             }
         })).data;
 
-              console.log(user)
+         
     //   let pictureBuffer = await (await axios.post('http://localhost:5000/api/publicPicture', { token: response.access_token, public_picture: user.picture }
     //         ,{withCredentials:true})).data;
     //         console.log(pictureBuffer)
@@ -43,12 +46,17 @@ const SignUp = () => {
        name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google',googleId: user.sub}
     ,{withCredentials:true})).data;
-    console.log(res)
-
+   
     if(res.message == 'User Created' || res.message == 'User Exists'){
-      let res   = await (await axios.post('http://localhost:5000/api/login', {googleId: user.googleId, account_type: 'google'})).data
-      console.log(res)
-      localStorage.setItem("token",res.Authorization);
+       
+      let res   = await (await axios.post('http://localhost:5000/api/login', {googleId: user.sub, account_type: 'google'})).data
+     localStorage.setItem("token",res.Authorization);
+      
+        const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+         )).data;
+         dispatch(actions.updateUser(info))
+     
+    
       navigate('/')
     } 
    }

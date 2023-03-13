@@ -13,9 +13,9 @@ const LoginModal = () => {
     }
     return (
         <div ref={modalRef} onClick={(event) => {closeModal()}} className='bg-[#f2f2f2] fixed z-50 w-full h-full'>
-        <div className='border shadow-2xl   rounded-xl flex flex-col bg-white w-2/4 z-50 fixed top-1/4 left-1/4 '>
-            <RxCross2 className='relative text-4xl left-[95%] top-[.5em]' />
-            <p className="font-[Mulish] lg:text-2xl mt-4 ml-24 4 mb-7 font-extrabold">Please Login or Signup to Continue</p>
+        <div className='border shadow-2xl w-full  rounded-xl flex flex-col bg-white lg:w-2/4 z-50 fixed top-1/4 lg:left-1/4 '>
+            <RxCross2 className='relative text-4xl left-[90%] lg:left-[95%] top-[.5em]' />
+            <p className="font-[Mulish] lg:text-2xl m-auto lg:mt-4 lg:ml-24 4 mb-7 font-extrabold">Please Login or Signup to Continue</p>
             <hr />
             <Link to='/' className="font-[Pacifico] mx-auto my-[1em] text-2xl lg:text-3xl font-extrabold ">Ink Up</Link>
             <button><Link to="/login" className="border my-auto text-white mx-4  bg-blue-500 rounded-lg p-3 w-[70%] font-[Museo] h-[3em]" type="submit">Login</Link>  </button>
