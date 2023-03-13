@@ -69,6 +69,8 @@ const verify = (req,res,next) => {
         res.status(403).json("You are not authenticated")
     }
 }
+
+
 app.get('/api/notifications', verify, async(req,res) => {
 notifications.find({userId: req.user._id},(err,doc) => {
     if(err){throw err}
@@ -86,7 +88,7 @@ notifications.find({userId: req.user._id},(err,doc) => {
     }
 })
 })
-app.post('/api/notification/read', verify, async(req,res) => {
+    app.post('/api/notification/read', verify, async(req,res) => {
     notifications.findByIdAndUpdate(req.body._id, {read:true},{new:true}, (err,doc) => {
         if(err){throw err}
         if(doc){

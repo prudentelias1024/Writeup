@@ -27,18 +27,18 @@ const MyPosts = () => {
   const  dispatch = useDispatch()
    const [otherAuthorPost,setOtherAuthorPost] = useState(null)
   const increasePostView = async() => {
-    let res = await (await axios.post(`http://localhost:5000/post/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+    let res = await (await axios.post(`https://writeup-37ap.vercel.app/post/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
   }
 
   const getOtherAuthorPost = async() => {
-    let  res = await(await axios.get(`http://localhost:5000/post/getAuthorPosts/${params.username}/${params.postId}`)).data
+    let  res = await(await axios.get(`https://writeup-37ap.vercel.app/post/getAuthorPosts/${params.username}/${params.postId}`)).data
     console.log(res)
     setOtherAuthorPost(res)
 
   }
  
   const getPost = async() => {
-    let  res_post = await(await axios.get(`http://localhost:5000/post/${params.username}/${params.postId}`)).data
+    let  res_post = await(await axios.get(`https://writeup-37ap.vercel.app/post/${params.username}/${params.postId}`)).data
     setPost(res_post)
     if(user !== null){
       checkLiked(res_post.likes,user.username)
@@ -85,15 +85,15 @@ const MyPosts = () => {
       if (user == null) {
         dispatch(actions.setShowModal(true))
       }else{
-      let  res = await(await axios.post(`http://localhost:5000/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      let likeNotification = await(await axios.post('http://localhost:5000/api/notification/like', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
+      let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let likeNotification = await(await axios.post('https://writeup-37ap.vercel.app/api/notification/like', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
      
       setPost(res)
       setLiked(true)
       }
       } 
     const unlikePost = async(postId) => {
-      let  res = await(await axios.post(`http://localhost:5000/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
       setPost(res)
       setLiked(false)
@@ -125,8 +125,8 @@ const MyPosts = () => {
       }
   
      const commentPost = async(user,postId,name,author, commentWords) => {
-      let  res = await(await axios.post(`http://localhost:5000/post/comment`,{user:user, postId:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      let commentNotification = await(await axios.post('http://localhost:5000/api/notification/comment', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
+      let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/comment`,{user:user, postId:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let commentNotification = await(await axios.post('https://writeup-37ap.vercel.app/api/notification/comment', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
         setPost(res)
         // setComment('')
@@ -135,15 +135,15 @@ const MyPosts = () => {
       if (user == null) {
         dispatch(actions.setShowModal(true))
       }else{
-      let  res = await(await axios.post(`http://localhost:5000/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
-      let bookmarkNotification = await(await axios.post('http://localhost:5000/api/notification/bookmark', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
+      let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let bookmarkNotification = await(await axios.post('https://writeup-37ap.vercel.app/api/notification/bookmark', {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
       setPost(res)
       setBookmarked(true)
       } }
       
      const unbookmarkPost = async(postId) => {
-      let  res = await(await axios.post(`http://localhost:5000/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+      let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
       setPost(res)
       setBookmarked(false)
@@ -152,12 +152,12 @@ const MyPosts = () => {
          if (user == null) {
           dispatch(actions.setShowModal(true))
         }else {
-       axios.post(`http://localhost:5000/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+       axios.post(`https://writeup-37ap.vercel.app/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
        setFollowed(true)
         }
       }
       const unfollow = async(user,author) => {
-        axios.post(`http://localhost:5000/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+        axios.post(`https://writeup-37ap.vercel.app/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
         setFollowed(false )
 
      }

@@ -7,7 +7,7 @@ import Bookmarked from './Notifications/bookmarked';
 import Commented from './Notifications/commented';
 import Welcome from './Notifications/welcome';
 import {useSelector} from 'react-redux'
-const socket = io('http://localhost:5000')
+const socket = io('https://writeup-37ap.vercel.app')
 //Notification types
 //follow 
 //likes 

@@ -128,7 +128,7 @@ const handlePostTags = (event) => {
     const handlePostSubmission = async() => {
         estimateReadingTime()
         console.log(post)
-      let res = await (await axios.post('http://localhost:5000/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})).data
+      let res = await (await axios.post('https://writeup-37ap.vercel.app/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
       if(res.message == 'Published'){
         setTimeout(() => {
@@ -141,7 +141,7 @@ const handlePostTags = (event) => {
     }
     const handlePostDraft = async() => {
         console.log(post)
-        axios.post('http://localhost:5000/post/draft', post,{headers: {Authorization: localStorage.getItem('token')}})
+        axios.post('https://writeup-37ap.vercel.app/post/draft', post,{headers: {Authorization: localStorage.getItem('token')}})
 
     }
     const handleRemoveImage = () => {

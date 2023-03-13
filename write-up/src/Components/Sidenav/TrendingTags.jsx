@@ -41,7 +41,7 @@ export default function TrendingTags(){
         setTags(tagsArray)
        }
        const getTags = async() => {
-     let res = await (await axios.get('http://localhost:5000/api/tags')).data
+     let res = await (await axios.get('https://writeup-37ap.vercel.app/api/tags')).data
      //Contains all tags without their title
      let tagsArray = []
      //contains all tags with their title with uniqueness

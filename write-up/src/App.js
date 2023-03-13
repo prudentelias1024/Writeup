@@ -27,24 +27,24 @@ function App() {
       const dispatch = useDispatch()
   
       const loadUser = async() => {
-          const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+          const info = await (await axios.get('https://writeup-37ap.vercel.app/api/user',{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
            dispatch(actions.updateUser(info))
        
        }
        const getPosts = async() => {
-        let  res_posts = await(await axios.get('http://localhost:5000/api/posts')).data
+        let  res_posts = await(await axios.get('https://writeup-37ap.vercel.app/api/posts')).data
          console.log(res_posts)
        dispatch(actions.updatePosts(res_posts))
      }
        const getNotifications = async() => {
-        let  notifications = await(await axios.get('http://localhost:5000/api/notifications',{headers: {Authorization: localStorage.getItem('token')}})).data
+        let  notifications = await(await axios.get('https://writeup-37ap.vercel.app/api/notifications',{headers: {Authorization: localStorage.getItem('token')}})).data
   
        dispatch(actions.updateNotifications(notifications))
      }
 
      const getBookmarkedPosts = async() => {
-      let bookmarked_post = await (await axios.get('http://localhost:5000/api/bookmarked',{headers: {Authorization: localStorage.getItem('token')}})).data
+      let bookmarked_post = await (await axios.get('https://writeup-37ap.vercel.app/api/bookmarked',{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(bookmarked_post)
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }

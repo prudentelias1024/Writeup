@@ -24,9 +24,9 @@ export default function UserNav(){
     const pollNotifications = async() => {
      const oldNotificationsLength = notifications.length
    
-     const newNotificationsLength = await( await axios.get('http://localhost:5000/api/notifications/length',{headers:{Authorization: localStorage.getItem('token')}})).data.length
+     const newNotificationsLength = await( await axios.get('https://writeup-37ap.vercel.app/api/notifications/length',{headers:{Authorization: localStorage.getItem('token')}})).data.length
      if(newNotificationsLength > oldNotificationsLength) { 
-        let newNotifications = await(await axios.get('http://localhost:5000/api/notifications',{headers:{Authorization: localStorage.getItem('token')}})).data
+        let newNotifications = await(await axios.get('https://writeup-37ap.vercel.app/api/notifications',{headers:{Authorization: localStorage.getItem('token')}})).data
         dispatch(actions.updateNotifications(newNotifications))
 
          setNewNotification(true)

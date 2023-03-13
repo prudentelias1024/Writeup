@@ -13,7 +13,7 @@ const TagCard = () => {
    
     const [tagPosts, setTagPosts] = useState([])
    const getTagPosts = async() =>{
-       const res =  await (await axios.get(`http://localhost:5000/api/tags/${name}`)).data
+       const res =  await (await axios.get(`https://writeup-37ap.vercel.app/api/tags/${name}`)).data
        setTagPosts(res)
        if(res.length == 0){
            console.log('res')

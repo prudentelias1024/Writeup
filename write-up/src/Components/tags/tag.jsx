@@ -35,13 +35,13 @@ const Tag = ({tag, count}) => {
          dispatch(actions.setShowModal(true))
           }else{
         setFollowed(true)
-        const res = await(await axios.post(`http://localhost:5000/api/tags/follow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        const res = await(await axios.post(`https://writeup-37ap.vercel.app/api/tags/follow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
         dispatch(actions.updateUser(res))
           }
     }
     const unfollowTag = async() => {
         setFollowed(false)
-        const res = await(await axios.post(`http://localhost:5000/api/tags/unfollow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        const res = await(await axios.post(`https://writeup-37ap.vercel.app/api/tags/unfollow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
        
         dispatch(actions.updateUser(res))
     }

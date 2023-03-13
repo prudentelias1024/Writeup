@@ -40,19 +40,19 @@ const SearchPage = () => {
     // if(user == null){
     //     dispatch(actions.setShowModal(true))
     // }else {}
-//     axios.post(`http://localhost:5000/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+//     axios.post(`https://writeup-37ap.vercel.app/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
   
 //     setFollowed(true)
 // }
 //    }
 //    const unfollow = async(author) => {
-//      axios.post(`http://localhost:5000/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+//      axios.post(`https://writeup-37ap.vercel.app/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
 //     setFollowed(false)
 
 //   }
   
     const search = async(searchWords) => {
-    let res =  await (await axios.post('http://localhost:5000/api/search', {query:  searchWords})).data
+    let res =  await (await axios.post('https://writeup-37ap.vercel.app/api/search', {query:  searchWords})).data
    console.log(user)
    setSearchResult(res)
    setTimeout(()=>

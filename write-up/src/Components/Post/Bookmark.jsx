@@ -17,14 +17,14 @@ export function Bookmark({bookmarks,postId,username}){
     }
     const bookmarkPost = async(postId) => {
          setBookmarked(true)
-        let  res = await(await axios.post(`http://localhost:5000/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
        
         } 
         
         const unbookmarkPost = async(postId) => {
            setBookmarked(false)
-        let  res = await(await axios.post(`http://localhost:5000/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
         } 
 

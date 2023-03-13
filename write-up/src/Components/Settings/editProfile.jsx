@@ -57,7 +57,7 @@ const EditProfile = () => {
     const submitChanges = async(event) => {
       event.preventDefault()
       console.log(profileChanges)
-     let res =  await (await axios.post('http://localhost:5000/api/user/edit', {profileChanges}, {withCredentials:true, headers:{Authorization: localStorage.getItem('token') }})).data
+     let res =  await (await axios.post('https://writeup-37ap.vercel.app/api/user/edit', {profileChanges}, {withCredentials:true, headers:{Authorization: localStorage.getItem('token') }})).data
      localStorage.removeItem("token")
       localStorage.setItem("token", res.Authorization)
       dispatch(actions.updateUser(res.user))

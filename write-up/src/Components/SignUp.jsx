@@ -29,7 +29,7 @@ const SignUp = () => {
         })).data;
 
          
-    //   let pictureBuffer = await (await axios.post('http://localhost:5000/api/publicPicture', { token: response.access_token, public_picture: user.picture }
+    //   let pictureBuffer = await (await axios.post('https://writeup-37ap.vercel.app/api/publicPicture', { token: response.access_token, public_picture: user.picture }
     //         ,{withCredentials:true})).data;
     //         console.log(pictureBuffer)
     //         let file = new File([pictureBuffer], 'image.png', );
@@ -42,17 +42,17 @@ const SignUp = () => {
     //          })
     //     })
     //     console.log(user)
-      let res = await (await axios.post('http://localhost:5000/api/signup', {
+      let res = await (await axios.post('https://writeup-37ap.vercel.app/api/signup', {
        name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google',googleId: user.sub}
     ,{withCredentials:true})).data;
    
     if(res.message == 'User Created' || res.message == 'User Exists'){
        
-      let res   = await (await axios.post('http://localhost:5000/api/login', {googleId: user.sub, account_type: 'google'})).data
+      let res   = await (await axios.post('https://writeup-37ap.vercel.app/api/login', {googleId: user.sub, account_type: 'google'})).data
      localStorage.setItem("token",res.Authorization);
       
-        const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+        const info = await (await axios.get('https://writeup-37ap.vercel.app/api/user',{headers: {Authorization: localStorage.getItem('token')}}
          )).data;
          dispatch(actions.updateUser(info))
      

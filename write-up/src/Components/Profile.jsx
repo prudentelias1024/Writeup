@@ -17,13 +17,13 @@ const Profile = () => {
     const [myPosts, setMyPosts] = useState(null)
     const dispatch = useDispatch()
    const loadUser = async() => {
-        const info = await (await axios.get('http://localhost:5000/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+        const info = await (await axios.get('https://writeup-37ap.vercel.app/api/user',{headers: {Authorization: localStorage.getItem('token')}}
          )).data;
          dispatch(actions.updateUser(info))
          
      }
      const  getMyPosts = async() => {
-        let res = await (await axios.get('http://localhost:5000/api/user/posts', {headers: {Authorization:  localStorage.getItem('token')}})).data
+        let res = await (await axios.get('https://writeup-37ap.vercel.app/api/user/posts', {headers: {Authorization:  localStorage.getItem('token')}})).data
        console.log(res)
        setMyPosts(res)
        
