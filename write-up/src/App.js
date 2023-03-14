@@ -50,14 +50,14 @@ function App() {
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV == 'production') {
           URL = "https://inkup-api.onrender.com"
         }else{
           URL = "http://localhost:5000"
                  
         }
        console.log(URL)
-        setTimeout(() => {
+      
           getPosts();
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== undefined) {
@@ -65,7 +65,7 @@ function App() {
           getNotifications()
           
         }
-        }, 500);
+       
       }
       , []);
   
