@@ -7,10 +7,17 @@ import { actions } from '../../store';
 import Input from '../Input';
 import  NavBar  from "../NavBar";
 const EditProfile = () => {
+  let URL
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
    useEffect(() => {
+    if (process.env.NODE_ENV == 'production') {
+      URL = "https://inkup-api.onrender.com"
+    }else{
+      URL = "http://localhost:5000"
+             
+    }
     console.log(user)
     setProfileChanges({name: user.name,email: user.email,username: user.username,work : user.work,education: user.education,hobby: user.hobby,websiteUrl: user.websiteUrl,location: user.location,bio:user.bio})
     console.log(profileChanges)
@@ -57,7 +64,7 @@ const EditProfile = () => {
     const submitChanges = async(event) => {
       event.preventDefault()
       console.log(profileChanges)
-     let res =  await (await axios.post('https://writeup-37ap.vercel.app/api/user/edit', {profileChanges}, {withCredentials:true, headers:{Authorization: localStorage.getItem('token') }})).data
+     let res =  await (await axios.post(`${URL}/api/user/edit`, {profileChanges}, {withCredentials:true, headers:{Authorization: localStorage.getItem('token') }})).data
      localStorage.removeItem("token")
       localStorage.setItem("token", res.Authorization)
       dispatch(actions.updateUser(res.user))
