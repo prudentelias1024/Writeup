@@ -106,6 +106,7 @@ export default function TrendingTags(){
         URL = "http://localhost:5000"
                
       }
+      console.log(URL)
        getTags()
        setTagCount({})
        
