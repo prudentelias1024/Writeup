@@ -18,15 +18,22 @@ const axios = require('axios')
 const firebase = require('firebase-admin')
 const http = require('http')
 const server = http.createServer(app)
+//Dynamic URL
+let URL;
+if (process.env.NODE_ENV == 'production') {
+    URL = "https://inkup-api.onrender.com"
+  }else{
+    URL = "http://localhost:3000"
+           
+  }
 const io  = require('socket.io')(server, {
     cors:{
-    origin: "https://writeup.vercel.app",
+    origin: URL,
     method: ["GET", "POST"],
     
 }
 })
 //sockets 
-
 io.on('connection',(socket) => {
     console.log(`Connected : ${socket.id}`)
     
@@ -40,7 +47,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use(cors({
-    origin: 'https://writeup.vercel.app',
+    origin: URL,
     credentials: true
 }))
 
