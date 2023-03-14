@@ -7,7 +7,7 @@ import {  useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 import axios from "axios";
 export default function UserNav(){
-   
+   let URL;
     const { user} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
@@ -16,6 +16,12 @@ export default function UserNav(){
     const [newNotification, setNewNotification] = useState(false)
      const helperRef   = useRef()
     useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
        setInterval(() => {
            pollNotifications()
        }, 300000);
@@ -24,9 +30,9 @@ export default function UserNav(){
     const pollNotifications = async() => {
      const oldNotificationsLength = notifications.length
    
-     const newNotificationsLength = await( await axios.get('https://writeup-37ap.vercel.app/api/notifications/length',{headers:{Authorization: localStorage.getItem('token')}})).data.length
+     const newNotificationsLength = await( await axios.get(`${URL}/api/notifications/length`,{headers:{Authorization: localStorage.getItem('token')}})).data.length
      if(newNotificationsLength > oldNotificationsLength) { 
-        let newNotifications = await(await axios.get('https://writeup-37ap.vercel.app/api/notifications',{headers:{Authorization: localStorage.getItem('token')}})).data
+        let newNotifications = await(await axios.get(`${URL}/api/notifications`,{headers:{Authorization: localStorage.getItem('token')}})).data
         dispatch(actions.updateNotifications(newNotifications))
 
          setNewNotification(true)
