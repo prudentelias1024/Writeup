@@ -40,6 +40,7 @@ export default function TrendingTags(){
           tagsArray = tagsArray.slice(0,10)
           
         setTags(tagsArray)
+        console.log(tags)
        }
        const getTags = async() => {
      let res = await (await axios.get(`${URL}/api/tags`)).data
