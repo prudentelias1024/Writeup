@@ -6,7 +6,7 @@ import { actions } from '../../store';
 import { useDispatch } from "react-redux";
 import LoginModal from '../loginModal';
 const Tag = ({tag, count}) => {
-
+    let URL
     const {user,showModal} = useSelector(state => state)
     const [followed, setFollowed] = useState(false)
     const dispatch = useDispatch()  
@@ -23,6 +23,12 @@ const Tag = ({tag, count}) => {
         }
     }
     useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
         console.log(user)
      setTimeout(() => {
         
@@ -35,13 +41,13 @@ const Tag = ({tag, count}) => {
          dispatch(actions.setShowModal(true))
           }else{
         setFollowed(true)
-        const res = await(await axios.post(`https://writeup-37ap.vercel.app/api/tags/follow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        const res = await(await axios.post(`${URL}/api/tags/follow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
         dispatch(actions.updateUser(res))
           }
     }
     const unfollowTag = async() => {
         setFollowed(false)
-        const res = await(await axios.post(`https://writeup-37ap.vercel.app/api/tags/unfollow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        const res = await(await axios.post(`${URL}/api/tags/unfollow`, {tag: tag}, {headers: {Authorization: localStorage.getItem('token')}})).data
        
         dispatch(actions.updateUser(res))
     }

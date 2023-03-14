@@ -13,7 +13,7 @@ import Tag from '../tags/tag';
 import LoginModal from '../loginModal';
 
 const SearchPage = () => {
-    
+    let URL;
    const location = useLocation()
    const [tabIndex, setTabIndex] = useState(0);
    const [filteredView, setFilteredView] = useState(null)
@@ -40,19 +40,19 @@ const SearchPage = () => {
     // if(user == null){
     //     dispatch(actions.setShowModal(true))
     // }else {}
-//     axios.post(`https://writeup-37ap.vercel.app/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+//     axios.post(``${URL}/api/follow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
   
 //     setFollowed(true)
 // }
 //    }
 //    const unfollow = async(author) => {
-//      axios.post(`https://writeup-37ap.vercel.app/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
+//      axios.post(``${URL}/api/unfollow`,{ user:user, author: author }, {headers: {Authorization: localStorage.getItem('token')}})
 //     setFollowed(false)
 
 //   }
   
     const search = async(searchWords) => {
-    let res =  await (await axios.post('https://writeup-37ap.vercel.app/api/search', {query:  searchWords})).data
+    let res =  await (await axios.post(`${URL}/api/search`, {query:  searchWords})).data
    console.log(user)
    setSearchResult(res)
    setTimeout(()=>
@@ -117,7 +117,12 @@ const SearchPage = () => {
 //    }
 //    }
    useEffect(()=> {
-
+    if (process.env.NODE_ENV == 'production') {
+        URL = "https://inkup-api.onrender.com"
+      }else{
+        URL = "http://localhost:5000"
+               
+      }
     console.log(query)
    
         search(query);

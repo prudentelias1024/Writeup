@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 export function Bookmark({bookmarks,postId,username}){
+    let URL;
     const  checkBookmarked = (bookmarkers,username) => {
    
         if (bookmarkers) {
@@ -17,18 +18,24 @@ export function Bookmark({bookmarks,postId,username}){
     }
     const bookmarkPost = async(postId) => {
          setBookmarked(true)
-        let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let  res = await(await axios.post(`${URL}/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
        
         } 
         
         const unbookmarkPost = async(postId) => {
            setBookmarked(false)
-        let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let  res = await(await axios.post(`${URL}/post/unbookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
         } 
 
     useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
         checkBookmarked(bookmarks,username)
     },[])
 

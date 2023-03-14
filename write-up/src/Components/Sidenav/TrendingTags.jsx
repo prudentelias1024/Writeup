@@ -3,6 +3,7 @@ import axios  from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 export default function TrendingTags(){
+  let URL;
     const [tagCount, setTagCount] = useState({})
     const [tags,setTags] = useState([])
     const {user} = useSelector(state => state)
@@ -41,7 +42,7 @@ export default function TrendingTags(){
         setTags(tagsArray)
        }
        const getTags = async() => {
-     let res = await (await axios.get('https://writeup-37ap.vercel.app/api/tags')).data
+     let res = await (await axios.get(`${URL}/api/tags`)).data
      //Contains all tags without their title
      let tagsArray = []
      //contains all tags with their title with uniqueness
@@ -98,7 +99,12 @@ export default function TrendingTags(){
     }
    
     useEffect(() => {
-    
+      if (process.env.NODE_ENV == 'production') {
+        URL = "https://inkup-api.onrender.com"
+      }else{
+        URL = "http://localhost:5000"
+               
+      }
        getTags()
        setTagCount({})
        

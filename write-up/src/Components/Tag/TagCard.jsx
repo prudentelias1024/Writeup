@@ -6,6 +6,7 @@ import Post from '../Post';
 
 
 const TagCard = () => {
+    let URL
     const {name} = useParams()
     console.log(name)
     const {user,showModal} = useSelector(state => state)
@@ -13,7 +14,7 @@ const TagCard = () => {
    
     const [tagPosts, setTagPosts] = useState([])
    const getTagPosts = async() =>{
-       const res =  await (await axios.get(`https://writeup-37ap.vercel.app/api/tags/${name}`)).data
+       const res =  await (await axios.get(`${URL}/api/tags/${name}`)).data
        setTagPosts(res)
        if(res.length == 0){
            console.log('res')
@@ -21,7 +22,12 @@ const TagCard = () => {
        }
     }
 useEffect(() => {
-  
+    if (process.env.NODE_ENV == 'production') {
+        URL = "https://inkup-api.onrender.com"
+      }else{
+        URL = "http://localhost:5000"
+               
+      }
    getTagPosts()
 }, []);
 

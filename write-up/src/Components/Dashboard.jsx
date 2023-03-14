@@ -8,6 +8,7 @@ import DashboardPosts from './Dashboard/DashboardPosts';
 import DetailsCard from './Dashboard/DetailsCard';
 import  NavBar  from "./NavBar";
 const Dashboard = () => {
+   let URL
     const [myPosts, setMyPosts] = useState([])
     const [numberOfPosts, setNumberOfPosts] = useState(null)
     const [ totalLikes, setTotalLikes] = useState(null)
@@ -21,29 +22,35 @@ const Dashboard = () => {
 
    }
   const  getMyPosts = async() => {
-   let res = await (await axios.get('https://writeup-37ap.vercel.app//api/user/posts', {headers: {Authorization:  localStorage.getItem('token')}})).data
+   let res = await (await axios.get(`${URL}/api/user/posts`, {headers: {Authorization:  localStorage.getItem('token')}})).data
   console.log(res)
    setMyPosts(res)
    setNumberOfPosts(res.length)
 }
   const  getTotalLikes = async() => {
-   let res = await (await axios.get('https://writeup-37ap.vercel.app//api/user/posts/totalLikes', {headers: {Authorization:  localStorage.getItem('token')}})).data
+   let res = await (await axios.get(`${URL}/api/user/posts/totalLikes`, {headers: {Authorization:  localStorage.getItem('token')}})).data
   console.log(res)
   setTotalLikes(res.totalLikes)
 }
   const  getTotalComments = async() => {
-   let res = await (await axios.get('https://writeup-37ap.vercel.app//api/user/posts/totalComments', {headers: {Authorization:  localStorage.getItem('token')}})).data
+   let res = await (await axios.get(`${URL}/api/user/posts/totalComments`, {headers: {Authorization:  localStorage.getItem('token')}})).data
   console.log(res)
 
     setTotalComments(res.totalComments)
 }
   const  getTotalBookmarks = async() => {
-   let res = await (await axios.get('https://writeup-37ap.vercel.app//api/user/posts/totalBookmarks', {headers: {Authorization:  localStorage.getItem('token')}})).data
+   let res = await (await axios.get(`${URL}/api/user/posts/totalBookmarks`, {headers: {Authorization:  localStorage.getItem('token')}})).data
   console.log(res)
   setTotalBookmark(res.totalBookmarks)
 }
   
     useEffect(() => {
+      if (process.env.NODE_ENV == 'production') {
+        URL = "https://inkup-api.onrender.com"
+      }else{
+        URL = "http://localhost:5000"
+               
+      }
         setMyPosts(getMyPosts())
         getTotalLikes()
       getTotalComments()

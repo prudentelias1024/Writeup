@@ -5,10 +5,17 @@ import axios from 'axios';
 
 import { actions } from '../store';
 const Tags = () => {
+    let URL;
     const [tags, setTags] = useState([[]]);
     const [publishedCount,setPublishedCount ] = useState({
     })
     useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
        getTags()
         setPublishedCount({})
      }, [])
@@ -50,7 +57,7 @@ const Tags = () => {
        }
 
     const getTags = async() => {
-     let res = await (await axios.get('https://writeup-37ap.vercel.app/api/tags')).data
+     let res = await (await axios.get(`${URL}/api/tags`)).data
      //Contains all tags without their title
      let tagsArray = []
      //temprary array

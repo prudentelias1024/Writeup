@@ -38,11 +38,7 @@ io.on('connection',(socket) => {
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
-app.use(expressSession({
-    secret:'inkware',
-    resave: true,
-    saveUninitialized: true
-}))
+
 app.use(cors({
     origin: 'https://writeup.vercel.app',
     credentials: true

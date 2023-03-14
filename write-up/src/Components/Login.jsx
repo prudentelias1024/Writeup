@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import NavBar from './NavBar';
 import Button from './Navbar/Button';
 import {FcGoogle} from 'react-icons/fc'
@@ -13,6 +13,15 @@ import axios  from 'axios';
 import { useDispatch } from 'react-redux';
 import { actions } from '../store';
 const Login = () => {
+    let URL;
+    useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
+    }, [])
    const navigate = useNavigate()
     
    const [token,setToken] = useState()
@@ -34,22 +43,22 @@ const Login = () => {
     
        console.log(user);
        
-       const res = await(await axios.post('https://writeup-37ap.vercel.app//api/login',{googleId:user.sub,account_type: 'google'},{withCredentials:true}))
+       const res = await(await axios.post(`${URL}/api/login`,{googleId:user.sub,account_type: 'google'},{withCredentials:true}))
        if (res.message =='User Doesn\t Exists') {
       
-          let res = await (await axios.post('https://writeup-37ap.vercel.app//api/signup', {
+          let res = await (await axios.post(`${URL}/api/signup`, {
        name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google', googleId: user.sub}
         ,{withCredentials:true})).data;
         if(res.message == 'User Created'){
-            let res   = await (await axios.post('https://writeup-37ap.vercel.app//api/login', {username: user.email, account_type: 'google'})).data
+            let res   = await (await axios.post(`${URL}/api/login`, {username: user.email, account_type: 'google'})).data
             console.log(res)
           
           }
        } 
        console.log(res)
         localStorage.setItem("token",res.data.Authorization);
-        const info = await (await axios.get('https://writeup-37ap.vercel.app//api/user',{headers: {Authorization: localStorage.getItem('token')}}
+        const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
         )).data;
         dispatch(actions.updateUser(info))
         navigate('/')

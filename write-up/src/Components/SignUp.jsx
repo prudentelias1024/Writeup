@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import NavBar from './NavBar';
 import Button from './Navbar/Button';
 import {FcGoogle} from 'react-icons/fc'
@@ -17,6 +17,15 @@ import {v4} from 'uuid'
 import { useDispatch } from 'react-redux';
 import { actions } from '../store';
 const SignUp = () => {
+    let URL;
+    useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
+    },[])
      const navigate = useNavigate()
      const dispatch = useDispatch()
    const signUpWithGoogle = useGoogleLogin({
@@ -42,17 +51,17 @@ const SignUp = () => {
     //          })
     //     })
     //     console.log(user)
-      let res = await (await axios.post('https://writeup-37ap.vercel.app/api/signup', {
+      let res = await (await axios.post(`${URL}/api/signup`, {
        name:user.name, email:user.email, public_picture: user.picture, username: user.email, joined_on:
        new Date, account_type: 'google' ,joined_on: new Date, account_type:'google',googleId: user.sub}
     ,{withCredentials:true})).data;
    
     if(res.message == 'User Created' || res.message == 'User Exists'){
        
-      let res   = await (await axios.post('https://writeup-37ap.vercel.app/api/login', {googleId: user.sub, account_type: 'google'})).data
+      let res   = await (await axios.post(`${URL}/api/login`, {googleId: user.sub, account_type: 'google'})).data
      localStorage.setItem("token",res.Authorization);
       
-        const info = await (await axios.get('https://writeup-37ap.vercel.app/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+        const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
          )).data;
          dispatch(actions.updateUser(info))
      

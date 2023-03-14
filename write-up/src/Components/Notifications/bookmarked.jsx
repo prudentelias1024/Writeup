@@ -9,12 +9,13 @@ import { actions } from '../../store';
 
 import { time } from "../../time";
 const Bookmarked = ({notification}) => {
+    let   URL
     const {notifications} = useSelector(state => state)
     const dispatch = useDispatch()
     const [timeCreated,setTimeCreated] = useState()
     const markAsRead = async(_id) => {
         let temp = []
-        const newNotification = await (await axios.post('http://localhost:5000/api/notification/read',{_id:_id}, {headers:{Authorization: localStorage.getItem('token')}})).data
+        const newNotification = await (await axios.post(`${URL}/api/notification/read`,{_id:_id}, {headers:{Authorization: localStorage.getItem('token')}})).data
           let index = notifications.findIndex((notification) =>{return notification._id === newNotification._id})
         temp = [...notifications]
         temp[index] = newNotification
@@ -22,7 +23,12 @@ const Bookmarked = ({notification}) => {
         dispatch(actions.updateNotifications(temp))
        }
     useEffect(() => {
-      
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
 
         setTimeout(() => {
             markAsRead(notification._id)

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
 
 const CreatePosts = () => {
+    let URL
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
  
@@ -36,6 +37,12 @@ const CreatePosts = () => {
       const excerptRef = useRef()
 
      useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
         const toolbar = quillRef.current.getEditor().getModule('toolbar')
         toolbar.addHandler('image',CustomImageHandler)
     }, [quillRef])
@@ -128,7 +135,7 @@ const handlePostTags = (event) => {
     const handlePostSubmission = async() => {
         estimateReadingTime()
         console.log(post)
-      let res = await (await axios.post('https://writeup-37ap.vercel.app/post/create', post,{headers: {Authorization: localStorage.getItem('token')}})).data
+      let res = await (await axios.post(`${URL}/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
       if(res.message == 'Published'){
         setTimeout(() => {
@@ -141,7 +148,7 @@ const handlePostTags = (event) => {
     }
     const handlePostDraft = async() => {
         console.log(post)
-        axios.post('https://writeup-37ap.vercel.app/post/draft', post,{headers: {Authorization: localStorage.getItem('token')}})
+        axios.post(`${URL}/post/draft`, post,{headers: {Authorization: localStorage.getItem('token')}})
 
     }
     const handleRemoveImage = () => {

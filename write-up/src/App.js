@@ -23,32 +23,39 @@ import TagTemplate from './Components/Tag/TagTemplate';
 import ReadLater from './Components/ReadLater';
 import SearchPage from './Components/Search/SearchPage';
 function App() {
+        let URL;
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
   
       const loadUser = async() => {
-          const info = await (await axios.get('https://writeup-37ap.vercel.app/api/user',{headers: {Authorization: localStorage.getItem('token')}}
+          const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
            dispatch(actions.updateUser(info))
        
        }
        const getPosts = async() => {
-        let  res_posts = await(await axios.get('https://writeup-37ap.vercel.app/api/posts')).data
+        let  res_posts = await(await axios.get(`${URL}/api/posts`)).data
          console.log(res_posts)
        dispatch(actions.updatePosts(res_posts))
      }
        const getNotifications = async() => {
-        let  notifications = await(await axios.get('https://writeup-37ap.vercel.app/api/notifications',{headers: {Authorization: localStorage.getItem('token')}})).data
+        let  notifications = await(await axios.get(`${URL}/api/notifications`,{headers: {Authorization: localStorage.getItem('token')}})).data
   
        dispatch(actions.updateNotifications(notifications))
      }
 
      const getBookmarkedPosts = async() => {
-      let bookmarked_post = await (await axios.get('https://writeup-37ap.vercel.app/api/bookmarked',{headers: {Authorization: localStorage.getItem('token')}})).data
+      let bookmarked_post = await (await axios.get(`${URL}/api/bookmarked`,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(bookmarked_post)
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+          URL = "https://inkup-api.onrender.com"
+        }else{
+          URL = "http://localhost:5000"
+                 
+        }
         console.log(localStorage.getItem('token'))
         getPosts();
         getBookmarkedPosts();

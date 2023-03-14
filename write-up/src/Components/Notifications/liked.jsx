@@ -11,8 +11,9 @@ const Liked = ({notification}) => {
     const dispatch = useDispatch()
     const [timeCreated,setTimeCreated] = useState()
     const markAsRead = async(_id) => {
+        let URL
         let temp = []
-        const newNotification = await (await axios.post('http://localhost:5000/api/notification/read',{_id:_id}, {headers:{Authorization: localStorage.getItem('token')}})).data
+        const newNotification = await (await axios.post(`${URL}/api/notification/read`,{_id:_id}, {headers:{Authorization: localStorage.getItem('token')}})).data
           let index = notifications.findIndex((notification) =>{return notification._id === newNotification._id})
         temp = [...notifications]
         temp[index] = newNotification
@@ -21,7 +22,12 @@ const Liked = ({notification}) => {
        }
     useEffect(() => {
       
-      
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
         setTimeout(() => {
             markAsRead(notification._id)
         }, 3000);
