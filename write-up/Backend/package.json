@@ -1,6 +1,6 @@
 
 {
-    "name": "Inkup API",
+    "name": "Inkup_API",
     "version": "1.0.0",
     "description": "node express testing",
     "main": "server.js",
