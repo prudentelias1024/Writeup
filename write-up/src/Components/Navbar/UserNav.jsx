@@ -6,6 +6,7 @@ import Button from "./Button";
 import {  useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 import axios from "axios";
+import { locale } from "moment";
 export default function UserNav(){
    let URL;
     const { user} = useSelector((state) => state)
@@ -23,7 +24,10 @@ export default function UserNav(){
                    
           }
        setInterval(() => {
-           pollNotifications()
+        if (localStorage.getItem('token') !== undefined) {
+            
+            pollNotifications()
+        }
        }, 300000);
        pollNotifications()
     })
