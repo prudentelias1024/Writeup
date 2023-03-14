@@ -56,7 +56,7 @@ function App() {
           URL = "http://localhost:5000"
                  
         }
-       console.log(URL)
+    
       
           getPosts();
         getBookmarkedPosts();
