@@ -43,6 +43,7 @@ export default function TrendingTags(){
        }
        const getTags = async() => {
      let res = await (await axios.get(`${URL}/api/tags`)).data
+     console.log(res)
      //Contains all tags without their title
      let tagsArray = []
      //contains all tags with their title with uniqueness

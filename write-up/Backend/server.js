@@ -330,7 +330,6 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
 })
 
 app.get('/api/tags', (req,res) => {
-    res.setHeader("Access-Control-Allow-Credentials","true")
     PublishedPosts.find().select('tags title').exec((err,doc) => {
         if (err) {
             throw err
