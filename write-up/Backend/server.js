@@ -45,7 +45,7 @@ app.use(expressSession({
     saveUninitialized: true
 }))
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://writeup.vercel.app',
     credentials: true
 }))
 
