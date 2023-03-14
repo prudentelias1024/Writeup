@@ -16,7 +16,9 @@ const Tags = () => {
             URL = "http://localhost:5000"
                    
           }
-       getTags()
+     setTimeout(() => {
+        getTags()
+     }, 500);
         setPublishedCount({})
      }, [])
        const constructTagAndPublished = (tags,publishedCount) => {
