@@ -11,7 +11,6 @@ const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
 const notifications   = require('./notificationsSchema')
-
 const jwt = require('jsonwebtoken')
 const moment = require('moment');
 const { populate } = require('./usersSchema');
@@ -51,6 +50,7 @@ app.use(cors({
 
 //Routes Middlewares
 const verify = (req,res,next) => {
+    res.setHeader("Access-Control-Allow-Credentials","true")
     const authHeader = req.headers.authorization
     if(authHeader){
         let token = authHeader.toString().split(' ')[1]
@@ -69,9 +69,13 @@ const verify = (req,res,next) => {
         res.status(403).json("You are not authenticated")
     }
 }
-
+app.get('/', (req,res) => {
+    res.setHeader("Access-Control-Allow-Credentials","true")
+    res.send('API is running....')
+})
 
 app.get('/api/notifications', verify, async(req,res) => {
+  
 notifications.find({userId: req.user._id},(err,doc) => {
     if(err){throw err}
     if(doc) {
@@ -80,8 +84,9 @@ notifications.find({userId: req.user._id},(err,doc) => {
     }
 })
 })
+
 app.get('/api/notifications/length', verify, async(req,res) => {
-notifications.find({userId: req.user._id},(err,doc) => {
+   notifications.find({userId: req.user._id},(err,doc) => {
     if(err){throw err}
     if(doc) {
         res.send({length: doc.length})
@@ -89,7 +94,7 @@ notifications.find({userId: req.user._id},(err,doc) => {
 })
 })
     app.post('/api/notification/read', verify, async(req,res) => {
-    notifications.findByIdAndUpdate(req.body._id, {read:true},{new:true}, (err,doc) => {
+     notifications.findByIdAndUpdate(req.body._id, {read:true},{new:true}, (err,doc) => {
         if(err){throw err}
         if(doc){
             
@@ -98,7 +103,7 @@ notifications.find({userId: req.user._id},(err,doc) => {
     })
 })
 app.post('/api/notification/like',verify, async(req,res) => {
-    const {postId, author,post_name} = req.body
+      const {postId, author,post_name} = req.body
    console.log(author)
    if(author._id !== req.user._id){
     const newNotification = new notifications({
@@ -120,7 +125,7 @@ app.post('/api/notification/like',verify, async(req,res) => {
 }
 })
 app.post('/api/notification/comment',verify, async(req,res) => {
-    const {postId, author,post_name} = req.body
+     const {postId, author,post_name} = req.body
     if(author._id !== req.user._id){
    
     const newNotification = new notifications({
@@ -136,7 +141,7 @@ app.post('/api/notification/comment',verify, async(req,res) => {
 
 })
 app.post('/api/notification/bookmark',verify, async(req,res) => {
-    const {postId, author,post_name} = req.body
+     const {postId, author,post_name} = req.body
     if(author._id !== req.user._id){
    
     const newNotification = new notifications({
@@ -329,6 +334,7 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
 })
 
 app.get('/api/tags', (req,res) => {
+    res.setHeader("Access-Control-Allow-Credentials","true")
     PublishedPosts.find().select('tags title').exec((err,doc) => {
         if (err) {
             throw err
@@ -407,6 +413,7 @@ app.post('/api/tags/unfollow', verify, (req,res) => {
 })
 
 app.get('/api/tags/:name', (req,res) => {
+    res.setHeader("Access-Control-Allow-Credentials","true")
     console.log(req.params.name)
     PublishedPosts.find({tags: {$in: `#${req.params.name}`}}).populate('author').exec((err,doc) => {
       if(err){
@@ -418,6 +425,7 @@ app.get('/api/tags/:name', (req,res) => {
     })
 })
 app.get('/api/posts',  (req,res) => {
+    res.setHeader("Access-Control-Allow-Credentials","true")
      PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
        if (err) {
            throw err
