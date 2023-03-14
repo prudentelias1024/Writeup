@@ -57,13 +57,15 @@ function App() {
                  
         }
        console.log(URL)
-        getPosts();
+        setTimeout(() => {
+          getPosts();
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== undefined) {
           loadUser();
           getNotifications()
           
         }
+        }, 500);
       }
       , []);
   
