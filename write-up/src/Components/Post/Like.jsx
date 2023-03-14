@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { io } from "socket.io-client";
-const socket = io('https://writeup-37ap.vercel.app')
+// import { io } from "socket.io-client";
 export function Like({likes,postId,username}){
     const  checkLiked = (likers,username) => {
         console.log(username)
@@ -20,13 +19,13 @@ export function Like({likes,postId,username}){
       }
     useEffect(() => {
         checkLiked(likes,username)
-    },[socket])
+    },[])
     const [liked,setLiked] = useState(false)
 
     const likePost = async(postId) => {
         setLiked(true)
         let  res = await(await axios.post(`https://writeup-37ap.vercel.app/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-        socket.emit('like', 'res')
+      
         // setPost(res)
            
         } 
