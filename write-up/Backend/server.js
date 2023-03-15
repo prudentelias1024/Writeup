@@ -59,7 +59,8 @@ const verify = (req,res,next) => {
     const authHeader = req.headers.authorization
     if(authHeader){
         let token = authHeader.toString().split(' ')[1]
-     jwt.verify(token,'Inkware Non-Member', (err,user) => {
+       
+     jwt.verify(token,process.env.INKUP_SECRET_KEY, (err,user) => {
         console.log(user)
             if(err){res.status(401).json("Token is invalid")}
             if(user){
