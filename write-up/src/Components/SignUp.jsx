@@ -17,7 +17,7 @@ import {v4} from 'uuid'
 import { useDispatch } from 'react-redux';
 import { actions } from '../store';
 const SignUp = () => {
-    let URL;
+    let URL =  "https://inkup-api.onrender.com";
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"

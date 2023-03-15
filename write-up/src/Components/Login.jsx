@@ -13,7 +13,7 @@ import axios  from 'axios';
 import { useDispatch } from 'react-redux';
 import { actions } from '../store';
 const Login = () => {
-    let URL;
+    let URL  = "https://inkup-api.onrender.com";
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"

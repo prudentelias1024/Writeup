@@ -142,6 +142,8 @@ const SearchPage = () => {
                 <li onClick={filterTag} ref={tab2Ref} className='block font-[mulish]  h-min text-gray-500 cursor-pointer'>Tags</li>
               
             </ul>
+
+         
              
             {filteredView !== null &&  filteredView.data.length !== 0 ?
              filteredView.type == 'post'  ?
@@ -149,6 +151,7 @@ const SearchPage = () => {
                 return <Post key={index} post={post} showCoverImage="hidden" additionalStyles="lg:ml-[20em] mt-[1em]" removeReactions={true} />
             }): filteredView !== null &&  filteredView.data.length !== 0 &&   filteredView.type == 'people'  ? 
             filteredView.data.map((user,index) => {
+                console.log(user)
                           return <ProfileSearchResult  people={user} key={index}/>
             }): filteredView !== null && filteredView.data.length !== 0 && filteredView.type == 'tags' ? 
            
