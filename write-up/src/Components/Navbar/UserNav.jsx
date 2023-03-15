@@ -24,12 +24,15 @@ export default function UserNav(){
                    
           }
        setInterval(() => {
-        if (localStorage.getItem('token') !== undefined) {
+        if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
             
             pollNotifications()
         }
        }, 300000);
+       if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
+          
        pollNotifications()
+       }
     })
     const pollNotifications = async() => {
      const oldNotificationsLength = notifications.length

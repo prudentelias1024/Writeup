@@ -63,10 +63,16 @@ const verify = (req,res,next) => {
               
                 User.findOne({username: user}).populate('followers').populate('following').exec((err,userDoc) => {
                     if(err){throw err} 
-                     req.user = userDoc;
-                    next();
+                     if(userDoc){
+                        req.user = userDoc;
+                        next();
+                     } else {
+                   
+                        res.status(403).json("You are not authenticated")
+                     }
+                    
                 })
-            }
+            } 
         })
     } else {
         res.status(403).json("You are not authenticated")
@@ -89,7 +95,7 @@ notifications.find({userId: req.user._id},(err,doc) => {
 })
 
 app.get('/api/notifications/length', verify, async(req,res) => {
-   notifications.find({userId: req.user._id},(err,doc) => {
+     notifications.find({userId: req.user._id},(err,doc) => {
     if(err){throw err}
     if(doc) {
         res.send({length: doc.length})
