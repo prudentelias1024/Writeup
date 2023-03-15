@@ -37,7 +37,7 @@ const SignUp = () => {
             }
         })).data;
 
-         
+         console.log(URL)
     //   let pictureBuffer = await (await axios.post('https://writeup-37ap.vercel.app/api/publicPicture', { token: response.access_token, public_picture: user.picture }
     //         ,{withCredentials:true})).data;
     //         console.log(pictureBuffer)

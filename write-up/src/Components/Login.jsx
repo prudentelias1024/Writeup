@@ -42,6 +42,7 @@ const Login = () => {
        })).data;
     
        console.log(user);
+       console.log(URL);
        
        const res = await(await axios.post(`${URL}/api/login`,{googleId:user.sub,account_type: 'google'},{withCredentials:true}))
        if (res.message =='User Doesn\t Exists') {
