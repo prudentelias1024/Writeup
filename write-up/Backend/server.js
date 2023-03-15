@@ -22,7 +22,7 @@ const server = http.createServer(app)
 let URL;
 
 if (process.env.NODE_ENV == 'production') {
-    URL = "https://writeup.vercel.app/"
+    URL = "https://writeup.vercel.app"
   }else{
     URL = "http://localhost:3000"
            
