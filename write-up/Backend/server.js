@@ -257,6 +257,34 @@ app.post('/api/notification/follow',verify, async(req,res) => {
         }
     })
 })
+
+app.post('/api/signup' ,async(req,res) => {
+   
+   
+    console.log(req.body)
+    User.findOne({email: req.body.email}, async(err,doc) => {
+        console.log(doc)
+        if(err){
+            throw err
+        }
+        if(doc){
+            res.send({message: "User Exists"})
+        }
+       if(!doc){
+        const newUser = new User({
+            name:req.body.name,
+            email:req.body.email,
+            public_picture: req.body.public_picture,
+            username: req.body.email.toString().split('@')[0],
+            joined_on: req.body.joined_on,
+            account_type: req.body.account_type,
+            googleId: req.body.googleId
+        })
+        await newUser.save()
+        res.send({message: "User Created"})
+       }
+    })
+})
 app.post('/post/create', verify, async(req,res) => {
     
     let {title,body,tags,coverImageURL,withExcerpt, postId} = req.body
@@ -545,33 +573,7 @@ app.post('/api/publicPicture', async(req,res) => {
         res.send(pictureBuffer)
 })
 
-app.post('/api/signup' ,async(req,res) => {
-   
-   
-    console.log(req.body)
-    User.findOne({email: req.body.email}, async(err,doc) => {
-        console.log(doc)
-        if(err){
-            throw err
-        }
-        if(doc){
-            res.send({message: "User Exists"})
-        }
-       if(!doc){
-        const newUser = new User({
-            name:req.body.name,
-            email:req.body.email,
-            public_picture: req.body.public_picture,
-            username: req.body.email.toString().split('@')[0],
-            joined_on: req.body.joined_on,
-            account_type: req.body.account_type,
-            googleId: req.body.googleId
-        })
-        await newUser.save()
-        res.send({message: "User Created"})
-       }
-    })
-})
+
  
 
 app.get('/api/user' , verify, (req,res) => {
