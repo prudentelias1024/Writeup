@@ -20,6 +20,7 @@ const http = require('http')
 const server = http.createServer(app)
 //Dynamic URL
 let URL;
+
 if (process.env.NODE_ENV == 'production') {
     URL = "https://inkup-api.onrender.com"
   }else{
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV == 'production') {
            
   }
 const io  = require('socket.io')(server, {
+    
     cors:{
     origin: URL,
     method: ["GET", "POST"],
@@ -45,7 +47,7 @@ io.on('connection',(socket) => {
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
-
+console.log(URL)
 app.use(cors({
     origin: URL,
     credentials: true
