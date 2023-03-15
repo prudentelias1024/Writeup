@@ -60,6 +60,7 @@ const verify = (req,res,next) => {
     if(authHeader){
         let token = authHeader.toString().split(' ')[1]
      jwt.verify(token,'Inkware Non-Member', (err,user) => {
+        console.log(user)
             if(err){res.status(401).json("Token is invalid")}
             if(user){
               
@@ -256,6 +257,11 @@ app.post('/api/notification/follow',verify, async(req,res) => {
             res.send({Authorization: `Bearer ${access_token}`})
         }
     })
+})
+
+app.get('/api/user' , verify, (req,res) => {
+    // console.log(req.user)
+  res.send(req.user)
 })
 
 app.post('/api/signup' ,async(req,res) => {
@@ -575,11 +581,6 @@ app.post('/api/publicPicture', async(req,res) => {
 
 
  
-
-app.get('/api/user' , verify, (req,res) => {
-    // console.log(req.user)
-  res.send(req.user)
-})
 
 app.post('/api/user/edit', verify, (req,res) => {
     changes = req.body.profileChanges
