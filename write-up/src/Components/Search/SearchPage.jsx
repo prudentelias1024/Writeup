@@ -235,7 +235,7 @@ const SearchPage = () => {
                 {searchResult !== null && searchResult.user.length !== 0 ?
                      searchResult.user.length > 4 ?
                      searchResult.user.slice(searchResult.length - 4 , searchResult.length - 1).map((people,index) => {
-                        return( <div className='flex flex-row pl-[1em]' key={index}>
+                        return( <div className='flex flex-row pl-[1em] mb-[1em]' key={index}>
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
                             <p className="font-[Mulish] w-full text-md font-bold">{people.name}</p>
@@ -251,7 +251,7 @@ const SearchPage = () => {
                      }
                     </div>)
                     }) : searchResult.user.map((people,index) => {
-                        return( <div className='flex flex-row pl-[1em]' key={index}>
+                        return( <div className='flex flex-row pl-[1em] mb-[1em]' key={index}>
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
                             <p className="font-[Mulish] w-full text-md font-bold">{people.name}</p>

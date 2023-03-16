@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import NavBar from './NavBar';
 import Button from './Navbar/Button';
 import {FcGoogle} from 'react-icons/fc'
@@ -12,6 +12,7 @@ import {userContext} from '../Contexts/userContext';
 import axios  from 'axios';
 import { useDispatch } from 'react-redux';
 import { actions } from '../store';
+import TwitterLogin from 'react-twitter-login-button'
 const Login = () => {
     let URL  = "https://inkup-api.onrender.com";
     useEffect(() => {
@@ -21,6 +22,7 @@ const Login = () => {
             URL = "http://localhost:5000"
                    
           }
+
     }, [])
    const navigate = useNavigate()
     
@@ -31,7 +33,7 @@ const Login = () => {
     const {profile} = useProfile()
    
     const [email, setEmail] = useState()
-   
+   const twitterRef = useRef()
     const dispatch = useDispatch()
     const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -88,8 +90,10 @@ const Login = () => {
     }
  
      const loginWihTwitter = () => {
-
+      
+    
      }
+     
   
         
 
@@ -113,11 +117,13 @@ const Login = () => {
 
           </button>
          
-          <button onClick={loginWihTwitter} className="bg-black text-white  w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
+          <button onClick={() => {loginWihTwitter()}} className="bg-black text-white  w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
               <BsTwitter className='text-[1d9bf0] text-4xl ml-3'/>
               <p className='font-[Museo] text-xl font-semibold -mt-8 ml-3 '>Login With Twitter</p>
 
           </button>
+         
+         
         
           <form className='flex flex-col gap-10 ml-2 mt-10'  >
             <div>
