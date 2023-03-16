@@ -61,7 +61,6 @@ const verify = (req,res,next) => {
         let token = authHeader.toString().split(' ')[1]
        
      jwt.verify(token,process.env.INKUP_SECRET_KEY, (err,user) => {
-        console.log(user)
             if(err){res.status(401).json("Token is invalid")}
             if(user){
               
@@ -116,15 +115,54 @@ app.get('/api/notifications/length', verify, async(req,res) => {
     })
 })
 app.post('/api/notification/like',verify, async(req,res) => {
-      const {postId, author,post_name} = req.body
-   console.log(author)
-   if(author._id !== req.user._id){
+  const {postId, author,post_name} = req.body
+  notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
+   if (err) { throw err;}
+    if (doc) {
+        console.log(doc)
+        console.log(req.user._id, author._id)
+          //incase there's nothing in the db
+     
+  if (doc.length == 0 ) {
+    console.log(doc.length)
+       if (req.user._id !== author._id ) {
+              
     const newNotification = new notifications({
-        userId: author._id,
+        userId: author._id, //Notification receiver
+        postId: postId,
+        actionUserId: req.user._id,
         message: [
             {
 
-            user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}]
+            user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}]
+        
+            ,
+            post: [{name: post_name }, {link: `p/@${author.username}/${postId}`}]
+        }
+         ],
+        type: 'like'
+       
+
+    })
+    await newNotification.save()
+
+       }
+    }else{
+         //check against duplications of notifications
+         //If the author likes his/her post do not create any notifications
+       let exists =  doc.some((notification) =>{return notification.type == 'like'} )
+     console.log(exists)
+    if (exists === false &&  req.user._id !== author._id) {
+        
+    
+    const newNotification = new notifications({
+        userId: author._id,
+        postId: postId,
+        actionUserId: req.user._id,
+        message: [
+            {
+
+            user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}]
         
             ,
             post: [{name: post_name }, {link: `p/@${author.username}/${postId}`}]
@@ -136,6 +174,14 @@ app.post('/api/notification/like',verify, async(req,res) => {
     })
     await newNotification.save()
 }
+    }
+
+     
+    }
+  })
+
+   
+  
 })
 app.post('/api/notification/comment',verify, async(req,res) => {
      const {postId, author,post_name} = req.body
@@ -155,16 +201,44 @@ app.post('/api/notification/comment',verify, async(req,res) => {
 })
 app.post('/api/notification/bookmark',verify, async(req,res) => {
      const {postId, author,post_name} = req.body
-    if(author._id !== req.user._id){
+     notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
+        if (err) {
+         throw err;
+        }
+         if (doc) {
+        if (doc.length == 0) {
+            if (req.user._id !== author._id ) {
    
-    const newNotification = new notifications({
-        userId: author._id,
-        message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}],post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
-        type: 'bookmark'
-       
-    })
-    await newNotification.save()
-    }
+            const newNotification = new notifications({
+                userId: author._id,
+                postId: postId,
+                actionUserId: req.user._id,
+                message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}],post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
+                type: 'bookmark'
+            
+            })
+            await newNotification.save()
+        }
+        } else {
+             //check against duplications of notifications
+             let exists =  doc.some((notification) =>{return notification.type == 'bookmark'} )
+          if (exists === false  && author._id !== req.user._id) {
+            //check if the author of the post doesn't bookmark if the author bookmark his/her post don't create notification
+           
+        
+            const newNotification = new notifications({
+                userId: author._id,
+                actionUserId: req.user._id,
+                postId: postId,
+                message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}],post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
+                type: 'bookmark'
+            
+            })
+            await newNotification.save()
+        }  
+}
+         }
+        })
 })
 app.post('/api/notification/welcome',verify, (req,res) => {
 
@@ -486,21 +560,35 @@ app.get('/api/posts',  (req,res) => {
 })
 
 app.post('/post/like', verify, (req,res) => {
-  
-    PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {likes: req.user._id}}, {new:false}, (err,doc) => {
-        if (err) {
-            throw err
-        }
-        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('author').exec((err,populatedDoc) => {
-        if (err) {
-            throw err
-        }
-        if (populatedDoc) {
-            res.send(populatedDoc[0])
-        }
+    
+   PublishedPosts.findOne({postId: req.body.postId}).select('likes').exec((err,doc) => {
+    if (err) {throw err  }
+    if (doc) {
+      
         
-    })
-    })
+      if(   doc.likes.indexOf(req.user._id) == -1){
+        PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {likes: req.user._id}}, {new:false}, (err,doc) => {
+            if (err) {
+                throw err
+            } if(doc){
+         
+            }
+            PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('author').exec((err,populatedDoc) => {
+            if (err) {
+                throw err
+            }
+            if (populatedDoc) {
+                res.send(populatedDoc[0])
+            }
+            
+        })
+    
+        })
+      }
+
+     }
+   }) 
+  
 })
 app.post('/post/comment', verify, (req,res) => {
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {comments: [{user: req.user._id, message: req.body.comment}] }}, {new:true}, (err,doc) => {
@@ -538,6 +626,11 @@ app.post('/post/unlike', verify, (req,res) => {
 app.post('/post/bookmark', verify, (req,res) => {
     console.log(req.body.postId);
     console.log(req.user._id);
+    PublishedPosts.findOne({postId: req.body.postId}).select('bookmarks').exec((err,doc) => {
+        if (err) {throw err  }
+        if (doc) {
+            
+          if(doc.bookmarks.indexOf(req.user._id) == -1){
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
@@ -552,6 +645,9 @@ app.post('/post/bookmark', verify, (req,res) => {
         
     })
     })
+}
+}
+})
 })
 app.post('/post/unbookmark', verify, (req,res) => {
     console.log(req.body.postId);

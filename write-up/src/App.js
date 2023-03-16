@@ -23,7 +23,7 @@ import TagTemplate from './Components/Tag/TagTemplate';
 import ReadLater from './Components/ReadLater';
 import SearchPage from './Components/Search/SearchPage';
 function App() {
-        let URL;
+        let URL
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
   
@@ -51,10 +51,12 @@ function App() {
      }
       useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
+          dispatch(actions.updateURL("https://inkup-api.onrender.com"))
           URL = "https://inkup-api.onrender.com"
         }else{
-          URL = "http://localhost:5000"
-                 
+          
+          dispatch(actions.updateURL("http://localhost:5000"))
+          URL =  "http://localhost:5000" 
         }
     
       

@@ -15,8 +15,8 @@ import { actions } from '../../store';
 import LoginModal from '../loginModal';
 const MyPosts = () => {
   
-  let URL;
- const {user,showModal} =  useSelector(state => state)
+ ;
+ const {user,showModal,URL} =  useSelector(state => state)
  const [liked,setLiked] = useState()
  const [followed,setFollowed] = useState(false)
  const [bookmarked,setBookmarked] = useState()
@@ -85,33 +85,35 @@ const MyPosts = () => {
       if (user == null) {
         dispatch(actions.setShowModal(true))
       }else{
+        
+        setLiked(true)
+     
       let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
       let likeNotification = await(await axios.post(`${URL}/api/notification/like`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
-     
+      console.log(res)   
       setPost(res)
-      setLiked(true)
       }
       } 
     const unlikePost = async(postId) => {
+      setLiked(false)
       let  res = await(await axios.post(`${URL}/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(res)
       setPost(res)
-      setLiked(false)
          
       } 
     
     useEffect(() => {
-      if (process.env.NODE_ENV == 'production') {
-        URL = "https://inkup-api.onrender.com"
-      }else{
-        URL = "http://localhost:5000"
-               
-      }
+       
+       
      setTimeout(() => {
+   
       increasePostView()
      }, 5000);
-      getPost();
-      getOtherAuthorPost();
+   
+      
+       getPost();
+       getOtherAuthorPost();
+   
        
      
     }, [])
@@ -141,11 +143,11 @@ const MyPosts = () => {
       if (user == null) {
         dispatch(actions.setShowModal(true))
       }else{
+        setBookmarked(true)
       let  res = await(await axios.post(`${URL}/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
       let bookmarkNotification = await(await axios.post(`${URL}/api/notification/bookmark`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
       setPost(res)
-      setBookmarked(true)
       } }
       
      const unbookmarkPost = async(postId) => {

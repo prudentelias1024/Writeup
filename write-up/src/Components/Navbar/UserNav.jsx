@@ -8,8 +8,8 @@ import { actions } from "../../store";
 import axios from "axios";
 import { locale } from "moment";
 export default function UserNav(){
-   let URL;
-    const { user} = useSelector((state) => state)
+   
+    const { user, URL} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
     const {notifications} = useSelector(state => state)
@@ -17,18 +17,13 @@ export default function UserNav(){
     const [newNotification, setNewNotification] = useState(false)
      const helperRef   = useRef()
     useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            URL = "https://inkup-api.onrender.com"
-          }else{
-            URL = "http://localhost:5000"
-                   
-          }
+       
        setInterval(() => {
         if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
             
             pollNotifications()
         }
-       }, 300000);
+       }, 100000);
        if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
           
        pollNotifications()

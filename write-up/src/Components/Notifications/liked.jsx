@@ -7,12 +7,13 @@ import { actions } from '../../store';
 
 import { time } from "../../time";
 const Liked = ({notification}) => {
-    const {notifications} = useSelector(state => state)
+    const {notifications,URL} = useSelector(state => state)
     const dispatch = useDispatch()
     const [timeCreated,setTimeCreated] = useState()
     const markAsRead = async(_id) => {
-        let URL
+       
         let temp = []
+        console.log(URL)
         const newNotification = await (await axios.post(`${URL}/api/notification/read`,{_id:_id}, {headers:{Authorization: localStorage.getItem('token')}})).data
           let index = notifications.findIndex((notification) =>{return notification._id === newNotification._id})
         temp = [...notifications]
@@ -22,19 +23,15 @@ const Liked = ({notification}) => {
        }
     useEffect(() => {
       
-        if (process.env.NODE_ENV == 'production') {
-            URL = "https://inkup-api.onrender.com"
-          }else{
-            URL = "http://localhost:5000"
-                   
-          }
+      
         setTimeout(() => {
             markAsRead(notification._id)
         }, 3000);
+        
         setInterval(() => {
             setTimeCreated(time(notification.createdAt))  
         }, 500);
-    }, [timeCreated]);
+    }, []);
     return (
         <div>
             <div className='flex flex-col lg:flex-row gap-3 m-auto w-[115%] lg:w-[57.6%] lg:m-auto bg-white p-[1em]  justify-between lg:pl-[7em] hover:scale-110'>

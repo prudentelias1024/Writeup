@@ -5,6 +5,14 @@ const notificationsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
       },
+    actionUserId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+    postId: {
+        type: String,
+        required: false,
+      },
       message: [
         {
         user: [
