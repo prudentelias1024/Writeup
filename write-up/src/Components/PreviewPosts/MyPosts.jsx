@@ -89,9 +89,10 @@ const MyPosts = () => {
         setLiked(true)
      
       let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      let likeNotification = await(await axios.post(`${URL}/api/notification/like`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)   
       setPost(res)
+      let likeNotification = await(await axios.post(`${URL}/api/notification/like`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
+     
       }
       } 
     const unlikePost = async(postId) => {
