@@ -47,7 +47,7 @@ export function Like({likes,postId,username}){
        if (liked == true) {
       return (
         <div className="flex flex-row gap-3">
-        <FaHeart onClick={(event) => {likePost(postId)}} className="text-xl "/> 
+        <FaHeart onClick={(event) => {likePost(postId)}} className="text-xl text-red-500"/> 
         <div className="flex gap-2">
         <p className="font-[Mulish] -mt-[.09em]">
             {
