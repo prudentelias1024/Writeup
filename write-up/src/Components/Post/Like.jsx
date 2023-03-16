@@ -61,7 +61,7 @@ export function Like({likes,postId,username}){
        } else {
          return(
             <div className="flex flex-row gap-3">
-            <FaRegHeart onClick={(event) => {unlikePost(postId)}} className="text-xl "/> 
+            <FaRegHeart onClick={(event) => {unlikePost(postId)}} className="text-xl text-red-500 "/> 
             <div className="flex gap-2">
             <p className="font-[Mulish] -mt-[.09em]">
                 {
