@@ -16,7 +16,7 @@ export default function AuthorInfo({author,timestamp}){
         <img src={author.public_picture} className='w-[2.5em] h-[2.5em] lg:w-[3em] lg:h-[3em] rounded-full object-cover' /> 
 
         <div className=''>
-                <p className="author_title  text-md font-extrabold  text-[#171717] lg:text-xl font-[Montserrat]"> {
+                <p className="author_title  text-md font-bold  text-[#171717] lg:text-xl font-[Montserrat]"> {
                 user !== null ?
                 author.name !== user.name ?
                 author.name: 'You':

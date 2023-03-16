@@ -30,6 +30,10 @@ body
     src: url('./fonts/Lobster-Regular.ttf');
 }
 @font-face {
+    font-family: Alegreya_Sans;
+    src: url('./fonts/static/AlegreyaSans-Thin.ttf');
+}
+@font-face {
     font-family: Mulish;
     src: url('./fonts/Mulish.ttf');
 }
