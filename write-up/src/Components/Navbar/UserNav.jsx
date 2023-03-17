@@ -28,7 +28,7 @@ export default function UserNav(){
             
             pollNotifications()
         }
-       }, 100000);
+       }, 50000);
        if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
        
             
