@@ -57,13 +57,15 @@ export default function TrendingTags(){
         temp.push(tag.tags)
        
     })
+    console.log(temp)
     temp.map((tag) => {
-        for (let i = 0; i < temp.length + 2; i++){
+        for (let i = 0; i < tag.length ; i++){
+     
          tagsArray.push(tag[i])
        }
       
     })
-
+    console.log(tagsArray)
     tagsArray.map((tag) => {
       if (tagCount[tag]){
         
