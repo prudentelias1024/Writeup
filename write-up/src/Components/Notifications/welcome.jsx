@@ -10,7 +10,7 @@ const Welcome = () => {
     <div className=' w-[85%] font-[Mulish] lg:m-auto font-semibold leading-8 mb-[1em]'>
 
     <p className='text-3xl text-center mb-[1em] mt-[1em] m-auto'>🎈🎉🎁</p>
-     <p className='w-[95%] ml-[1em]'>Welcome to Inkup! 👏👏👏. We offer Writers of all kind, the platform to showcase their writing and menthorship ability to others </p> 
+     <p className='w-[95%] ml-[1em]'>Welcome to Inkup! 👏👏👏. We offer Writers of all kind, the platform to showcase their writing and mentorship ability to others </p> 
      
     </div>
     </div>
