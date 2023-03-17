@@ -74,7 +74,7 @@ const Tags = () => {
     console.log(temp)
    //Extract all tags
     temp.map((tag) => {
-        for (let i = 0; i < temp.length + 2; i++){
+        for (let i = 0; i < tag.length ; i++){
          tagsArray.push(tag[i])
        }
       

@@ -81,6 +81,41 @@ const verify = (req,res,next) => {
         res.status(403).json("You are not authenticated")
     }
 }
+const followingTagsPosts = (tags) => {
+    //First algorithm, the one which takes precedence over other algorithm this algorithm is handpicked by the user the moment they follow a tag
+    let followingPosts = []
+     tags.map((tag) => {
+         PublishedPosts.find({tags: {$in: `#${tag}`}}).exec((err,doc) => {
+           if(err){throw err}
+           if(doc){
+           
+            doc.map((post) => {
+                //This prevent the algorithm from giving duplicate post given the user is following the tags of the post
+                if(followingPosts.filter((followingPost) => {return followingPost.postId == post.postId }).length == 0){
+                   followingPosts.push(post)
+                   console.log(followingPosts.length)
+                }
+            })
+           }
+        })
+
+     })
+     return  followingPosts
+}
+const followingUserPosts = (authors) => {
+let interestedUserPosts = []
+    authors.map((author) => {
+        PublishedPosts.find({author: author }).exec((err,doc) => {
+           if(err){throw err}
+           if(doc){
+            interestedUserPosts.push(doc)
+           }
+        })
+
+    })
+    return interestedUserPosts
+}
+
 app.get('/', (req,res) => {
     res.setHeader("Access-Control-Allow-Credentials","true")
     res.send('API is running....')
@@ -548,8 +583,16 @@ app.get('/api/posts',  (req,res) => {
        
        }
    })
+  
+  
+})
+app.get('/api/posts/personalised', verify, (req,res) => {
+    let userPersonalised = []
+    res.setHeader("Access-Control-Allow-Credentials","true")
+    console.log(followingTagsPosts(req.user.followingTags))
+    console.log(followingUserPosts(req.user.following))
     
-   
+  
   
 })
 

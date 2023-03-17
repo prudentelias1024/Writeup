@@ -38,6 +38,11 @@ function App() {
          console.log(res_posts)
        dispatch(actions.updatePosts(res_posts))
      }
+       const getPersonalisedPosts = async() => {
+        let  res_posts = await(await axios.get(`${URL}/api/posts/personalised`,{headers: {Authorization: localStorage.getItem('token')}})).data
+        
+       dispatch(actions.updatePosts(res_posts))
+     }
        const getNotifications = async() => {
         let  notifications = await(await axios.get(`${URL}/api/notifications`,{headers: {Authorization: localStorage.getItem('token')}})).data
        dispatch(actions.updateNotifications(notifications))
@@ -63,6 +68,7 @@ function App() {
           getPosts();
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== undefined) {
+          getPersonalisedPosts()
           loadUser();
           getNotifications()
           
@@ -84,6 +90,7 @@ function App() {
       <Route path='/settings' element={<Settings/>}/>
       <Route path='/login'  element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>
+      <Route path='/register' element={<SignUp/>}/>
       <Route path='/create' element={<CreatePosts/>}/>
       <Route path='/Dashboard'  element={<Dashboard/>}/>
       <Route path='/Dashboard/followers'  element={<Followers/>}/>

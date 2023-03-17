@@ -1,8 +1,9 @@
 // //TODO: 
         // Task                             Status
         //Create Mobile Versions of Inkup   Done
-    //Make Blog Postable on Inkup
+    //Make Blog Postable on Inkup           Done
     //Create Various Algorithm
+    
     // -Top post by page views
     // Top posts by page views:
     // This algorithm sorts your blog posts by the number of page views they have received and presents a list of the top posts to readers.
