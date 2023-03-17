@@ -39,7 +39,7 @@ const Commented = ({notification}) => {
     }, [timeCreated]);
     return (
         <div>
-            <div className='flex flex-col lg:flex-row gap-3 lg:w-[57.6%] w-[115%] lg:m-auto bg-white p-[1em] m-auto justify-between lg:pl-[7em] hover:scale-110'>
+            <div className='flex flex-col lg:flex-row gap-3 lg:w-[60%] w-[115%] lg:m-auto bg-white p-[1em] m-auto justify-between lg:pl-[7em] hover:scale-110'>
             {
             notification.read == false? 
             <p className='lg:ml-[-6em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Unread </p>
@@ -52,7 +52,7 @@ const Commented = ({notification}) => {
          <p className='font-[Mulish] text-xl lg:ml-[-.5em] lg:mt-[.5em] -mt-[.75em]'><Link to='/' className='font-bold font-[Mulish]'>Jace  </Link> commented  <Link className='text-blue-600 font-bold' to="/">Lorem ipsum dolor sit amet consectetur adipisicing elit.</Link></p> 
          
         </div>
-        <p className="font-[Mulish] text-gray-400 lg:my-auto m-auto lg:ml-[-2em] font-bold">2 mins ago</p>
+        <p className="font-[Mulish] text-gray-400 lg:my-auto m-auto lg:ml-[-2em] font-bold">{timeCreated}</p>
   </div>
         </div>
     );

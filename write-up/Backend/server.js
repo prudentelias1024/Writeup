@@ -92,19 +92,12 @@ notifications.find({userId: req.user._id},(err,doc) => {
     if(err){throw err}
     if(doc) {
        
-        res.send(doc)
+        res.send(doc.reverse())
     }
 })
 })
 
-app.get('/api/notifications/length', verify, async(req,res) => {
-     notifications.find({userId: req.user._id},(err,doc) => {
-    if(err){throw err}
-    if(doc) {
-        res.send({length: doc.length})
-    }
-})
-})
+
     app.post('/api/notification/read', verify, async(req,res) => {
      notifications.findByIdAndUpdate(req.body._id, {read:true},{new:true}, (err,doc) => {
         if(err){throw err}
@@ -114,6 +107,7 @@ app.get('/api/notifications/length', verify, async(req,res) => {
         }
     })
 })
+
 app.post('/api/notification/like',verify, async(req,res) => {
   const {postId, author,post_name} = req.body
   notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
@@ -319,7 +313,7 @@ app.post('/api/notification/follow',verify, async(req,res) => {
    
  })
 
-    app.post('/api/login' ,(req,res) => {
+app.post('/api/login' ,(req,res) => {
     console.log(req.body)
      User.findOne({googleId: req.body.googleId},(err,user) => {
         console.log(user)
@@ -332,7 +326,7 @@ app.post('/api/notification/follow',verify, async(req,res) => {
             res.send({Authorization: `Bearer ${access_token}`})
         }
     })
-})
+    })
 
 app.get('/api/user' , verify, (req,res) => {
     // console.log(req.user)

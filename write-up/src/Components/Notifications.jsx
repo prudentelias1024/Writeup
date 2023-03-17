@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
 import io from 'socket.io-client'
 import Followed from './Notifications/followed';
@@ -18,12 +18,17 @@ import {useSelector} from 'react-redux'
 //system
 const Notifications = () => {
     const {notifications} = useSelector(state => state)
+  
+    
     return (
         <>
         <NavBar/>
         <div className='pt-[6em] lg:pt-[8em] w-[100%]  flex flex-col gap-[.75em]'>
-            {notifications && notifications.length !== 0?
+            {
+            notifications && notifications.length !== 0?
+            
               notifications.map((notification) => {
+                console.log(notification)
                 if(notification.type == 'like'){
                   return <Liked notification={notification}/>
                 }

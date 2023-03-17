@@ -39,7 +39,7 @@ const Bookmarked = ({notification}) => {
     }, [timeCreated]);
     return (
         <div>
-            <div className='flex flex-col lg:flex-row lg:gap-3 w-[115%] lg:w-[57.6%] lg:m-auto bg-white p-[1em] ml-auto justify-between lg:pl-[7em] hover:scale-110'>
+            <div className='flex flex-col lg:flex-row lg:gap-3 w-[115%] lg:w-[60%] lg:m-auto bg-white p-[1em] ml-auto justify-between lg:pl-[7em] hover:scale-110'>
             {
             notification.read == false? 
             <p className='lg:ml-[-6em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Unread </p>
@@ -54,7 +54,7 @@ const Bookmarked = ({notification}) => {
          </p> 
         
         </div>
-        <p className="font-[Mulish] text-gray-400 my-auto m-auto lg:ml-[-1em] font-bold">2 mins ago</p>
+        <p className="font-[Mulish] text-gray-400 my-auto m-auto lg:ml-[-2em] font-bold">{timeCreated}</p>
          
   </div>
         </div>

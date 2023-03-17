@@ -10,20 +10,11 @@ import {  useGoogleLogin } from '@react-oauth/google';
 import {  useFacebook, useLogin, useProfile} from "react-facebook";
 import {userContext} from '../Contexts/userContext';
 import axios  from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../store';
 import TwitterLogin from 'react-twitter-login-button'
 const Login = () => {
-    let URL  = "https://inkup-api.onrender.com";
-    useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            URL = "https://inkup-api.onrender.com"
-          }else{
-            URL = "http://localhost:5000"
-                   
-          }
-
-    }, [])
+   const {URL} = useSelector(state => state)
    const navigate = useNavigate()
     
    const [token,setToken] = useState()

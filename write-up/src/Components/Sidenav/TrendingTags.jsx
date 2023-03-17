@@ -3,7 +3,7 @@ import axios  from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 export default function TrendingTags(){
-  let URL;
+   let URL
     const [tagCount, setTagCount] = useState({})
     const [tags,setTags] = useState([])
     const {user} = useSelector(state => state)
@@ -103,15 +103,16 @@ export default function TrendingTags(){
     }
    
     useEffect(() => {
+     
       if (process.env.NODE_ENV == 'production') {
-        URL = "https://inkup-api.onrender.com"
+              URL = "https://inkup-api.onrender.com"
       }else{
-        URL = "http://localhost:5000"
-               
+        URL =  "http://localhost:5000" 
       }
-      console.log(URL)
-       getTags()
-       setTagCount({})
+      setTimeout(() => {
+        getTags()
+        setTagCount({})
+      }, 500);
        
     }, [])
     return(

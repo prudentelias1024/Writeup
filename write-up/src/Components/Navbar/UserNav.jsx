@@ -8,16 +8,21 @@ import { actions } from "../../store";
 import axios from "axios";
 import { locale } from "moment";
 export default function UserNav(){
-   
-    const { user, URL} = useSelector((state) => state)
+    let URL;
+    const { user} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
-    const {notifications} = useSelector(state => state)
-    const dispatch = useDispatch()
-    const [newNotification, setNewNotification] = useState(false)
+   const dispatch = useDispatch()
      const helperRef   = useRef()
     useEffect(() => {
-       
+        if (process.env.NODE_ENV == 'production') {
+            dispatch(actions.updateURL("https://inkup-api.onrender.com"))
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            
+            dispatch(actions.updateURL("http://localhost:5000"))
+            URL =  "http://localhost:5000" 
+          }
        setInterval(() => {
         if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
             
@@ -25,26 +30,30 @@ export default function UserNav(){
         }
        }, 100000);
        if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
-          
-       pollNotifications()
+       
+            
+              pollNotifications()
+         
        }
-    })
+    },[])
     const pollNotifications = async() => {
-     const oldNotificationsLength = notifications.length
-   
-     const newNotificationsLength = await( await axios.get(`${URL}/api/notifications/length`,{headers:{Authorization: localStorage.getItem('token')}})).data.length
-     if(newNotificationsLength > oldNotificationsLength) { 
-        let newNotifications = await(await axios.get(`${URL}/api/notifications`,{headers:{Authorization: localStorage.getItem('token')}})).data
+          let newNotifications = await(await axios.get(`${URL}/api/notifications`,{headers:{Authorization: localStorage.getItem('token')}})).data
+       
         dispatch(actions.updateNotifications(newNotifications))
-
-         setNewNotification(true)
-         const result =  notifications.filter((notification) => {
-            return notification.read == true
+         const read =  newNotifications.filter((notification) => {
+            return notification.read === false
          })
-       if(result.length == notifications.length) {
+    
+       
+       if(read.length == 0) {
          setAllRead(true)
+       } else {
+         setAllRead(false)
        }
-     }
+      
+    
+      
+     
     }
     const toggleHelper = () => {
          setToggled(!toggled)
@@ -68,9 +77,9 @@ export default function UserNav(){
             <Button additionalStyles="" to="/signup" name="Create an account" borderColor="border-pink-500" textColor=" text-pink-500"/>
         
             </div> :
-             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[64em]">
+             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[55em]">
             
-            <Button to="/create" additionalStyles="hidden lg:block" name="Create Posts" borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
+            <Button to="/create" additionalStyles="hidden lg:block" name="Write a Post " borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
             <IoIosSearch    className="lg:hidden text-4xl mt-[.125em]"/>  
         
            <Link to="/create">
@@ -78,7 +87,7 @@ export default function UserNav(){
            </Link>
             <Link to="/notifications">
            {
-            newNotification == true && allRead == false ?
+            allRead == false ?
             <VscBellDot className="text-4xl mt-0" />:
             <IoIosNotificationsOutline className="text-4xl mt-0"/>
         }

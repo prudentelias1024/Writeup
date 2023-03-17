@@ -40,8 +40,8 @@ function App() {
      }
        const getNotifications = async() => {
         let  notifications = await(await axios.get(`${URL}/api/notifications`,{headers: {Authorization: localStorage.getItem('token')}})).data
-  
        dispatch(actions.updateNotifications(notifications))
+       console.log(notifications)
      }
 
      const getBookmarkedPosts = async() => {
@@ -59,7 +59,7 @@ function App() {
           URL =  "http://localhost:5000" 
         }
     
-      
+        console.log(URL)
           getPosts();
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== undefined) {
