@@ -15,17 +15,33 @@ import { actions } from '../../store';
 import LoginModal from '../loginModal';
 const MyPosts = () => {
   
- ;
+  useEffect(() => {
+       
+       
+    setTimeout(() => {
+  
+     increasePostView()
+    }, 5000);
+  
+     
+      getPost();
+      getOtherAuthorPost();
+  
+      
+    
+   }, [])
  const {user,showModal,URL} =  useSelector(state => state)
  const [liked,setLiked] = useState()
  const [followed,setFollowed] = useState(false)
  const [bookmarked,setBookmarked] = useState()
+ const [commented,setCommented] = useState(false)
   const params = useParams()
   const likeRef = useRef()
   const bookmarkRef = useRef()
   const [post,setPost] = useState(null)
   const  dispatch = useDispatch()
    const [otherAuthorPost,setOtherAuthorPost] = useState(null)
+  
   const increasePostView = async() => {
     let res = await (await axios.post(`${URL}/post/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
   }
@@ -103,21 +119,7 @@ const MyPosts = () => {
          
       } 
     
-    useEffect(() => {
-       
-       
-     setTimeout(() => {
-   
-      increasePostView()
-     }, 5000);
-   
-      
-       getPost();
-       getOtherAuthorPost();
-   
-       
-     
-    }, [])
+    
  
    const [comment,setComment] = useState('')
     let modules = {
@@ -134,10 +136,13 @@ const MyPosts = () => {
       }
   
      const commentPost = async(user,postId,name,author, commentWords) => {
-      let  res = await(await axios.post(`${URL}/post/comment`,{user:user, postId:postId, comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      setCommented(true)
+      let  res = await(await axios.post(`${URL}/post/comment`,{user:user, postId:postId, post_name:name,comment:commentWords}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      setPost(res)
       let commentNotification = await(await axios.post(`${URL}/api/notification/comment`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)
-        setPost(res)
+       
+
         // setComment('')
       } 
      const bookmarkPost = async(postId,name,author) => {
@@ -204,7 +209,7 @@ const MyPosts = () => {
             </button>:
             
             <button className='rounded-full flex  lg:flex-col gap-[1em]'>
-                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.name,post.author)} className='text-2xl flex  lg:text-3xl text-black'/>
+                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.title,post.author)} className='text-2xl flex  lg:text-3xl text-black'/>
                     <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
                 </button>
                 }
@@ -254,17 +259,17 @@ const MyPosts = () => {
                 <div className='flex flex-row'>
                </div>
               
-                <ReactQuill modules={modules} defaultValue='' onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
+                <ReactQuill  modules={modules} defaultValue='' value={commented == true ? '' :comment } onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
      
-                <button onClick={(event) => {commentPost(user._id,post.postId,post.name,post.author,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
+                <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
 
 
                 </div>
                 {
-                  post.comments && post.comments.length > 0  && post.comments.map(comment => 
+                  post.comments && post.comments.length > 0  &&post.comments.map(comment => 
                   <Comment key={comment._id} commenter={comment.user} timestamp={comment.createdAt} body={comment.message}/>
                  
-                  )
+                  ).reverse()
                 }
                 
                 </div> :''          

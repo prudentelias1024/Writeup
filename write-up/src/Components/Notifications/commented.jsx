@@ -44,15 +44,15 @@ const Commented = ({notification}) => {
             notification.read == false? 
             <p className='font-[Outfit] lg:ml-[-6em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Unread </p>
            : <p className='font-[Outfit] lg:ml-[-6em] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Read </p> }
-        <img src={img} className='h-[3em] w-[3em] rounded-full m-auto' />
+        <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[3em] w-[3em] rounded-full m-auto' />
         <p className='relative left-[.5em] lg:left-[-1.75em] lg:top-2 m-auto -top-10 text-gray-600 text-3xl'>✍</p>
-        <div className='lg:-ml-[2.5em] w-[85%] font-[Mulish] m-auto '>
+        <div className='lg:-ml-[2.5em] w-[85%] font-[Outfit] m-auto '>
 
         
-         <p className='font-[Mulish] text-xl lg:ml-[-.5em] lg:mt-[.5em] -mt-[.75em]'><Link to='/' className='font-bold font-[Mulish]'>Jace  </Link> commented  <Link className='text-blue-600 font-bold' to="/">Lorem ipsum dolor sit amet consectetur adipisicing elit.</Link></p> 
+         <p className='font-[Outfit] text-xl lg:ml-[-.5em] lg:mt-[.5em] -mt-[.75em]'><Link className='font-bold font-[Outfit] text-xl' to={notification.message[0].user[1].link}>{notification.message[0].user[0].name}  </Link> commented <Link className='text-blue-600 font-bold text-xl' to={"/"+notification.message[0].post[1].link}>{notification.message[0].post[0].name}</Link></p> 
          
         </div>
-        <p className="font-[Mulish] text-gray-400 lg:my-auto m-auto lg:ml-[-2em] font-bold">{timeCreated}</p>
+        <p className="font-[Outfit] text-gray-400 lg:my-auto m-auto lg:ml-[-2em] font-bold">{timeCreated}</p>
   </div>
         </div>
     );

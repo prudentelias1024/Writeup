@@ -29,6 +29,11 @@ const PublishedPosts = new mongoose.Schema({
         type:Boolean,
         required:true
      },
+
+     readingTime : {
+        type: String,
+        required: true
+     },
     created: {
         type:Date,
         required:true

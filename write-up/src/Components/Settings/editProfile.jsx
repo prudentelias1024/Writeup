@@ -76,9 +76,9 @@ const EditProfile = () => {
         <>
         <NavBar/>
         <div className='edit top-32 relative '>
-            <form className="flex flex-col gap-[3em]  lg:ml-[20em] ">
+            <form className="flex flex-col lg:gap-[3em] gap-[1em]  lg:ml-[20em] ">
                 
-            <div className="user ml-[1.5em] pt-5 p-4 rounded-lg bg-white  lg:w-3/4">
+            <div className="user lg:ml-[1.5em] pt-5 p-4 lg:rounded-lg bg-white  lg:w-3/4">
             <p className="text-2xl font-bold font-[Outfit]">User</p>    
             <br></br>
              <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={profileChanges.name }/>
@@ -92,7 +92,7 @@ const EditProfile = () => {
              <p className='font-[Outfit] font-bold mb-[2.5em] text-xl'>Public Pic</p>
               <div className='flex flex-row gap-3'>
              <img className='rounded-full h-12 w-12 mt-2' src={user.public_picture} alt={user.name}   />
-            <div className='border p-4 rounded-lg -mt-[1em]  bg-[#f6f6f6] flex flex-row pl-[2em] gap-[.5em] w-full'>
+            <div className='border p-4 lg:rounded-lg -mt-[1em]  bg-[#f6f6f6] flex flex-row pl-[2em] gap-[.5em] w-full'>
                 
             <button className='bg-blue-500 py-3 h-fit text-white rounded-lg px-6'>Choose File</button>
             <p className='font-[Outfit] mt-[.5em] ml-[1em]'>No File Selected</p>
@@ -101,7 +101,7 @@ const EditProfile = () => {
              </div>
             </div>
 
-            <div className="user pt-5 p-4 rounded-lg bg-white lg:w-3/4 lg:ml-[1.5em]">
+            <div className="user pt-5 p-4 lg:rounded-lg bg-white lg:w-3/4 lg:ml-[1.5em]">
             <p className="text-2xl font-bold font-[Outfit]">Outworld Profile</p>    
             <br></br>
             <Input handleChanges={handleChanges} label="Work" placeholder="What do you like to decribe you work like?" />
@@ -112,7 +112,7 @@ const EditProfile = () => {
              <br></br>
            </div>
            
-            <div className="user pt-5 p-4 rounded-lg bg-white lg:w-3/4 lg:ml-[1.5em] ">
+            <div className="user pt-5 p-4 lg:rounded-lg bg-white lg:w-3/4 lg:ml-[1.5em] ">
             <p className="text-2xl font-bold font-[Outfit]">Personal</p>    
             <br></br>
             <Input handleChanges={handleChanges} label="Website URL" placeholder="Add your Website Link" />

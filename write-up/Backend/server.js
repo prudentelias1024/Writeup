@@ -18,6 +18,7 @@ const axios = require('axios')
 const firebase = require('firebase-admin')
 const http = require('http')
 const server = http.createServer(app)
+const nodemailer = require('nodemailer')
 //Dynamic URL
 let URL;
 
@@ -213,20 +214,73 @@ app.post('/api/notification/like',verify, async(req,res) => {
   
 })
 app.post('/api/notification/comment',verify, async(req,res) => {
-     const {postId, author,post_name} = req.body
-    if(author._id !== req.user._id){
-   
-    const newNotification = new notifications({
-        userId: author._id,
-        message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}],
-                   post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
-        type: 'comment'
+    const {postId, author,post_name} = req.body
+    notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
+     if (err) { throw err;}
+      if (doc) {
+          console.log(doc)
+          console.log(req.user._id, author._id)
+            //incase there's nothing in the db
        
-
+    if (doc.length == 0 ) {
+      console.log(doc.length)
+         if (req.user._id !== author._id ) {
+                
+      const newNotification = new notifications({
+          userId: author._id, //Notification receiver
+          postId: postId,
+          actionUserId: req.user._id,
+          message: [
+         
+              {
+  
+              user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}]
+          
+              ,
+              post: [{name: post_name }, {link: `p/@${author.username}/${postId}`}]
+          }
+           ],
+          type: 'comment'
+         
+  
+      })
+      await newNotification.save()
+  
+         }
+      }else{
+           //check against duplications of notifications
+           //If the author likes his/her post do not create any notifications
+         let exists =  doc.some((notification) =>{return notification.type == 'comment'} )
+       console.log(exists)
+      if (exists === false &&  req.user._id !== author._id) {
+          
+      
+      const newNotification = new notifications({
+          userId: author._id,
+          postId: postId,
+          actionUserId: req.user._id,
+          message: [
+              {
+  
+              user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}]
+          
+              ,
+              post: [{name: post_name }, {link: `p/@${author.username}/${postId}`}]
+          }
+           ],
+          type: 'comment'
+         
+  
+      })
+      await newNotification.save()
+  }
+      }
+  
+       
+      }
     })
-    await newNotification.save()
-}
-
+  
+     
 })
 app.post('/api/notification/bookmark',verify, async(req,res) => {
      const {postId, author,post_name} = req.body
@@ -242,6 +296,7 @@ app.post('/api/notification/bookmark',verify, async(req,res) => {
                 userId: author._id,
                 postId: postId,
                 actionUserId: req.user._id,
+                
                 message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}],post: [{name: post_name }, {link: `p/${author.username}/${postId}`}]} ],
                 type: 'bookmark'
             
@@ -397,7 +452,7 @@ app.post('/api/signup' ,async(req,res) => {
 })
 app.post('/post/create', verify, async(req,res) => {
     
-    let {title,body,tags,coverImageURL,withExcerpt, postId} = req.body
+    let {title,body,tags,coverImageURL,withExcerpt, postId, readingTime} = req.body
      tags  = tags.split(' ')
     const publishedPosts = new PublishedPosts({
         postId: postId,
@@ -407,7 +462,8 @@ app.post('/post/create', verify, async(req,res) => {
          coverImageURL: coverImageURL,
         author: req.user._id,
         created: moment(),
-        withExcerpt: withExcerpt
+        withExcerpt: withExcerpt,
+        readingTime: readingTime
         
     })
    await  publishedPosts.save()

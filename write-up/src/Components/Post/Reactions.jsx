@@ -1,4 +1,4 @@
-import { FaBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegEye } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Bookmark } from "./Bookmark";
 import { Comments } from "./Comments";
@@ -13,7 +13,16 @@ export function Reactions({post, remove}){
         <Like likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>
         <Comments comments={post.comments} postId={post.postId} username={user !== null ?user.username :''} />
         <Bookmark bookmarks={post.bookmarks} postId={post.postId} username={user !== null ?user.username :''}/>
-       </div>
+        {/* <div className='-mt-1 flex flex-row gap-1'>
+                <FaRegEye  className=' text-black-500 text-2xl'/>
+                <p className="total font-[Outfit]">{post.views} </p>  <p className="hidden lg:block">Views</p>
+                </div> */}
+                
+
+       </div> 
+         
+      
+
        </div>
     )
 }

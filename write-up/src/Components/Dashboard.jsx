@@ -60,7 +60,7 @@ const Dashboard = () => {
         <>
             <NavBar/>
             <div className="top-32 relative flex-col ">
-               <p className="flex flex-col font-[Outfit] font-semibold text-2xl ml-[1em] mb-[1em] lg:ml-44 lg:text-4xl">Dashboard</p>
+               <p className="flex flex-col font-[Outfit] font-semibold text-2xl lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
                <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6  lg:pl-[14em]">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
@@ -108,9 +108,9 @@ const Dashboard = () => {
                     }) :<>
                     <div className='flex flex-row gap-1 m-auto text-center'>
                         
-                     <p className='font-[Outfit]'> No Posts Yet??</p>
+                     <p className='font-[Outfit]  lg:mt-[-10em] lg:ml-[4em]'> No Posts Yet??</p>
   
-                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6'> Write a Post</Link>
+                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[-10em] lg:ml-[0em]'> Write a Post</Link>
                     </div>
                     </>
                   }

@@ -4,14 +4,28 @@ import mock from './mock.jpg'
 import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
 import {  Link} from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 export default function Post({post, removeReactions, showCoverImage, additionalStyles}) {
-  
+  const {user} = useSelector(state => state)
+  const [viewed, setViewed] = useState(false)
+  useEffect(() => {
+    checkViewed() 
+  }, [])
+     const checkViewed = () => {
+      if (user !== null) {
+        let status =  post.viewedBy.some((viewer) => {return viewer !== user._id })
+        setViewed(status)
+      }
+     
+     }
      return (
         
            
             <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-[full] border  rounded-lg   lg:p-[1em]'} >
-
-
+             {      viewed ?                   
+          <p className='font-[Outfit] mt-[1em] lg:mr-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg lg:mb-[1em]'>Viewed </p>: ''
+             }
            
             {/* {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
@@ -40,6 +54,11 @@ export default function Post({post, removeReactions, showCoverImage, additionalS
 
                 </div>
                 <Reactions post={post} remove={removeReactions}/>
+               {post.readingTime !== null || post.readingTime !== undefined || post.readingTime !== ''?
+
+                <div className='absolute bottom-[2em] right-6'>
+                  <p className='font-[Outfit] text-[#717171]'> {post.readingTime}</p>
+                  </div> : ''}
                 </div>
                  
  
