@@ -13,12 +13,12 @@ export default function Post({post, removeReactions, showCoverImage, additionalS
 
 
            
-            {
+            {/* {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
               <img src={post.coverImageURL} className={ showCoverImage + " w-full rounded-sm ml-[.5em]"} alt="" />
                  : null
          
-            }
+            } */}
             <div>        
                   <AuthorInfo timestamp={post.created}  author={post.author}/>
                  
