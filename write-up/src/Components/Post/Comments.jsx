@@ -5,10 +5,10 @@ export function Comments({comments,postId,username}){
         <div className="flex flex-row gap-3">
         <FaRegComment className="text-xl "/> 
         <div className="flex flex-row gap-2">
-        <p className="font-[Mulish] -mt-[.09em]">{
+        <p className="font-[Outfit] -mt-[.09em]">{
             comments.length
         } </p> 
-        <p className="hidden lg:block font-[Mulish] -mt-[.09em]">Comments </p> 
+        <p className="hidden lg:block font-[Outfit] -mt-[.09em]">Comments </p> 
         
             
             </div>

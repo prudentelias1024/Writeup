@@ -6,7 +6,7 @@ const DetailsCard = ({color, text,amount}) => {
             <p className="details_amount text-3xl mt-[.25em] lg:text-5xl  text-bold">
             {amount}
             </p>
-            <p className="details_content font-[Montserrat] text-base  lg:text-2xl font-semibold mt-3 lg:-ml-3 lg:mt-5 text-white-400">
+            <p className="details_content font-[Outfit] text-base  lg:text-2xl font-semibold mt-3 lg:-ml-3 lg:mt-5 text-white-400">
                {text}
             </p>
         </div>

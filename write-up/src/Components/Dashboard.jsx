@@ -60,7 +60,7 @@ const Dashboard = () => {
         <>
             <NavBar/>
             <div className="top-32 relative flex-col ">
-               <p className="flex flex-col font-[Montserrat] font-semibold text-2xl ml-[1em] mb-[1em] lg:ml-44 lg:text-4xl">Dashboard</p>
+               <p className="flex flex-col font-[Outfit] font-semibold text-2xl ml-[1em] mb-[1em] lg:ml-44 lg:text-4xl">Dashboard</p>
                <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6  lg:pl-[14em]">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
@@ -73,11 +73,11 @@ const Dashboard = () => {
                <div className=" lg:flex lg:flex-row lg:gap-3 lg:ml-[11em] mt-[3em]">
                 <div className="dashboard_navs hidden lg:block">
                     <ul >
-                        <li className='block hover:bg-green-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Posts <div className='bg-green-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{numberOfPosts}</div> </Link></li>
-                        <li className='block hover:bg-red-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Followers <div className='bg-red-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ?user.followers.length : '0'}</div> </Link></li>
-                        <li className='block hover:bg-yellow-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Following users <div className='bg-yellow-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ?user.following.length : '0'}</div> </Link></li>
-                        <li className='block hover:bg-purple-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Following tags <div className='bg-purple-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ? user.followingTags.length: '0'}</div> </Link></li>
-                        <li className='block hover:bg-orange-200'><Link className='flex flex-row gap-2 p-3 text-2xl mt-[.5em] '>Analytics <div className='bg-orange-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
+                        <li className='block font-[Maven] hover:bg-green-200'><Link className='flex flex-row gap-2 font-[Sora] p-3 text-2xl mt-[.5em] '>Posts <div className='bg-green-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{numberOfPosts}</div> </Link></li>
+                        <li className='block font-[Maven] hover:bg-red-200'><Link className='flex flex-row gap-2 font-[Sora] p-3 text-2xl mt-[.5em] '>Followers <div className='bg-red-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ?user.followers.length : '0'}</div> </Link></li>
+                        <li className='block font-[Maven] hover:bg-yellow-200'><Link className='flex flex-row gap-2 font-[Sora] p-3 text-2xl mt-[.5em] '>Following users <div className='bg-yellow-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ?user.following.length : '0'}</div> </Link></li>
+                        <li className='block font-[Maven] hover:bg-purple-200'><Link className='flex flex-row gap-2 font-[Sora] p-3 text-2xl mt-[.5em] '>Following tags <div className='bg-purple-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{user ? user.followingTags.length: '0'}</div> </Link></li>
+                        <li className='block font-[Maven] hover:bg-orange-200'><Link className='flex flex-row gap-2 font-[Sora] p-3 text-2xl mt-[.5em] '>Analytics <div className='bg-orange-500 text-white p-1 border border-gray-200 w-fit rounded-full'>0</div> </Link></li>
                     </ul>
                 </div>
                 <div className="filterer lg:hidden relative top-[-26.5em]">
@@ -108,9 +108,9 @@ const Dashboard = () => {
                     }) :<>
                     <div className='flex flex-row gap-1 m-auto text-center'>
                         
-                     <p className='font-[Mulish]'> No Posts Yet??</p>
+                     <p className='font-[Outfit]'> No Posts Yet??</p>
   
-                     <Link to='/create' className='font-[Mulish] text-blue-600 mb-6'> Write a Post</Link>
+                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6'> Write a Post</Link>
                     </div>
                     </>
                   }

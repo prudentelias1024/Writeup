@@ -6,10 +6,11 @@ const DashboardPosts = ({post}) => {
     return (
         <div className="flex flex-col justify-around border rounded-xl  w-[90%] ml-4  h-fit bg-white py-2  lg:flex-row lg:w-[60em]  lg:px-4 lg:py-6 lg:ml-[4em]">
         <div className='flex flex-col'>
-            <Link className="text-[#3b49df] text-xl w-full px-4 leading-8 lg:text-2xl font-bold font-[Mulish]" to="/dashboard">{post.title}</Link>
+            <Link className="text-[#3b49df] text-xl w-full px-4 leading-8 lg:text-2xl font-bold font-[Outfit]" to="/dashboard">{post.title}</Link>
            
             <div className="dates flex gap-3 flex-row">
             <p className='font-bold text-[#787878] p-2 ml-2'>Published: 30 Jan</p> 
+          
             <p className='font-bold text-[#787878] p-2 ml-2'>Edited: 30 Jan</p> 
           
             </div>
@@ -33,7 +34,7 @@ const DashboardPosts = ({post}) => {
                 </div>
 
                 <div className="post_actions flex flex-row gap-3 -mt-2.5">
-                <Link className="font-[Mulish] text-gray-500 mt-2">Edit</Link>
+                <Link className="font-[Outfit] text-gray-500 mt-2">Edit</Link>
                 <FaEllipsisH className="text-gray-500 text-xl mt-3"/>
             </div>
 

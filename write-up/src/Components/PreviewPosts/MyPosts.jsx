@@ -185,27 +185,27 @@ const MyPosts = () => {
                             
                 <button  onClick={(event) => unlikePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <BsHeartFill className='text-2xl lg:text-3xl text-red-500'/>
-                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.likes.length}</p>
+                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.likes.length}</p>
                 </button> :  <button  onClick={(event) => likePost(post.postId,post.title,post.author)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <FaRegHeart className='text-2xl lg:text-3xl text-black'/>
-                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.likes.length}</p>
+                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.likes.length}</p>
                 </button>
                 }
                 <button className='rounded-full flex lg:flex-col gap-[1em]'>
                     <FaRegComment className='text-2xl lg:text-3xl text-black'/>
-                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.comments.length}</p>
+                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.comments.length}</p>
                 </button>
                 {
                 bookmarked == true ?
                             
                 <button  onClick={(event) => unbookmarkPost(post.postId)} className='rounded-full flex  lg:flex-col gap-[1em]'>
                 <FaBookmark className='text-2xl lg:text-3xl text-black'/>
-                <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
+                <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
             </button>:
             
             <button className='rounded-full flex  lg:flex-col gap-[1em]'>
                     <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.name,post.author)} className='text-2xl flex  lg:text-3xl text-black'/>
-                    <p className="font-[Mulish] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
+                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
                 </button>
                 }
 
@@ -223,7 +223,7 @@ const MyPosts = () => {
                 <p className='text-2xl leading-8 font-black w-fit px-[.75em] lg:px-[1.5em] mb-[.25em] lg:text-4xl '>
                   {post.title}
                   </p>
-                <div className='font-[Mulish] flex flex-row gap-3 pl-3 lg:ml-[2.5em]'>
+                <div className='font-[Outfit] flex flex-row gap-3 pl-3 lg:ml-[2.5em]'>
                   {
                 
                 post.tags.toString().split(',').map((tag,index) => {
@@ -243,6 +243,7 @@ const MyPosts = () => {
                   value={post.body}
                   readOnly={true}
                   theme={"bubble"}
+                  style={{fontFamily: 'Outfit'}}
                 />
               </div>
            {user !== null ?
@@ -275,17 +276,17 @@ const MyPosts = () => {
             <img src={post.author.public_picture} className='w-[3em] h-[3em] rounded-full object-cover' /> 
            <div>
 
-            <p className="font-[Mulish] text-xl font-extrabold">{post.author.name}</p>
-            <p className="font-[Mulish] -mt-1 text-[#717171] text-base font-extrabold">@{post.author.username} </p>
+            <p className="font-[Outfit] text-xl font-extrabold">{post.author.name}</p>
+            <p className="font-[Outfit] -mt-1 text-[#717171] text-base font-extrabold">@{post.author.username} </p>
                 </div>
                 
            </div>
           
-          <div className="bio ml-[.5em] font-[Mulish] font-semibold leading-7 text-[#717171] mt-[1em]">
+          <div className="bio ml-[.5em] font-[Outfit] font-semibold leading-7 text-[#717171] mt-[1em]">
             {post.author.bio !== '' ? post.author.bio : <p className="text-center my-[1em]">No Bio Yet</p>}
           </div>
           <div className=''>
-            <p className='font-[Mulish] text-[#171717] font-extrabold mt-[1em] uppercase ml-2'>Joined On</p>
+            <p className='font-[Outfit] text-[#171717] font-extrabold mt-[1em] uppercase ml-2'>Joined On</p>
                     <p className='text-[#717171] font-bold ml-[.5em] mt-[.25em]'>{format(post.author.joined_on)}</p>
           </div>
          {user !== null ?

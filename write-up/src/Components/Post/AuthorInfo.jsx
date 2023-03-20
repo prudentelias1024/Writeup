@@ -16,12 +16,12 @@ export default function AuthorInfo({author,timestamp}){
         <img src={author.public_picture} className='w-[2.5em] h-[2.5em] lg:w-[3em] lg:h-[3em] rounded-full object-cover' /> 
 
         <div className=''>
-                <p className="author_title  text-md font-bold  text-[#171717] lg:text-xl font-[Montserrat]"> {
+                <p className="author_title  text-md font-bold  text-[#171717] lg:text-xl font-[Sora]"> {
                 user !== null ?
                 author.name !== user.name ?
                 author.name: 'You':
                  author.name}</p>
-                <p className="font-medium text-xs lg:mt-[.125em] lg:text-sm -mt-[.25em] text-[#717171] font-[montserrat]">Posted on {timePosted}</p>
+                <p className="text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em] text-[#717171] font-[Maven]">Posted on {timePosted}</p>
                 </div>
         </div>
         

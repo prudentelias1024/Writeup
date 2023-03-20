@@ -41,3 +41,15 @@ body
     font-family: Museo;
     src: url('./fonts/Museo.ttf');
 }
+@font-face {
+    font-family: Maven;
+    src: url('./fonts/Maven_Pro/static/MavenPro-Regular.ttf');
+}
+@font-face {
+    font-family: Sora;
+    src: url('./fonts/Sora/static/Sora-Regular.ttf');
+}
+@font-face {
+    font-family: Outfit;
+    src: url('./fonts/Outfit/static/Outfit-Regular.ttf');
+}

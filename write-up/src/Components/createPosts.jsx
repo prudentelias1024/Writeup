@@ -15,8 +15,7 @@ const CreatePosts = () => {
     let URL
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
- 
-
+     const [tagsError,setTagsError] = useState('')
     const  CustomImageHandler = () => {
         const input =  document.createElement("input")
           input.setAttribute("type","file");
@@ -120,9 +119,19 @@ const handleExcerpt = () => {
    
 }
 const handlePostTags = (event) => {
-    setPost({
+     const tags = event.target.value
+     let tagsAmount = tags.split(' #').length
+     console.log(tagsAmount)
+     if (tagsAmount <= 4) {
+        setTagsError('')
+         setPost({
         ...post, tags: event.target.value
     })
+     } else {
+        setTagsError("You cannot use more than 4 tags")
+     }
+
+   
     console.log(post)
     }
 
@@ -135,15 +144,17 @@ const handlePostTags = (event) => {
     const handlePostSubmission = async() => {
         estimateReadingTime()
         console.log(post)
-      let res = await (await axios.post(`${URL}/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
-      console.log(res)
-      if(res.message == 'Published'){
-        setTimeout(() => {
-            setLoading(true)
-            navigate('/')
-        }, 
-        2000);
-      }
+        if (tagsError == '') {
+            let res = await (await axios.post(`${URL}/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+            console.log(res)
+            if(res.message == 'Published'){
+              setTimeout(() => {
+                  setLoading(true)
+                  navigate('/')
+              }, 
+              2000);
+            }
+        }
 
     }
     const handlePostDraft = async() => {
@@ -169,36 +180,37 @@ const handlePostTags = (event) => {
             post.coverImageURL !== '' ? <>  
             <img src={post.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
            <div className='flex place-content-center'>
-            <button onClick={handleUploadImage} type='button' className='font-[Mulish] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
-            <button onClick={handleRemoveImage} type='button' className='font-[Mulish] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
+            <button onClick={handleUploadImage} type='button' className='font-[Outfit] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
+            <button onClick={handleRemoveImage} type='button' className='font-[Outfit] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
             </div>
             </>
             : 
-            <button onClick={handleUploadImage} type='button' className='font-[Mulish]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
+            <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
         
 
         }
        
         <input onChange={handleImageSelection} ref={titleImage} type="file" className='opacity-0' />
           <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
-                    className="rounded-md pl-[.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" />
+                  className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" />
         <input onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                    className="rounded-md pl-[.5em] outline-none   font-[Museo]  w-full font-bold placeholder:font-[Museo] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
+                    className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 
+        {tagsError !== '' ? <p className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsError}</p> : ''}
             
-        <ReactQuill hanlders={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', paddingLeft: '.5em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+        <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '3em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
       
         </div>
-        <div className='ml-4 mt-4 flex gap-4'>
+        <div className='lg:ml-[20em] ml-[2em] mt-4 flex gap-4'>
         <input ref={excerptRef} onChange={handleExcerpt} type="checkbox"/>
-        <p className="font-[Mulish] font-bold">With Excerpt</p>
+        <p className="font-[Outfit] font-bold">With Excerpt</p>
         </div>
-        <div  className=' lg:-ml-24 lg:mb-12'  >
+        <div  className=' lg:ml-[-10em] lg:mb-12'  >
         <button onClick={handlePostSubmission} className="bg-black text-white mt-[2em] w-[12em] ml-[1em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
-               <p className='font-[Mulish] text-xl font-semibold'>Publish</p>
+               <p className='font-[Outfit] text-xl font-semibold'>Publish</p>
 
           </button>
-         <button onClick={handlePostDraft} type='submit' className='font-[Mulish] ml-8 font-bold'>Save as draft</button>
+         <button onClick={handlePostDraft} type='submit' className='font-[Outfit] ml-8 font-bold'>Save as draft</button>
         </div>
         </div>
     );
