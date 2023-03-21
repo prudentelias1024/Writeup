@@ -96,6 +96,7 @@ const CreatePosts = () => {
        
     })
     const handlePostBody = (value) => {
+        estimateReadingTime()
     setPost({
         ...post, body: value
     })
@@ -145,9 +146,10 @@ const handlePostTags = (event) => {
          setPost({...post, readingTime: `${minutes} mins read`})
       }
     const handlePostSubmission = async() => {
-        estimateReadingTime()
+
         setLoading(true)
-        if (tagsError == '' && post.readingTime !== '') {
+        if (tagsError == '' ) {
+            console.log(post.readingTime)
             let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
             if(res.message == 'Published'){
              let temp = []
