@@ -145,7 +145,7 @@ const handlePostTags = (event) => {
         estimateReadingTime()
         console.log(post)
         if (tagsError == '') {
-            let res = await (await axios.post(`${URL}/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+            let res = await (await axios.post("https://inkup-api.onrender.com/post/create", post,{headers: {Authorization: localStorage.getItem('token')}})).data
             console.log(res)
             if(res.message == 'Published'){
               setTimeout(() => {
