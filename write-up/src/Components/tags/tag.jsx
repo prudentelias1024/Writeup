@@ -56,9 +56,10 @@ const Tag = ({tag, count}) => {
         {showModal == true ? <LoginModal/> :''}
         <div className={  
        checkFollowed() ||followed ? 'border-t-green-500 border border-t-[1em] bg-white p-[1em] lg:rounded-xl leading-8' : 'border-t-red-500 border border-t-[1em] bg-white p-[1em] lg:rounded-xl leading-8'   }>
-           <Link  className='hover:border-red-500 hover:border-2 hover:rounded-full hover:px-5 hover:text-red-500 hover:border-full p-3 font-[Mulish]' to={"/tag/"+tag}>#{tag}</Link> 
+           <Link  className='hover:border-red-500 font-semibold hover:border-2 hover:rounded-full hover:px-5 hover:text-red-500 hover:border-full p-3 font-[Outfit
+          ]' to={"/tag/"+tag}>#{tag}</Link> 
            
-               <p className='font-[Mulish] ml-3 font-bold mt-2'>{count} Posts Published</p> 
+               <p className='font-[Outfit] ml-3 font-bold mt-2'>{count} Posts Published</p> 
            
            {
              user !== null?

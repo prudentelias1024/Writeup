@@ -137,7 +137,7 @@ const handlePostTags = (event) => {
 
     const estimateReadingTime = () => {
         const avgWPM = 250;
-        const words = post.split(' ').length
+        const words = post.body.split(' ').length
         const minutes = Math.ceil(words/avgWPM)
          setPost({...post, readingTime: `${minutes} mins read`})
       }

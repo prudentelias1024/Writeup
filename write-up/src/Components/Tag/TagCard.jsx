@@ -34,9 +34,9 @@ useEffect(() => {
     return (
         <div className='lg:pl-[9em]'>
             <div className='  border border-t-[1em] bg-white  flex  flex-col lg:gap-[30em]  text-center lg:flex-row lg:justify-center  border-t-red-500 p-[1em] leading-8 lg:rounded-xl lg:my-auto lg:mx-auto w-full mx-auto  lg:w-[50%] '>
-           <p className='font-[Mulish] text-3xl font-bold capitalize ml-8'>{name}</p>
+           <p className='font-[Outfit] text-3xl font-bold capitalize ml-8'>{name}</p>
              {user !== null?
-          <button className='text-red-500 rounded-full w-[13em] h-[3em] m-auto px-6 border-2 lg:ml-3 mt-[1.5em] font-bold border-red-500 lg:mb-4 lg:text-lg lg:mt-[-.25em]'>Follow</button>:
+          <button className='text-red-500 font-[Maven] rounded-full w-[13em] h-[3em] m-auto px-6 border-2 lg:ml-3 mt-[1.5em] font-bold border-red-500 lg:mb-4 lg:text-lg font-[Maven] lg:mt-[-.25em]'>Follow</button>:
           <button className='text-red-500 rounded-full w-[13em] h-[3em] m-auto px-6 border-2 lg:ml-3 mt-[1.5em] font-bold border-red-500 lg:mb-4 lg:text-lg lg:mt-[-.25em]'>Follow</button>
              }
         </div>
