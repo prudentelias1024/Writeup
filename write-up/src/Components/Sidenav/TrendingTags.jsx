@@ -14,7 +14,7 @@ export default function TrendingTags(){
             keys.map((key,j) => {
                if(tag.tag === key){
            
-                  temp.push({tag:tag.tag.toLowerCase(), publishedPosts: publishedCount[key]})
+                  temp.push({tag:tag.tag, publishedPosts: publishedCount[key]})
                }
             })
           })
@@ -61,7 +61,7 @@ export default function TrendingTags(){
     temp.map((tag) => {
         for (let i = 0; i < tag.length ; i++){
      
-         tagsArray.push(tag[i])
+         tagsArray.push(tag[i].toLowerCase())
        }
       
     })
