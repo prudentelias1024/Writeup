@@ -22,6 +22,7 @@ import Tags from './Components/Tags';
 import TagTemplate from './Components/Tag/TagTemplate';
 import ReadLater from './Components/ReadLater';
 import SearchPage from './Components/Search/SearchPage';
+import FAQ from './Components/FAQ';
 function App() {
         let URL
         const user = useSelector((state) => state.user)
@@ -100,6 +101,7 @@ function App() {
       <Route path='/tags' element={<Tags/>}/>
       <Route path='/readlater' element={<ReadLater/>}/>
       <Route path='/search' element={<SearchPage/>}/>
+      <Route path='/faq' element={<FAQ/>}/>
      
     </Routes>
     
