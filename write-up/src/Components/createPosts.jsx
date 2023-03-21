@@ -85,7 +85,7 @@ const CreatePosts = () => {
         title: '',
         body: '',
         tags: '',
-        withExcerpt: '',
+        withExcerpt: false,
         coverImageURL: '',
         postId: v4(),
         draftId: v4(),
@@ -143,10 +143,9 @@ const handlePostTags = (event) => {
       }
     const handlePostSubmission = async() => {
         estimateReadingTime()
-        console.log(tagsError)
+       
         if (tagsError == '') {
-            let res = await (await axios.post("https://inkup-api.onrender.com/post/create", post,{headers: {Authorization: localStorage.getItem('token')}})).data
-            console.log(res)
+            let res = await (await axios.post(`http://localhost:5000/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
             if(res.message == 'Published'){
               setTimeout(() => {
                   setLoading(true)

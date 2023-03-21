@@ -14,7 +14,7 @@ export default function TrendingTags(){
             keys.map((key,j) => {
                if(tag.tag === key){
            
-                  temp.push({tag:tag.tag, publishedPosts: publishedCount[key]})
+                  temp.push({tag:tag.tag.toLowerCase(), publishedPosts: publishedCount[key]})
                }
             })
           })
@@ -119,7 +119,7 @@ export default function TrendingTags(){
         <>
         <div className=" hidden bg-[#f6f6f6] lg:block h-[40em] overflow-x-hidden lg:ml-[-3em]">
         <p className=" text-lg font-bold font-[Maven] mb-3  ">Trending Tags</p>
-        <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] px-10 ">
+        <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] overflow-y-auto overflow-x-hidden px-10 ">
         {tags && tags.map((tag,index) => 
           
            
@@ -135,7 +135,7 @@ export default function TrendingTags(){
        
          <>
          <p className=" text-lg font-bold font-[Mulish] ml-[-1em] mb-3 mt-[4em]">My Tags</p>
-          <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] px-10 ">
+          <div className="flex flex-col text-center m:auto pl-3 lg:ml-[4em] h-[15em] overflow-y-auto overflow-x-hidden px-10 ">
           { user.followingTags.map((tag,index) => 
             
             
