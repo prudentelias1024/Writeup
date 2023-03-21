@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../node_modules/react-quill/dist/quill.bubble.css'
 import mock from './mock.jpg'
 import  axios  from "axios";
@@ -10,9 +10,12 @@ import { storage } from "../firebase";
 // import { CustomImageHandler } from './CustomImageHandler';
 import { useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
-
+import BounceLoader from "react-spinners/BounceLoader";
+import { actions } from '../store';
 const CreatePosts = () => {
     let URL
+    const {posts} = useSelector(state => state)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
      const [tagsError,setTagsError] = useState('')
@@ -143,15 +146,19 @@ const handlePostTags = (event) => {
       }
     const handlePostSubmission = async() => {
         estimateReadingTime()
-       
+        setLoading(true)
         if (tagsError == '') {
             let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
             if(res.message == 'Published'){
+             let temp = []
+             temp = [res.data, ...posts]
+             dispatch(actions.updatePosts(temp))
+
               setTimeout(() => {
-                  setLoading(true)
+                setLoading(false)
                   navigate('/')
               }, 
-              2000);
+              2500);
             }
         }
 
@@ -166,10 +173,35 @@ const handlePostTags = (event) => {
    setTempImage(null)
     }
     
+    
     return (
+        <>
+      
         <div className="create ">
             {loading == true ?  
-                      <ReactLoading className='fixed bg-white z-10' type="bubbles" color="#512bd4" height={'100%'} width={'100%'} />: ''
+            <div className='relative ml-[-7.5em] lg:m-0 bg-white flex flex-col'>
+                
+                      <BounceLoader
+                      color="#cbcbcbeb"
+                      loading={loading}
+                      cssOverride={{ 
+                          width: "100%",
+                          height: "100%",
+                          marginTop: '15em',
+                          marginLeft: '40%',
+                          zIndex: 10000,
+                          paddingLeft: '4em',
+                          position: "fixed",
+                          display: "block"
+                          
+                        }}
+                        size={300}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                        />
+                        <p className='fixed w-[85%] ml-[50%] lg:w-full z-[1000] text-2xl mt-[22.5em] lg:ml-[39%] text-black font-bold font-[Outfit]'>Wait! We are publishing your article.....</p>
+                        </div>
+                    : ''
 }
  {/* <div className=" fixed border w-full top-0 pb-4 lg:ml-14">
       <p className="font-[Pacifico]   text-3xl mt-4 ml-4 font-extrabold lg:mt-5  lg:ml-52 ">Ink Up</p>
@@ -212,6 +244,7 @@ const handlePostTags = (event) => {
          <button onClick={handlePostDraft} type='submit' className='font-[Outfit] ml-8 font-bold'>Save as draft</button>
         </div>
         </div>
+        </>
     );
 }
 export default CreatePosts;

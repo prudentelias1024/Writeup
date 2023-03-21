@@ -50,7 +50,7 @@ const Bookmarked = ({notification}) => {
 
         
          <p className='font-[Mulish] text-xl m-auto lg:ml-[-.5em] lg:mt-[.5em]'><Link  className='font-bold font-[Outfit]'  to={notification.message[0].user[1].link}>{notification.message[0].user[0].name}  </Link> bookmarked   
-         <Link className='text-blue-600 font-bold' to={"/"+notification.message[0].post[1].link}>{notification.message[0].post[0].name}</Link>
+         <Link className='text-blue-600 font-bold ml-1' to={"/"+notification.message[0].post[1].link}> {notification.message[0].post[0].name}</Link>
          </p> 
         
         </div>

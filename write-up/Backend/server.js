@@ -472,7 +472,7 @@ app.post('/api/signup' ,async(req,res) => {
                 path: '/inkup.png',
                 cid: 'inkup.png'
             }],
-            html: `"<img style='margin:auto; border-radius: 100%; ' src='cid:inkup.png'/> <br> <br> <p style='font-family: Outfit; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p 'font-family: Outfit; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Dear  ${req.body.name}, I hope this email finds you well. I am reaching out to you on behalf of our app [App Name], which is a platform that showcases articles written by users like yourself. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We believe that you have a unique perspective and valuable insights that our readers would love to hear about. We would be thrilled if you could join our community of writers and share your knowledge and experiences with us </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Not only will you have the opportunity to showcase your skills and expertise, but you will also be able to connect with other like-minded individuals who share your passion for writing. Our platform is user-friendly and provides a supportive environment for writers of all levels to grow and develop their skills</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> If you are interested in writing for us, please let us know and we will provide you with more information on how to get started. We would be honored to have you as part of our community and can't wait to see the amazing content you will create. To write another article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you for considering this opportunity. We look forward to hearing back from you soon.</p>  <p> Best regards, <br>
+            html: `" <p style='font-family: Outfit; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Dear  ${req.body.name}, I hope this email finds you well. I am reaching out to you on behalf of our app [Inkup], which is a platform that showcases articles written by users like yourself. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We believe that you have a unique perspective and valuable insights that our readers would love to hear about. We would be thrilled if you could join our community of writers and share your knowledge and experiences with us </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Not only will you have the opportunity to showcase your skills and expertise, but you will also be able to connect with other like-minded individuals who share your passion for writing. Our platform is user-friendly and provides a supportive environment for writers of all levels to grow and develop their skills</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> If you are interested in writing for us, please let us know and we will provide you with more information on how to get started. We would be honored to have you as part of our community and can't wait to see the amazing content you will create. To write another article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you for considering this opportunity. We look forward to hearing back from you soon.</p>  <p> Best regards, <br>
            ${req.body.name}"`
           }
 
@@ -483,7 +483,17 @@ app.post('/api/signup' ,async(req,res) => {
     })
 })
 app.post('/post/create', verify, async(req,res) => {
-    
+    let publishedBefore;
+    PublishedPosts.find({email: req.user.email}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            if(doc.length > 0){
+                publishedBefore = true
+            } else {
+                publishedBefore = false
+            }
+        }
+    })
     let {title,body,tags,coverImageURL,withExcerpt, postId, readingTime} = req.body
      tags  = tags.split(' ')
     const publishedPosts = new PublishedPosts({
@@ -499,7 +509,6 @@ app.post('/post/create', verify, async(req,res) => {
         
     })
    await  publishedPosts.save()
-    res.send({message:"Published"})
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         
@@ -515,14 +524,14 @@ app.post('/post/create', verify, async(req,res) => {
       let message = {
         from: "'Inkup' <Inkup1024@gmail.com>", //my email address
         to: `${req.user.email}`,
-        subject: ' Congratulations on Your First Article! Let\'s Keep the Momentum Going.',
+        subject: ` Congratulations on Your ${publishedBefore == true ? 'Successful Post': 'First Article!'} Let\'s Keep the Momentum Going.`,
         text: 'Article Published',
         attachment: [{
             filename: 'inkup.png',
             path: '/inkup.png',
             cid: 'inkup.png'
         }],
-        html: `"<img style='margin:auto; border-radius: 100%; ' src='cid:inkup.png'/> <br> <br> <p style='font-family: Outfit; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p 'font-family: Outfit; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Dear  ${req.user.name}, <br>  wanted to personally congratulate you on your first article that you posted on [App Name]. It was a pleasure to read and it’s great to see the insights and perspective that you have shared with our community. Your article has already gained a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> I know that writing can be a challenging process, but I wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that your voice is unique and valuable, and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a supportive community of fellow writers and readers who appreciate and enjoy quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'> </a>Write a post </p> <br> <p style='font-family: Outfit; font-size: 1.5em; >TThank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, <br>
+        html: ` <p style='font-family: Outfit; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Dear  ${req.user.name}, <br>  wanted to personally congratulate you on your ${publishedBefore == true ? 'Successful Post': 'First Article!'} Let\'s Keep the Momentum Going.} article that you posted on Inkup. It was a pleasure to read and it’s great to see the insights and perspective that you have shared with our community. Your article has already gained a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> I know that writing can be a challenging process, but I wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that your voice is unique and valuable, and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a supportive community of fellow writers and readers who appreciate and enjoy quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, <br>
        ${req.body.name}"`
       }
 
@@ -531,6 +540,7 @@ app.post('/post/create', verify, async(req,res) => {
   
    
 
+    res.send({message:"Published", data: publishedPosts})
 
 
 })

@@ -27,12 +27,12 @@ export default function Post({post, removeReactions, showCoverImage, additionalS
           <p className='font-[Outfit] mt-[1em] lg:mr-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg lg:mb-[1em]'>Viewed </p>: ''
              }
            
-            {/* {
+            {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
-              <img src={post.coverImageURL} className={ showCoverImage + " w-full rounded-sm ml-[.5em]"} alt="" />
-                 : null
+              <img src={post.coverImageURL} className={ showCoverImage + " w-[100%] rounded-sm ml-[.5em]"} alt="" />
+                 : ''
          
-            } */}
+            }
             <div>        
                   <AuthorInfo timestamp={post.created}  author={post.author}/>
                  
@@ -57,7 +57,7 @@ export default function Post({post, removeReactions, showCoverImage, additionalS
                {post.readingTime !== null || post.readingTime !== undefined || post.readingTime !== ''?
 
                 <div className='absolute bottom-[2em] right-6'>
-                  <p className='font-[Outfit] text-[#717171]'> {post.readingTime}</p>
+                  <p className='font-[Maven] text-[#717171]'> {post.readingTime}</p>
                   </div> : ''}
                 </div>
                  

@@ -219,7 +219,13 @@ const MyPosts = () => {
             </div>
 
             <div className="post lg:ml-[40em] -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
-            <img src={post.coverImageURL} className='w-full lg:h-[100%] object-cover' /> 
+             
+            {
+             post.coverImageURL &&  post.coverImageURL!== '' ?            
+              <img src={post.coverImageURL} className=" w-[98%] rounded-sm ml-[.5em]" alt="" />
+                 : ''
+         
+            }
             <div className="author flex lg:gap-[1em] lg:my-[3em] lg:ml-[4.5em]">
              
              <AuthorInfo author={post.author} timestamp={post.created}/>
