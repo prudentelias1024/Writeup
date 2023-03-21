@@ -7,9 +7,10 @@ import {  useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 import axios from "axios";
 import { locale } from "moment";
+import MobileSearch from "./mobileSearch";
 export default function UserNav(){
     let URL;
-    const { user} = useSelector((state) => state)
+    const { user, showMobileSearch} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
    const dispatch = useDispatch()
@@ -64,7 +65,9 @@ export default function UserNav(){
             helperRef.current.className = "dropdown fixed right-5 mt-16 bg-white flex flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32"
         }
      }
-   
+     const handleMobileSearch = () => {
+      dispatch(actions.showMobileSearch(!showMobileSearch))
+     }
     return(
         <>
        {
@@ -80,7 +83,7 @@ export default function UserNav(){
              <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[55em]">
             
             <Button to="/create" additionalStyles="hidden lg:block" name="Write a Post " borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
-            <IoIosSearch    className="lg:hidden text-4xl mt-[.125em]"/>  
+            <IoIosSearch onClick={handleMobileSearch}   className="lg:hidden text-4xl mt-[.125em]"/>  
         
            <Link to="/create">
             <IoIosAddCircleOutline className="text-4xl mt-1 block lg:hidden"/>
@@ -112,6 +115,7 @@ export default function UserNav(){
            
             </div>
         }
+        <MobileSearch/>
         </>
         
        

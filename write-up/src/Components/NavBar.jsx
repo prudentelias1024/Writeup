@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {  actions } from "../store/index";
 import { useSelector } from "react-redux";
-import MobileNav from "./Navbar/mobileNav";
+import MobileNav from "./Navbar/mobileSearch";
 import { useEffect } from "react";
 export default function NavBar({searchWords}) {
   const dispatch =   useDispatch()
