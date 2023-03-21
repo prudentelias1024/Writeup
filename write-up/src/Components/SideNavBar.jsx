@@ -41,7 +41,7 @@ export default function SideNavBar(){
 
             <SideNavLink link="/" additionalStyles="m-auto mt-6"  icon={<FcHome className="text-2xl"/>} name="Home"/>
             <SideNavLink link='/tags' additionalStyles="m-auto" icon={<AiFillFire className="text-2xl text-red-500"/>} name=" Tags"/>
-            <SideNavLink link='/' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
+            <SideNavLink link='/faq' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
   
         </div>
             <TrendingTags/>
