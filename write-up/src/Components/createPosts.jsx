@@ -92,11 +92,11 @@ const CreatePosts = () => {
         coverImageURL: '',
         postId: v4(),
         draftId: v4(),
-        readingTime: ''
+       
        
     })
     const handlePostBody = (value) => {
-        estimateReadingTime()
+     
     setPost({
         ...post, body: value
     })
@@ -139,12 +139,7 @@ const handlePostTags = (event) => {
     console.log(post)
     }
 
-    const estimateReadingTime = () => {
-        const avgWPM = 250;
-        const words = post.body.split(' ').length
-        const minutes = Math.ceil(words/avgWPM)
-         setPost({...post, readingTime: `${minutes} mins read`})
-      }
+    
     const handlePostSubmission = async() => {
 
         setLoading(true)
