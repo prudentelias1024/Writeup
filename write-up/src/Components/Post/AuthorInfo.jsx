@@ -21,7 +21,7 @@ export default function AuthorInfo({author,timestamp}){
                 author.name !== user.name ?
                 author.name: 'You':
                  author.name}</p>
-                <p className="text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em] text-[#717171] font-[Maven]">Posted on {timePosted}</p>
+                <p className="text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em] text-[#717171] font-[Maven]"> {timePosted}</p>
                 </div>
         </div>
         
