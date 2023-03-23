@@ -12,13 +12,16 @@ import { useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
 import { actions } from '../store';
+import { min } from 'moment';
 const CreatePosts = () => {
     let URL
     const {posts} = useSelector(state => state)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
-     const [tagsError,setTagsError] = useState('')
+     const [tagsError,setTagsError] = useState([])
+     const [prevTag,setPrevTag] = useState(null)
+     const [readingMinutesError,setReadingMinutesError] = useState(null)
     const  CustomImageHandler = () => {
         const input =  document.createElement("input")
           input.setAttribute("type","file");
@@ -96,7 +99,7 @@ const CreatePosts = () => {
        
     })
     const handlePostBody = (value) => {
-     
+        
     setPost({
         ...post, body: value
     })
@@ -123,40 +126,119 @@ const handleExcerpt = () => {
    
 }
 const handlePostTags = (event) => {
+    
+    
+     let tempTags = []
      const tags = event.target.value
-     let tagsAmount = tags.split(' #').length
-     console.log(tagsAmount)
-     if (tagsAmount <= 4) {
-        setTagsError('')
-         setPost({
-        ...post, tags: event.target.value
-    })
-     } else {
-        setTagsError("You cannot use more than 4 tags")
-     }
+     //start with tags
+     let tagsRecurring = /^#{2,}/
+     let hashtagsDisplaced  = /[#a-zA-Z#]/g
+     let actualTag = /[#a-zA-Z]/g
+     let specialCharacterRegex = /[^a-zA-Z]/g;
+     
 
-   
-    console.log(post)
-    }
+
+     let specialCharacterWithoutTags = /[@#$%&*(){}-~!]/g
+     let alphabetRegex = /[a-zA-Z]/g
+     let numberTagRegex = /[0-9]/g
+     let realTags = tags.split(' ')
+     
+    console.log(realTags)
+      
+        realTags.map((tag,index) => {
+            tag.trim()
+            setPrevTag(tag)
+
+            
+           //ignore every white-space from the user's input and retain every words that start with #
+            if(tag.startsWith('#')){
+              
+                 if(specialCharacterRegex.test(tag.split('#')[1]) === true && prevTag !== tag ){
+                        
+                        setTagsError([ `${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`])
+                   
+                } 
+
+             if(numberTagRegex.test(tag.split('#')[1]) === true && prevTag !== tag){
+               
+                  
+                        
+                        setTagsError([`${tag} is an invalid tag. Tag cannot contain number`])
+                    
+               
+              
+             }
+        
+                
+            if(specialCharacterRegex.test(tag.split('#')[1]) === false  && numberTagRegex.test(tag.split('#')[1]) === false && alphabetRegex.test(tag.split('#')[1]) === true ){
+                 tempTags.push(tag)
+                
+                let tagsAmount = tempTags.length
+                    console.log(tagsAmount)
+                    if (tagsAmount <= 4) {
+                    
+                        setPost({
+                    ...post, tags: event.target.value
+                })
+                    } else {
+                    setTagsError(["You cannot use more than 4 tags"])
+                    }
+                
+            }
+            
+                
+                
+            
+        } else if(numberTagRegex.test(tag) && prevTag !== tag){
+        
+                setTagsError([ `${tag} is an invalid tag. A valid tag cannot start with a number `])
+           
+        }   else if(alphabetRegex.test(tag) && prevTag !== tag){
+                
+                setTagsError([ `${tag} is an invalid tag. Tag cannot start with an alphabet`])
+          
+
+        }    else if(specialCharacterWithoutTags.test(tag) && prevTag !== tag){
+                
+                setTagsError([ `${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`])
+          
+        
+        }     })
+         
+       
+      
+    
+     }
 
     
     const handlePostSubmission = async() => {
+        const avgWPM = 250;
+        let words = post.body.split(' ').length
+       
+        let minutes = Math.round(words/avgWPM)
+         if(minutes < 1){
+            setReadingMinutesError('You cannot publish an article with less than One (1) minute reading time')
+            console.log(readingMinutesError)
+            console.log(tagsError)
+         }
+        if (tagsError == null && readingMinutesError == null ) {
+            setLoading(true)
+           
+            
+            // let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+            // if(res.message == 'Published'){
+            //  let temp = []
+            //  temp = [res.data, ...posts]
+            //  dispatch(actions.updatePosts(temp))
 
-        setLoading(true)
-        if (tagsError == '' ) {
-            console.log(post.readingTime)
-            let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
-            if(res.message == 'Published'){
-             let temp = []
-             temp = [res.data, ...posts]
-             dispatch(actions.updatePosts(temp))
-
-              setTimeout(() => {
-                setLoading(false)
-                  navigate('/')
-              }, 
-              2500);
-            }
+            //   setTimeout(() => {
+            //     setLoading(false)
+            //       navigate('/')
+            //   }, 
+            //   2500);
+            // }
+        } else {
+            setLoading(false)
         }
 
     }
@@ -224,11 +306,15 @@ const handlePostTags = (event) => {
         <input onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
                     className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 
-        {tagsError !== '' ? <p className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsError}</p> : ''}
+        { tagsError &&   tagsError.map((tagsErr) => {
+            return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
+        }) 
+    }
         <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '3em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
-      
+       
         </div>
+       { readingMinutesError !== null? <p className='lg:ml-[20em] my-[2em] font-bold font-[Outfit] text-red-500'>{readingMinutesError}</p> :''}
         <div className='lg:ml-[20em] ml-[2em] mt-4 flex gap-4'>
         <input ref={excerptRef} onChange={handleExcerpt} type="checkbox"/>
         <p className="font-[Outfit] font-bold">With Excerpt</p>

@@ -82,7 +82,7 @@ export default function UserNav(){
             </div> :
              <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[55em]">
             
-            <Button to="/create" additionalStyles="hidden lg:block" name="Write a Post " borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
+            <Button to="/create" additionalStyles="hidden lg:block" name="Create Content " borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
             <IoIosSearch onClick={handleMobileSearch}   className="lg:hidden text-4xl mt-[.125em]"/>  
         
            <Link to="/create">
