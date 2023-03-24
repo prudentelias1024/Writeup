@@ -2,11 +2,12 @@ import SideNavLink from "./Sidenav/SideNavLink";
 import { AiOutlineHome, AiOutlineBulb, AiFillFire } from "react-icons/ai";
 import { FcHome, FcQuestions } from "react-icons/fc";
 import { HiOutlineHashtag } from "react-icons/hi";
-import { FaHashtag } from "react-icons/fa";
+import { FaHashtag, FaTwitter } from "react-icons/fa";
 import TrendingTags from "./Sidenav/TrendingTags";
 import Button from "./Navbar/Button";
 import { useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function SideNavBar(){
    const {navStatus} =  useSelector((state) => state)
@@ -42,9 +43,14 @@ export default function SideNavBar(){
             <SideNavLink link="/" additionalStyles="m-auto mt-6"  icon={<FcHome className="text-2xl"/>} name="Home"/>
             <SideNavLink link='/tags' additionalStyles="m-auto" icon={<AiFillFire className="text-2xl text-red-500"/>} name=" Tags"/>
             <SideNavLink link='/faq' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
-  
+          <div className="flex flex-row mt-[-5em] ml-[2em]  mb-[2em]">
+          <a href="https://twitter.com/InkUp1024" target="_blank">
+          <FaTwitter className="text-3xl text-sky-500" />
+          </a>
+          </div>
         </div>
             <TrendingTags/>
+          
             
         </div>
     );

@@ -19,7 +19,42 @@ const CreatePosts = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
-     const [tagsError,setTagsError] = useState([])
+     const [tagsError,setTagsError] = useState(
+        [
+        //     {
+        // alphabetError: '',
+        // numberError: '',
+        // specialCharacter: '',
+        // numberInTagsError: '',
+        // specialCharacterInTag: ''
+          
+        // },
+        //     {
+        // alphabetError: '',
+        // numberError: '',
+        // specialCharacter: '',
+        // numberInTagsError: '',
+        // specialCharacterInTag: ''
+          
+        // },
+        //     {
+        // alphabetError: '',
+        // numberError: '',
+        // specialCharacter: '',
+        // numberInTagsError: '',
+        // specialCharacterInTag: ''
+          
+        // },
+        //     {
+        // alphabetError: '',
+        // numberError: '',
+        // specialCharacter: '',
+        // numberInTagsError: '',
+        // specialCharacterInTag: ''
+          
+        // },
+    
+     ])
      const [prevTag,setPrevTag] = useState(null)
      const [readingMinutesError,setReadingMinutesError] = useState(null)
     const  CustomImageHandler = () => {
@@ -127,6 +162,16 @@ const handleExcerpt = () => {
 }
 const handlePostTags = (event) => {
     
+// const updateError = (index,type,message) => {
+//   tagsError.map((tagError,tagErrorIndex) => {
+//     if (tagErrorIndex == index) {
+//         if (type == 'SPECIAL_CHARACTER_IN_TAGS') {
+//             return {}
+            
+//         }
+//     }
+//   })
+// }
     
      let tempTags = []
      const tags = event.target.value
@@ -146,6 +191,7 @@ const handlePostTags = (event) => {
     console.log(realTags)
       
         realTags.map((tag,index) => {
+
             tag.trim()
             setPrevTag(tag)
 
@@ -154,8 +200,8 @@ const handlePostTags = (event) => {
             if(tag.startsWith('#')){
               
                  if(specialCharacterRegex.test(tag.split('#')[1]) === true && prevTag !== tag ){
-                        
-                        setTagsError([ `${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`])
+                    
+                        setTagsError([`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`])
                    
                 } 
 

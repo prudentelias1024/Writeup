@@ -13,17 +13,17 @@ const FAQ = () => {
 
         <div className="faqs top-32 relative flex flex-col bg-white  text-black">
           <div className='flex text-2xl flex-row m-auto gap-[.25em]  font-bold font-[Outfit] p-[1em]'>
-          <p className='text-black'>Frequently </p>
-          <p className='text-pink-500 font-[Maven] '>Asked Questions </p>
+          <p className='text-black text-base lg:text-md'>Frequently </p>
+          <p className='text-pink-500 font-[Maven] text-base lg:text-md '>Asked Questions </p>
           </div>
-          <div className='questions grid grid-cols-2  gap-[3em] px-[3em] '>
-           <div className="question_one px-[5em] ml-[1em]">
+          <div className='questions flex flex-col lg:grid lg:grid-cols-2 gap-[3em] px-[3em] '>
+           <div className="question_one  lg:px-[5em] ml-[1em]">
              <GiOnTarget className='text-7xl'/>
             <p className="question font-bold font-[Outfit] text-xl">What is Inkup? </p>
             <p className="answer font-extralight leading-8 font-[Maven] mt-2">Inkup is a new generational article publishing app that allows its user to publish their contents to global audience. Inkup also provide the best tool for writers, bloggers, novelists, programmers, motivational writers and even teachers. It offers a user-friendly interface and a wide range of formatting tools to help writers create visually appealing articles. The app also allows writers to collaborate with others and receive feedback from readers. Inkup aims to empower writers to reach their full potential and build their personal brand through their writing. </p>
            </div>
         
-            <div className="question_one px-[5em] ml-[1em]">
+            <div className="question_one row-span-2 lg:px-[5em] ml-[1em]">
               <GiOnTarget className='text-7xl'/>
             <p className="question font-bold font-[Outfit] text-xl">How do I publish a content on Inkup? </p>
             <p className="answer font-extralight leading-8 font-[Maven] mt-1"> There are various steps (pre and actual steps) you need to take to publish.
@@ -42,24 +42,24 @@ const FAQ = () => {
              </p>
            </div>
 
-            <div className="question_one px-[5em] ml-[1em]">
+            <div className="question_one lg:px-[5em] ml-[1em]">
               <GiOnTarget className='text-7xl'/>
             <p className="question font-bold font-[Outfit] text-xl">Can I use images and videos in my articles?
  </p>
             <p className="answer font-extralight leading-8 font-[Maven]">Inkup allows user to add image to an article. Video embedding and video adding is not available for now. </p>
            </div>
 
-            <div className="question_one px-[5em] ml-[1em]">
+            <div className="question_one lg:px-[5em] ml-[1em]">
               <GiOnTarget className='text-7xl'/>
             <p className="question font-bold font-[Outfit] text-xl">Is there a limit to the number of articles I can publish </p>
             <p className="answer font-extralight leading-8 font-[Maven]">No, there is no limit to hoe many article that can be published by a user on Inkup </p>
            </div>
-            <div className="question_one px-[5em]  ml-[1em]">
+            <div className="question_one lg:px-[5em]  ml-[1em]">
               <GiOnTarget className='text-7xl'/>
            <div> <p className="question font-bold font-[Outfit] text-xl">How do I promote my articles to reach more readers? </p>
             <p className="answer font-extralight leading-8 font-[Maven]">You can share your post link on Social Media platforms to increase your audience but our algorithm helps you to reach a broader audience</p></div>
            </div>
-            <div className="question_one px-[5em]  ml-[1em]">
+            <div className="question_one lg:px-[5em]  ml-[1em]">
               <GiOnTarget className='text-7xl'/>
            <div> <p className="question font-bold font-[Outfit] text-xl">Can I see how many people have read my articles? </p>
             <p className="answer font-extralight leading-8 font-[Maven]">To see the number of views your content have:
@@ -69,7 +69,7 @@ const FAQ = () => {
             
             </p></div>
            </div>
-            <div className="question_one px-[5em]  ml-[1em]">
+            <div className="question_one lg:px-[5em] mb-[1em]  ml-[1em]">
               <GiOnTarget className='text-7xl'/>
            <div> <p className="question font-bold font-[Outfit] text-xl">How do I promote my articles to reach more readers? </p>
             <p className="answer font-extralight leading-8 font-[Maven]">You can share your post link on Social Media platforms to increase your audience but our algorithm helps you to reach a broader audience</p></div>

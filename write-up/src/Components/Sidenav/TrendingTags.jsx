@@ -144,8 +144,7 @@ export default function TrendingTags(){
           
           
           )}
-        
-          </div>
+             </div>
       
          
           </> : ''
