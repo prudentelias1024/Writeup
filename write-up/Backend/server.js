@@ -925,7 +925,7 @@ app.get('/api/user/posts/totalBookmarks', verify, (req,res) => {
 
 
 
-// connectToMongooseDB()
+connectToMongooseDB()
 
 mongoose.connection.once("open", () => {
     console.log("Connected to Mongodb")
