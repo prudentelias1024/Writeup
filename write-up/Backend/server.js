@@ -41,8 +41,8 @@ const io  = require('socket.io')(server, {
 //sockets 
 io.on('connection',(socket) => {
     console.log(`Connected : ${socket.id}`)
-    
-    socket.on('like', (data) => {
+    //How to pass headers to socket
+    socket.on('getNotifications', (data) => {
      console.log(data)
  })
 })
@@ -859,7 +859,6 @@ app.post('/api/publicPicture', async(req,res) => {
 })
 
 
- 
 
 app.post('/api/user/edit', verify, (req,res) => {
     changes = req.body.profileChanges
@@ -926,7 +925,7 @@ app.get('/api/user/posts/totalBookmarks', verify, (req,res) => {
 
 
 
-connectToMongooseDB()
+// connectToMongooseDB()
 
 mongoose.connection.once("open", () => {
     console.log("Connected to Mongodb")

@@ -27,7 +27,7 @@ export default function SideNavBar(){
   )
     
     return(
-        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto  pt-[8em]  text-center  z-30  pl-[em] fixed bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-80 lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">
+        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto  pt-[8em]  text-center  z-30  pl-[em] fixed bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-321 maxlg:ml-80 lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">
             <div className=" border pt-3 -ml-9 lg:hidden ">
             <p className="font-[Pacifico] text-3xl text-center ">Inkup </p>
             <p className="font-[Outfit]   text-lg leading-9 tracking-wide p-6 m-auto ml-[1em]">We allow content creators, developers and bloggers to share their contents and grow in our community</p>

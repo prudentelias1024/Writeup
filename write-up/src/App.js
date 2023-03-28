@@ -24,6 +24,7 @@ import ReadLater from './Components/ReadLater';
 import SearchPage from './Components/Search/SearchPage';
 import FAQ from './Components/FAQ';
 function App() {
+       
         let URL
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
@@ -59,6 +60,7 @@ function App() {
         if (process.env.NODE_ENV == 'production') {
           dispatch(actions.updateURL("https://inkup-api.onrender.com"))
           URL = "https://inkup-api.onrender.com"
+
         }else{
           
           dispatch(actions.updateURL("http://localhost:5000"))

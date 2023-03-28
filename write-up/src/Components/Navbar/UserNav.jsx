@@ -8,7 +8,9 @@ import { actions } from "../../store";
 import axios from "axios";
 import { locale } from "moment";
 import MobileSearch from "./mobileSearch";
+import { io } from "socket.io-client";
 export default function UserNav(){
+  let socket
     let URL;
     const { user, showMobileSearch} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
@@ -19,10 +21,12 @@ export default function UserNav(){
         if (process.env.NODE_ENV == 'production') {
             dispatch(actions.updateURL("https://inkup-api.onrender.com"))
             URL = "https://inkup-api.onrender.com"
+             socket = io(URL)
           }else{
             
             dispatch(actions.updateURL("http://localhost:5000"))
             URL =  "http://localhost:5000" 
+             socket = io(URL)
           }
        setInterval(() => {
         if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
@@ -38,6 +42,7 @@ export default function UserNav(){
        }
     },[])
     const pollNotifications = async() => {
+        socket.emit('getNotifications', {headers:{Authorization: localStorage.getItem('token')}})
           let newNotifications = await(await axios.get(`${URL}/api/notifications`,{headers:{Authorization: localStorage.getItem('token')}})).data
        
         dispatch(actions.updateNotifications(newNotifications))
