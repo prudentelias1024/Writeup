@@ -27,7 +27,7 @@ export default function SideNavBar(){
   )
     
     return(
-        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto  pt-[8em]  text-center  z-30  pl-[em] fixed bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-321 maxlg:ml-80 lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">
+        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto  pt-[8em]  text-center  z-30  pl-[em] fixed bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-32 maxlg:ml-80 lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">
             <div className=" border pt-3 -ml-9 lg:hidden ">
             <p className="font-[Pacifico] text-3xl text-center ">Inkup </p>
             <p className="font-[Outfit]   text-lg leading-9 tracking-wide p-6 m-auto ml-[1em]">We allow content creators, developers and bloggers to share their contents and grow in our community</p>
@@ -43,9 +43,12 @@ export default function SideNavBar(){
             <SideNavLink link="/" additionalStyles="m-auto mt-6"  icon={<FcHome className="text-2xl"/>} name="Home"/>
             <SideNavLink link='/tags' additionalStyles="m-auto" icon={<AiFillFire className="text-2xl text-red-500"/>} name=" Tags"/>
             <SideNavLink link='/faq' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
-          <div className="flex flex-row mt-[-5em] ml-[2em]  mb-[2em]">
+          <div className="flex flex-col mt-[-5em] ml-[2em] gap-[1em] mb-[2em]">
           <a href="https://twitter.com/InkUp1024" target="_blank">
-          <FaTwitter className="text-3xl text-sky-500" />
+         <button className=" -ml-6 flex flex-row text-black rounded-lg bg-white border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-black" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
+          </a>
+          <a href="https://twitter.com/InkUp1024" target="_blank">
+         <button className=" -ml-10 flex flex-row text-black rounded-lg bg-white border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-black" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
           </a>
           </div>
         </div>

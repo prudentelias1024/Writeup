@@ -56,7 +56,7 @@ export default function Post({post, removeReactions, showCoverImage, additionalS
                 <Reactions post={post} remove={removeReactions}/>
                {post.readingTime !== null || post.readingTime !== undefined || post.readingTime !== ''?
                   //-top-2
-                <div className='lg:relative lg:bottom-[0em] lg:left-[85%]  relative  left-[67.5%]'>
+                <div className='lg:relative lg:bottom-[0em] lg:left-[80%] max-lg:left-[85%]  relative  left-[67.5%]'>
                   <p className='font-[Outfit] text-[#717171]'> {post.readingTime}</p>
                   </div> : ''}
                 </div>

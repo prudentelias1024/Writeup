@@ -7,7 +7,7 @@ import { format } from '../../time';
 const DashboardPosts = ({post}) => {
     const {user} = useSelector(state => state)
     return (
-        <div className="flex flex-col justify-around border rounded-xl  w-[90%] ml-4  h-fit bg-white py-2  lg:flex-row lg:w-[60em]  lg:px-4 lg:py-6 lg:ml-[2em]">
+        <div className="flex flex-col justify-around border rounded-xl  w-[90%] ml-4  h-fit bg-white py-2  lg:flex-row max-lg:w-[60em] lg:w-[45em] lg:px-4 lg:py-6 lg:ml-[2em]">
         <div className='flex flex-col'>
             <Link className="text-[#3b49df] text-xl w-full px-4 leading-8 lg:text-2xl font-bold font-[Outfit]" to={'/p/@'+user.username+'/'+post.postId}>{post.title}</Link>
            
