@@ -183,7 +183,7 @@ const MyPosts = () => {
       {showModal == true ? <LoginModal /> : ''}
         <NavBar/>
         <div className='flex flex-col gap-[1em] lg:top-32 lg:relative lg:flex lg:gap-[30em]'>
-            <div className=" fixed flex impressions  z-10 border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[30em] lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
+            <div className=" fixed flex impressions  z-10 border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[10em] max-lg:ml-[30em] lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
            
                 {
                 liked == true ?
@@ -218,7 +218,7 @@ const MyPosts = () => {
                 
             </div>
 
-            <div className="post lg:ml-[40em] -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
+            <div className="post lg:ml-[20em]  max-lg:ml-[40em] -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
              
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
@@ -282,7 +282,7 @@ const MyPosts = () => {
                        
                       }
              </div>
-            <div className="author_Profile w-full lg:fixed lg:right-[1em] p-7 bg-white lg:w-[23em] text-[#171717] rounded-lg">
+            <div className="author_Profile w-full lg:fixed lg:right-[1em] border z-20 mb-[1em] p-7 bg-white lg:w-[23em] text-[#171717] rounded-lg">
                 <div className='flex gap-[1em]'>
             <img src={post.author.public_picture} className='w-[3em] h-[3em] rounded-full object-cover' /> 
            <div>
@@ -314,7 +314,7 @@ const MyPosts = () => {
           Edit Profile
           </Link>
 
-     </button> : <button onClick={(event) => {follow(user,post.author)}} className="bg-[#512bd4] text-white rounded-lg w-full mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
+     </button> : <button onClick={(event) => {follow(user,post.author)}} className="bg-[#512bd4] text-white rounded-lg w-full mb-[2em] max-lg:mb-[4em]  h-[3em] font-bold lg:ml-[3em] mt-[1em] lg:w-[15em]" type="button">
           Follow
           </button>
 
@@ -322,10 +322,10 @@ const MyPosts = () => {
          }{}
             </div>
             {
-              otherAuthorPost !== null &&  otherAuthorPost.length > 0  ?   <div className="more_posts w-full py-7 lg:-bottom-1 lg:fixed lg:right-[1em] lg:p-7 bg-white lg:w-[23em]  text-[#171717]">
+              otherAuthorPost !== null &&  otherAuthorPost.length > 0  ?   <div className="more_posts z-2  w-full max-lg:py-7 lg:top-1/2 lg:absolute lg:right-[1em] lg:p-7 bg-white lg:w-[23em]  text-[#171717]">
               <p className='font font-bold text-xl ml-7'>More posts from {post.author.name}</p>
-              <div className='flex flex-col w-full gap-8 py-[1.5em] mb-[1.5em]'>
-                 <div className='block hover:bg-[#ededed] w-full p-3 '>
+              <div className='flex flex-col w-full gap-8 max-lg:py-[1.5em] max-lg:mb-[1.5em]'>
+                 <div className='block hover:bg-[#ededed] w-full max-lg:p-3 '>
                      <p className='text-md w-full text-[#717171]'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                    <div className='flex flex-row ml-[1.8em] mt-[.5em] gap-4'>
  
