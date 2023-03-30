@@ -858,18 +858,28 @@ app.post('/api/publicPicture', async(req,res) => {
         res.send(pictureBuffer)
 })
 
-app.post('api/user/:username',(req,res) => {
+app.get('/api/user/:username',(req,res) => {
     User.find({username:req.params.username}).populate('followers').populate('following').populate('followingTags').exec((err,doc) => {
         if(err){throw err}
-        if(doc){res.send(doc)}
+        if(doc && doc.length > 0){res.send(doc[0])}else{
+            res.send('null')
+        }
     })
 })
-app.post('api/posts/:username',(req,res) => {
-   let userId =  User.find({username:req.params.username}).select('id')
-    PublishedPosts.find({author:userId}).populate('followers').populate('following').populate('followingTags').exec((err,doc) => {
+app.get('/api/posts/:username',(req,res) => {
+ User.find({username:req.params.username}).select('id').exec((err,doc) => {
+  if(err){throw err}
+  if(doc && doc.length > 0){
+    const userId = doc[0].id
+    PublishedPosts.find({author:userId}).populate('author').populate('likes').populate('comments').populate('bookmarks').exec((err,doc) => {
         if(err){throw err}
         if(doc){res.send(doc)}
     })
+  } else {
+    res.send('null')
+  }
+   })
+
 })
 
 app.post('/api/user/edit', verify, (req,res) => {
