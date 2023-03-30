@@ -858,7 +858,19 @@ app.post('/api/publicPicture', async(req,res) => {
         res.send(pictureBuffer)
 })
 
-
+app.post('api/user/:username',(req,res) => {
+    User.find({username:req.params.username}).populate('followers').populate('following').populate('followingTags').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){res.send(doc)}
+    })
+})
+app.post('api/posts/:username',(req,res) => {
+   let userId =  User.find({username:req.params.username}).select('id')
+    PublishedPosts.find({author:userId}).populate('followers').populate('following').populate('followingTags').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){res.send(doc)}
+    })
+})
 
 app.post('/api/user/edit', verify, (req,res) => {
     changes = req.body.profileChanges

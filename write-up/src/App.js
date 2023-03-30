@@ -23,6 +23,7 @@ import TagTemplate from './Components/Tag/TagTemplate';
 import ReadLater from './Components/ReadLater';
 import SearchPage from './Components/Search/SearchPage';
 import FAQ from './Components/FAQ';
+import MyProfile from './Components/MyProfile';
 function App() {
        
         let URL
@@ -96,9 +97,10 @@ function App() {
       <Route path='/register' element={<SignUp/>}/>
       <Route path='/create' element={<CreatePosts/>}/>
       <Route path='/Dashboard'  element={<Dashboard/>}/>
+      <Route path='/:username'  element={<Profile/>}/>
       <Route path='/Dashboard/followers'  element={<Followers/>}/>
       <Route path='/Dashboard/following'  element={<Following/>}/>
-      <Route path='/Profile' element={<Profile/>}/>
+      <Route path='/Profile' element={<MyProfile/>}/>
       <Route path='/logout' element={<Logout/>}/>
       <Route path='/tags' element={<Tags/>}/>
       <Route path='/readlater' element={<ReadLater/>}/>

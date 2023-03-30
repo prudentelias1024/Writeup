@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BsCalendarWeek, BsEnvelope } from 'react-icons/bs';
-import { Link, useParams, useRoutes } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import { SlNote } from "react-icons/sl";
 import { HiHashtag } from 'react-icons/hi';
@@ -12,14 +12,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../store/index";
 import {format} from '../time'
     
-const Profile = () => {
+const MyProfile = () => {
     let URL;
     const user = useSelector((state) => state.user)
     const [myPosts, setMyPosts] = useState(null)
     const dispatch = useDispatch()
-    const {username} = useParams()
    const loadUser = async() => {
-        const info = await (await axios.get(`${URL}/api/user/${username}`,)).data;
+        const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
+         )).data;
          dispatch(actions.updateUser(info))
          
      }
@@ -101,4 +101,4 @@ const Profile = () => {
     }
 }
 
-export default Profile;
+export default MyProfile;
