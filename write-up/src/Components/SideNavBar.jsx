@@ -2,7 +2,7 @@ import SideNavLink from "./Sidenav/SideNavLink";
 import { AiOutlineHome, AiOutlineBulb, AiFillFire } from "react-icons/ai";
 import { FcHome, FcQuestions } from "react-icons/fc";
 import { HiOutlineHashtag } from "react-icons/hi";
-import { FaHashtag, FaTwitter } from "react-icons/fa";
+import { FaHashtag, FaInstagram, FaTwitter } from "react-icons/fa";
 import TrendingTags from "./Sidenav/TrendingTags";
 import Button from "./Navbar/Button";
 import { useSelector } from "react-redux";
@@ -45,10 +45,10 @@ export default function SideNavBar(){
             <SideNavLink link='/faq' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
           <div className="flex flex-col mt-[-5em] ml-[2em] gap-[1em] mb-[2em]">
           <a href="https://twitter.com/InkUp1024" target="_blank">
-         <button className=" -ml-6 flex flex-row text-black rounded-lg bg-white border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-black" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
+         <button className=" -ml-6 flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
           </a>
-          <a href="https://twitter.com/InkUp1024" target="_blank">
-         <button className=" -ml-10 flex flex-row text-black rounded-lg bg-white border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-black" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
+          <a href="https://www.instagram.com/inkupofficial/" target="_blank">
+         <button className=" -ml-10 flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaInstagram className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
           </a>
           </div>
         </div>
