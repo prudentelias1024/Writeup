@@ -43,7 +43,7 @@ io.on('connection',(socket) => {
     console.log(`Connected : ${socket.id}`)
     //How to pass headers to socket
     socket.on('getNotifications', (data) => {
-     console.log(data)
+    //  console.log(data)
  })
 })
 
@@ -66,7 +66,7 @@ const verify = (req,res,next) => {
      jwt.verify(token,process.env.INKUP_SECRET_KEY, (err,user) => {
             if(err){res.status(401).json("Token is invalid")}
             if(user){
-              
+            
                 User.findOne({username: user}).populate('followers').populate('following').exec((err,userDoc) => {
                     if(err){throw err} 
                      if(userDoc){
@@ -580,7 +580,7 @@ app.post('/post/draft', verify, (req,res) => {
 
 app.get('/post/:username/:postId',  (req,res) => {
     let {username,postId} = req.params
-    console.log(postId)
+    console.log(req.params)
     username = username.split('@')[1]
      PublishedPosts.find({postId: postId}).populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
         if (err) {
@@ -899,7 +899,8 @@ app.post('/api/user/edit', verify, (req,res) => {
         }
     })
 })
-app.get('/api/user/posts', verify, (req,res) => {
+app.get('/api/user/posts/my', verify, (req,res) => {
+    
     PublishedPosts.find({author: req.user._id}, (err,doc) => {
         if(err){throw err}
         if(doc){

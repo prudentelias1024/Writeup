@@ -14,9 +14,14 @@ import { BsHeartFill } from 'react-icons/bs';
 import { actions } from '../../store';
 import LoginModal from '../loginModal';
 const MyPosts = () => {
-  
+  let URL;
   useEffect(() => {
-       
+    if (process.env.NODE_ENV == 'production') {
+      URL = "https://inkup-api.onrender.com"
+    }else{
+      URL = "http://localhost:5000"
+             
+    }
        
     setTimeout(() => {
   
@@ -30,7 +35,7 @@ const MyPosts = () => {
       
     
    }, [])
- const {user,showModal,URL} =  useSelector(state => state)
+ const {user,showModal} =  useSelector(state => state)
  const [liked,setLiked] = useState()
  const [followed,setFollowed] = useState(false)
  const [bookmarked,setBookmarked] = useState()

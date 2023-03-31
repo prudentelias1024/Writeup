@@ -22,7 +22,8 @@ const Dashboard = () => {
 
    }
   const  getMyPosts = async() => {
-   let res = await (await axios.get(`${URL}/api/user/posts`, {headers: {Authorization:  localStorage.getItem('token')}})).data
+   let res = await (await axios.get(`${URL}/api/user/posts/my`, {headers: {Authorization:  localStorage.getItem('token')}})).data
+  
   console.log(res)
    setMyPosts(res)
    setNumberOfPosts(res.length)
@@ -103,7 +104,7 @@ const Dashboard = () => {
                     <p className="text-2xl font-bold ml-3 mb-4 lg:ml-16  ">Your Posts</p>
                   
                   {
-                    myPosts.length > 0  ? myPosts.map((mypost) => {
+                    myPosts &&  myPosts.length > 0  ? myPosts.map((mypost) => {
                         return  <DashboardPosts key={mypost._id} post={mypost}/>
                     }) :<>
                     <div className='flex flex-row gap-1 m-auto text-center'>
