@@ -237,7 +237,7 @@ const SearchPage = () => {
                         return( <div className='flex flex-row pl-[1em] mb-[1em]' key={index}>
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
-                            <p className="font-[Maven] w-full text-md font-bold">{people.name}</p>
+                            <Link to={"/"+people.username} className="font-[Maven] w-full text-md font-bold">{people.name}</Link>
                             <p  className="font-[Maven] text-ellipsis h w-[390px] overflow-hidden whitespace-nowrap">{people.bio}</p>
                         </div>
                           
@@ -253,7 +253,7 @@ const SearchPage = () => {
                         return( <div className='flex flex-row pl-[1em] mb-[1em]' key={index}>
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
-                            <p className="font-[Maven] w-full text-md font-bold">{people.name}</p>
+                              <Link to={"/"+people.username} className="font-[Maven] w-full text-md font-bold">{people.name}</Link>
                             <p  className="font-[Maven] text-ellipsis w-[240px] overflow-hidden whitespace-nowrap">{people.bio}</p>
                         </div>
                         { user !== null?
