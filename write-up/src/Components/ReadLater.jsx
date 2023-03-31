@@ -11,38 +11,42 @@ const ReadLater = () => {
   
      let temp = []
     const extractTags = (post) => {
-        console.log(post)
         post.map((bookmarkedPost,index) => {
             bookmarkedPost.tags.toString().split(',').map((tag) => {
-              temp.push(tag)
+             if(!temp.includes(tag)){
+                 temp.push(tag)
+
+             }
              
               })
             })
             
-          
+          setTags(temp)
        
     }
     useEffect(() => {
-    setTimeout(() => {
+   
 
         extractTags(bookmarkedPosts)
-    },2000)
+    
     },[])
     return (
         <>
            <NavBar/>
-            <div className="top-32 relative flex flex-row">
+            <div className="top-32 relative flex flex-row lg:gap-[8em] max-lg:[40em]">
            
-            <div className="flex flex-col  pl-3 lg:ml-[4em] h-[15em] px-10 ">
-            {/* { 
+            <div className="flex flex-col  pl-3 lg:ml-[6em] h-[15em] px-10 ">
+                <p className='font-[Outfit] text-xl font-bold mb-[1em] ml-[-2em]'>Tags Bookmarked</p>
+            {
+             
              tags !== null ?  
-             tags.followingTags.map((tag,index) => 
+             tags.map((tag,index) => 
                
                
-               {return <SideNavTags  tag={"#"+tag} key={index}/>}
+               {return <SideNavTags  tag={tag} key={index}/>}
                ): ''
              
-            } */}
+            }
            
            
            
@@ -50,14 +54,12 @@ const ReadLater = () => {
            
             
 
-            {/* <div  className='bg-white w-1/3  pl-[1em]'>
-             {  
+            {  
                  bookmarkedPosts !== null && bookmarkedPosts.length > 0 ? bookmarkedPosts.map((bookmarkedPost,index) => {
                      console.log(bookmarkedPost)
-                     return <Post key={index} removeReactions="hidden" post={bookmarkedPost}/>
+                     return <Post key={index} removeReactions="hidden" additionalStyles="lg:w-[35em]" post={bookmarkedPost}/>
                     }) : '<p> No Post Bookmarked <p>'
                 }
-                </div> */}
                 
             
             </div>

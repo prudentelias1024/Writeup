@@ -16,7 +16,7 @@ import LoginModal from '../loginModal';
 const MyPosts = () => {
   let URL;
   useEffect(() => {
-    if (process.env.NODE_ENV == 'production') {
+    if (process.env.NODE_ENV === 'production') {
       URL = "https://inkup-api.onrender.com"
     }else{
       URL = "http://localhost:5000"
@@ -26,6 +26,7 @@ const MyPosts = () => {
     setTimeout(() => {
   
      increasePostView()
+     
     }, 5000);
   
      
@@ -151,10 +152,12 @@ const MyPosts = () => {
         // setComment('')
       } 
      const bookmarkPost = async(postId,name,author) => {
+      
       if (user == null) {
         dispatch(actions.setShowModal(true))
       }else{
         setBookmarked(true)
+        console.log(URL)
       let  res = await(await axios.post(`${URL}/post/bookmark`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
       let bookmarkNotification = await(await axios.post(`${URL}/api/notification/bookmark`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
       console.log(res)

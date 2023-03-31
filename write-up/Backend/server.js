@@ -677,7 +677,7 @@ app.post('/api/search', (req,res) => {
 })
 
 app.get('/api/bookmarked',verify, (req,res) => {
-    PublishedPosts.find().select('bookmarks title tags comments likes created  author postId').where('bookmarks').equals(req.user._id).populate('author').exec((err,doc) => {
+    PublishedPosts.find().select('bookmarks title tags viewedBy comments likes created  author postId').where('bookmarks').equals(req.user._id).populate('author').exec((err,doc) => {
         if (err) {
             throw err
         }   
