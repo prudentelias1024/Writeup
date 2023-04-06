@@ -43,12 +43,12 @@ export default function SideNavBar(){
             <SideNavLink link="/" additionalStyles="m-auto mt-6"  icon={<FcHome className="text-2xl"/>} name="Home"/>
             <SideNavLink link='/tags' additionalStyles="m-auto" icon={<AiFillFire className="text-2xl text-red-500"/>} name=" Tags"/>
             <SideNavLink link='/faq' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
-          <div className="flex flex-col mt-[-5em] ml-[2em] gap-[1em] mb-[2em]">
+          <div className="flex flex-col mt-[-5em] m-auto  gap-[1em] mb-[2em]">
           <a href="https://twitter.com/InkUp1024" target="_blank">
-         <button className=" -ml-6 flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
+         <button className=" m-auto flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
           </a>
           <a href="https://www.instagram.com/inkupofficial/" target="_blank">
-         <button className=" -ml-10 flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaInstagram className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
+         <button className="m-auto flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaInstagram className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
           </a>
           </div>
         </div>
