@@ -85,7 +85,7 @@ export default function UserNav(){
             <Button additionalStyles="" to="/signup" name="Create an account" borderColor="border-pink-500" textColor=" text-pink-500"/>
         
             </div> :
-             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[20em] max-lg:ml-[55em]">
+             <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[20em] ">
             
             <Button to="/create" additionalStyles="hidden lg:block" name="Create Content " borderColor="border-pink-500 -mt-2" textColor="text-pink-500"/>
             <IoIosSearch onClick={handleMobileSearch}   className="lg:hidden text-4xl mt-[.125em]"/>  

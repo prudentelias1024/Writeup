@@ -6,6 +6,7 @@ import UserNav from './Navbar/UserNav';
 import Posts from './Posts';
 import SideNavBar from './SideNavBar';
 import TagTopics from './TagTopics';
+import Podcast from './Podcast'
 export default function Home(){
    useEffect(() => {
 
@@ -17,8 +18,9 @@ export default function Home(){
         <div className=' flex flex-row gap-3 overflow-x-hidden lg:ml-4'>
           
         <SideNavBar/>
+        {/* <Podcast/> */}
      <Posts/>
-     <TagTopics/>
+     {/* <TagTopics/> */}
 </div>
         </>
     );
