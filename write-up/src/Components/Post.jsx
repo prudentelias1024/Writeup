@@ -29,7 +29,7 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
            
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
-              <img src={post.coverImageURL} className={ showCoverImage + " w-[100%] rounded-sm ml-[.5em]"} alt="" />
+              <img src={post.coverImageURL} className={ showCoverImage + " w-[95%] rounded-sm ml-[.5em]"} alt="" />
                  : ''
          
             }
