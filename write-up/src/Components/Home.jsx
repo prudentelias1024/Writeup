@@ -15,7 +15,7 @@ export default function Home(){
         <>
          
         <NavBar />
-        <div className=' flex flex-row gap-3 lg:overflow-x-hidden lg:ml-4'>
+        <div className=' flex flex-row gap-3 overflow-x-hidden lg:overflow-x-hidden lg:ml-4'>
           
         <SideNavBar/>
         {/* <Podcast/> */}
