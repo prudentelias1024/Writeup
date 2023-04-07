@@ -226,7 +226,7 @@ const MyPosts = () => {
                 
             </div>
 
-            <div className="post lg:ml-[20em]  max-lg:ml-[40em] -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
+            <div className="post lg:ml-[20em]  -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
              
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
