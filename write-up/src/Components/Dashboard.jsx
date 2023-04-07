@@ -62,7 +62,7 @@ const Dashboard = () => {
             <NavBar/>
             <div className="top-32 relative flex-col ">
                <p className="flex flex-col font-[Outfit] font-semibold text-2xl lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
-               <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] max-lg:pl-[14em]">
+               <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] ">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
                  <DetailsCard text="Total Posts" amount={numberOfPosts} color="bg-pink-500"/>
@@ -71,7 +71,7 @@ const Dashboard = () => {
                 <DetailsCard text="Total Bookmarks Receieved" amount={totalBookmark} color="bg-purple-500"/></> : 'null'
                }
                </div>
-               <div className=" lg:flex lg:flex-row lg:gap-3 lg:ml-[5em] max-lg:ml-[11em] mt-[3em]">
+               <div className=" lg:flex lg:flex-row lg:gap-3 lg:ml-[5em]  mt-[3em]">
                 <div className="dashboard_navs hidden lg:block">
                     <ul >
                         <li className='block font-[Maven] hover:bg-green-200'><Link className='flex flex-row gap-2 font-[Sora] p-3 text-2xl mt-[.5em] '>Posts <div className='bg-green-500 text-white p-1 border border-gray-200 w-fit rounded-full'>{numberOfPosts}</div> </Link></li>
@@ -100,7 +100,7 @@ const Dashboard = () => {
                         </select>
                    
                 </div>
-                <div className="posts flex flex-col gap-2 lg:ml-[5em] max-lg:ml-[13em]">
+                <div className="posts flex flex-col gap-2 lg:ml-[5em] ">
                     <p className="text-2xl font-bold ml-3 mb-4 lg:ml-16  ">Your Posts</p>
                   
                   {

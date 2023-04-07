@@ -17,7 +17,7 @@ export default function NavBar({searchWords}) {
       console.log(showMobileSearch)
   }, [showMobileSearch]);
  return(
-    <div className="w-full gap-[1em] lg:gap-[0em] bg-red pl-[1em] lg:justify-around flex flex-row z-50 fixed bg-[#fff] border lg:pt-4 lg:pb-4 lg:pl-[12em]">
+    <div className="w-full gap-[1em] lg:gap-[0em]  pl-[1em] lg:justify-around flex flex-row z-[4em]  bg-[#fff] border lg:pt-4 lg:pb-4 lg:pl-[12em]">
     <div className="flex flex-row  ">
     <RxHamburgerMenu onClick={() => {dispatch(actions.updateMobileNavStatus(!navStatus))}} className="text-4xl lg:-ml-4 mt-[.5em] lg:hidden" />
   

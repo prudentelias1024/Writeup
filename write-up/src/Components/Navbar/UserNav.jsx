@@ -105,7 +105,7 @@ export default function UserNav(){
 
             <img src={user.public_picture} alt={user.name} className='rounded-full h-12 w-12 -mt-4 mr-[1em] '  />
             </button >
-            <div ref={helperRef} className="hidden dropdown fixed left-32  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
+            <div ref={helperRef} className="hidden dropdown fixed left-12  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
                 <Link to='/profile' className=" block px-2 py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><p>{user.name}</p> <p>@{user.username}</p></Link>
                 <hr />
                 <Link to='/Dashboard' className="block px-2  py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underline">Dashboard</Link>
