@@ -7,7 +7,7 @@ export default function Posts(){
     } else {
    return(
     
-    <div className="flex flex-col ml-[0em] m-auto  gap-8 pt-[9em] w-full  lg:pt-[1em] max-lg:absolute max-lg:top-40 lg:w-[30%]   lg:ml-[10em]">
+    <div className="flex flex-col ml-[0em] m-auto  gap-8 pt-[0em] w-full  lg:pt-[1em] max-lg:absolute max-lg:top-40 lg:w-[30%]   lg:ml-[10em]">
       
     {
       posts.map((post) => {

@@ -83,7 +83,8 @@ function App() {
   
   return (
     <>
-    
+    <div className="overflow-x-hidden">
+      
     <Routes>
 
       <Route path='*' element={<Page404/>}/>
@@ -109,6 +110,7 @@ function App() {
      
     </Routes>
     
+    </div>
       
     </>
    
