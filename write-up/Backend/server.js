@@ -482,9 +482,115 @@ app.post('/api/signup' ,async(req,res) => {
        }
     })
 })
+
+// Tags Generator
+app.post('/api/ai/generateTag', async(req,res) => {
+    const content = req.body.content
+    const title = req.body.title
+    // axios.post
+})
+
+
+/**
+ CRUD OPERATIONS FOR POSTS (DRAFTS AND PUBLISHED) HERE
+ */
+app.post('/draft/create', verify, async(req,res) => {
+    let draftedBefore;
+    let quality = false
+    if(quality){
+    
+    
+    DraftPosts.find({author: req.user._id}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            if(doc.length > 0){
+                draftedBefore = true
+            } else {
+                draftedBefore = false
+            }
+        }
+    })
+    let {title,body,tags,coverImageURL, withExcerpt,postId} = req.body
+    if(tags !== undefined){
+        tags = tags.split(' ')
+    }
+    const avgWPM = 250;
+    let words = post.body.split(' ').length       
+    let minutes = Math.ceil(words/avgWPM)
+    let readingTime = `${minutes} mins read`
+    const draftPosts = new DraftPosts({
+        postId: postId,
+        title: title,
+        body:  body,
+        tags:tags,
+        coverImageURL: coverImageURL,
+        author: req.user._id,
+        created: moment(),
+        withExcerpt: withExcerpt,
+        readingTime: readingTime
+    })
+    await draftPosts.save()
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        
+        auth: {
+            user: 'inkup1024@gmail.com',
+            pass: 'zyghrqwepszerctl'
+            
+        }
+    
+    
+      })
+
+      let message = {
+        from: "'Inkup' <Inkup1024@gmail.com>", //my email address
+        to: `${req.user.email}`,
+        subject: `Your post, ${title} has been saved as Draft. Let\'s Keep the Momentum Going.`,
+        text: `${title} saved`,
+        attachment: [{
+            filename: 'inkup.png',
+            path: '/inkup.png',
+            cid: 'inkup.png'
+        }],
+        html: ` <p style='font-family: Outfit; font-size: 1.5em;'> <br> We want to personally congratulate you on your ${publishedBefore == false ?  'First Draft!' : 'Successful Draft'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to see you again and it’s great to see the insights and perspective that you have prepared for our community. Your article will gain a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We know that writing can be a challenging process, but we wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that you are gifted and special to our community and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a creative set of people in our community of fellow writers and readers who appreciate and enjoy your  quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field, that's is why it is neccessary to take your time to draft your ideas and knowledge before showing it to the world</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, Inkup <br>
+       ${req.user.name}"`
+      }
+
+   let messageId =  await  (await transporter.sendMail(message)).messageId
+    
+    DraftPosts.find({draftId: req.body.draftId}).populate('author').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){
+            res.send({message:"Drafted", data: doc[0]}).status(200)
+        }
+    })
+}  else {
+    res.send({message: 'Your Content contains junk contetnt. Please revised and check again'})
+}
+})
+
+app.delete('/draft/:id', verify, (req,res) => {
+    DraftPosts.deleteOne({draftId: req.params.id }, (err,doc) => {
+        if(err){throw err} 
+        if(doc) {
+            res.send('Draft Succesfully Deleted').status(200)
+        }
+    })
+})
+
+app.delete('/post/:id', verify, (req,res) => {
+    PublishedPosts.deleteOne({postId:req.params.id}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            res.send('Content successfully deleted').status(200)
+        }
+
+    })
+})
+
 app.post('/post/create', verify, async(req,res) => {
     let publishedBefore;
-    PublishedPosts.find({email: req.user.email}, (err,doc) => {
+    PublishedPosts.find({author: req.user._id}, (err,doc) => {
         if(err){throw err}
         if(doc){
             if(doc.length > 0){
@@ -503,7 +609,6 @@ app.post('/post/create', verify, async(req,res) => {
         let minutes = Math.ceil(words/avgWPM)
        
         let readingTime = `${minutes} mins read`
-        console.log(readingTime)
          
   
     const publishedPosts = new PublishedPosts({
@@ -559,24 +664,9 @@ app.post('/post/create', verify, async(req,res) => {
 
 
 })
-app.post('/post/draft', verify, (req,res) => {
-    let {title,body,tags,coverImageURL,withExcerpt, postId} = req.body
-     tags  = tags.split(' ')
-    const draftPosts = new DraftPosts({
-        postId: postId,
-        title: title,
-        body:  body,
-        tags:tags,
-        coverImageURL: coverImageURL,
-        userId: req.user._id,
-        withExcerpt: withExcerpt
-        
-    })
-     draftPosts.save()
-     res.send({message:"Saved as Draft"})
 
 
-})
+
 
 app.get('/post/:username/:postId',  (req,res) => {
     let {username,postId} = req.params
@@ -902,6 +992,16 @@ app.post('/api/user/edit', verify, (req,res) => {
 app.get('/api/user/posts/my', verify, (req,res) => {
     
     PublishedPosts.find({author: req.user._id}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            console.log(doc)
+            res.send(doc)
+        }
+    })
+})
+app.get('/api/user/posts/drafts', verify, (req,res) => {
+    
+    DraftPosts.find({author: req.user._id}, (err,doc) => {
         if(err){throw err}
         if(doc){
             console.log(doc)

@@ -6,10 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { userContext } from '../Contexts/userContext';
 import DashboardPosts from './Dashboard/DashboardPosts';
 import DetailsCard from './Dashboard/DetailsCard';
+import DraftsPosts from "./Dashboard/DraftPosts";
 import  NavBar  from "./NavBar";
 const Dashboard = () => {
    let URL
     const [myPosts, setMyPosts] = useState([])
+    const [draftPosts, setDraftPosts] = useState([])
+    const [draftPostsAmount, setDraftPostsAmount] = useState(null)
     const [numberOfPosts, setNumberOfPosts] = useState(null)
     const [ totalLikes, setTotalLikes] = useState(null)
     const [ totalComments, setTotalComments] = useState(null)
@@ -27,6 +30,13 @@ const Dashboard = () => {
   console.log(res)
    setMyPosts(res)
    setNumberOfPosts(res.length)
+}
+  const  getDraftPosts = async() => {
+   let res = await (await axios.get(`${URL}/api/user/posts/drafts`, {headers: {Authorization:  localStorage.getItem('token')}})).data
+  
+  console.log(res)
+   setDraftPosts(res)
+   setDraftPostsAmount(res.length)
 }
   const  getTotalLikes = async() => {
    let res = await (await axios.get(`${URL}/api/user/posts/totalLikes`, {headers: {Authorization:  localStorage.getItem('token')}})).data
@@ -52,7 +62,8 @@ const Dashboard = () => {
         URL = "http://localhost:5000"
                
       }
-        setMyPosts(getMyPosts())
+        getMyPosts()
+        getDraftPosts()
         getTotalLikes()
       getTotalComments()
         getTotalBookmarks()
@@ -60,15 +71,18 @@ const Dashboard = () => {
     return (
         <>
             <NavBar/>
-            <div className="top-32 relative flex-col ">
+            <div className="lg:top-32 top-4 relative flex-col ">
                <p className="flex flex-col font-[Outfit] font-semibold text-2xl lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
                <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] ">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
                  <DetailsCard text="Total Posts" amount={numberOfPosts} color="bg-pink-500"/>
+                <DetailsCard text="Total Drafts" amount={draftPostsAmount} color="bg-yellow-500"/>
                 <DetailsCard text="Total Likes" amount={totalLikes} color="bg-green-500"/>
                 <DetailsCard text="Total Comments" amount={totalComments} color="bg-orange-500"/>
-                <DetailsCard text="Total Bookmarks Receieved" amount={totalBookmark} color="bg-purple-500"/></> : 'null'
+                <DetailsCard text="Total Bookmarks Receieved" amount={totalBookmark} color="bg-purple-500"/> 
+                </>
+                : 'Loading......'
                }
                </div>
                <div className=" lg:flex lg:flex-row lg:gap-3 lg:ml-[5em]  mt-[3em]">
@@ -110,6 +124,23 @@ const Dashboard = () => {
                     <div className='flex flex-row gap-1 m-auto text-center'>
                         
                      <p className='font-[Outfit]  lg:mt-[-10em] lg:ml-[4em]'> No Posts Yet??</p>
+  
+                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[-10em] lg:ml-[0em]'> Write a Post</Link>
+                    </div>
+                    </>
+                  }
+                   
+                </div>
+                <div className="posts flex flex-col gap-2 lg:ml-[5em] ">
+                    <p className="text-2xl font-bold ml-3 mb-4 lg:ml-16  ">Drafts</p>
+                  
+                  {
+                    draftPosts &&  draftPosts.length > 0  ? draftPosts.map((myDraft) => {
+                        return  <DraftsPosts key={myDraft._id} draft={myDraft}/>
+                    }) :<>
+                    <div className='flex flex-row gap-1 m-auto text-center'>
+                        
+                     <p className='font-[Outfit]  lg:mt-[-10em] lg:ml-[4em]'> No Drafts Yet??</p>
   
                      <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[-10em] lg:ml-[0em]'> Write a Post</Link>
                     </div>

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const user = new mongoose.Schema({
+     premiumPlan: {type:String, default: () => 'free'},
      name:{type:String, required:true},
-   account_type: {type:String, required: true},
+    account_type: {type:String, required: true},
     username:{type:String, required:true},
     email:{type:String, required:true},
     public_picture:{type:String, required:true},
@@ -23,6 +24,7 @@ const user = new mongoose.Schema({
     location: {type:String,default :() => ''},
     googleId: {type:String},
     twitterId: {type:String},
-    githubId: {type:String}
+    githubId: {type:String},
+    verified: {type:Boolean,default: () => false }
 })
 module.exports = mongoose.model("Users", user)

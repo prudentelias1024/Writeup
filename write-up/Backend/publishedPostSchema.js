@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const PublishedPosts = new mongoose.Schema({
+    verifiedAuthor: {type: Boolean, default :() => false},
+    authorPremiumPlan: {type:String, default: () => 'free'},
     author: {
         type:  mongoose.Schema.Types.ObjectId,
         ref: 'Users',
@@ -104,7 +106,11 @@ const PublishedPosts = new mongoose.Schema({
                 },
          
         
-        ]
+        ],
+        collaborators: [{
+            type: mongoose.Schema.Types.ObjectId,
+            required: false
+    }]
 })
 
 module.exports =  mongoose.model('PublishedPosts',PublishedPosts)

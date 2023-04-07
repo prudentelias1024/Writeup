@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
 const DraftsPosts = new mongoose.Schema({
-    postId: {
-        type:String,
+    verifiedAuthor: {type: Boolean, default :() => false},
+    authorPremiumPlan: {type:String, default: () => 'free'},
+    author: {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
         required:true
     },
-    userId: {
-        type: String,
-        required:true,
+    draftId: {
+        type:String,
+        required:true
     },
     title: {
         type:String,
@@ -21,10 +24,14 @@ const DraftsPosts = new mongoose.Schema({
         type:String,
         required:true
     },
+    readingTime : {
+        type: String,
+        required: true
+     },
     
         withExcerpt: {
         type:Boolean,
-        required:true
+        required:false
      },
     created: {
         type:Date,
@@ -32,8 +39,12 @@ const DraftsPosts = new mongoose.Schema({
     },
     tags: {
         type: [String],
-        required:true
+        required:false
     },
+    collaborators: [{
+        type: mongoose.Schema.Types.ObjectId,
+        required: false
+}]
    
 })
 
