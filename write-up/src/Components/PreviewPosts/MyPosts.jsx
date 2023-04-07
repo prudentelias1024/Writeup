@@ -191,7 +191,7 @@ const MyPosts = () => {
       {showModal == true ? <LoginModal /> : ''}
         <NavBar/>
         <div className='flex flex-col gap-[1em] lg:top-32 lg:relative lg:flex lg:gap-[30em]'>
-            <div className=" fixed flex impressions  z-10 border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[10em] max-lg:ml-[30em] lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
+            <div className=" fixed flex impressions  z-[10em] border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[10em]  lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
            
                 {
                 liked == true ?
@@ -226,7 +226,7 @@ const MyPosts = () => {
                 
             </div>
 
-            <div className="post lg:ml-[20em]  -z-100 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
+            <div className="post lg:ml-[20em]  -z-10 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
              
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
