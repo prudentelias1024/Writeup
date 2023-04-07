@@ -53,7 +53,7 @@ const Profile = () => {
         <div className='flex flex-col overflow-x-hidden'>
             <NavBar/>
             
-            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[95%] ml-[.75em] rounded-xl top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5 max-lg:ml-[14em] lg:ml-[10em]  lg:pt-[4em]">
+            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[95%] ml-[.75em] rounded-xl top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
             <Link to="/settings">
             <button className='bg-blue-600 text-white w-[7em] h-[3em] font-bold text-sm absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
             </Link>
@@ -91,9 +91,9 @@ const Profile = () => {
             </div>
 
 
-        <div className=' max-lg:w-full lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
+        <div className=' lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
             <div className='hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
-            ml-[10em]  max-lg:ml-[14em] mt-[10em] h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
+            ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
             <div className='flex gap-2 w-fit'>
                     <SlNote className='text-xl ' />
                     <p className='font-[Outfit] w-[10em] font-light text-sm'> {myPosts? myPosts.length : 0} Posts published</p>
@@ -108,10 +108,10 @@ const Profile = () => {
                 </div>
               
             </div>
-            <div className=' flex flex-col gap-4  lg:mt-[10em] max-lg:ml-[10em]'>
+            <div className=' flex flex-col gap-4  lg:mt-[10em] '>
             {
              myPosts !== null && myPosts.map((myPost) => {
-                return <Post readingTimeStyles="top-[-3em]" additionalStyles="max-lg:w-[60em] lg:w-[30em] " key={myPost._id} post={myPost} />
+                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={myPost._id} post={myPost} />
              })
             }
             
