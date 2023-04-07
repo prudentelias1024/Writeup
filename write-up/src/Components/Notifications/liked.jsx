@@ -37,13 +37,13 @@ const Liked = ({notification}) => {
             <div className='flex flex-col lg:flex-row gap-3 m-auto w-[115%] lg:w-[60%] lg:m-auto bg-white p-[1em]  justify-between lg:pl-[7em] hover:scale-110'>
         {
             notification.read == false? 
-        <p className='lg:ml-[-6em] font-[Outfit] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Unread </p>
+        <p className='lg:ml-[-6em] font-[Outfit] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Unread </p>
 :
-                 <p className='lg:ml-[-6em] font-[Outfit] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Read </p> }
+                 <p className='lg:ml-[-6em] font-[Outfit] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Read </p> }
 
         <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[3em] w-[3em] m-auto lg:m-0 rounded-full' />
         
-        <p className=" relative m-auto  left-[1em] lg:left-[-1.5em] lg:top-3 -top-10 text-red-600 text-3xl">💖</p>
+        <p className=" relative m-auto z-0 left-[1em] lg:left-[-1.5em] lg:top-3 -top-10 text-red-600 text-3xl">💖</p>
         <div className=' w-[80%] font-[Outfit] m-auto lg:ml-[-2em]'>
 
         

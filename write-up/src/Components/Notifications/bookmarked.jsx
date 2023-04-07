@@ -43,7 +43,7 @@ const Bookmarked = ({notification}) => {
             {
             notification.read == false? 
             <p className='lg:ml-[-6em] font-[Outfit] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Unread </p>
-           : <p className='lg:ml-[-6em] font-[Outfit] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg'>Read </p> }
+           : <p className='lg:ml-[-6em] font-[Outfit] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em]'>Read </p> }
         <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[3em] w-[3em] rounded-full m-auto lg:m-0 ' />
        <p className='relative left-[.5em] m-auto lg:left-[-1.6em] lg:top-3  -top-8 text-gray-600 text-3xl'>📌</p>
         <div className='m-auto lg:-ml-[2.5em] lg:mt-[.25em] w-[85%] font-[Outfit] mt-[-1.5em]'>

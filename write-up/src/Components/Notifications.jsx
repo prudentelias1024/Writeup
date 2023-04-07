@@ -23,7 +23,7 @@ const Notifications = () => {
     return (
         <>
         <NavBar/>
-        <div className='pt-[6em] lg:pt-[8em] w-[100%]  flex flex-col gap-[.75em]'>
+        <div className='pt-[1em] lg:pt-[8em] w-[100%] z-0 flex flex-col gap-[.75em]'>
             {
             notifications && notifications.length !== 0?
             

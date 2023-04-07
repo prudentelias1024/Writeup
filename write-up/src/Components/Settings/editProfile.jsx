@@ -75,7 +75,7 @@ const EditProfile = () => {
     return (
         <>
         <NavBar/>
-        <div className='edit top-32 relative '>
+        <div className='edit top-4  lg:top-32 relative '>
             <form className="flex flex-col lg:gap-[3em] gap-[1em]  lg:ml-[20em] ">
                 
             <div className="user lg:ml-[1.5em] pt-5 p-4 lg:rounded-lg bg-white  lg:w-3/4">
