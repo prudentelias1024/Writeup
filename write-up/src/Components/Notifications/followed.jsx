@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import   img  from "../../mock.jpg";
+import { HiBadgeCheck } from 'react-icons/hi';
 const Followed = ({notification}) => {
     return (
         <div className='flex flex-col lg:flex-row gap-3 w-[115%] lg:w-[60%] lg:m-auto bg-white p-[1em] ml-0 justify-between lg:px-[1em] hover:scale-110'>
@@ -9,7 +10,9 @@ const Followed = ({notification}) => {
         <img src={img} className='h-[3em] w-[3em] rounded-full m-auto lg:ml-[2em]' />
           <div className='text-left w-[50%] font-[Mulish] m-auto  lg:ml-[7em] lg:mt-2 lg:flex lg:flex-row '>
 
-        <Link to='/' className='font-bold text-xl lg:text-xl lg:ml-[-5em]'>Lorem  ipsum</Link>
+        <Link to='/' className='font-bold text-xl lg:text-xl lg:ml-[-5em]'>Lorem  ipsum
+        
+        </Link>
          <p className='lg:ml-2  text-xl'>followed you !</p>
         </div>
          {/* <button className='border-2 shadow-md border-gray-500 bg-white p-2 font-[Mulish] rounded-md font-bol'>Follow Back</button> */}

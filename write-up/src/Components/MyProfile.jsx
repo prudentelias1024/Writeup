@@ -3,7 +3,7 @@ import { BsCalendarWeek, BsEnvelope } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import { SlNote } from "react-icons/sl";
-import { HiHashtag } from 'react-icons/hi';
+import { HiBadgeCheck, HiHashtag } from 'react-icons/hi';
 import { FaRegComment } from 'react-icons/fa';
 import DashboardPosts from './Dashboard/DashboardPosts';
 import axios from 'axios';
@@ -49,14 +49,18 @@ const MyProfile = () => {
         <div className='flex flex-col'>
             <NavBar/>
             
-            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[100%] ml-[0em] top-[1em]  rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
+            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[100%] ml-[0em] top-[4em]  rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
             <Link to="/settings">
             <button className='bg-blue-600 text-white w-[7em] h-[3em] font-bold text-sm absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
             </Link>
              <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em] ml-auto mr-auto' src={user.public_picture} alt={user.name}  />
+             <div className='flex flex-row justify-center'>
+
              <p className=" text-lg font-bold font-[Montserrat] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
+             <HiBadgeCheck className="text-xl text-blue-500 mt-1"/>
+             </div> 
              <p className=" text-sm font-[Montserrat]  text-[#a2a2a2] font-semibold mt-[.2em] mb-[1em] lg:text-xl">@{user.username}</p>
-                <div className="flex flex-row gap-4 mb-[1em] ml-[1.2em] lg:ml-[33em] lg:pb-[2em]">
+                <div className="flex flex-row gap-4 justify-center mb-[1em] ml-[1.2em] lg:ml-[33em] lg:pb-[2em]">
                 <div className='joined flex flex-row text-[#acaaaa] font-[Montserrat] font-bold gap-2'>
                     <BsCalendarWeek className=' text-base lg:text-xl'/>
                     <p className='font-[Mulish] text-xs'>{format(user.joined_on)}</p>

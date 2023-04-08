@@ -3,7 +3,7 @@ import { BsBriefcase, BsBriefcaseFill, BsCalendarWeek, BsEnvelope } from 'react-
 import { Link, useParams, useRoutes } from 'react-router-dom';
 import NavBar from './NavBar';
 import { SlNote } from "react-icons/sl";
-import { HiHashtag } from 'react-icons/hi';
+import { HiBadgeCheck, HiHashtag } from 'react-icons/hi';
 import { FaGraduationCap, FaRegComment } from 'react-icons/fa';
 import DashboardPosts from './Dashboard/DashboardPosts';
 import axios from 'axios';
@@ -53,12 +53,16 @@ const Profile = () => {
         <div className='flex flex-col overflow-x-hidden'>
             <NavBar/>
             
-            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[100%] top-[.75em] rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
+            <div className=" bg-white mb-[6em] pt-[5em] text-center border w-[100%] top-[2.5em] rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
             <Link to="/settings">
             <button className='bg-blue-600 text-white w-[7em] h-[3em] font-bold text-sm absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
             </Link>
              <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em] ml-auto mr-auto' src={user.public_picture} alt={user.name}  />
+             <div className='flex flex-row justify-center'>
+
              <p className=" text-lg font-bold font-[Outfit] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
+             {  user.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}
+             </div>
              <p className=" text-sm font-[Outfit]  text-[#a2a2a2] font-semibold mt-[.2em] mb-[1em] lg:text-xl">@{user.username}</p>
              <p className=" text-sm font-[Outfit]  text-[#333] font-medium mt-[.2em] mb-[1em] lg:px-[8em] lg:text-xl">{user.bio !== ''? user.bio: 'No Bio Yet'}</p>
                 <div className="flex flex-row gap-4 mb-[1em] ml-[1.2em] lg:ml-[22em] max-lg:ml-[33em] lg:pb-[2em]">
@@ -73,7 +77,7 @@ const Profile = () => {
 
                 </div>
                 <hr />
-                <div className="flex flex-row justify-around mt-[1em] mb-[2em]">
+                <div className="flex flex-row justify-center mt-[1em] mb-[2em]">
                     <div className="education flex flex-col text-[#acaaaa]">
 
                         <FaGraduationCap className='text-lg ml-10 lg:text-3xl font-bold' />
@@ -124,7 +128,6 @@ const Profile = () => {
         return (
             <>
             <div className='flex flex-col'>
-            <NavBar/>
              <Page404/>
             </div>
             </>

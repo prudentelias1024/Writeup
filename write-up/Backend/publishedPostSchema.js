@@ -112,5 +112,4 @@ const PublishedPosts = new mongoose.Schema({
             required: false
     }]
 })
-
 module.exports =  mongoose.model('PublishedPosts',PublishedPosts)

@@ -20,7 +20,7 @@ export default function Search({content}) {
     return(
         <>   <form action="/search">
              <input onChange={(event) => {handleSearchWords(event)}} onSubmit={(event) =>{handleSearch(event)}
-             } className="hidden lg:ml-[0em] max-lg:ml-[-15em] lg:block h-12 w-auto mt-4 border rounded-3xl ml-12 font-[Maven] pl-5 font-bold placeholder:font-[Maven] placeholder:font-bold placeholder:ml-5" value={searchWords == null ?content: searchWords } type="text" placeholder="Enter your search here" name="search"  />
+             } className="hidden lg:ml-[0em]  lg:block h-12 w-auto mt-4 border rounded-3xl ml-12 font-[Maven] pl-5 font-bold placeholder:font-[Maven] placeholder:font-bold placeholder:ml-5" value={searchWords == null ?content: searchWords } type="text" placeholder="Enter your search here" name="search"  />
              </form>
         </>
 

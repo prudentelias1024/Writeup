@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const notificationsSchema = new mongoose.Schema({
+    actionUserVerified: {
+      type: Boolean,
+      required: true
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

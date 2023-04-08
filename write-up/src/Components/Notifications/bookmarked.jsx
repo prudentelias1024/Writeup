@@ -4,9 +4,8 @@ import { FaBookmark } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import   img  from "../../mock.jpg";
-
+import { HiBadgeCheck } from 'react-icons/hi';
 import { actions } from '../../store';
-
 import { time } from "../../time";
 const Bookmarked = ({notification}) => {
     let   URL
@@ -49,7 +48,7 @@ const Bookmarked = ({notification}) => {
         <div className='m-auto lg:-ml-[2.5em] lg:mt-[.25em] w-[85%] font-[Outfit] mt-[-1.5em]'>
 
         
-         <p className='font-[Mulish] text-xl m-auto lg:ml-[-.5em] lg:mt-[.5em]'><Link  className='font-bold font-[Outfit]'  to={notification.message[0].user[1].link}>{notification.message[0].user[0].name}  </Link> bookmarked   
+         <p className='font-[Mulish] text-xl m-auto lg:ml-[-.5em] lg:mt-[.5em]'><Link  className='font-bold font-[Outfit]'  to={notification.message[0].user[1].link}><p>{notification.message[0].user[0].name} </p>  {  notification.actionUserVerified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}  </Link> bookmarked   
          <Link className='text-blue-600 font-bold ml-1' to={"/"+notification.message[0].post[1].link}> {notification.message[0].post[0].name}</Link>
          </p> 
         

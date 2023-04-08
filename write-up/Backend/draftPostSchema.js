@@ -48,4 +48,5 @@ const DraftsPosts = new mongoose.Schema({
    
 })
 
+
 module.exports =  mongoose.model('DraftPosts',DraftsPosts)

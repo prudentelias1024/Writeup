@@ -79,25 +79,25 @@ const SignUp = () => {
           <div className='flex flex-col place-self-center mb-[10em]'>
          
           <button onClick={() => {signUpWithGoogle()}} className="bg-black text-white w-[95%] ml-2 lg:ml-12 rounded-lg lg:w-[45em] mt-[6em] h-[4em]" type="submit">
-              <FcGoogle className='text-4xl ml-3'/>
+              <FcGoogle className='text-4xl mr-3 ml-3'/>
               <p className='font-[Outfit] text-xl font-semibold -mt-8 ml-3 '>Continue With Google</p>
 
           </button>
           <button className="bg-black text-white w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
-              <BsTwitter className='text-[1d9bf0] text-4xl ml-3'/>
+              <BsTwitter className='text-[1d9bf0] text-4xl mr-3 ml-3'/>
               <p className='font-[Outfit] text-xl font-semibold -mt-8 ml-3 '>Continue With Twitter</p>
 
           </button>
           <button className="bg-black text-white w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
-              <AiFillInstagram className='text-[1d9bf0] text-4xl ml-3'/>
-              <p className='font-[Outfit] text-xl font-semibold -mt-8 ml-7 '>Continue With Instagram</p>
+              <AiFillInstagram className='text-[1d9bf0] text-4xl mr-7 ml-3'/>
+              <p className='font-[Outfit] text-xl font-semibold -mt-8 ml-10 '>Continue With Instagram</p>
 
           </button>
           
           <div className='flex flex-col m-auto lg:flex-row mt-9 mb-72'>
 
           <p className="font-[Outfit] text-2xl">
-              Already Have an Account??
+               Have an Account??
           </p>
           <Link to="/login" className='text-2xl font-[Outfit] lg:ml-3 text-blue-500'>Login</Link>
           </div>

@@ -8,6 +8,8 @@ import { actions } from "../../store";
 import axios from "axios";
 import { locale } from "moment";
 import MobileSearch from "./mobileSearch";
+
+import { HiBadgeCheck } from 'react-icons/hi';
 import { io } from "socket.io-client";
 export default function UserNav(){
   let socket
@@ -82,7 +84,7 @@ export default function UserNav(){
         
             <Button additionalStyles=" hidden lg:block" to="/login" name="Login" borderColor="border-none" textColor="text-blue-500"/>
      
-            <Button additionalStyles="" to="/signup" name="Create an account" borderColor="border-pink-500" textColor=" text-pink-500"/>
+            <Button additionalStyles="" to="/signup" name="Create account" borderColor="border-pink-500" textColor=" text-pink-500"/>
         
             </div> :
              <div className="profile flex flex-row gap-2.5 mt-4 lg:ml-[20em] ">
@@ -106,7 +108,9 @@ export default function UserNav(){
             <img src={user.public_picture} alt={user.name} className='rounded-full h-12 w-12 -mt-4 mr-[1em] '  />
             </button >
             <div ref={helperRef} style={{zIndex: 10}} className="hidden dropdown  fixed left-12  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
-                <Link to='/profile' className=" block px-2 py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><p>{user.name}</p> <p>@{user.username}</p></Link>
+                <Link to='/profile' className=" block px-2 py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><div className="flex flex-row">
+                  <p>{user.name}</p>
+                 {user.verified ? <HiBadgeCheck className="text-xl text-blue-500 mt-1"/> : ''} </div> <p>@{user.username}</p></Link>
                 <hr />
                 <Link to='/Dashboard' className="block px-2  py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underline">Dashboard</Link>
                 <Link to='/create' className="block px-2 py-3  ml-4 font-[Maven] font-semibold hover:bg-gray-100 hover:underline">Create Post</Link>

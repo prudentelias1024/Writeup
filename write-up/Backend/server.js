@@ -20,7 +20,10 @@ const firebase = require('firebase-admin')
 const http = require('http')
 const server = http.createServer(app)
 const nodemailer = require('nodemailer')
-const cron = require('node-cron')
+const cron = require('node-cron');
+const draftPostSchema = require('./draftPostSchema');
+const publishedPostSchema = require('./publishedPostSchema');
+const usersSchema = require('./usersSchema');
 //Dynamic URL
 let URL;
 
@@ -161,6 +164,7 @@ app.post('/api/notification/like',verify, async(req,res) => {
        if (req.user._id !== author._id ) {
               
     const newNotification = new notifications({
+        actionUserVerified: req.user.verified,
         userId: author._id, //Notification receiver
         postId: postId,
         actionUserId: req.user._id,
@@ -230,6 +234,7 @@ app.post('/api/notification/comment',verify, async(req,res) => {
          if (req.user._id !== author._id ) {
                 
       const newNotification = new notifications({
+        actionUserVerified: req.user.verified,
           userId: author._id, //Notification receiver
           postId: postId,
           actionUserId: req.user._id,
@@ -296,6 +301,7 @@ app.post('/api/notification/bookmark',verify, async(req,res) => {
             if (req.user._id !== author._id ) {
    
             const newNotification = new notifications({
+                actionUserVerified: req.user.verified,
                 userId: author._id,
                 postId: postId,
                 actionUserId: req.user._id,
@@ -333,6 +339,7 @@ app.post('/api/notification/welcome',verify, (req,res) => {
 app.post('/api/notification/follow',verify, async(req,res) => {
     const {postId, author,post_name} = req.body
     const newNotification = new notifications({
+        actionUserVerified: req.user.verified,
         userId: author._id,
         message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}]} ],
         type: 'follow'
@@ -878,6 +885,15 @@ app.post('/post/comment', verify, (req,res) => {
     })
     })
 })
+app.get('/api/user/verified/:id',(req,res) => {
+    User.findById(req.params.id).select("verified").exec((err,doc) => {
+        if(err){throw err}
+        if(doc){
+            res.send(doc.verified).status(200)
+        }
+    })
+})
+
 app.post('/post/unlike', verify, (req,res) => {
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$pull:{likes: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
@@ -1049,6 +1065,17 @@ app.get('/api/user/posts/totalBookmarks', verify, (req,res) => {
 
 
 connectToMongooseDB()
+
+// PublishedPosts.updateMany({}, {$set: {verifiedAuthor: false, authorPremiumPlan: 'free', collaborators:[], }}).then(result => {
+//     console.log(`Updated ${result.upsertedCount} documents`)
+// }).catch(err => {
+//     console.log(err)
+// })
+// notifications.updateMany({}, {$set: {actionUserVerified: false, }}).then(result => {
+//     console.log(`Updated ${result.upsertedCount} documents`)
+// }).catch(err => {
+//     console.log(err)
+// })
 
 mongoose.connection.once("open", () => {
     console.log("Connected to Mongodb")

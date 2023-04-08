@@ -4,9 +4,8 @@ import { FaCommentAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import   img  from "../../mock.jpg";
-
+import { HiBadgeCheck } from 'react-icons/hi';
 import { actions } from '../../store';
-
 import { time } from "../../time";
 const Commented = ({notification}) => {
     let URL;
@@ -49,7 +48,8 @@ const Commented = ({notification}) => {
         <div className='lg:-ml-[2.5em] w-[85%] font-[Outfit] m-auto '>
 
         
-         <p className='font-[Outfit] text-xl lg:ml-[-.5em] lg:mt-[.5em] -mt-[.75em]'><Link className='font-bold font-[Outfit] text-xl' to={notification.message[0].user[1].link}>{notification.message[0].user[0].name}  </Link> commented <Link className='text-blue-600 font-bold text-xl' to={"/"+notification.message[0].post[1].link}>{notification.message[0].post[0].name}</Link></p> 
+         <p className='font-[Outfit] text-xl lg:ml-[-.5em] lg:mt-[.5em] -mt-[.75em]'><Link className='font-bold font-[Outfit] text-xl' to={notification.message[0].user[1].link}><p>{notification.message[0].user[0].name} </p>  {  notification.actionUserVerified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}   </Link> commented <Link className='text-blue-600 font-bold text-xl' to={"/"+notification.message[0].post[1].link}>{notification.message[0].post[0].name}
+         </Link></p> 
          
         </div>
         <p className="font-[Outfit] text-gray-400 lg:my-auto m-auto lg:ml-[-2em] font-bold">{timeCreated}</p>

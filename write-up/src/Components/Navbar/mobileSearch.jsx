@@ -20,9 +20,9 @@ const MobileSearch = ({content}) => {
         <>  {
             showMobileSearch == true?
        
-         <form action="/search" className='absolute top-[4em] w-[98%]'>
+         <form action="/search" className='absolute top-[4em] w-[95%] ml-[-0.5em]'>
              <input onChange={(event) => {handleSearchWords(event)}} onSubmit={(event) =>{handleSearch(event)}
-             } className=" lg:hidden  h-12 w-[100%] mt-4 border rounded-md ml-1 font-[Maven] pl-5 font-bold placeholder:font-[Maven] placeholder:font-bold placeholder:ml-5" value={searchWords == null ?content: searchWords } type="text" placeholder="Enter your search here" name="search"  />
+             } className=" lg:hidden  h-12 w-[100%] mt-4 border rounded-md font-[Maven] pl-5 font-bold placeholder:font-[Maven] placeholder:font-bold placeholder:ml-5" value={searchWords == null ?content: searchWords } type="text" placeholder="Enter your search here" name="search"  />
              </form> : ''
 }
         </>

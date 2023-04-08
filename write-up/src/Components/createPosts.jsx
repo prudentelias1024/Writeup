@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from 'react-quill'
 import { useDispatch, useSelector } from 'react-redux';
 import '../../node_modules/react-quill/dist/quill.bubble.css'
 import mock from './mock.jpg'
@@ -11,13 +11,8 @@ import { storage } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
-import { actions } from '../store';
-import { min } from 'moment';
 const CreatePosts = () => {
     let URL
-    const {posts} = useSelector(state => state)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
      const [tagsError,setTagsError] = useState(
         
@@ -50,7 +45,7 @@ const CreatePosts = () => {
           }}
      const quillRef = useRef()
       const excerptRef = useRef()
-
+   
      useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
@@ -70,7 +65,6 @@ const CreatePosts = () => {
     } 
 
   
-
 
     const handleImageSelection = async(event) => {
      setPost({...post, image: event.target.files[0]});
@@ -289,7 +283,11 @@ muchTagsError: ''
       
      }
 
-    
+     const tagsGenerator = async() => {
+        const {title,body} = post
+       
+     }
+ 
     const handlePostSubmission = async() => {
         const avgWPM = 250;
         let words = post.body.split(' ').length
@@ -423,12 +421,18 @@ muchTagsError: ''
         <input ref={excerptRef} onChange={handleExcerpt} type="checkbox"/>
         <p className="font-[Outfit] font-bold">With Excerpt</p>
         </div>
-        <div  className=' lg:ml-[-10em] lg:mb-12'  >
-        <button onClick={handlePostSubmission} className="bg-black text-white mt-[2em] w-[12em] ml-[1em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
+        <div className='lg:ml-[20em] mt-4 flex gap-3'>
+        <button onClick={tagsGenerator} className="bg-blue-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
+        
+
+        <p className="font-[Outfit] font-bold">Generate Tags</p>
+        </button>
+        
+         <button onClick={handlePostSubmission} className="bg-green-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
                <p className='font-[Outfit] text-xl font-semibold'>Publish</p>
 
           </button>
-         <button onClick={handlePostDraft} type='submit' className='font-[Outfit] ml-8 font-bold'>Save as draft</button>
+         <button onClick={handlePostDraft} type='submit' className='bg-red-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] font-[Outfit] font-bold'>Save as draft</button>
         </div>
         </div>
         </>
