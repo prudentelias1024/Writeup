@@ -14,6 +14,8 @@ import BounceLoader from "react-spinners/BounceLoader";
 const CreatePosts = () => {
     let URL
     const [loading,setLoading] = useState(false)
+    const tagsRef = useRef()
+    const [readingTime, setReadingTime] = useState('')
      const [tagsError,setTagsError] = useState(
         
             {
@@ -102,8 +104,13 @@ const CreatePosts = () => {
        
        
     })
+
     const handlePostBody = (value) => {
-        
+      const avgWPM = 250;
+    let words = value.split(' ').length       
+    let minutes = Math.ceil(words/avgWPM)
+    setReadingTime(minutes)
+  
     setPost({
         ...post, body: value
     })
@@ -284,8 +291,11 @@ muchTagsError: ''
      }
 
      const tagsGenerator = async() => {
-        const {title,body} = post
-       
+        const {title} = post
+         const body = quillRef.current.unprivilegedEditor.getText();
+         let tags = await (await axios.post('http://localhost:8000/ai/generateTags', {title:title, content:body})).data
+         tags = tags.map((tag) => {return "#" + tag.word})
+         tagsRef.current.value = tags.join(' ')
      }
  
     const handlePostSubmission = async() => {
@@ -380,7 +390,7 @@ muchTagsError: ''
         <input onChange={handleImageSelection} ref={titleImage} type="file" className='opacity-0' />
           <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
                   className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" />
-        <input onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
+        <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
                     className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 
         { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
@@ -417,7 +427,10 @@ muchTagsError: ''
        
         </div>
        { readingMinutesError !== null? <p className='lg:ml-[20em] my-[2em] font-bold font-[Outfit] text-red-500'>{readingMinutesError}</p> :''}
-        <div className='lg:ml-[20em] ml-[2em] mt-4 flex gap-4'>
+        <div className='lg:ml-[20em] relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
+        <p className="font-[Outfit] font-bold">{readingTime} mins read</p>
+        </div>
+        <div className='lg:ml-[20em] ml-[2em] mt-[0em] flex gap-4'>
         <input ref={excerptRef} onChange={handleExcerpt} type="checkbox"/>
         <p className="font-[Outfit] font-bold">With Excerpt</p>
         </div>
