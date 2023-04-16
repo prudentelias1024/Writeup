@@ -77,7 +77,7 @@ const Profile = () => {
 
                 </div>
                 <hr />
-                <div className="flex flex-row justify-center mt-[1em] mb-[2em]">
+                <div className="flex flex-row gap-[4em] lg:gap-[10em] justify-center mt-[1em] mb-[2em]">
                     <div className="education flex flex-col text-[#acaaaa]">
 
                         <FaGraduationCap className='text-lg ml-10 lg:text-3xl font-bold' />
@@ -95,8 +95,8 @@ const Profile = () => {
             </div>
 
 
-        <div className=' lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
-            <div className='hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
+        <div className='lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
+            <div className='mt-[10em] hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
             ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
             <div className='flex gap-2 w-fit'>
                     <SlNote className='text-xl ' />

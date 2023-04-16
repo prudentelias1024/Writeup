@@ -24,6 +24,7 @@ import ReadLater from './Components/ReadLater';
 import SearchPage from './Components/Search/SearchPage';
 import FAQ from './Components/FAQ';
 import MyProfile from './Components/MyProfile';
+import AdminDashboard from './Components/Admin/AdminDashboard';
 function App() {
        
         let URL
@@ -107,6 +108,7 @@ function App() {
       <Route path='/readlater' element={<ReadLater/>}/>
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='/faq' element={<FAQ/>}/>
+      <Route path='/admin' element={<AdminDashboard/>} />
      
     </Routes>
     

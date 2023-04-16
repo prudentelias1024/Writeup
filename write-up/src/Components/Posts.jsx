@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 export default function Posts(){
     const {posts} = useSelector(state => state)
     if (posts == null) {
-        
+         
     } else {
    return(
     
-    <div className="flex flex-col ml-[0em] m-auto  gap-1 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%]   lg:ml-[10em]">
+    <div className="flex flex-col ml-[0em] m-auto md:mr-[3em] md:ml-[5em]  gap-1 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%]   lg:ml-[10em]">
       
     {
       posts.map((post) => {

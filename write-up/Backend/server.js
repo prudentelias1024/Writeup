@@ -87,6 +87,39 @@ const verify = (req,res,next) => {
         res.status(403).json("You are not authenticated")
     }
 }
+
+const verifyAdmin = (req,res,next) => {
+    res.setHeader("Access-Control-Allow-Credentials","true")
+    const authHeader = req.headers.authorization
+    if(authHeader){
+        let token = authHeader.toString().split(' ')[1]
+       
+     jwt.verify(token,process.env.INKUP_SECRET_KEY, (err,user) => {
+            if(err){ req.status = 401; res.status(401).json("Token is invalid")}
+            if(user){
+            
+                User.findOne({username: user}).exec((err,userDoc) => {
+                    if(err){throw err} 
+                     if(userDoc){
+                       if(userDoc.username == 'prudentelias' || userDoc.username == 'InkupOfficial')
+                       req.status = 200
+                        next();
+                     } else {
+                        req.status = 403
+                        res.status(403).json("You are not authenticated")
+                     }
+                    
+                })
+            } 
+        })
+    } else {
+        req.status = 403
+        res.status(403).json("You are not authenticated")
+    }
+}
+
+
+
 const followingTagsPosts = (tags) => {
     //First algorithm, the one which takes precedence over other algorithm this algorithm is handpicked by the user the moment they follow a tag
     let followingPosts = []
@@ -220,6 +253,40 @@ app.post('/api/notification/like',verify, async(req,res) => {
    
   
 })
+
+app.get('/api/admin/users', verifyAdmin, async(req,res) => {
+    User.find().exec(async(err,doc) => {
+    if (req.status == 200) {
+        res.send(doc)
+    }
+    })
+})
+
+app.get('/api/admin/posts', verifyAdmin, async(req,res) => {
+    PublishedPosts.find().populate('author').exec(async(err,doc) => {
+
+        if (req.status == 200) {
+            res.send(doc)
+        }
+    })
+})
+app.get('/api/admin/drafts', verifyAdmin, async(req,res) => {
+    DraftPosts.find().populate('author').exec(async(err,doc) => {
+
+        if (req.status == 200) {
+            res.send(doc)
+        }
+    })
+})
+app.get('/api/admin/notifications', verifyAdmin, async(req,res) => {
+    notifications.find().exec(async(err,doc) => {
+
+        if (req.status == 200) {
+            res.send(doc)
+        }
+    })
+})
+
 app.post('/api/notification/comment',verify, async(req,res) => {
     const {postId, author,post_name} = req.body
     notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
@@ -694,6 +761,7 @@ app.get('/post/:username/:postId',  (req,res) => {
         }
     })
 })
+app.get('/api/user')
 app.post('/post/viewed', verify, (req,res) => {
     let viewers = [], views;
    PublishedPosts.find({postId: req.body.postId}).select('views viewedBy').exec((err,doc) => {

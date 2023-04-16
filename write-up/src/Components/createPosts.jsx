@@ -15,6 +15,7 @@ const CreatePosts = () => {
     let URL
     const [loading,setLoading] = useState(false)
     const tagsRef = useRef()
+    const [junkError,setJunkError] = useState(false)
     const [readingTime, setReadingTime] = useState('')
      const [tagsError,setTagsError] = useState(
         
@@ -308,11 +309,18 @@ muchTagsError: ''
             console.log(readingMinutesError)
             console.log(tagsError)
          }
-        if (tagsError == null && readingMinutesError == null ) {
-            setLoading(true)
+         const {title} = post
+            const body = quillRef.current.unprivilegedEditor.getText();
            
+         let junkRes = await(await axios.post('http://localhost:8000/ai/junkChecker', {content:body, title:title })).data
+         console.log(junkRes)
+         if (junkRes == true) {
+             setJunkError('Junk words are detected in your content. Please revise your article')
+         }
+        if (tagsError == null && readingMinutesError == null && junkError == false) {
+            setLoading(true)
             
-            // let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+           // let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
             // if(res.message == 'Published'){
             //  let temp = []
             //  temp = [res.data, ...posts]
@@ -324,6 +332,7 @@ muchTagsError: ''
             //   }, 
             //   2500);
             // }
+           
         } else {
             setLoading(false)
         }
@@ -423,17 +432,20 @@ muchTagsError: ''
             
         }) : ''
     }
-        <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '3em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+        <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
        
+        {/* <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Add Collaborators @person' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '10%', width: '100%'}} /> */}
         </div>
-       { readingMinutesError !== null? <p className='lg:ml-[20em] my-[2em] font-bold font-[Outfit] text-red-500'>{readingMinutesError}</p> :''}
         <div className='lg:ml-[20em] relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
         <p className="font-[Outfit] font-bold">{readingTime} mins read</p>
         </div>
-        <div className='lg:ml-[20em] ml-[2em] mt-[0em] flex gap-4'>
+       
+       { readingMinutesError !== null? <p className='lg:ml-[20em] my-[2em] font-bold font-[Outfit] text-red-500'>{readingMinutesError}</p> :''}
+        <div className='lg:ml-[20em] relative left-[5%] top-[-2em] mt-[0em] flex gap-4'>
         <input ref={excerptRef} onChange={handleExcerpt} type="checkbox"/>
         <p className="font-[Outfit] font-bold">With Excerpt</p>
         </div>
+       { junkError !== null? <p className='lg:ml-[20em] my-[2em] ml-[1em] font-bold font-[Outfit] text-red-500'>{junkError}</p> :''}
         <div className='lg:ml-[20em] mt-4 flex gap-3'>
         <button onClick={tagsGenerator} className="bg-blue-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
         

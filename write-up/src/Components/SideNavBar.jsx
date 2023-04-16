@@ -27,7 +27,11 @@ export default function SideNavBar(){
   )
     
     return(
-        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto fixed h-full pb-[4em] pt-[0em] w-full  text-center  z-30  pl-[0em]  bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-32  lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">            <div className=" border pt-3 -ml-9 lg:hidden ">
+        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto fixed h-full pb-[4em] pt-[0em] w-full  text-center  z-30 md:w-full
+         md:flex md:flex-col md:w-[15em] md:relative md:bg-[#f6f6f6] md:ml-[3em] md:mr-[3em] lg:mt-20 lg: p-2 md:gap-2 
+          pl-[0em]
+            bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-32  lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">    
+                <div className=" border pt-3 -ml-9 md:hidden lg:hidden ">
             <p className="font-[Pacifico] text-3xl text-center ">Inkup </p>
             <p className="font-[Outfit]   text-lg leading-9 tracking-wide p-6 m-auto ml-[1em]">We allow content creators, developers and bloggers to share their contents and grow in our community</p>
           <div className="m-auto">
@@ -43,11 +47,11 @@ export default function SideNavBar(){
             <SideNavLink link='/tags' additionalStyles="m-auto" icon={<AiFillFire className="text-2xl text-red-500"/>} name=" Tags"/>
             <SideNavLink link='/faq' additionalStyles="m-auto mb-[5em]" icon={<FcQuestions className="text-2xl"/>} name="FAQ"/>
           <div className="flex flex-col mt-[-5em] m-auto  gap-[1em] mb-[2em]">
-          <a href="https://twitter.com/InkUp1024" target="_blank">
-         <button className=" m-auto flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaTwitter className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
+          <a href="https://twitter.com/InkUp1024"  target="_blank">
+         <button className=" m-auto  flex flex-row text-white rounded-lg bg-black border-black p-2 gap-2 border-2"> <FaTwitter className="text-2xl -mt-1 text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Twitter</p></button>
           </a>
-          <a href="https://www.instagram.com/inkupofficial/" target="_blank">
-         <button className="m-auto flex flex-row text-white rounded-lg bg-black border-black p-2 gap-5 border-2"> <FaInstagram className="text-2xl mt- text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
+          <a href="https://www.instagram.com/inkupofficial/"  target="_blank">
+         <button className="w-[14em] flex flex-row text-white rounded-lg bg-black  border-black p-2 gap-2 border-2"> <FaInstagram className="text-2xl -mt-1 text-white" /> <p className="font-xl font-[Outfit] font-bold w-full">Follow Us On Instagram</p></button>
           </a>
           </div>
         </div>
