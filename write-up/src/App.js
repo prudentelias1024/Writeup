@@ -27,6 +27,7 @@ import MyProfile from './Components/MyProfile';
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import Podcast from './Components/Podcast';
 import Podcasts from './Components/Podcasts';
+import CreatePodcast from './Components/createPodcast';
 function App() {
        
         let URL
@@ -112,7 +113,7 @@ function App() {
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/admin' element={<AdminDashboard/>} />
       <Route path='/podcasts' element={<Podcasts/>} />
-     
+       <Route path='/addPodcast' element={<CreatePodcast/>} />
     </Routes>
     
     </div>

@@ -8,7 +8,7 @@ import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 // import { CustomImageHandler } from './CustomImageHandler';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
 const CreatePosts = () => {
@@ -382,6 +382,7 @@ muchTagsError: ''
       <p className="font-[Pacifico]   text-3xl mt-4 ml-4 font-extrabold lg:mt-5  lg:ml-52 ">Ink Up</p>
   </div> */}
         <div className='text-editor bg-white text-black  flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
+        <Link to='/addPodcast' className='font-[Outfit] text-xl relative top-[-2em] text-blue-500 text-bold'>or add Podcast?</Link>
         {
             post.coverImageURL !== '' ? <>  
             <img src={post.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
