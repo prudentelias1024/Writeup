@@ -32,7 +32,7 @@ export default function  Podcast  () {
   }
    return (
      <> 
-     <div className="lg:mt-[10em] flex flex-col gap-[1em] border rounded-xl bg-orange-800 text-white h-fit p-[2em] ml-[10em]">
+     <div className="lg:mt-[5em] flex flex-col w-[30em] gap-[1em] border rounded-xl bg-orange-800 text-white h-fit p-[2em] ">
       <audio  ref={podcastRef} src="./pod1.mp3"></audio>
        <div className="podcastInfo flex flex-col">
         <div className="flex flex-row justify-between px-[1em]">
@@ -72,19 +72,19 @@ export default function  Podcast  () {
        <div className="reactions flex flex-row justify-center gap-[3em] mt-[1em]">
           <div className="flex flex-row gap-[.5em]">
             
-       <FaRegHeart className="text-2xl"/> 
+       <FaRegHeart className="text-xl"/> 
        
-        <p className="text-xl font-[Outfit] font-bold  -mt-.95">3 Likes</p>
+        <p className="text-base font-[Outfit] font-bold  -mt-.95">3 Likes</p>
           </div>
           <div className="flex flex-row gap-[.5em]">
             
-      <FaRegComment className="text-2xl"/>
-        <p className="text-xl font-[Outfit] font-bold  -mt-.95">3 Comments</p>
+      <FaRegComment className="text-xl"/>
+        <p className="text-base font-[Outfit] font-bold  -mt-.95">3 Comments</p>
           </div>
           <div className="flex flex-row gap-[.5em]">
-       <FaRegBookmark className="text-2xl"/>
+       <FaRegBookmark className="text-xl"/>
             
-        <p className="text-xl font-[Outfit] font-bold  -mt-.95">3 Bookmarks</p>
+        <p className="text-base font-[Outfit] font-bold  -mt-.95">3 Bookmarks</p>
           </div>
        </div>
      

@@ -25,6 +25,8 @@ import SearchPage from './Components/Search/SearchPage';
 import FAQ from './Components/FAQ';
 import MyProfile from './Components/MyProfile';
 import AdminDashboard from './Components/Admin/AdminDashboard';
+import Podcast from './Components/Podcast';
+import Podcasts from './Components/Podcasts';
 function App() {
        
         let URL
@@ -109,6 +111,7 @@ function App() {
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/admin' element={<AdminDashboard/>} />
+      <Route path='/podcasts' element={<Podcasts/>} />
      
     </Routes>
     

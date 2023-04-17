@@ -436,7 +436,7 @@ muchTagsError: ''
        
         {/* <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Add Collaborators @person' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '10%', width: '100%'}} /> */}
         </div>
-        <div className='lg:ml-[20em] relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
+        <div className=' relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
         <p className="font-[Outfit] font-bold">{readingTime} mins read</p>
         </div>
        
@@ -446,18 +446,18 @@ muchTagsError: ''
         <p className="font-[Outfit] font-bold">With Excerpt</p>
         </div>
        { junkError !== null? <p className='lg:ml-[20em] my-[2em] ml-[1em] font-bold font-[Outfit] text-red-500'>{junkError}</p> :''}
-        <div className='lg:ml-[20em] mt-4 flex gap-3'>
-        <button onClick={tagsGenerator} className="bg-blue-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
+        <div className='ml-[20em] mt-4 flex gap-3'>
+        <button onClick={tagsGenerator} className="bg-blue-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] " type="submit">
         
 
         <p className="font-[Outfit] font-bold">Generate Tags</p>
         </button>
         
-         <button onClick={handlePostSubmission} className="bg-green-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] " type="submit">
+         <button onClick={handlePostSubmission} className="bg-green-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] " type="submit">
                <p className='font-[Outfit] text-xl font-semibold'>Publish</p>
 
           </button>
-         <button onClick={handlePostDraft} type='submit' className='bg-red-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em] lg:ml-[30em] rounded-lg lg:w-[15em] font-[Outfit] font-bold'>Save as draft</button>
+         <button onClick={handlePostDraft} type='submit' className='bg-red-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] font-[Outfit] font-bold'>Save as draft</button>
         </div>
         </div>
         </>
