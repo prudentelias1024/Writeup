@@ -80,7 +80,7 @@ const Dashboard = () => {
                 <DetailsCard text="Total Drafts" amount={draftPostsAmount} color="bg-yellow-500"/>
                 <DetailsCard text="Total Likes" amount={totalLikes} color="bg-green-500"/>
                 <DetailsCard text="Total Comments" amount={totalComments} color="bg-orange-500"/>
-                <DetailsCard text="Total Bookmarks Receieved" amount={totalBookmark} color="bg-purple-500"/> 
+                <DetailsCard text="Total Bookmarks " amount={totalBookmark} color="bg-purple-500"/> 
                 </>
                 : 'Loading......'
                }
@@ -121,6 +121,7 @@ const Dashboard = () => {
                     myPosts &&  myPosts.length > 0  ? myPosts.map((mypost) => {
                         return  <DashboardPosts key={mypost._id} post={mypost}/>
                     }) :<>
+                    
                     <div className='flex flex-row gap-1 m-auto text-center'>
                         
                      <p className='font-[Outfit]  lg:mt-[-10em] lg:ml-[4em]'> No Posts Yet??</p>
@@ -129,10 +130,9 @@ const Dashboard = () => {
                     </div>
                     </>
                   }
-                   
-                </div>
-                <div className="posts flex flex-col gap-2 lg:ml-[5em] ">
-                    <p className="text-2xl font-bold ml-3 mb-4 lg:ml-16  ">Drafts</p>
+               
+                <div className=" flex flex-col gap-2 lg:ml-[5em] ">
+                    <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-8  ">Drafts</p>
                   
                   {
                     draftPosts &&  draftPosts.length > 0  ? draftPosts.map((myDraft) => {
@@ -140,13 +140,14 @@ const Dashboard = () => {
                     }) :<>
                     <div className='flex flex-row gap-1 m-auto text-center'>
                         
-                     <p className='font-[Outfit]  lg:mt-[-10em] lg:ml-[4em]'> No Drafts Yet??</p>
+                     <p className='font-[Outfit]  lg:mt-[5em] lg:ml-[4em]'> No Drafts Yet??</p>
   
-                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[-10em] lg:ml-[0em]'> Write a Post</Link>
+                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[5em] lg:ml-[0em]'> Write a Post</Link>
                     </div>
                     </>
                   }
                    
+                </div>
                 </div>
                </div>
             </div>
