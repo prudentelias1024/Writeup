@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { MdOutlineAudiotrack } from "react-icons/md";
+import {v4} from  'uuid'
+import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
+import { storage } from "../firebase";
 const CreatePodcast = () => {
     const [filename, setFilename] = useState(null)
     const uploadRef = useRef()
@@ -9,6 +12,9 @@ const CreatePodcast = () => {
     const handleAudioSelection = (event) => {
     setFilename(event.target.files[0].name)
     }
+   const uploadAudio = (event) => {
+    
+   }
     return (
         <>
         <div className="podcast">
@@ -22,7 +28,7 @@ const CreatePodcast = () => {
             </p>
         </div>
         <div className="flex-row gap-[1em] flex pt-[1em] w-[95%] lg:w-[80%] m-auto">
-        <button type="button" className="bg-yellow-500 text-white w-full font-bold font-[Outfit] p-[1em] rounded-lg">Publish </button>
+        <button type="button" className="bg-yellow-500 text-white w-full font-bold font-[Outfit] p-[1em] rounded-lg" onClick={uploadAudio}>Publish </button>
         <button type="button" className="bg-green-500 text-white w-full font-bold font-[Outfit] p-[1em] rounded-lg" onClick={handleAudioUpload}> Upload  </button>
         </div>
         </form>    

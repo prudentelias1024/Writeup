@@ -57,17 +57,17 @@ const MyProfile = () => {
              <div className='flex flex-row justify-center'>
 
              <p className=" text-lg font-bold font-[Montserrat] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
-             <HiBadgeCheck className="text-xl text-blue-500 mt-1"/>
+             <HiBadgeCheck className="text-xl text-blue-500 mt-8"/>
              </div> 
              <p className=" text-sm font-[Montserrat]  text-[#a2a2a2] font-semibold mt-[.2em] mb-[1em] lg:text-xl">@{user.username}</p>
-                <div className="flex flex-row gap-4 justify-center mb-[1em] ml-[1.2em] lg:ml-[33em] lg:pb-[2em]">
+                <div className="flex flex-row gap-4 justify-center mb-[1em] ml-[1.2em] lg:ml-[3em] lg:pb-[2em]">
                 <div className='joined flex flex-row text-[#acaaaa] font-[Montserrat] font-bold gap-2'>
-                    <BsCalendarWeek className=' text-base lg:text-xl'/>
-                    <p className='font-[Mulish] text-xs'>{format(user.joined_on)}</p>
+                    <BsCalendarWeek className=' text-base lg:text-xl mt-1.5'/>
+                    <p className='font-[Outfit] text-xs lg:text-xl'>{format(user.joined_on)}</p>
                 </div>
                 <div className='joined flex flex-row text-[#acaaaa] font-bold gap-2'>
-                    <BsEnvelope className='text-base lg:text-xl'/>
-                    <p className='font-[Mulish] text-xs'> {user.email}</p>
+                    <BsEnvelope className='text-base lg:text-xl mt-1.5'/>
+                    <p className='font-[Outfit] text-xs lg:text-xl'> {user.email}</p>
                 </div>
 
                 </div>

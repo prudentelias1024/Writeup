@@ -447,7 +447,7 @@ muchTagsError: ''
         <p className="font-[Outfit] font-bold">With Excerpt</p>
         </div>
        { junkError !== null? <p className='lg:ml-[20em] my-[2em] ml-[1em] font-bold font-[Outfit] text-red-500'>{junkError}</p> :''}
-        <div className='ml-[20em] mt-4 flex gap-3'>
+        <div className='lg:ml-[20em] mt-4 flex gap-3'>
         <button onClick={tagsGenerator} className="bg-blue-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] " type="submit">
         
 
