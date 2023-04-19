@@ -320,18 +320,18 @@ muchTagsError: ''
         if (tagsError == null && readingMinutesError == null && junkError == false) {
             setLoading(true)
             
-           // let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
-            // if(res.message == 'Published'){
-            //  let temp = []
-            //  temp = [res.data, ...posts]
-            //  dispatch(actions.updatePosts(temp))
+           let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+            if(res.message == 'Published'){
+             let temp = []
+             temp = [res.data, ...posts]
+             dispatch(actions.updatePosts(temp))
 
-            //   setTimeout(() => {
-            //     setLoading(false)
-            //       navigate('/')
-            //   }, 
-            //   2500);
-            // }
+              setTimeout(() => {
+                setLoading(false)
+                  navigate('/')
+              }, 
+              2500);
+            }
            
         } else {
             setLoading(false)
