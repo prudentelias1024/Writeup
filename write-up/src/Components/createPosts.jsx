@@ -11,8 +11,12 @@ import { storage } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
+import { actions } from '../store';
 const CreatePosts = () => {
     let URL
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const posts = useSelector(state=> state.posts)
     const [loading,setLoading] = useState(false)
     const tagsRef = useRef()
     const [junkError,setJunkError] = useState(false)
