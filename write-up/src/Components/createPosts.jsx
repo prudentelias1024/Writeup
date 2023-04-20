@@ -23,6 +23,7 @@ const CreatePosts = () => {
     const tagsRef = useRef()
     const [junkError,setJunkError] = useState(false)
     const [readingTime, setReadingTime] = useState('')
+    const {collaborators, collaboratorsName} = useSelector(state => state)
      const [tagsError,setTagsError] = useState(
         
             {
@@ -34,10 +35,11 @@ const CreatePosts = () => {
         muchTagsError: ''
           
             })
+            const [CollaboratorAlreadyAddedError, setCollaboratorAlreadyAddedError] = useState(false)
      const [prevTag,setPrevTag] = useState(null)
       const [suggestedUsers, setSuggestedUsers] = useState(null)
      const [readingMinutesError,setReadingMinutesError] = useState(null)
-  
+       const [collaborationError, setCollaborationError] = useState(null)
     const  CustomImageHandler = () => {
         const input =  document.createElement("input")
           input.setAttribute("type","file");
@@ -58,9 +60,13 @@ const CreatePosts = () => {
           
           const quillRef = useRef()
           const [searchedCollaborators, setSearchedCollaborators] = useState(false)
-         const [collaborators, setCollaborators] = useState([])
-         const [collaboratorsName, setCollaboratorsName] = useState('')
-    const suggestPeople = async(event) => {
+          const [inCollaboration, setInCollboration] = useState(false)
+              const suggestPeople = async(event) => {
+                console.log(collabRef.current.value)
+                if (collabRef.current.value == '') {
+                    setInCollboration(false)
+                    setCollaboratorAlreadyAddedError(false)
+                }
         let values = event.target.value
         let searchTerms = []
         searchTerms =  values.split('@')
@@ -79,7 +85,7 @@ const CreatePosts = () => {
           }
         const toolbar = quillRef.current.getEditor().getModule('toolbar')
         toolbar.addHandler('image',CustomImageHandler)
-    }, [quillRef])
+    }, [])
 
      const titleImage = useRef()
     const [tempImage, setTempImage] = useState(null)
@@ -123,6 +129,7 @@ const CreatePosts = () => {
         coverImageURL: '',
         postId: v4(),
         draftId: v4(),
+        collaborators: ''
        
        
     })
@@ -321,6 +328,13 @@ muchTagsError: ''
      }
  
     const handlePostSubmission = async() => {
+        
+            setPost({
+                ...post, collaborators: collaborators
+            })
+            axios.post(`${URL}/post/draft`, post,{headers: {Authorization: localStorage.getItem('token')}})
+
+       
         const avgWPM = 250;
         let words = post.body.split(' ').length
        
@@ -357,7 +371,7 @@ muchTagsError: ''
         } else {
             setLoading(false)
         }
-
+    
     }
     const handlePostDraft = async() => {
         console.log(post)
@@ -370,14 +384,31 @@ muchTagsError: ''
     }
     const addCollaborator = (username,id) => {
         setSearchedCollaborators(true)
-        username =  collaboratorsName + ', @'+ username 
-        console.log(username)
-        setCollaboratorsName(username)
-        setCollaborators([...collaborators, id])
-        collabRef.current.value = collaboratorsName;
-        console.log(collaborators)
-
+        if (collaboratorsName.includes(username)) {
+            username = collaboratorsName
+            setCollaboratorAlreadyAddedError(true)
+        } else{
+            username =  collaboratorsName + ' @'+ username + ',' 
+        }
+        dispatch(actions.setCollaboratorsName(username))
+        if (collaborators.includes(id)) {
+            id = collaborators
+            setCollaboratorAlreadyAddedError(true)
+        }else {
+            id = [...collaborators, id]
+        }
+        dispatch(actions.setCollaborators(id))
+        collabRef.current.value = username;
+        setInCollboration(true)
+        console.log(collabRef.current.value)
+        
+        
     }
+    // const disablePublish = () => {
+    //     if (collaborators.length !== 0) {
+    //         setInCollboration(true) 
+    //     }
+    // }
     return (
         <>
       
@@ -464,7 +495,7 @@ muchTagsError: ''
     }
         <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
      
-        <input onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
+        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
         </div>
         <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black z-50 rounded-lg w-[95%] ml-2 lg:w-[60%] lg:ml-[20em]">
            {
@@ -477,6 +508,7 @@ muchTagsError: ''
                     <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{user.username}</p>
                 </div>
             </div>
+            {CollaboratorAlreadyAddedError ? <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>User Already added as a Collaborator</p> <br /> </> : ''}
             </>
             })
         
@@ -500,12 +532,21 @@ muchTagsError: ''
 
         <p className="font-[Outfit] font-bold">Generate Tags</p>
         </button>
-        
+        {
+         inCollaboration? 
+         <button onClick={handlePostSubmission} className="bg-green-200 cursor-not-allowed text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] " disabled>
+               <p className='font-[Outfit] text-xl font-semibold'>Publish</p>
+
+          </button>
+         
+         :
          <button onClick={handlePostSubmission} className="bg-green-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] " type="submit">
                <p className='font-[Outfit] text-xl font-semibold'>Publish</p>
 
           </button>
-         <button onClick={handlePostDraft} type='submit' className='bg-red-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] font-[Outfit] font-bold'>Save as draft</button>
+        
+         }
+          <button onClick={handlePostDraft} type='submit' className='bg-red-500 text-white mt-[2em] w-[95%] ml-[.5em]  h-[4em]  rounded-lg lg:w-[15em] font-[Outfit] font-bold'>Save as draft</button>
         </div>
         </div>
         </>

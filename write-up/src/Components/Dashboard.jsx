@@ -17,6 +17,7 @@ const Dashboard = () => {
     const [ totalLikes, setTotalLikes] = useState(null)
     const [ totalComments, setTotalComments] = useState(null)
     const [ totalBookmark, setTotalBookmark] = useState(null)
+    const [collaboratedPosts, setCollaboratedPosts] = useState(null)
     const {user} = useSelector(state => state)
    const ref = useRef()
    const navigate = useNavigate()
@@ -33,7 +34,11 @@ const Dashboard = () => {
 }
   const  getDraftPosts = async() => {
    let res = await (await axios.get(`${URL}/api/user/posts/drafts`, {headers: {Authorization:  localStorage.getItem('token')}})).data
-  
+    let collaborated = res.filter((draft) => {
+    return draft.collaborators.some((collaborator) => {collaborator.username = user.username  })
+})
+
+  setCollaboratedPosts(collaborated)
   console.log(res)
    setDraftPosts(res)
    setDraftPostsAmount(res.length)
@@ -72,7 +77,7 @@ const Dashboard = () => {
         <>
             <NavBar/>
             <div className="lg:top-32 top-4 relative flex-col ">
-               <p className="flex flex-col font-[Outfit] font-semibold text-2xl lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
+               <p className="flex flex-col font-[Outfit] font-semibold text-2xl  lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
                <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] ">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
@@ -98,7 +103,7 @@ const Dashboard = () => {
                 <div className="filterer lg:hidden relative top-[-26.5em]">
                    
                         <select onChange={handleChange}  ref={ref} className='w-[95%] rounded-sm outline-blue-600
-                         h-[2.5em] ml-[.75em] border'>
+                         h-[2.5em] relative top-[-11.8em] ml-[.75em] border'>
                             <option   value="Dashboard">
                            Posts 
                               
@@ -143,6 +148,24 @@ const Dashboard = () => {
                      <p className='font-[Outfit]  lg:mt-[5em] lg:ml-[4em]'> No Drafts Yet??</p>
   
                      <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[5em] lg:ml-[0em]'> Write a Post</Link>
+                    </div>
+                    </>
+                  }
+                   
+                </div>
+                
+                <div className=" flex flex-col gap-2 lg:ml-[5em] ">
+                    <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-8  ">Collaborated Post</p>
+                  
+                  {
+                    collaboratedPosts &&  collaboratedPosts.length > 0  ? collaboratedPosts.map((coll) => {
+                        return <DraftsPosts key={coll._id} draft={coll}/>
+                    }) :<>
+                    <div className='flex flex-col gap-1 m-auto text-center'>
+                        
+                     <p className='font-[Outfit]  lg:mt-[5em] lg:ml-[4em]'> No Collaborated Post Yet??</p>
+  
+                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[5em] lg:ml-[0em]'> Write a Post to Collaborate</Link>
                     </div>
                     </>
                   }
