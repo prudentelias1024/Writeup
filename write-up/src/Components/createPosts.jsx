@@ -57,6 +57,7 @@ const CreatePosts = () => {
           const excerptRef = useRef()
           
           const quillRef = useRef()
+          const [searchedCollaborators, setSearchedCollaborators] = useState(false)
          const [collaborators, setCollaborators] = useState([])
          const [collaboratorsName, setCollaboratorsName] = useState('')
     const suggestPeople = async(event) => {
@@ -368,7 +369,8 @@ muchTagsError: ''
    setTempImage(null)
     }
     const addCollaborator = (username,id) => {
-        username =  collaboratorsName + '@'+ username + ', ' +
+        setSearchedCollaborators(true)
+        username =  collaboratorsName + ', @'+ username 
         console.log(username)
         setCollaboratorsName(username)
         setCollaborators([...collaborators, id])
@@ -470,7 +472,7 @@ muchTagsError: ''
             suggestedUsers.map((user,index) => {
               return  <>              <div key={index} className="person flex flex-row gap-[.5em]"  >
                 <img src={user.public_picture} alt={user.name} className='w-[2.5em] h-[2.5em] mt-[.25em] ml-[.5em] rounded-full ' />
-                <div onClick={() => {addCollaborator(user.username,user._id)}} className="  flex flex-col pr-[2em]">
+                <div onClick={() => {addCollaborator(user.username,user._id)}} className="cursor-pointer  flex flex-col pr-[2em]">
                     <p className='font-[Outfit] text-lg font-bold'>{user.name}</p>
                     <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{user.username}</p>
                 </div>
@@ -479,7 +481,7 @@ muchTagsError: ''
             })
         
 
-            : <p className='font-bold font-[Outfit] text-xl text-center text-[#acaaaa]'> No Result Found</p>
+            : <p className='font-bold font-[Outfit] text-xl text-center text-[#acaaaa]'> {searchedCollaborators? 'No Result Found': ''}</p>
            }
         </div>
         <div className=' relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
