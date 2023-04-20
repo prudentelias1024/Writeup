@@ -58,6 +58,7 @@ const CreatePosts = () => {
           
           const quillRef = useRef()
          const [collaborators, setCollaborators] = useState([])
+         const [collaboratorsName, setCollaboratorsName] = useState('')
     const suggestPeople = async(event) => {
         let values = event.target.value
         let searchTerms = []
@@ -366,11 +367,13 @@ muchTagsError: ''
    setPost({...post, image: '' })
    setTempImage(null)
     }
-    const addCollaborator = (username) => {
-        collabRef.current.value = ''
-        username = '@'+ username;
-        setCollaborators([...collaborators, username])
-        collabRef.current.value = collaborators;
+    const addCollaborator = (username,id) => {
+        username =  collaboratorsName + '@'+ username + ', ' +
+        console.log(username)
+        setCollaboratorsName(username)
+        setCollaborators([...collaborators, id])
+        collabRef.current.value = collaboratorsName;
+        console.log(collaborators)
 
     }
     return (
@@ -461,13 +464,13 @@ muchTagsError: ''
      
         <input onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
         </div>
-        <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black z-50 rounded-lg w-[95%] ml-2">
+        <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black z-50 rounded-lg w-[95%] ml-2 lg:w-[60%] lg:ml-[20em]">
            {
             suggestedUsers && suggestedUsers !== null ?
             suggestedUsers.map((user,index) => {
-              return  <>              <div key={index} className="person flex flex-row gap-[.5em] "  >
+              return  <>              <div key={index} className="person flex flex-row gap-[.5em]"  >
                 <img src={user.public_picture} alt={user.name} className='w-[2.5em] h-[2.5em] mt-[.25em] ml-[.5em] rounded-full ' />
-                <div onClick={() => {addCollaborator(user.username)}} className="  flex flex-col pr-[2em]">
+                <div onClick={() => {addCollaborator(user.username,user._id)}} className="  flex flex-col pr-[2em]">
                     <p className='font-[Outfit] text-lg font-bold'>{user.name}</p>
                     <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{user.username}</p>
                 </div>
@@ -476,7 +479,7 @@ muchTagsError: ''
             })
         
 
-            : <p className='font-bold font-[Outfit] text-xl text-center'> No Result Found</p>
+            : <p className='font-bold font-[Outfit] text-xl text-center text-[#acaaaa]'> No Result Found</p>
            }
         </div>
         <div className=' relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
