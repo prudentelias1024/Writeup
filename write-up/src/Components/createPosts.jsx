@@ -12,8 +12,10 @@ import { Link, useNavigate } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
 import { actions } from '../store';
+import { BsNodeMinusFill } from 'react-icons/bs';
 const CreatePosts = () => {
     let URL
+    const collabRef = useRef() 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const posts = useSelector(state=> state.posts)
@@ -33,7 +35,9 @@ const CreatePosts = () => {
           
             })
      const [prevTag,setPrevTag] = useState(null)
+      const [suggestedUsers, setSuggestedUsers] = useState(null)
      const [readingMinutesError,setReadingMinutesError] = useState(null)
+  
     const  CustomImageHandler = () => {
         const input =  document.createElement("input")
           input.setAttribute("type","file");
@@ -50,9 +54,20 @@ const CreatePosts = () => {
                 })
              })
           }}
-     const quillRef = useRef()
-      const excerptRef = useRef()
-   
+          const excerptRef = useRef()
+          
+          const quillRef = useRef()
+         const [collaborators, setCollaborators] = useState([])
+    const suggestPeople = async(event) => {
+        let values = event.target.value
+        let searchTerms = []
+        searchTerms =  values.split('@')
+        searchTerms.map(async searchTerm => {
+            let suggestedUsers = await (await axios.get(`http://localhost:5000/api/user/findCollaborators/${searchTerm}`)).data
+            setSuggestedUsers(suggestedUsers)
+    
+        })
+    }
      useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
@@ -351,8 +366,13 @@ muchTagsError: ''
    setPost({...post, image: '' })
    setTempImage(null)
     }
-    
-    
+    const addCollaborator = (username) => {
+        collabRef.current.value = ''
+        username = '@'+ username;
+        setCollaborators([...collaborators, username])
+        collabRef.current.value = collaborators;
+
+    }
     return (
         <>
       
@@ -438,8 +458,26 @@ muchTagsError: ''
         }) : ''
     }
         <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
-       
-        {/* <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Add Collaborators @person' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '10%', width: '100%'}} /> */}
+     
+        <input onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
+        </div>
+        <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black z-50 rounded-lg w-[95%] ml-2">
+           {
+            suggestedUsers && suggestedUsers !== null ?
+            suggestedUsers.map((user,index) => {
+              return  <>              <div key={index} className="person flex flex-row gap-[.5em] "  >
+                <img src={user.public_picture} alt={user.name} className='w-[2.5em] h-[2.5em] mt-[.25em] ml-[.5em] rounded-full ' />
+                <div onClick={() => {addCollaborator(user.username)}} className="  flex flex-col pr-[2em]">
+                    <p className='font-[Outfit] text-lg font-bold'>{user.name}</p>
+                    <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{user.username}</p>
+                </div>
+            </div>
+            </>
+            })
+        
+
+            : <p className='font-bold font-[Outfit] text-xl text-center'> No Result Found</p>
+           }
         </div>
         <div className=' relative left-[70%] mb-[1em] mr-[1em] mt-4 flex gap-4'>
         <p className="font-[Outfit] font-bold">{readingTime} mins read</p>

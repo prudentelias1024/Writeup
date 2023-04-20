@@ -792,6 +792,17 @@ app.get('/post/getAuthorPosts/:username/:postId', (req,res) => {
     })
 })
 
+app.get('/api/user/findCollaborators/:username', (req,res) => {
+ console.log(req.params.username)
+    User.find({username : {$regex:'^'+ req.params.username, $options: 'i'}}, (err,users) => {
+        if(err){ throw err;
+        }else {
+            console.log(users)
+        res.send(users)
+        }
+})
+})
+
 app.get('/api/tags', (req,res) => {
     PublishedPosts.find().select('tags title').exec((err,doc) => {
         if (err) {
