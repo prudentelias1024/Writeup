@@ -149,7 +149,7 @@ const handlePostTitle = (event) => {
     setPost({
         ...post, title: event.target.value
     })
-   
+ 
 }
 const handleExcerpt = () => {
     
@@ -478,7 +478,7 @@ muchTagsError: ''
           {
             draft.title !== ''?
             <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
-                value={draft.title}   className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
+              defaultValue={draft.title}    className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
                   <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
                   className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> 
 
@@ -487,7 +487,7 @@ muchTagsError: ''
        {
        draft.tag !== ''? 
        <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                  value={ draft.tags.join(' ')}  className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" /> :
+                  defaultValue={ draft.tags.join(' ')}  className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" /> :
        <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
                  className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 }
@@ -524,7 +524,7 @@ muchTagsError: ''
         <ReactQuill defaultValue={defaultValue} handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
      {
         draft.collaborators.length > 0 ?
-        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  value={draft.collaborators.map(collaborator => {return collaborator.username}).join(' ')} name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
+        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  defaultValue={draft.collaborators.map(collaborator => {return collaborator.username}).join(' ')} name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
         <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
      }
         </div>
