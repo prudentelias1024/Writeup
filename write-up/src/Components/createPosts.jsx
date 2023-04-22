@@ -13,7 +13,7 @@ import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
 import { actions } from '../store';
 import { BsNodeMinusFill } from 'react-icons/bs';
-const CreatePosts = () => {
+const CreatePosts = ({defaultValue, draft}) => {
     let URL
     const collabRef = useRef() 
     const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const CreatePosts = () => {
     const tagsRef = useRef()
     const [junkError,setJunkError] = useState(false)
     const [readingTime, setReadingTime] = useState('')
-    const {collaborators, collaboratorsName} = useSelector(state => state)
+    const {collaborators, collaboratorsName, drafts} = useSelector(state => state)
      const [tagsError,setTagsError] = useState(
         
             {
@@ -332,8 +332,6 @@ muchTagsError: ''
             setPost({
                 ...post, collaborators: collaborators
             })
-            axios.post(`${URL}/post/draft`, post,{headers: {Authorization: localStorage.getItem('token')}})
-
        
         const avgWPM = 250;
         let words = post.body.split(' ').length
@@ -374,8 +372,14 @@ muchTagsError: ''
     
     }
     const handlePostDraft = async() => {
-        console.log(post)
-        axios.post(`${URL}/post/draft`, post,{headers: {Authorization: localStorage.getItem('token')}})
+        setPost({
+            ...post, collaborators: collaborators
+        })
+        console.log(URL)
+        let res = (await axios.post('http://localhost:5000/post/draft', post,{headers: {Authorization: localStorage.getItem('token')}})).data
+       
+        dispatch(actions.updateDrafts([...drafts, res.data]))
+        navigate('/')
 
     }
     const handleRemoveImage = () => {
@@ -443,7 +447,7 @@ muchTagsError: ''
   </div> */}
         <div className='text-editor bg-white text-black  flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
         <Link to='/addPodcast' className='font-[Outfit] text-xl relative top-[-2em] text-blue-500 text-bold'>or add Podcast?</Link>
-        {
+        {draft.coverImageURL !== ''?
             post.coverImageURL !== '' ? <>  
             <img src={post.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
            <div className='flex place-content-center'>
@@ -453,16 +457,40 @@ muchTagsError: ''
             </>
             : 
             <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
+        :
+
+        
+        
+            draft.coverImageURL !== '' ? <>  
+            <img src={draft.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
+           <div className='flex place-content-center'>
+            <button onClick={handleUploadImage} type='button' className='font-[Outfit] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
+            <button onClick={handleRemoveImage} type='button' className='font-[Outfit] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
+            </div>
+            </>
+            : 
+            <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
         
 
-        }
+}
        
         <input onChange={handleImageSelection} ref={titleImage} type="file" className='opacity-0' />
-          <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
-                  className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" />
-        <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                    className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
+          {
+            draft.title !== ''?
+            <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
+                value={draft.title}   className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
+                  <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
+                  className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> 
 
+            
+          }
+       {
+       draft.tag !== ''? 
+       <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
+                  value={ draft.tags.join(' ')}  className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" /> :
+       <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
+                 className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
+}
         { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
             return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
@@ -493,20 +521,32 @@ muchTagsError: ''
             
         }) : ''
     }
-        <ReactQuill  handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
-     
+        <ReactQuill defaultValue={defaultValue} handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+     {
+        draft.collaborators.length > 0 ?
+        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  value={draft.collaborators.map(collaborator => {return collaborator.username}).join(' ')} name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
         <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
+     }
         </div>
         <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black z-50 rounded-lg w-[95%] ml-2 lg:w-[60%] lg:ml-[20em]">
            {
             suggestedUsers && suggestedUsers !== null ?
-            suggestedUsers.map((user,index) => {
+            suggestedUsers.map((suggestedUser,index) => {
               return  <>              <div key={index} className="person flex flex-row gap-[.5em]"  >
-                <img src={user.public_picture} alt={user.name} className='w-[2.5em] h-[2.5em] mt-[.25em] ml-[.5em] rounded-full ' />
-                <div onClick={() => {addCollaborator(user.username,user._id)}} className="cursor-pointer  flex flex-col pr-[2em]">
-                    <p className='font-[Outfit] text-lg font-bold'>{user.name}</p>
-                    <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{user.username}</p>
+                <img src={suggestedUser.public_picture} alt={suggestedUser.name} className='w-[2.5em] h-[2.5em] mt-[.25em] ml-[.5em] rounded-full ' />
+                {
+                    suggestedUser.username == user.username ?
+                    <div className="cursor-pointer  flex flex-col pr-[2em]">
+                    <p className='font-[Outfit] text-lg font-bold'>You</p>
+                    <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{suggestedUser.username}</p>
                 </div>
+                    : 
+                    <div onClick={() => {addCollaborator(suggestedUser.username,suggestedUser._id)}} className="cursor-pointer  flex flex-col pr-[2em]">
+                    <p className='font-[Outfit] text-lg font-bold'>{suggestedUser.name}</p>
+                    <p className='font-[Outfit] w-[230px] text-ellipsis whitespace-nowrap text-base text-[#acaaaa] -mt-2 mb-[1em]'  >@{suggestedUser.username}</p>
+                </div>
+                }
+               
             </div>
             {CollaboratorAlreadyAddedError ? <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>User Already added as a Collaborator</p> <br /> </> : ''}
             </>

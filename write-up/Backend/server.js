@@ -568,10 +568,10 @@ app.post('/api/ai/generateTag', async(req,res) => {
 /**
  CRUD OPERATIONS FOR POSTS (DRAFTS AND PUBLISHED) HERE
  */
-app.post('/draft/create', verify, async(req,res) => {
+app.post('/post/draft', verify, async(req,res) => {
     let draftedBefore;
     let quality = false
-    if(quality){
+    // if(quality){
     
     
     DraftPosts.find({author: req.user._id}, (err,doc) => {
@@ -584,24 +584,25 @@ app.post('/draft/create', verify, async(req,res) => {
             }
         }
     })
-    let {title,body,tags,coverImageURL, withExcerpt,postId} = req.body
+    let {title,body,tags,coverImageURL, withExcerpt,draftId, collaborators} = req.body
     if(tags !== undefined){
         tags = tags.split(' ')
     }
     const avgWPM = 250;
-    let words = post.body.split(' ').length       
+    let words = body.split(' ').length       
     let minutes = Math.ceil(words/avgWPM)
     let readingTime = `${minutes} mins read`
     const draftPosts = new DraftPosts({
-        postId: postId,
         title: title,
         body:  body,
         tags:tags,
+        draftId: draftId,
         coverImageURL: coverImageURL,
         author: req.user._id,
         created: moment(),
         withExcerpt: withExcerpt,
-        readingTime: readingTime
+        readingTime: readingTime,
+        collaborators: collaborators,
     })
     await draftPosts.save()
     let transporter = nodemailer.createTransport({
@@ -626,7 +627,7 @@ app.post('/draft/create', verify, async(req,res) => {
             path: '/inkup.png',
             cid: 'inkup.png'
         }],
-        html: ` <p style='font-family: Outfit; font-size: 1.5em;'> <br> We want to personally congratulate you on your ${publishedBefore == false ?  'First Draft!' : 'Successful Draft'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to see you again and it’s great to see the insights and perspective that you have prepared for our community. Your article will gain a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We know that writing can be a challenging process, but we wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that you are gifted and special to our community and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a creative set of people in our community of fellow writers and readers who appreciate and enjoy your  quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field, that's is why it is neccessary to take your time to draft your ideas and knowledge before showing it to the world</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, Inkup <br>
+        html: ` <p style='font-family: Outfit; font-size: 1.5em;'> <br> We want to personally congratulate you on your ${draftedBefore == false ?  'First Draft!' : 'Successful Draft'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to see you again and it’s great to see the insights and perspective that you have prepared for our community. Your article will gain a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We know that writing can be a challenging process, but we wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that you are gifted and special to our community and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a creative set of people in our community of fellow writers and readers who appreciate and enjoy your  quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field, that's is why it is neccessary to take your time to draft your ideas and knowledge before showing it to the world</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, Inkup <br>
        ${req.user.name}"`
       }
 
@@ -638,9 +639,9 @@ app.post('/draft/create', verify, async(req,res) => {
             res.send({message:"Drafted", data: doc[0]}).status(200)
         }
     })
-}  else {
-    res.send({message: 'Your Content contains junk contetnt. Please revised and check again'})
-}
+// }  else {
+//     res.send({message: 'Your Content contains junk contetnt. Please revised and check again'})
+// }
 })
 
 app.delete('/draft/:id', verify, (req,res) => {
@@ -1101,6 +1102,16 @@ app.get('/api/user/posts/drafts', verify, (req,res) => {
         if(doc){
             console.log(doc)
             res.send(doc)
+        }
+    })
+})
+app.get('/api/user/drafts/:draftId', verify, (req,res) => {
+    
+    DraftPosts.find({draftId: req.params.draftId}).populate('collaborators').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){
+            console.log(doc)
+            res.send(doc[0])
         }
     })
 })

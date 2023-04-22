@@ -2,13 +2,16 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, collaborators: [], collaboratorsName: ''},
+    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, collaborators: [], collaboratorsName: '', drafts: []},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
       }, 
       updateMobileNavStatus(state,action){
         state.navStatus =  action.payload
+      },
+      updateDrafts(state,action){
+        state.drafts =  action.payload
       },
       showMobileSearch(state,action){
         state.showMobileSearch = action.payload

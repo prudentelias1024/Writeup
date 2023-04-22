@@ -28,6 +28,7 @@ import AdminDashboard from './Components/Admin/AdminDashboard';
 import Podcast from './Components/Podcast';
 import Podcasts from './Components/Podcasts';
 import CreatePodcast from './Components/createPodcast';
+import PostEditor from './Components/postEditor';
 function App() {
        
         let URL
@@ -113,6 +114,7 @@ function App() {
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/admin' element={<AdminDashboard/>} />
       <Route path='/podcasts' element={<Podcasts/>} />
+      <Route path='/post/edit/:draftId' element={<PostEditor/>} />
        <Route path='/addPodcast' element={<CreatePodcast/>} />
     </Routes>
     

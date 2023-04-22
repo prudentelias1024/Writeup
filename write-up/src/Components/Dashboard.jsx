@@ -12,11 +12,12 @@ const Dashboard = () => {
    let URL
     const [myPosts, setMyPosts] = useState([])
     const [draftPosts, setDraftPosts] = useState([])
-    const [draftPostsAmount, setDraftPostsAmount] = useState(null)
-    const [numberOfPosts, setNumberOfPosts] = useState(null)
-    const [ totalLikes, setTotalLikes] = useState(null)
-    const [ totalComments, setTotalComments] = useState(null)
-    const [ totalBookmark, setTotalBookmark] = useState(null)
+    const [draftPostsAmount, setDraftPostsAmount] = useState(0)
+    const [numberOfPosts, setNumberOfPosts] = useState(0)
+    const [ totalLikes, setTotalLikes] = useState(0)
+    const [ totalComments, setTotalComments] = useState(0)
+    const [ totalBookmark, setTotalBookmark] = useState(0)
+    const [ totalCollboaratedPosts, setTotalCollboratedPosts] = useState(0)
     const [collaboratedPosts, setCollaboratedPosts] = useState(null)
     const {user} = useSelector(state => state)
    const ref = useRef()
@@ -34,14 +35,16 @@ const Dashboard = () => {
 }
   const  getDraftPosts = async() => {
    let res = await (await axios.get(`${URL}/api/user/posts/drafts`, {headers: {Authorization:  localStorage.getItem('token')}})).data
+   console.log(res)
+    setDraftPosts(res)
+    setDraftPostsAmount(res.length)
+
+
     let collaborated = res.filter((draft) => {
-    return draft.collaborators.some((collaborator) => {collaborator.username = user.username  })
+    return draft.collaborators.some((collaborator) => {collaborator = user._id  })
 })
 
   setCollaboratedPosts(collaborated)
-  console.log(res)
-   setDraftPosts(res)
-   setDraftPostsAmount(res.length)
 }
   const  getTotalLikes = async() => {
    let res = await (await axios.get(`${URL}/api/user/posts/totalLikes`, {headers: {Authorization:  localStorage.getItem('token')}})).data
@@ -78,11 +81,12 @@ const Dashboard = () => {
             <NavBar/>
             <div className="lg:top-32 top-4 relative flex-col ">
                <p className="flex flex-col font-[Outfit] font-semibold text-2xl  lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
-               <div className="grid grid-cols-2  w-[90%] ml-[1em] gap-[.5em] lg:flex lg:flex-row lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] ">
+               <div className="grid grid-cols-2  w-full ml-[1em] gap-[.5em] lg:gap-[1em] lg:grid lg:grid-cols-3 lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] ">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
                  <DetailsCard text="Total Posts" amount={numberOfPosts} color="bg-pink-500"/>
                 <DetailsCard text="Total Drafts" amount={draftPostsAmount} color="bg-yellow-500"/>
+                <DetailsCard text="Collaborated Posts" amount={totalCollboaratedPosts} color="bg-blue-500"/>
                 <DetailsCard text="Total Likes" amount={totalLikes} color="bg-green-500"/>
                 <DetailsCard text="Total Comments" amount={totalComments} color="bg-orange-500"/>
                 <DetailsCard text="Total Bookmarks " amount={totalBookmark} color="bg-purple-500"/> 
@@ -137,7 +141,7 @@ const Dashboard = () => {
                   }
                
                 <div className=" flex flex-col gap-2 lg:ml-[5em] ">
-                    <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-8  ">Drafts</p>
+                    <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-[-1em]  ">Drafts</p>
                   
                   {
                     draftPosts &&  draftPosts.length > 0  ? draftPosts.map((myDraft) => {
@@ -155,7 +159,7 @@ const Dashboard = () => {
                 </div>
                 
                 <div className=" flex flex-col gap-2 lg:ml-[5em] ">
-                    <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-8  ">Collaborated Post</p>
+                    <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-[-1em]  ">Collaborated Post</p>
                   
                   {
                     collaboratedPosts &&  collaboratedPosts.length > 0  ? collaboratedPosts.map((coll) => {

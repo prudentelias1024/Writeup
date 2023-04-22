@@ -43,7 +43,7 @@ const DraftsPosts = new mongoose.Schema({
     },
     collaborators: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'Users',
         required: false
 }]
    
