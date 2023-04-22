@@ -568,11 +568,24 @@ app.post('/api/ai/generateTag', async(req,res) => {
 /**
  CRUD OPERATIONS FOR POSTS (DRAFTS AND PUBLISHED) HERE
  */
+app.delete('/draft/:draftId', verify, async(req,res) => {
+    DraftPosts.findOneAndDelete({draftId: req.params.draftId}, (err,doc) => {
+        if(err){throw err}
+        if(doc){res.send({status:200})}
+    })
+})
+app.put('/draft/:draftId', verify, async(req,res) => {
+    console.log(req.body)
+    DraftPosts.findOneAndUpdate({draftId: req.params.draftId}, req.body, (err,doc) => {
+     if(err){throw err}
+     if(doc){ res.send({status:200})}
+    })
+})
+
 app.post('/post/draft', verify, async(req,res) => {
     let draftedBefore;
     let quality = false
     // if(quality){
-    
     
     DraftPosts.find({author: req.user._id}, (err,doc) => {
         if(err){throw err}
@@ -1094,7 +1107,18 @@ app.get('/api/user/posts/my', verify, (req,res) => {
             res.send(doc)
         }
     })
+
 })
+app.get('/api/user/posts/collaborated', verify, (req,res) => {
+    DraftPosts.find({collaborators: {$in: req.user._id}}).populate('author').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){
+            res.send(doc); 
+           
+        }
+    })
+})
+
 app.get('/api/user/posts/drafts', verify, (req,res) => {
     
     DraftPosts.find({author: req.user._id}, (err,doc) => {

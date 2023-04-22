@@ -8,14 +8,16 @@ import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 // import { CustomImageHandler } from './CustomImageHandler';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
 import { actions } from '../store';
 import { BsNodeMinusFill } from 'react-icons/bs';
 const CreatePosts = ({defaultValue, draft}) => {
-    let URL
+    const  [URL,setURL] = useState(null)
+    const {draftId} = useParams()
     const collabRef = useRef() 
+    const titleRef = useRef() 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const posts = useSelector(state=> state.posts)
@@ -78,9 +80,9 @@ const CreatePosts = ({defaultValue, draft}) => {
     }
      useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
-            URL = "https://inkup-api.onrender.com"
+            setURL("https://inkup-api.onrender.com")
           }else{
-            URL = "http://localhost:5000"
+            setURL("http://localhost:5000")
                    
           }
         const toolbar = quillRef.current.getEditor().getModule('toolbar')
@@ -129,7 +131,7 @@ const CreatePosts = ({defaultValue, draft}) => {
         coverImageURL: '',
         postId: v4(),
         draftId: v4(),
-        collaborators: ''
+        collaborators: []
        
        
     })
@@ -372,15 +374,30 @@ muchTagsError: ''
     
     }
     const handlePostDraft = async() => {
-        setPost({
-            ...post, collaborators: collaborators
-        })
         console.log(URL)
-        let res = (await axios.post('http://localhost:5000/post/draft', post,{headers: {Authorization: localStorage.getItem('token')}})).data
-       
+        if(draftId){
+            let collaboratorsId = []
+             draft.collaborators.map((collaborator) => {
+               collaboratorsId.push(collaborator._id)
+            })
+            setPost({
+                ...post, draftId:draftId, 
+                collaborators: collaborators 
+            })
+            console.log(post)
+            console.log(collaborators)
+        let response = (await axios.put(`${URL}/draft/${draftId}`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+        console.log(response)
+        if(response.status == 200){
+            navigate('/')
+        }
+        }else {
+        let res = (await axios.post(`${URL}/post/draft`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+        
         dispatch(actions.updateDrafts([...drafts, res.data]))
         navigate('/')
 
+        }
     }
     const handleRemoveImage = () => {
    setPost({...post, image: '' })
@@ -477,7 +494,7 @@ muchTagsError: ''
         <input onChange={handleImageSelection} ref={titleImage} type="file" className='opacity-0' />
           {
             draft.title !== ''?
-            <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
+            <input onChange={handlePostTitle}  ref={titleRef} name='title' placeholder='Add Post Title '
               defaultValue={draft.title}    className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
                   <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
                   className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> 

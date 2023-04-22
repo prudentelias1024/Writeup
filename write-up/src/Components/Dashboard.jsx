@@ -39,13 +39,14 @@ const Dashboard = () => {
     setDraftPosts(res)
     setDraftPostsAmount(res.length)
 
-
-    let collaborated = res.filter((draft) => {
-    return draft.collaborators.some((collaborator) => {collaborator = user._id  })
-})
-
-  setCollaboratedPosts(collaborated)
 }
+
+  const getCollaboratedPosts = async() => {
+    let res = await (await axios.get(`${URL}/api/user/posts/collaborated`, {headers: {Authorization:  localStorage.getItem('token')}})).data
+    console.log(res)
+    setCollaboratedPosts(res)
+    setTotalCollboratedPosts(res.length)
+  }
   const  getTotalLikes = async() => {
    let res = await (await axios.get(`${URL}/api/user/posts/totalLikes`, {headers: {Authorization:  localStorage.getItem('token')}})).data
   console.log(res)
@@ -75,6 +76,7 @@ const Dashboard = () => {
         getTotalLikes()
       getTotalComments()
         getTotalBookmarks()
+        getCollaboratedPosts()
     },[])
     return (
         <>
