@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, collaborators: [], collaboratorsName: '', drafts: []},
+    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: []},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
@@ -35,9 +35,15 @@ const userSlice = createSlice({
         state.showModal = action.payload
       },
       setCollaborators(state,action){
-        state.collaborators = action.payload
+        state.tempCollaborators = action.payload
       },
       setCollaboratorsName(state,action){
+        state.collaboratorsName = action.payload
+      },
+      setTempDraft(state,action){
+        state.collaboratorsName = action.payload
+      },
+      setTempPost(state,action){
         state.collaboratorsName = action.payload
       },
     

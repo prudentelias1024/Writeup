@@ -183,6 +183,41 @@ notifications.find({userId: req.user._id},(err,doc) => {
     })
 })
 
+
+app.post('/api/notification/collaboration', verify, async(req,res) => {
+    notifications.find({actionUserId:req.user._id, postId: req.body.draftId, userId: req.body.collaboratorId , type: 'collaboration'}).exec(async(err,doc) => {
+        if(err){throw err}
+        if(doc){
+            if(doc.length == 0 ){
+                const notification = new notifications({
+                    actionUserVerified: req.user.verified,
+                    userId: req.body.collaboratorId,
+                    actionUserId: req.user._id,
+                    postId: req.body.draftId,
+                    message: [
+                        {
+                            user: [
+                                {name:req.user.name},
+                                {link: `/@${req.user.username}`},
+                                {public_picture: req.user.public_picture}
+                            ],
+                            post: [{name: req.body.title},
+                               {link: `/post/edit/${req.body.draftId}`}
+                            ], 
+                        }
+                    ],
+                    type: 'collaboration'
+
+            
+                })
+            
+                await notification.save()
+            
+            }
+        } 
+    })
+})
+
 app.post('/api/notification/like',verify, async(req,res) => {
   const {postId, author,post_name} = req.body
   notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
@@ -658,10 +693,10 @@ app.post('/post/draft', verify, async(req,res) => {
 })
 
 app.delete('/draft/:id', verify, (req,res) => {
-    DraftPosts.deleteOne({draftId: req.params.id }, (err,doc) => {
+    DraftPosts.deleteOne({draftId: req.params.id },{new:true},(err,doc) => {
         if(err){throw err} 
         if(doc) {
-            res.send('Draft Succesfully Deleted').status(200)
+            res.send({status: 200, data:{doc}})
         }
     })
 })

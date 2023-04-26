@@ -1,17 +1,18 @@
 import axios from 'axios';
 import React, { useContext, useRef, useState } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { userContext } from '../Contexts/userContext';
 import DashboardPosts from './Dashboard/DashboardPosts';
 import DetailsCard from './Dashboard/DetailsCard';
 import DraftsPosts from "./Dashboard/DraftPosts";
 import  NavBar  from "./NavBar";
+import { actions } from '../store';
 const Dashboard = () => {
    let URL
     const [myPosts, setMyPosts] = useState([])
-    const [draftPosts, setDraftPosts] = useState([])
+    // const [draftPosts, setDraftPosts] = useState([])
     const [draftPostsAmount, setDraftPostsAmount] = useState(0)
     const [numberOfPosts, setNumberOfPosts] = useState(0)
     const [ totalLikes, setTotalLikes] = useState(0)
@@ -19,7 +20,8 @@ const Dashboard = () => {
     const [ totalBookmark, setTotalBookmark] = useState(0)
     const [ totalCollboaratedPosts, setTotalCollboratedPosts] = useState(0)
     const [collaboratedPosts, setCollaboratedPosts] = useState(null)
-    const {user} = useSelector(state => state)
+    const {user,drafts} = useSelector(state => state)
+    const dispatch = useDispatch()
    const ref = useRef()
    const navigate = useNavigate()
    const handleChange = () => {
@@ -36,7 +38,8 @@ const Dashboard = () => {
   const  getDraftPosts = async() => {
    let res = await (await axios.get(`${URL}/api/user/posts/drafts`, {headers: {Authorization:  localStorage.getItem('token')}})).data
    console.log(res)
-    setDraftPosts(res)
+    // setDraftPosts(res)
+    dispatch(actions.updateDrafts(res))
     setDraftPostsAmount(res.length)
 
 }
@@ -146,10 +149,10 @@ const Dashboard = () => {
                     <p className="text-2xl font-bold ml-3 mt-[2em] mb-4 lg:ml-[-1em]  ">Drafts</p>
                   
                   {
-                    draftPosts &&  draftPosts.length > 0  ? draftPosts.map((myDraft) => {
+                    drafts &&  drafts.length > 0  ? drafts.map((myDraft) => {
                         return  <DraftsPosts key={myDraft._id} draft={myDraft}/>
                     }) :<>
-                    <div className='flex flex-row gap-1 m-auto text-center'>
+                   <div className='flex flex-row gap-1 m-auto text-center'>
                         
                      <p className='font-[Outfit]  lg:mt-[5em] lg:ml-[4em]'> No Drafts Yet??</p>
   

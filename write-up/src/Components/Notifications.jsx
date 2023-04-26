@@ -7,6 +7,7 @@ import Bookmarked from './Notifications/bookmarked';
 import Commented from './Notifications/commented';
 import Welcome from './Notifications/welcome';
 import {useSelector} from 'react-redux'
+import Collaboration from './Notifications/collaboration';
 // const socket = io('https://writeup-37ap.vercel.app')
 //Notification types
 //follow 
@@ -40,6 +41,9 @@ const Notifications = () => {
                 }
                 if(notification.type == 'follow'){
                   return  <Followed notification={notification}/>
+                }
+                if(notification.type == 'collaboration'){
+                  return  <Collaboration notification={notification}/>
                 }
               }) : ''   
         }

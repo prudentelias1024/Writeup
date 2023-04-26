@@ -13,7 +13,7 @@ import ReactLoading from 'react-loading';
 import BounceLoader from "react-spinners/BounceLoader";
 import { actions } from '../store';
 import { BsNodeMinusFill } from 'react-icons/bs';
-const CreatePosts = ({defaultValue, draft}) => {
+const CreatePosts = ({defaultValue, draft, collaborators, collaboratorsName}) => {
     const  [URL,setURL] = useState(null)
     const {draftId} = useParams()
     const collabRef = useRef() 
@@ -25,7 +25,7 @@ const CreatePosts = ({defaultValue, draft}) => {
     const tagsRef = useRef()
     const [junkError,setJunkError] = useState(false)
     const [readingTime, setReadingTime] = useState('')
-    const {collaborators, collaboratorsName, drafts} = useSelector(state => state)
+    const {tempCollaborators, tempCollaboratorsName,drafts, tempDraft, tempPost} = useSelector(state => state)
      const [tagsError,setTagsError] = useState(
         
             {
@@ -85,9 +85,12 @@ const CreatePosts = ({defaultValue, draft}) => {
             setURL("http://localhost:5000")
                    
           }
-        const toolbar = quillRef.current.getEditor().getModule('toolbar')
+          const toolbar = quillRef.current.getEditor().getModule('toolbar')
         toolbar.addHandler('image',CustomImageHandler)
-    }, [])
+        console.log(collaborators)
+       dispatch(actions.setCollaborators(collaborators))
+     
+     }, [])
 
      const titleImage = useRef()
     const [tempImage, setTempImage] = useState(null)
@@ -354,12 +357,13 @@ muchTagsError: ''
          }
         if (tagsError == null && readingMinutesError == null && junkError == false) {
             setLoading(true)
-            
-           let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+            dispatch(actions.setTempPost({...post}))
+           let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, tempPost,{headers: {Authorization: localStorage.getItem('token')}})).data
             if(res.message == 'Published'){
              let temp = []
              temp = [res.data, ...posts]
              dispatch(actions.updatePosts(temp))
+             dispatch(actions.setTempPost({}))
 
               setTimeout(() => {
                 setLoading(false)
@@ -374,51 +378,78 @@ muchTagsError: ''
     
     }
     const handlePostDraft = async() => {
-        console.log(URL)
-        if(draftId){
-            let collaboratorsId = []
-             draft.collaborators.map((collaborator) => {
-               collaboratorsId.push(collaborator._id)
-            })
+
+    if(draftId){
+        if(draft.coverImageURL !== ''){
             setPost({
-                ...post, draftId:draftId, 
-                collaborators: collaborators 
+                ...post, coverImageURL: draft.coverImageURL
             })
-            console.log(post)
-            console.log(collaborators)
-        let response = (await axios.put(`${URL}/draft/${draftId}`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+        }
+        if (excerptRef.current.checked == true) {
+            setPost({
+                ...post, withExcerpt: true
+            })
+              } else {
+            setPost({
+                ...post,  withExcerpt: false
+            })
+        }
+           let response = (await axios.put(`${URL}/draft/${draftId}`, 
+            {  coverImageURL: draft.coverImageURL,
+                draftId:draftId, 
+                 tags: tagsRef.current.value,
+                 title: titleRef.current.value,
+                 body: quillRef.current.value,
+                 collaborators: [...tempCollaborators],
+                 postId: post.postId,
+                 withExcerpt: post.withExcerpt
+                 
+             
+           },{headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(response)
         if(response.status == 200){
+            [...tempCollaborators].forEach((collab) => {
+                axios.post(`${URL}/api/notification/collaboration`, {collaboratorId: collab, title: post.title, draftId: draftId },{headers: {Authorization: localStorage.getItem('token')}})
+
+            })
+            dispatch(actions.setCollaborators([]))
+            dispatch(actions.setTempDraft({}))
             navigate('/')
         }
-        }else {
-        let res = (await axios.post(`${URL}/post/draft`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
+    }else {
+        dispatch(actions.setTempPost({...post}))
+        let res = (await axios.post(`${URL}/post/draft`, tempDraft,{headers: {Authorization: localStorage.getItem('token')}})).data
         
         dispatch(actions.updateDrafts([...drafts, res.data]))
+        dispatch(actions.setCollaborators([]))
+        dispatch(actions.setTempPost({}))
         navigate('/')
-
-        }
+        
     }
+}
     const handleRemoveImage = () => {
    setPost({...post, image: '' })
    setTempImage(null)
     }
     const addCollaborator = (username,id) => {
         setSearchedCollaborators(true)
-        if (collaboratorsName.includes(username)) {
+          if (collaboratorsName.includes(username)) {
             username = collaboratorsName
             setCollaboratorAlreadyAddedError(true)
         } else{
             username =  collaboratorsName + ' @'+ username + ',' 
         }
+
         dispatch(actions.setCollaboratorsName(username))
-        if (collaborators.includes(id)) {
-            id = collaborators
+        console.log(collaboratorsName)
+        if (tempCollaborators.includes(id)) {
+            id = tempCollaborators
             setCollaboratorAlreadyAddedError(true)
         }else {
-            id = [...collaborators, id]
+            id = [...tempCollaborators, id]
         }
         dispatch(actions.setCollaborators(id))
+
         collabRef.current.value = username;
         setInCollboration(true)
         console.log(collabRef.current.value)
@@ -464,39 +495,43 @@ muchTagsError: ''
   </div> */}
         <div className='text-editor bg-white text-black  flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
         <Link to='/addPodcast' className='font-[Outfit] text-xl relative top-[-2em] text-blue-500 text-bold'>or add Podcast?</Link>
-        {draft.coverImageURL !== ''?
-            post.coverImageURL !== '' ? <>  
-            <img src={post.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
-           <div className='flex place-content-center'>
-            <button onClick={handleUploadImage} type='button' className='font-[Outfit] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
-            <button onClick={handleRemoveImage} type='button' className='font-[Outfit] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
-            </div>
-            </>
-            : 
-            <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
-        :
+        {draftId !== undefined ? 
+        
+        draft.coverImageURL !== undefined?
+        <>
+    <img src={draft.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
+    <div className='flex place-content-center'>
+     <button onClick={handleUploadImage} type='button' className='font-[Outfit] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
+     <button onClick={handleRemoveImage} type='button' className='font-[Outfit] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
+     </div>
+     </>
+     : <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
+      
+:
+    post.coverImageURL !== '' ?
+     <> <img src={post.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
+    <div className='flex place-content-center'>
+     <button onClick={handleUploadImage} type='button' className='font-[Outfit] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
+     <button onClick={handleRemoveImage} type='button' className='font-[Outfit] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
+     </div>
+     </>
+     : 
+     <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
+     
+    } 
 
         
         
-            draft.coverImageURL !== '' ? <>  
-            <img src={draft.coverImageURL} className='w-full h-full lg:h-[30em] object-cover' /> 
-           <div className='flex place-content-center'>
-            <button onClick={handleUploadImage} type='button' className='font-[Outfit] rounded-md bg-yellow-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Change</button>
-            <button onClick={handleRemoveImage} type='button' className='font-[Outfit] rounded-md bg-red-500 text-white w-[15em] h-[4em]  font-bold border mt-[2em] mb-[2em] ml-3 mr-3 lg:ml-8'>Remove</button>
-            </div>
-            </>
-            : 
-            <button onClick={handleUploadImage} type='button' className='font-[Outfit]  w-[15em] h-[4em] ml-8 font-bold border mt-[2em] mb-[2em]'>Add Cover Image</button>
         
 
-}
+
        
         <input onChange={handleImageSelection} ref={titleImage} type="file" className='opacity-0' />
           {
             draft.title !== ''?
             <input onChange={handlePostTitle}  ref={titleRef} name='title' placeholder='Add Post Title '
               defaultValue={draft.title}    className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
-                  <input onChange={handlePostTitle} name='title' placeholder='Add Post Title '
+                  <input onChange={handlePostTitle} ref={titleRef} name='title' placeholder='Add Post Title '
                   className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> 
 
             
@@ -541,7 +576,7 @@ muchTagsError: ''
         <ReactQuill defaultValue={defaultValue} handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
      {
         draft.collaborators.length > 0 ?
-        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  defaultValue={draft.collaborators.map(collaborator => {return collaborator.username}).join(' ')} name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
+        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  defaultValue={draft.collaborators.map(collaborator => {return( "@"+collaborator.username)}).join(' ')} name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
         <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
      }
         </div>

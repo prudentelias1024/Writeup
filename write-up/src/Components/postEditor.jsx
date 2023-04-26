@@ -7,6 +7,7 @@ const PostEditor = () => {
    const location = useLocation()
    const {draftId}= useParams()
    const [draftPost, setDraftPost] = useState(null)
+   const [collaborators, setCollaborators] = useState([])
    let URL;
    useEffect(() => {
     if (process.env.NODE_ENV == 'production') {
@@ -20,17 +21,22 @@ const PostEditor = () => {
 }, [])
 const  getDraftPost = async() => {
     let res = await (await axios.get(`${URL}/api/user/drafts/${draftId}`, {headers: {Authorization:  localStorage.getItem('token')}})).data
-    console.log(res)
      setDraftPost(res)
-     console.log(draftPost)
-   
+
+     let tempCollab = []
+      res.collaborators.map(coll => {
+        tempCollab.push(coll._id)
+      })
+      setCollaborators(tempCollab)
+     
+      
      
  }
   return (
     <>
     
     {
-        draftPost !== null ?   <CreatePosts defaultValue={draftPost.body} draft={draftPost}/> : ''
+        draftPost !== null ?   <CreatePosts collaboratorsName={draftPost.collaborators.map(collaborator => {return " @" +collaborator.username}).join('  ')} collaborators={collaborators} defaultValue={draftPost.body} draft={draftPost}/> : ''
     }
     </>
     );
