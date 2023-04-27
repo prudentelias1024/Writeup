@@ -2,29 +2,43 @@ import DetailsCard from '../Dashboard/DetailsCard'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import  Page404  from "../Page404";
+import { useSelector } from 'react-redux';
 const AdminDashboard = () => {
     let URL;
     const [users, setUsers] = useState([])
     const [posts, setPosts] = useState([])
     const [notifications, setNotifications] = useState([])
     const [drafts, setDrafts] = useState([])
+    const [isAdmin, setIsAdmin] = useState(false)
     const getAnalytics = async() => {
-        const users = await ( await axios.get(`${URL}/api/admin/users`, {headers: {Authorization:localStorage.getItem('token') }})).data
+        const usersRes = await ( await axios.get(`${URL}/api/admin/users`, {headers: {Authorization:localStorage.getItem('token') }})).data
 
-        setUsers(users)
+        setUsers(usersRes)
 
-        const posts = await ( await axios.get(`${URL}/api/admin/posts`, {headers: {Authorization:localStorage.getItem('token') }})).data
+        const postsRes = await ( await axios.get(`${URL}/api/admin/posts`, {headers: {Authorization:localStorage.getItem('token') }})).data
         
-        setPosts(posts)
+        setPosts(postsRes)
 
-        const notifications = await ( await axios.get(`${URL}/api/admin/notifications`, {headers: {Authorization:localStorage.getItem('token') }})).data
-        setNotifications(notifications)
+        const notificationsRes = await ( await axios.get(`${URL}/api/admin/notifications`, {headers: {Authorization:localStorage.getItem('token') }})).data
+        setNotifications(notificationsRes)
     
-        const drafts = await ( await axios.get(`${URL}/api/admin/drafts`, {headers: {Authorization:localStorage.getItem('token') }})).data
-        setDrafts(drafts)
+        const draftsRes = await ( await axios.get(`${URL}/api/admin/drafts`, {headers: {Authorization:localStorage.getItem('token') }})).data
+        setDrafts(draftsRes)
+        
+        console.log(postsRes)
 
  
 
+    }
+    const verifyAdmin = async() => {
+        const adminStatus = await (await axios.get(`${URL}/api/admin/isAdmin`,{headers: {Authorization: localStorage.getItem('token')}}
+        )).data.isAdmin;
+        if(adminStatus === true){
+            getAnalytics()
+        }
+       setIsAdmin(adminStatus)
+       
     }
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
@@ -33,13 +47,14 @@ const AdminDashboard = () => {
             URL = "http://localhost:5000"
                    
           }
-          setTimeout(() => {
-            
-              getAnalytics() 
-          }, 2000);
+         
+              verifyAdmin()
+              
+         
     }
 , [])
     return (
+      isAdmin === false ? <Page404/> :
         <div className='flex flex-col gap-[1em]'>
         <p className="font-[Outfit] text-3xl my-[1em] lg:ml-[2em] font-bold">App Analytics</p>
         <div className='lg:flex lg:flex-row grid grid-cols-2 px-[.5em] lg:px-[3em] '>

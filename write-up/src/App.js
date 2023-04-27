@@ -38,7 +38,11 @@ function App() {
       const loadUser = async() => {
           const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
-           dispatch(actions.updateUser(info))
+           let isAdmin = false
+           if(info.username == 'InkupOfficial' && info.username == 'prudentelias'){
+            isAdmin = false
+           }
+           dispatch(actions.updateUser({...info, isAdmin: isAdmin}))
        
        }
        const getPosts = async() => {

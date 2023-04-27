@@ -288,11 +288,19 @@ app.post('/api/notification/like',verify, async(req,res) => {
    
   
 })
-
+app.get('/api/admin/isAdmin', verifyAdmin, async(req,res) => {
+    if(req.status == 200){
+        res.send({isAdmin: true})
+    } else {
+        res.send({isAdmin:false})
+    }
+})
 app.get('/api/admin/users', verifyAdmin, async(req,res) => {
     User.find().exec(async(err,doc) => {
     if (req.status == 200) {
         res.send(doc)
+    } else {
+        res.send({status: 403})
     }
     })
 })
@@ -302,6 +310,8 @@ app.get('/api/admin/posts', verifyAdmin, async(req,res) => {
 
         if (req.status == 200) {
             res.send(doc)
+        }else {
+            res.send({status: 403})
         }
     })
 })
@@ -310,6 +320,8 @@ app.get('/api/admin/drafts', verifyAdmin, async(req,res) => {
 
         if (req.status == 200) {
             res.send(doc)
+        } else {
+            res.send({status: 403})
         }
     })
 })
@@ -318,6 +330,8 @@ app.get('/api/admin/notifications', verifyAdmin, async(req,res) => {
 
         if (req.status == 200) {
             res.send(doc)
+        } else {
+            res.send({status: 403})
         }
     })
 })
