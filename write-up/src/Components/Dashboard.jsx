@@ -85,7 +85,7 @@ const Dashboard = () => {
         <>
             <NavBar/>
             <div className="lg:top-32 top-4 relative flex-col ">
-               <p className="flex flex-col font-[Outfit] font-semibold text-2xl  lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[7em] lg:text-4xl">Dashboard</p>
+               <p className="flex flex-col font-[Outfit] font-semibold text-2xl  lg:mb-[-1em] ml-[1em] mb-[1em] lg:ml-[3em] lg:text-4xl">Dashboard</p>
                <div className="grid grid-cols-2  w-full ml-[1em] gap-[.5em] lg:gap-[1em] lg:grid lg:grid-cols-3 lg:ml-[1em] lg:pt-[4em] lg:gap-6 lg:pl-[6em] ">
                { 
                 totalLikes !== null && totalComments !== null && totalBookmark !== null ? <>
