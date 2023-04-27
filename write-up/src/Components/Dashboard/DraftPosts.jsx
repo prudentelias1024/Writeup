@@ -64,7 +64,7 @@ return (
     </div>
     {
         user._id == draft.author ?
-          <div  onClick={() => {handleDraftDeletion(draft.draftId)}} className="post_actions flex flex-row gap-3 -mt-2.5"> <p className="font-[Outfit]  mt-2 text-bold text-red-500">Delete</p>  </div>: ''
+          <div  onClick={() => {handleDraftDeletion(draft.draftId)}} className="post_actions cursor-pointer flex flex-row gap-3 -mt-2.5"> <p className="font-[Outfit]  mt-2 text-bold text-red-500">Delete</p>  </div>: ''
         
     }
     </div>

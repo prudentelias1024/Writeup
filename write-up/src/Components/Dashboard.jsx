@@ -172,9 +172,9 @@ const Dashboard = () => {
                     }) :<>
                     <div className='flex flex-col gap-1 m-auto text-center'>
                         
-                     <p className='font-[Outfit]  lg:mt-[5em] lg:ml-[4em]'> No Collaborated Post Yet??</p>
+                     <p className='font-[Outfit]  lg:mt-[2em] lg:ml-[4em]'> No Collaborated Post Yet??</p>
   
-                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[5em] lg:ml-[0em]'> Write a Post to Collaborate</Link>
+                     <Link to='/create' className='font-[Outfit] text-blue-600 mb-6 lg:mt-[0em] lg:ml-[3em]'> Write a Post to Collaborate</Link>
                     </div>
                     </>
                   }
