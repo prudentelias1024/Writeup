@@ -633,6 +633,7 @@ app.put('/draft/:draftId', verify, async(req,res) => {
 
 app.post('/post/draft', verify, async(req,res) => {
     let draftedBefore;
+    console.log(req.body)
     let quality = false
     // if(quality){
     
@@ -674,7 +675,10 @@ app.post('/post/draft', verify, async(req,res) => {
             user: 'inkup1024@gmail.com',
             pass: 'zyghrqwepszerctl'
             
-        }
+        },
+        tls: {
+  rejectUnauthorized: false
+}
     
     
       })

@@ -25,7 +25,8 @@ const CreatePosts = ({defaultValue, draft, collaborators, collaboratorsName}) =>
     const tagsRef = useRef()
     const [junkError,setJunkError] = useState(false)
     const [readingTime, setReadingTime] = useState('')
-    const {tempCollaborators, tempCollaboratorsName,drafts, tempDraft, tempPost} = useSelector(state => state)
+    const { tempCollaboratorsName,drafts, tempDraft, tempPost} = useSelector(state => state)
+    const tempCollaborators = useSelector(state => state.tempCollaborators)
      const [tagsError,setTagsError] = useState(
         
             {
@@ -64,7 +65,7 @@ const CreatePosts = ({defaultValue, draft, collaborators, collaboratorsName}) =>
           const [searchedCollaborators, setSearchedCollaborators] = useState(false)
           const [inCollaboration, setInCollboration] = useState(false)
               const suggestPeople = async(event) => {
-                console.log(collabRef.current.value)
+
                 if (collabRef.current.value == '') {
                     setInCollboration(false)
                     setCollaboratorAlreadyAddedError(false)
@@ -85,9 +86,19 @@ const CreatePosts = ({defaultValue, draft, collaborators, collaboratorsName}) =>
             setURL("http://localhost:5000")
                    
           }
+          
+          console.log(tempCollaborators)
+          console.log(tempCollaboratorsName)
+          if(collaboratorsName !== undefined){
+            dispatch(actions.setCollaboratorsName(collaboratorsName))
+        } 
+          
+          if(collaborators !== undefined){
+              dispatch(actions.setCollaborators([...collaborators]))
+            } 
           const toolbar = quillRef.current.getEditor().getModule('toolbar')
         toolbar.addHandler('image',CustomImageHandler)
-        console.log(collaborators)
+        console.log(tempCollaborators)
        dispatch(actions.setCollaborators(collaborators))
      
      }, [])
@@ -400,7 +411,7 @@ muchTagsError: ''
                  tags: tagsRef.current.value,
                  title: titleRef.current.value,
                  body: quillRef.current.value,
-                 collaborators: [...tempCollaborators],
+                 collaborators: tempCollaborators,
                  postId: post.postId,
                  withExcerpt: post.withExcerpt
                  
@@ -418,7 +429,29 @@ muchTagsError: ''
         }
     }else {
         dispatch(actions.setTempPost({...post}))
-        let res = (await axios.post(`${URL}/post/draft`, tempDraft,{headers: {Authorization: localStorage.getItem('token')}})).data
+        if (excerptRef.current.checked == true) {
+            setPost({
+                ...post, withExcerpt: true
+            })
+              } else {
+            setPost({
+                ...post,  withExcerpt: false
+            })
+        }
+           
+        let res = (await axios.post(`${URL}/post/draft`, {  
+                coverImageURL:
+                post.coverImageURL,
+               draftId:v4(), 
+                tags: tagsRef.current.value,
+                title: titleRef.current.value,
+                body: quillRef.current.value,
+                collaborators: tempCollaborators,
+                postId: post.postId,
+                withExcerpt: post.withExcerpt
+                
+            
+          },{headers: {Authorization: localStorage.getItem('token')}})).data
         
         dispatch(actions.updateDrafts([...drafts, res.data]))
         dispatch(actions.setCollaborators([]))
@@ -433,28 +466,39 @@ muchTagsError: ''
     }
     const addCollaborator = (username,id) => {
         setSearchedCollaborators(true)
-          if (collaboratorsName.includes(username)) {
-            username = collaboratorsName
+
+        //if not draft
+        if(tempCollaboratorsName == ''){
+            let  collaboratorsName =' @' + username + ','
+            dispatch(actions.setCollaboratorsName(username))
+            collabRef.current.value = collaboratorsName;
+        }else {
+          if ( tempCollaboratorsName.includes(username)) {
+            username =  tempCollaboratorsName
             setCollaboratorAlreadyAddedError(true)
         } else{
-            username =  collaboratorsName + ' @'+ username + ',' 
+            username =   tempCollaboratorsName + ' @'+ username + ',' 
+            console.log(username)
+            collabRef.current.value = username;
+            
         }
-
-        dispatch(actions.setCollaboratorsName(username))
+       
+        // dispatch(actions.setCollaboratorsName(username))
         console.log(collaboratorsName)
+    }
+        if(tempCollaborators === undefined){
+            dispatch(actions.setCollaborators(id))
+       
+        }else {
         if (tempCollaborators.includes(id)) {
             id = tempCollaborators
             setCollaboratorAlreadyAddedError(true)
         }else {
             id = [...tempCollaborators, id]
+            dispatch(actions.setCollaborators(id))
         }
-        dispatch(actions.setCollaborators(id))
-
-        collabRef.current.value = username;
-        setInCollboration(true)
-        console.log(collabRef.current.value)
-        
-        
+    setInCollboration(true)
+    }  
     }
     // const disablePublish = () => {
     //     if (collaborators.length !== 0) {

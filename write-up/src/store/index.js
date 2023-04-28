@@ -38,13 +38,13 @@ const userSlice = createSlice({
         state.tempCollaborators = action.payload
       },
       setCollaboratorsName(state,action){
-        state.collaboratorsName = action.payload
+        state.tempCollaboratorsName = action.payload
       },
       setTempDraft(state,action){
-        state.collaboratorsName = action.payload
+        state.tempDraft = action.payload
       },
       setTempPost(state,action){
-        state.collaboratorsName = action.payload
+        state.tempDraft = action.payload
       },
     
     
