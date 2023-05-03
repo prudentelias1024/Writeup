@@ -777,6 +777,7 @@ app.post('/post/create', verify, async(req,res) => {
     
     
       })
+      console.log(req.user)
 
       let message = {
         from: "'Inkup' <Inkup1024@gmail.com>", //my email address
