@@ -742,6 +742,7 @@ app.post('/post/create', verify, async(req,res) => {
         }
     })
     let {title,body,tags,coverImageURL,withExcerpt, postId} = req.body
+    console.log(req.body)
      tags  = tags.split(' ')
     
         const avgWPM = 250;
