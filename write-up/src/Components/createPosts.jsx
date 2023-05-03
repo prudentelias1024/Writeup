@@ -396,7 +396,7 @@ muchTagsError: ''
             // setLoading(true)
             console.log(tempPost)
             // dispatch(actions.setTempPost({...post}))
-           let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, tempPost,{headers: {Authorization: localStorage.getItem('token')}})).data
+           let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
             console.log(res)
             if(res.message == 'Published'){
              let temp = []
