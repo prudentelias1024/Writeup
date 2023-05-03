@@ -746,7 +746,7 @@ app.post('/post/create', verify, async(req,res) => {
      tags  = tags.split(' ')
     
         const avgWPM = 250;
-        let words = post.body.split(' ').length
+        let words = body.split(' ').length
        
         let minutes = Math.ceil(words/avgWPM)
        
