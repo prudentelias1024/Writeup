@@ -15,6 +15,7 @@ import { actions } from '../store';
 import { BsNodeMinusFill } from 'react-icons/bs';
 const CreatePosts = ({defaultValue, draft, collaborators, collaboratorsName}) => {
     const  [URL,setURL] = useState(null)
+    const [errorInTag, setErrorInTag] = useState(false)
     const {draftId} = useParams()
     const collabRef = useRef() 
     const titleRef = useRef() 
@@ -220,6 +221,8 @@ const handlePostTags = (event) => {
 
             setPrevTag(tag)
             if (realTags.length > 4) {
+                setErrorInTag(true)
+                     
                 setTagsError({...tagsError,muchTagsError:  "You cannot use more than 4 tags"})
             }
             
@@ -242,8 +245,11 @@ const handlePostTags = (event) => {
                  if(specialCharacterRegex.test(tag.split('#')[1]) === true && prevTag !== tag ){
                     //if the user keep typing in the incorrect tag despite receiving error
                      if ((tag.startsWith(prevTag) || prevTag.startsWith(tag) || tag.split('#')[0] == '' ) && tagsError.specialCharacterInTagsErrors.includes(`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`) == false) {
+                        setErrorInTag(true)
                         setTagsError({ ...tagsError,specialCharacterInTagsErrors: [`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
                      } else {
+                        setErrorInTag(true)
+                     
                         setTagsError({ ...tagsError,specialCharacterInTagsErrors: [...tagsError.specialCharacterInTagsErrors,`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
                      }
                 }
@@ -255,8 +261,12 @@ const handlePostTags = (event) => {
                             `${tag} is an invalid tag. Tag cannot contain number`
                         ) == false) {
                             setTagsError({...tagsError,numberInTagsErrors: [`${tag} is an invalid tag. Tag cannot contain number`]})
+                            setErrorInTag(true)
+                     
                         } else {
                         setTagsError({...tagsError,numberInTagsErrors: [...tagsError.numberInTagsErrors,`${tag} is an invalid tag. Tag cannot contain number`]})
+                        setErrorInTag(true)
+                     
                         }
                
               
@@ -284,6 +294,8 @@ const handlePostTags = (event) => {
                 })
                     } else {
                     setTagsError({muchTagsError: "You cannot use more than 4 tags"})
+                    setErrorInTag(true)
+                     
                     }
                 
             }
@@ -294,8 +306,11 @@ const handlePostTags = (event) => {
         } else if(numberTagRegex.test(tag) && tag !== prevTag){
              if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.numberErrors.includes( `${tag} is an invalid tag. A valid tag cannot start with a number `) == false) {
                 setTagsError({...tagsError,numberErrors: [ `${tag} is an invalid tag. A valid tag cannot start with a number `]})
+                setErrorInTag(true)
+                     
              } else {
-
+                setErrorInTag(true)
+                     
                  setTagsError({...tagsError,numberErrors: [...tagsError.numberErrors, `${tag} is an invalid tag. A valid tag cannot start with a number `]})
                 
              }
@@ -303,15 +318,22 @@ const handlePostTags = (event) => {
         }   else if(alphabetRegex.test(tag) && tag !== prevTag ){
             if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.alphabetErrors.includes(`${tag} is an invalid tag. Tag cannot start with an alphabet`) == false) {
                 setTagsError({...tagsError,alphabetErrors: [ `${tag} is an invalid tag. Tag cannot start with an alphabet`]})
+                setErrorInTag(true)
+                     
             } else {
                 setTagsError({...tagsError,alphabetErrors: [...tagsError.alphabetErrors, `${tag} is an invalid tag. Tag cannot start with an alphabet`]})
+                setErrorInTag(true)
+                     
             }
 
         }    else if(specialCharacterWithoutTags.test(tag) && tag !== prevTag){
             if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.specialCharactersErrors.includes(`${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`) == false) {
                 setTagsError({...tagsError,specialCharactersErrors: [`${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
+                setErrorInTag(true)
+                     
             } else {
-
+                setErrorInTag(true)
+                     
                 setTagsError({...tagsError,specialCharactersErrors: [...tagsError.specialCharactersErrors, `${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
           
             }
@@ -320,6 +342,7 @@ const handlePostTags = (event) => {
          
     })
 } else {
+    setErrorInTag(false)
   setTagsError(   
     {
 alphabetErrors: [],
@@ -360,16 +383,19 @@ muchTagsError: ''
          }
          const {title} = post
             const body = quillRef.current.unprivilegedEditor.getText();
-           
-         let junkRes = await(await axios.post('http://localhost:8000/ai/junkChecker', {content:body, title:title })).data
-         console.log(junkRes)
-         if (junkRes == true) {
-             setJunkError('Junk words are detected in your content. Please revise your article')
-         }
-        if (tagsError == null && readingMinutesError == null && junkError == false) {
-            setLoading(true)
-            dispatch(actions.setTempPost({...post}))
+           console.log(body)
+        //  let junkRes = await(await axios.post('http://localhost:8000/ai/junkChecker', {content:body, title:title })).data
+        //  console.log(junkRes)
+        //  if (junkRes == true) {
+        //      setJunkError('Junk words are detected in your content. Please revise your article')
+        //  }
+        console.log(readingMinutesError)
+        console.log(junkError)
+        if ((tagsError.alphabetErrors.length == 0 && tagsError.muchTagsError == '' && tagsError.numberErrors.length == 0 && tagsError.numberInTagsErrors.length == 0 && tagsError.specialCharacterInTagsErrors.length == 0 && tagsError.specialCharactersErrors.length == 0) && readingMinutesError == null && junkError == false) {
+            // setLoading(true)
+            // dispatch(actions.setTempPost({...post}))
            let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, tempPost,{headers: {Authorization: localStorage.getItem('token')}})).data
+            console.log(res)
             if(res.message == 'Published'){
              let temp = []
              temp = [res.data, ...posts]

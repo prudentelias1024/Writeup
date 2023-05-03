@@ -797,7 +797,7 @@ app.post('/post/create', verify, async(req,res) => {
     PublishedPosts.find({postId: req.body.postId}).populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
         if(err){throw err}
         if(doc){
-            res.send({message:"Published", data: doc[0]})
+            res.send({status:"Published", data: doc[0]})
         }
     })
 
