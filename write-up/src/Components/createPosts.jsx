@@ -390,6 +390,7 @@ muchTagsError: ''
         //      setJunkError('Junk words are detected in your content. Please revise your article')
         //  }
         console.log(readingMinutesError)
+        console.log(tagsError)
         console.log(junkError)
         if ((tagsError.alphabetErrors.length == 0 && tagsError.muchTagsError == '' && tagsError.numberErrors.length == 0 && tagsError.numberInTagsErrors.length == 0 && tagsError.specialCharacterInTagsErrors.length == 0 && tagsError.specialCharactersErrors.length == 0) && readingMinutesError == null && junkError == false) {
             // setLoading(true)
