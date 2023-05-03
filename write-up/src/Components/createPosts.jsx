@@ -390,9 +390,9 @@ muchTagsError: ''
         //      setJunkError('Junk words are detected in your content. Please revise your article')
         //  }
         console.log(readingMinutesError)
-        console.log(tagsError.alphabetErrors.length)
+        console.log(tagsError.muchTagsError.length =='')
         console.log(junkError)
-        if ((tagsError.alphabetErrors.length == 0 && tagsError.muchTagsError == "" && tagsError.numberErrors.length == 0 && tagsError.numberInTagsErrors.length == 0 && tagsError.specialCharacterInTagsErrors.length == 0 && tagsError.specialCharactersErrors.length == 0) && readingMinutesError == null && junkError == false) {
+        if (tagsError.alphabetErrors.length == 0 && tagsError.muchTagsError == "" && tagsError.numberErrors.length == 0 && tagsError.numberInTagsErrors.length == 0 && tagsError.specialCharacterInTagsErrors.length == 0 && tagsError.specialCharactersErrors.length == 0 && readingMinutesError == null && junkError == false) {
             // setLoading(true)
             // dispatch(actions.setTempPost({...post}))
            let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, tempPost,{headers: {Authorization: localStorage.getItem('token')}})).data
