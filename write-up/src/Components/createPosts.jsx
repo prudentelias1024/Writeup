@@ -398,7 +398,7 @@ muchTagsError: ''
             // dispatch(actions.setTempPost({...post}))
            let res = await (await axios.post(`https://inkup-api.onrender.com/post/create`, post,{headers: {Authorization: localStorage.getItem('token')}})).data
             console.log(res)
-            if(res.message == 'Published'){
+            if(res.status == 'Published'){
              let temp = []
              temp = [res.data, ...posts]
              dispatch(actions.updatePosts(temp))
