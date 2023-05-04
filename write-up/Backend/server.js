@@ -24,6 +24,7 @@ const cron = require('node-cron');
 const draftPostSchema = require('./draftPostSchema');
 const publishedPostSchema = require('./publishedPostSchema');
 const usersSchema = require('./usersSchema');
+
 //Dynamic URL
 let URL;
 
@@ -41,6 +42,134 @@ const io  = require('socket.io')(server, {
     
 }
 })
+// # ┌────────────── second (optional)
+// # │ ┌──────────── minute
+// # │ │ ┌────────── hour
+// # │ │ │ ┌──────── day of month
+// # │ │ │ │ ┌────── month
+// # │ │ │ │ │ ┌──── day of week
+// # │ │ │ │ │ │
+// # │ │ │ │ │ │
+// # * * * * * *
+cron.schedule('0 0 12 * * ', () => {
+    console.log('Running .......')
+User.find().select('lastPosted lastPosteNotified name email').exec((err,users) => {
+ users.forEach(async(user) => {
+ if(moment().diff(moment(user.lastPosted)) >= 30 || moment().diff(moment(user.lastPostedNotified)) >= 30) {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+           auth: {
+            user: 'inkup1024@gmail.com',
+            pass: 'zyghrqwepszerctl'
+            
+        },
+        tls: {
+            rejectUnauthorized: false
+          }
+    
+      })
+
+      let message = {
+        from: "'Inkup' <Inkup1024@gmail.com>", //my email address
+        to: `${user.email}`,
+        subject: 'Don\'t Forget to Post on Our App!',
+        text: 'It\'s been a long time!',
+        attachment: [{
+            filename: 'inkup.png',
+            path: '/inkup.png',
+            cid: 'inkup.png'
+        }],
+        html: `" <p style='font-family: Outfit; font-size: 1.5em;'>Dear ${user.name}</p> <br>
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+        We hope this email finds you well. We wanted to send you a friendly reminder about our app, which we think could be very useful for you.
+         </p> <br> 
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         As you may recall, our app can help you as a Writer, Programmer and Podcaster. We noticed that you haven't posted since your last post and more often as you used to, and we wanted to encourage you to give it another try and help us build our  community.
+         </p> <br> 
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         So why not give it another try? We think you'll be pleasantly surprised by how much it can simplify your daily routine. If you have any questions or concerns, please don't hesitate to reach out to us.
+
+         </p> <br> 
+
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         Thank you for considering our app, and we look forward to hearing from you soon.
+         </p> <br> 
+
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         Thank you for considering our app, and we look forward to hearing from you soon.
+         </p> <br> 
+         
+         <p> Best regards, <br>
+       ${user.name}"`
+      }
+
+   let messageId =  await  (await transporter.sendMail(message)).messageId
+   User.findOneAndUpdate({email:user.email},{$set: {lastPostedNotified: new Date}}).exec((err,doc) => {
+    if (err) {
+        throw err
+    }
+   })
+ }
+
+ if (moment().diff(moment(user.lastActive)) >= 7 || moment().diff(moment(user.lastActiveNotified)) >= 7) {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+           auth: {
+            user: 'inkup1024@gmail.com',
+            pass: 'zyghrqwepszerctl'
+            
+        },
+        tls: {
+            rejectUnauthorized: false
+          }
+    
+      })
+
+      let message = {
+        from: "'Inkup' <Inkup1024@gmail.com>", //my email address
+        to: `${user.email}`,
+        subject: 'Don\'t Forget to Use Our App!',
+        text: 'It\'s been a long time!',
+        attachment: [{
+            filename: 'inkup.png',
+            path: '/inkup.png',
+            cid: 'inkup.png'
+        }],
+        html: `" <p style='font-family: Outfit; font-size: 1.5em;'>Dear ${user.name}</p> <br>
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+        We hope this email finds you well. We wanted to send you a friendly reminder about our app, which we think could be very useful for you.
+         </p> <br> 
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         As you may recall, our app can help you as a Writer, Programmer and Podcaster. We noticed that you haven't been using our application as often as you used to, and we wanted to encourage you to give it another try and help us build our  community.
+         </p> <br> 
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         So why not give it another try? We think you'll be pleasantly surprised by how much it can simplify your daily routine. If you have any questions or concerns, please don't hesitate to reach out to us.
+
+         </p> <br> 
+
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         Thank you for considering our app, and we look forward to hearing from you soon.
+         </p> <br> 
+
+         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         Thank you for considering our app, and we look forward to hearing from you soon.
+         </p> <br> 
+         
+         <p> Best regards, <br>
+       ${user.name}"`
+      }
+      User.findOneAndUpdate({email:user.email},{$set: {lastActiveNotified: new Date}}).exec((err,doc) => {
+        if (err) {
+            throw err
+        }
+       })
+   let messageId =  await  (await transporter.sendMail(message)).messageId
+ }
+})
+})
+
+})
+
 //sockets 
 io.on('connection',(socket) => {
     console.log(`Connected : ${socket.id}`)
@@ -155,7 +284,17 @@ let interestedUserPosts = []
     return interestedUserPosts
 }
 
-
+app.post('/api/user/attendance',verify, async(req,res) => {
+    console.log(req.body)
+User.findOneAndUpdate({email: req.user.email}, {$set :{lastActive: req.body.moment}}, (err,doc) => {
+    if(err){
+        throw err
+    }
+    if(doc){
+        console.log(doc)
+    }
+})
+})
 app.get('/', (req,res) => {
     res.setHeader("Access-Control-Allow-Credentials","true")
     res.send('API is running....')
@@ -795,7 +934,15 @@ app.post('/post/create', verify, async(req,res) => {
 
    let messageId =  await  (await transporter.sendMail(message)).messageId
     console.log(`An E-mail has been sent to: ${email} with message id: ${messageId}`)
-  
+   
+    User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
+        if(err){
+            throw err
+        }
+        if(doc){
+            console.log(doc)
+        }
+    })
     PublishedPosts.find({postId: req.body.postId}).populate('author').populate('likes').populate('bookmarks').populate('comments.user').exec((err,doc) => {
         if(err){throw err}
         if(doc){
@@ -1234,6 +1381,12 @@ app.get('/api/user/posts/totalBookmarks', verify, (req,res) => {
 
 
 connectToMongooseDB()
+
+// User.updateMany({}, {$set: {lastActiveNotified: '', lastPostedNotified: ''}}).then(result => {
+//     console.log(`Updated ${result.upsertedCount} documents`)
+// }).catch(err => {
+//     console.log(err)
+// })
 
 // PublishedPosts.updateMany({}, {$set: {verifiedAuthor: false, authorPremiumPlan: 'free', collaborators:[], }}).then(result => {
 //     console.log(`Updated ${result.upsertedCount} documents`)

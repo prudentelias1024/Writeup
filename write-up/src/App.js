@@ -29,6 +29,7 @@ import Podcast from './Components/Podcast';
 import Podcasts from './Components/Podcasts';
 import CreatePodcast from './Components/createPodcast';
 import PostEditor from './Components/postEditor';
+import { async } from '@firebase/util';
 function App() {
        
         let URL
@@ -86,6 +87,13 @@ function App() {
           getNotifications()
           
         }
+
+        const updateLastVisitation = async() => {
+         let res =  (await axios.post(`${URL}/api/user/attendance`,{moment: new Date}, {headers: {Authorization: localStorage.getItem('token') }})).data
+        }
+    
+       
+          updateLastVisitation()
        
       }
       , []);

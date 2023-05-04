@@ -2,6 +2,14 @@ const mongoose = require('mongoose')
 const user = new mongoose.Schema({
      premiumPlan: {type:String, default: () => 'free'},
      name:{type:String, required:true},
+     lastActive:
+      {type:Date, required:false},
+      lastPosted:
+      {type:Date, required:false},
+      lastActiveNotified:
+      {type:Date, required:false},
+      lastPostedNotified:
+      {type:Date, required:false},
     account_type: {type:String, required: true},
     username:{type:String, required:true},
     email:{type:String, required:true},
