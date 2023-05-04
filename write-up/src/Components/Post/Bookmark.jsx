@@ -48,7 +48,7 @@ export function Bookmark({bookmarks,postId,username}){
         <p className="font-[Outfit] -mt-[.09em]">{
            bookmarks.length
         } </p> 
-        <p className="hidden lg:block font-[Outfit] -mt-[.09em]">Bookmarks </p> 
+        <p className="hidden lg:block font-[Outfit]  ml-[-.5em] -mt-[.09em]">Bookmarks </p> 
         
     </div>
     )
@@ -59,7 +59,7 @@ export function Bookmark({bookmarks,postId,username}){
         <p className="font-[Outfit] -mt-[.09em]">{
            bookmarks.length
         } </p> 
-        <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Bookmarks </p> 
+        <p className="hidden md:block lg:block font-[Outfit] ml-[-.5em] -mt-[.09em]">Bookmarks </p> 
         
     </div>
         )
