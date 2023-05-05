@@ -1,6 +1,7 @@
 import Post from "./Post";
 import { useSelector } from "react-redux";
 import Poll from "./poll";
+import ShortFormCreator from "./shortFormCreator";
 export default function Posts(){
     const {posts} = useSelector(state => state)
     if (posts == null) {
@@ -9,7 +10,8 @@ export default function Posts(){
    return(
     
     <div className="flex flex-col ml-[0em] m-auto md:mr-[3em] md:ml-[5em]  gap-1 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%]   lg:ml-[10em]">
-     <Poll/> 
+     {/* <Poll/>  */}
+      <ShortFormCreator/>
     {
       posts.map((post) => {
          return(<Post key={post._id} post={post} />)
