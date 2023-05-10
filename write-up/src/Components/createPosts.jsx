@@ -184,17 +184,6 @@ const handleExcerpt = () => {
 }
 const handlePostTags = (event) => {
     
-// const updateError = (index,type,message) => {
-//   tagsError.map((tagError,tagErrorIndex) => {
-//     if (tagErrorIndex == index) {
-//         if (type == 'SPECIAL_CHARACTER_IN_TAGS') {
-//             return {}
-            
-//         }
-//     }
-//   })
-// }
-    
      let tempTags = []
      const tags = event.target.value
      //start with tags

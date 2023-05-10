@@ -24,7 +24,7 @@ const cron = require('node-cron');
 const draftPostSchema = require('./draftPostSchema');
 const publishedPostSchema = require('./publishedPostSchema');
 const usersSchema = require('./usersSchema');
-
+const reels = require('./reelsSchema');
 //Dynamic URL
 let URL;
 
