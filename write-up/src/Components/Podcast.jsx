@@ -1,6 +1,7 @@
 import { current } from "@reduxjs/toolkit";
 import { useEffect, useRef, useState } from "react";
 import { FaRegBookmark, FaPlay, FaRegHeart, FaRegComment, FaPause } from "react-icons/fa";
+import { HiBadgeCheck } from "react-icons/hi";
 import Mock from "./mock.jpg";
 import sound from './pod1.mp3'
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -66,6 +67,8 @@ export default function  Podcast  () {
      <img src={Mock} alt="Prudent Elias" className="h-[3em] w-[3em] rounded-full"/>
       <div className="flex flex-col ">
       <p className="font-bold font-[Outfit] ">Prudent Elias</p>
+  {/* <p className=" text-lg font-bold font-[Outfit] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
+{  user.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''} */}
       <p className="font-semibold text-sm font-[Outfit] -mt-1">@prudentelias</p>
       </div>
       </div>

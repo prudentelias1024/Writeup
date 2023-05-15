@@ -868,6 +868,48 @@ app.delete('/post/:id', verify, (req,res) => {
     })
 })
 
+//Update Poll
+app.put('/reels/poll/:id', verify, async(req,res) => {
+    reels.findOneAndUpdate({reelId: req.body.reelId}, req.body,{new:true}, (err,doc)=> {
+        if (err) {
+            throw err;
+        } 
+        if(doc){
+             res.send({status:200 , data: doc})
+        }
+    })
+})
+
+/** CRUD Operation for Reels */
+app.post('/reels/create', verify, async(req,res) => {
+    
+ let modOptions = []
+ req.body.options.map((option) => {
+    modOptions.push({pollname: option, vote: 0})
+ })
+ let newReels = new reels({
+    verifiedAuthor: req.user.verified,
+    authorPremiumPlan: req.user.premiumPlan,
+    authorId: req.user._id,
+    created: moment(),
+    text: req.body.text,
+    options: modOptions,
+    tags: req.body.tags,
+    type: req.body.type,
+    reelId: req.body.reelsId,
+    reelImageURL: req.body.reelImageURL
+
+ })
+//  User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
+//     if(err){
+//         throw err
+//     }
+//     if(doc){
+//         console.log(doc)
+//     }
+// })
+})
+
 app.post('/post/create', verify, async(req,res) => {
     let publishedBefore;
     PublishedPosts.find({author: req.user._id}, (err,doc) => {
@@ -893,6 +935,8 @@ app.post('/post/create', verify, async(req,res) => {
          
   
     const publishedPosts = new PublishedPosts({
+        verifiedAuthor: req.user.verified,
+        authorPremiumPlan: req.user.premiumPlan,
         postId: postId,
         title: title,
         body:  body,

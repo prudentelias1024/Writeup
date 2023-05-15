@@ -92,7 +92,7 @@ const Login = () => {
 
     return (
         <div className='bg-white flex flex-col  '>
-        <div className="ml-14">
+        <div className="ml-7">
       <p className="font-[Pacifico] mt-5 text-3xl font-extrabold text-center">Ink Up</p>
   </div>
           <div className='flex flex-col lg:place-self-center mB-12'>

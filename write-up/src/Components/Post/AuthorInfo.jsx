@@ -13,7 +13,7 @@ export default function AuthorInfo({author,timestamp, collaborators}){
         }, 500);
     }, [timePosted]);
     return(
-        <div className='mt-3 ml-[2.5em] lg:ml-0 mb-3 flex flex-row gap-2'>
+        <div className='lg:pl-[2em] pr-[1.5em] mt-3 ml-[1em] lg:ml-0 mb-3 flex flex-row gap-2'>
          <div className="flex flex-row ">
 
         <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[3em] lg:h-[3em] rounded-full object-cover' /> 

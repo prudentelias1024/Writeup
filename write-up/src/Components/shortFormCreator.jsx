@@ -6,16 +6,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import PollInput from './pollInput';
 import { actions } from '../store';
 import { FaPlus } from 'react-icons/fa'
-
+import axios from 'axios';
+import {v4} from 'uuid'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '../firebase';
+import mock from '../mock.jpg'
 
 const ShortFormCreator = () => {
-    const {user, reelsPlaceholder, showPollCreator} = useSelector(state => state)
+    const  [URL,setURL] = useState(null)
+    const [disableAddMore, setDisableAddMore] = useState(false)
+    const {user, reelsPlaceholder, showPollCreator, cancelImageStatus} = useSelector(state => state)
     const tagsRef = useRef()
     const quillRef = useRef()
     const dispatch = useDispatch()
+    const [tags, setTags] = useState('')
     const [prevTag,setPrevTag] = useState(null)
     const [errorInTag, setErrorInTag] = useState(false)
     const [compToDuplicate, setCompToDuplicate] = useState([])
+    const [optionOne,setOptionOne] = useState('')
+    const [optionTwo,setOptionTwo] = useState('')
+    const [optionThree,setOptionThree] = useState('')
+    const [optionFour,setOptionFour] = useState('')
+    const reelImageRef = useRef()
+    const [imageReelURL, setImageReelURL] = useState(null)
     const [tagsError,setTagsError] = useState(
         
         {
@@ -38,6 +51,14 @@ const ShortFormCreator = () => {
           ["link"]
       ]
     }
+    useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            setURL("https://inkup-api.onrender.com")
+          }else{
+            setURL("http://localhost:5000")
+                   
+          }
+    })
     const handlePostTags = (event) => {
            let tempTags = []
              const tags = event.target.value
@@ -133,6 +154,7 @@ const ShortFormCreator = () => {
                             console.log(tagsAmount)
                             if (tagsAmount <= 4) {
                              setErrorInTag(false)
+                             setTags(event.target.value)
                              
                             } else {
                             setTagsError({muchTagsError: "You cannot use more than 4 tags"})
@@ -201,24 +223,72 @@ const ShortFormCreator = () => {
              }
         
     const handleShortContent = () => {
+        axios.post(`${URL}/reels/create`,
+         {
+         reelId: v4(),
+         tags: tags,
+         type: showPollCreator == true? 'poll' : 'image',
+         text: quillRef.current.value,
+         options: [optionOne,optionTwo,optionThree, optionFour],
+         coverImageURL: imageReelURL !== null ?imageReelURL : ''
+
+        }, {
+            headers:{Authorization: localStorage.getItem('token')
+        }})
 
     }
     const addMorePollOption = () => {
         console.log(compToDuplicate)
-        const componentToDuplicate = <PollInput/>
+        const componentToDuplicate = <PollInput optionHandler={handleOptionFour}/>
         if (compToDuplicate !== null) {
             
             setCompToDuplicate([...compToDuplicate, componentToDuplicate])
         } else {
             setCompToDuplicate(componentToDuplicate)
         }
+        setDisableAddMore(true)
+    }
+    const handleOptionOne = (event) => {
+       setOptionOne(event.target.value)
+    }
+    const handleOptionTwo = (event) => {
+       setOptionTwo(event.target.value)
+    }
+    const handleOptionThree = (event) => {
+       setOptionThree(event.target.value)
+    }
+    const handleOptionFour = (event) => {
+       setOptionFour(event.target.value)
+    }
+    const handleImageReel = () => {
+        reelImageRef.current.click()
+    }
+    const handleReelImageUpload = (event) => {
+        const imgRef = ref(storage,`reelImages/${v4()}`)
+        uploadBytes(imgRef, event.target.files[0]).then(() => {
+            getDownloadURL(imgRef).then((url) => {
+                setImageReelURL(url)
+            })
+       })
+      dispatch(actions.setShowPollCreator(false))
     }
     const cancelPoll = () => {
     dispatch(actions.setShowPollCreator(false))
-    setCompToDuplicate(null)
+    setOptionOne('')
+    setOptionTwo('')
+    setOptionThree('')
+    setOptionFour('')
+    setCompToDuplicate([])
+    
+    setDisableAddMore(false)
     }
     const handlePollCreator = () => {
      dispatch(actions.setShowPollCreator(true))
+    }
+    const cancelImage = () => {
+        dispatch(actions.setCancelImage(true))
+        //delete from firebase bucket
+   
     }
     useEffect(() => {
            console.log(showPollCreator)
@@ -226,35 +296,12 @@ const ShortFormCreator = () => {
     if( user !== null){
     return (
             <div className='rounded-md border bg-white font-[Outfit]lg:mt-0 mt-[2em] py-[1em] px-[.5em] flex flex-row gap-[1em] h-fit'>
-            <img src={user.public_picture} alt={user.name} className="h-[3em] w-[3em] rounded-full" />  
+            {/* <img src={user.public_picture} alt={user.name} className="h-[3em] w-[3em] rounded-full" />   */}
             <div className="creator flex flex-col">
             <ReactQuill className='w-[30em] font-[Outfit]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em',  background: "white", height: '100%', width: '100%'}} />
             <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
                  className="rounded-md pl-[0em] outline-none ml-[.25em]   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-extralight text-lg text-gray-400 h-[3em] lg:pl-[0em]" />
-{
- showPollCreator == true ?  <div className="flex flex-row gap-[2em]">
-    <MdCancel className='text-3xl ml-[-2em] mt-[.5em]' onClick={cancelPoll}/>
-    <div className='flex flex-col '>
-   
-     <PollInput/> 
-     <PollInput/> 
-     {
-        compToDuplicate.length !== 0 ? 
-              compToDuplicate.map((comp) =>{
-                return comp
-              }) : ''
-
-     }
-     <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-500 text-white flex gap-[1em]' onClick={addMorePollOption}>
-     <FaPlus className='mt-[.35em]'/>
-    <p className='mt-0.5'> Add More Choices</p></button>
-    </div>
-
-
- </div>
-  : ''
-}   
-{ tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
+                 { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
             return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
         }) :''
@@ -284,14 +331,50 @@ const ShortFormCreator = () => {
             
         }) : ''
     }
+
+                 <input type="file" onChange={handleReelImageUpload} ref={reelImageRef} className='opacity-0' />
+               {cancelImageStatus ? '':   <div>
+                 <MdCancel className=' relative left-[2em] top-[1em] text-3xl ml-[-2em] mt-[.5em]' onClick={cancelImage}/>
+   
+                <img src={mock} alt='reel' className='w-full object-cover ml-[3em]' />
+                 </div> }
+{
+ showPollCreator == true ?  <div className="flex flex-row gap-[2em]">
+    <MdCancel className='text-3xl ml-[-2em] mt-[.5em]' onClick={cancelPoll}/>
+    <div className='flex flex-col '>
+   
+     <PollInput optionHandler={handleOptionOne}/> 
+     <PollInput optionHandler={handleOptionTwo}/> 
+     <PollInput optionHandler={handleOptionThree}/> 
+     {
+        compToDuplicate.length !== 0 ? 
+              compToDuplicate.map((comp) =>{
+                return comp
+              }) : ''
+
+     }
+  {disableAddMore ?
+   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-200 text-white flex gap-[1em] ml-[1em]' onClick={addMorePollOption}>
+     <FaPlus className='mt-[.35em]'/>
+    <p className='mt-0.5'> Add More Choices</p></button>
+  
+  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-500 text-white flex gap-[1em]  ml-[1em]' onClick={addMorePollOption}>
+     <FaPlus className='mt-[.35em]'/>
+    <p className='mt-0.5'> Add More Choices</p></button>
+}
+    </div>
+
+ </div>
+  : ''
+}   
            <div className='flex flex-row justify-between '>
             {showPollCreator == false ? <div className="quick_tools flex flex-row gap-[1em] ml-[-2em] lg:ml-[2em] ">
                 <FaPoll className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handlePollCreator}/>
-                <FaImage className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]'  />
+                <FaImage className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handleImageReel} />
             </div> : ''}
             <div >
                 
-                <button className='font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]'>Publish
+                <button onClick={handleShortContent} className={showPollCreator  ? "font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :"font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
                 </button>
                 </div>
             </div>

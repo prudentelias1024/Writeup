@@ -1,10 +1,22 @@
 const mongoose = require('mongoose')
 
 const reelsSchema = new mongoose.Schema({
-    reelsId: {
-        type: mongoose.Schema.Types.ObjectId,
+    verifiedAuthor: {type: Boolean, default :() => false},
+    authorPremiumPlan: {type:String, default: () => 'free'},
+    reelId: {
+        type: String,
         required: true,
     },
+    created: {
+        type:Date,
+        required:true
+    },
+    reelImageURL: {
+        type:String,
+        required:false
+    },
+   
+
     authorId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
@@ -15,10 +27,27 @@ const reelsSchema = new mongoose.Schema({
         required: true
     }
     ,
+    votes: {
+        type:Number,
+        required: false
+    },
+    tags:   {
+        type: [String],
+        required:true
+    }  ,
     options: [
-        {type:String, required:true}
+       {
+          pollname:  {type:String, required:true},
+          vote: {type:Number,
+            default: 0,
+             required:true},
+             percentage: {
+                type:Number,
+                required: false
+             }
+       }
     ],
-    views: {
+    impressions: {
         type:Number,
          default: 0,
         required:true

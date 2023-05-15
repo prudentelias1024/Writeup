@@ -6,8 +6,9 @@ import { Like } from "./Like";
 
 export function Reactions({post, remove}){
     const {user} = useSelector(state => state)
+    // const user = {username: 'elias1024', name:'Prudent Elias'}
     return(
-        <div className={remove +  " flex flex-row justify-between ml-[3em] mt-5 md:ml-[1em]  lg:ml-1 mb-[1em] lg:mt-3 max-lg:ml-8 lg:mb-4"}>
+        <div className={remove +  " flex flex-row justify-between ml-[3em] mt-5 md:ml-[1em]  lg:ml-[.45em] mb-[1em] lg:mt-3 max-lg:ml-8 lg:mb-4"}>
        <div className="flex flex-row gap-3">
         
         <Like likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>

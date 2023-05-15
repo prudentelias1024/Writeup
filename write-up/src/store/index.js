@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false},
+    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
@@ -52,6 +52,9 @@ const userSlice = createSlice({
     
       setShowPollCreator(state,action){
         state.showPollCreator = action.payload
+      },
+      setCancelImage(state,action){
+        state.cancelImageStatus = action.payload
       },
     
     

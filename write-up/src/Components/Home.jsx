@@ -18,6 +18,7 @@ export default function Home(){
         <div className=' flex flex-row gap-3 overflow-x-hidden lg:overflow-x-hidden lg:ml-4'>
           
         <SideNavBar/>
+        
         {/* <Podcast/> */}
        
      <Posts/>
