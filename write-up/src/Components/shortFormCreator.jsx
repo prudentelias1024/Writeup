@@ -235,8 +235,12 @@ const ShortFormCreator = () => {
         }, {
             headers:{Authorization: localStorage.getItem('token')
         }})).data
-        let prevReels = reel
-        dispatch(actions.updateReels([reel.reel, ...prevReels]))
+        console.log(reel)
+        if(reel.data){
+            let prevReels = reel
+            dispatch(actions.updateReels([reel.reel, ...prevReels]))
+
+        }
         
     }
     const addMorePollOption = () => {
