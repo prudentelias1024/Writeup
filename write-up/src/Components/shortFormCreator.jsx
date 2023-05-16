@@ -222,8 +222,8 @@ const ShortFormCreator = () => {
               
              }
         
-    const handleShortContent = () => {
-        axios.post(`${URL}/reels/create`,
+    const handleShortContent = async() => {
+       let reel = await (await axios.post(`${URL}/reels/create`,
          {
          reelId: v4(),
          tags: tags,
@@ -234,8 +234,10 @@ const ShortFormCreator = () => {
 
         }, {
             headers:{Authorization: localStorage.getItem('token')
-        }})
-
+        }})).data
+        let prevReels = reel
+        dispatch(actions.updateReels([reel.reel, ...prevReels]))
+        
     }
     const addMorePollOption = () => {
         console.log(compToDuplicate)
