@@ -229,7 +229,7 @@ const ShortFormCreator = () => {
          tags: tags,
          type: showPollCreator == true? 'poll' : 'image',
          text: quillRef.current.value,
-         options: [optionOne,optionTwo,optionThree, optionFour],
+         options: optionFour == ''? [optionOne,optionTwo,optionThree]: [optionOne,optionTwo,optionThree, optionFour] ,
          reelImageURL: imageReelURL !== null ?imageReelURL : ''
 
         }, {
@@ -339,7 +339,7 @@ const ShortFormCreator = () => {
     }
 
                  <input type="file" onChange={handleReelImageUpload} ref={reelImageRef} className='opacity-0' />
-               {cancelImageStatus ? '':   <div>
+               {cancelImageStatus == true? '':   <div>
                  <MdCancel className=' relative left-[2em] top-[1em] text-3xl ml-[-2em] mt-[.5em]' onClick={cancelImage}/>
    
              
