@@ -8,6 +8,7 @@ const AdminDashboard = () => {
     let URL;
     const [users, setUsers] = useState([])
     const [posts, setPosts] = useState([])
+    const [reels, setReels] = useState([])
     const [notifications, setNotifications] = useState([])
     const [drafts, setDrafts] = useState([])
     const [isAdmin, setIsAdmin] = useState(false)
@@ -19,6 +20,10 @@ const AdminDashboard = () => {
         const postsRes = await ( await axios.get(`${URL}/api/admin/posts`, {headers: {Authorization:localStorage.getItem('token') }})).data
         
         setPosts(postsRes)
+
+        const reelsRes = await ( await axios.get(`${URL}/api/admin/reels`, {headers: {Authorization:localStorage.getItem('token') }})).data
+        
+       setReels(reelsRes)
 
         const notificationsRes = await ( await axios.get(`${URL}/api/admin/notifications`, {headers: {Authorization:localStorage.getItem('token') }})).data
         setNotifications(notificationsRes)
@@ -62,6 +67,7 @@ const AdminDashboard = () => {
             <DetailsCard text="Total Posts" amount={posts.length}  color="bg-red-500" />
             <DetailsCard text="Total Drafts" amount={drafts.length}  color="bg-purple-500" />
             <DetailsCard text="Total Notifications" amount={notifications.length}  color="bg-orange-500" />
+            <DetailsCard text="Total Notifications" amount={reels.length}  color="bg-yellow-500" />
         </div>
          <p className="font-[Outfit] text-2xl lg:text-3xl my-[1em] ml-[1em] lg:ml-[2em] font-bold"> Users ({users.length})</p>
          <div className='users flex flex-col gap-[1em] '>

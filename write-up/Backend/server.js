@@ -443,6 +443,24 @@ app.get('/api/admin/users', verifyAdmin, async(req,res) => {
     }
     })
 })
+app.get('/api/admin/reels', verifyAdmin, async(req,res) => {
+    reels.find().exec(async(err,doc) => {
+    if (req.status == 200) {
+        res.send(doc)
+    } else {
+        res.send({status: 403})
+    }
+    })
+})
+app.get('/api/admin/users', verifyAdmin, async(req,res) => {
+    User.find().exec(async(err,doc) => {
+    if (req.status == 200) {
+        res.send(doc)
+    } else {
+        res.send({status: 403})
+    }
+    })
+})
 
 app.get('/api/admin/posts', verifyAdmin, async(req,res) => {
     PublishedPosts.find().populate('author').exec(async(err,doc) => {
