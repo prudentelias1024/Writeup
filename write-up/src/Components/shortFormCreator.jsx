@@ -372,7 +372,7 @@ const ShortFormCreator = () => {
            <div className='flex flex-row justify-between '>
             {showPollCreator == false ? <div className="quick_tools flex flex-row gap-[1em] ml-[-2em] lg:ml-[2em] ">
                 <FaPoll className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handlePollCreator}/>
-                <FaImage className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handleImageReel} />
+                {/* <FaImage className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handleImageReel} /> */}
             </div> : ''}
             <div >
                 
