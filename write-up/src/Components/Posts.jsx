@@ -69,7 +69,7 @@ export default function Posts(){
          {
           reelsClicked == true? 
            reels && reels.length > 0 && reels.map((reel) => {
-            reel.type == 'Poll' ? <Poll reel={reel} key={reel.reelId} /> : reels.type == 'Image' ? <ImageReel reel={reel} key={reel.reelId} /> : <p className="font-[Outfit] text-xl font-bold text-[#333] text-center">No Reels</p>
+            reel.type == 'poll' ? <Poll reel={reel} key={reel.reelId} /> : reels.type == 'Image' ? <ImageReel reel={reel} key={reel.reelId} /> : <p className="font-[Outfit] text-xl font-bold text-[#333] text-center">No Reels</p>
            }) : ''
          }
     {
