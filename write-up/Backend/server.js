@@ -909,6 +909,7 @@ app.put('/reels/poll/:id', verify, async(req,res) => {
 
 /** CRUD Operation for Reels */
 app.post('/reels/create', verify, async(req,res) => {
+    console.log(req.body)
     const  {username,name,email} = req.user
     let publishedBefore = false
      reels.find({author: req.user._id}, (err,doc) => {
