@@ -230,7 +230,7 @@ const ShortFormCreator = () => {
          type: showPollCreator == true? 'poll' : 'image',
          text: quillRef.current.value,
          options: [optionOne,optionTwo,optionThree, optionFour],
-         coverImageURL: imageReelURL !== null ?imageReelURL : ''
+         reelImageURL: imageReelURL !== null ?imageReelURL : ''
 
         }, {
             headers:{Authorization: localStorage.getItem('token')
