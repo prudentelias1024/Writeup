@@ -868,6 +868,14 @@ app.delete('/post/:id', verify, (req,res) => {
     })
 })
 
+app.get('/reels', verify, async(req,res) => {
+    reels.find().exec((err,doc) => {
+        if(err) {throw err}
+        if(doc){
+            res.send(doc)
+        }
+    })
+})
 //Update Poll
 app.put('/reels/poll/:id', verify, async(req,res) => {
     reels.findOneAndUpdate({reelId: req.body.reelId}, req.body,{new:true}, (err,doc)=> {

@@ -336,7 +336,7 @@ const ShortFormCreator = () => {
                {cancelImageStatus ? '':   <div>
                  <MdCancel className=' relative left-[2em] top-[1em] text-3xl ml-[-2em] mt-[.5em]' onClick={cancelImage}/>
    
-                <img src={mock} alt='reel' className='w-full object-cover ml-[3em]' />
+             
                  </div> }
 {
  showPollCreator == true ?  <div className="flex flex-row gap-[2em]">
@@ -354,11 +354,11 @@ const ShortFormCreator = () => {
 
      }
   {disableAddMore ?
-   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-200 text-white flex gap-[1em] ml-[1em]' onClick={addMorePollOption}>
+   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-200 text-white  gap-[1em] ml-[1em]' onClick={addMorePollOption}>
      <FaPlus className='mt-[.35em]'/>
     <p className='mt-0.5'> Add More Choices</p></button>
   
-  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-500 text-white flex gap-[1em]  ml-[1em]' onClick={addMorePollOption}>
+  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-500 text-white  gap-[1em]  ml-[1em]' onClick={addMorePollOption}>
      <FaPlus className='mt-[.35em]'/>
     <p className='mt-0.5'> Add More Choices</p></button>
 }
@@ -374,7 +374,7 @@ const ShortFormCreator = () => {
             </div> : ''}
             <div >
                 
-                <button onClick={handleShortContent} className={showPollCreator  ? "font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :"font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
+                <button onClick={handleShortContent} className={showPollCreator  ? "font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[7em] relative left-[11em]" :"font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
                 </button>
                 </div>
             </div>

@@ -35,7 +35,11 @@ function App() {
         let URL
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
-  
+      const getReels = async() => {
+        const reel = await (await axios.get(`${URL}/reels`,{headers: {Authorization: localStorage.getItem('token')}}
+        )).data;
+        dispatch(actions.updateReels(reel))
+      }
       const loadUser = async() => {
           const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
