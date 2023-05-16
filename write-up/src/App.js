@@ -84,6 +84,7 @@ function App() {
     
         console.log(URL)
           getPosts();
+          getReels()
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== undefined) {
           getPersonalisedPosts()

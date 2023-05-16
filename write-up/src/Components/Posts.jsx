@@ -16,9 +16,7 @@ export default function Posts(){
     useEffect(() => {
 
       inksRef.current.click()
-      console.log(inkClicked)
-      console.log(reelsClicked)
-      // console.log(inksRef.current)
+        // console.log(inksRef.current)
     }, [])
     if (posts == null) {
          
