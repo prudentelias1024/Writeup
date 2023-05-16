@@ -14,9 +14,7 @@ const Poll = ({reel}) => {
     const valueTwoRef = useRef()
     const valueThreeRef = useRef()
     const valueFourRef = useRef()
-    const user = {
-        username: 'elias1024', name:'Prudent Elias', public_picture: mock 
-    }
+    const {user} = useSelector(state => state)
     const handlePollDisabled = (index) => {
        pollRef.current.classList.add('cursor-text')
        setDisable(true)
@@ -65,6 +63,7 @@ const Poll = ({reel}) => {
         
         
      }
+     reel.viewedBy.push(user._id)
         
     
       axios.put(`${URL}/reels/poll/${reel.reelId}`, 
