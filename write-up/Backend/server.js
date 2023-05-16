@@ -980,6 +980,12 @@ if(publishedBefore == false){
     
 }
 
+reels.find({reelId: req.body.reelId}, (err,reel) => {
+    if(err){throw err}
+    if(reel){
+        res.send({status: 200, reel:reel})
+    }
+})
 })
 
 app.post('/post/create', verify, async(req,res) => {
