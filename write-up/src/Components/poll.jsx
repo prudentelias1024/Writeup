@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import Tag from './Post/Tag';
 import mock from "./inkup.png";
+import { useSelector } from 'react-redux';
 const Poll = ({reel}) => {
     const [URL, setURL] = useState()
     const [disable, setDisable] = useState(false)
