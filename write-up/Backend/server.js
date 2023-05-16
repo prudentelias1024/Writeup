@@ -929,7 +929,7 @@ app.post('/reels/create', verify, async(req,res) => {
  let newReels = new reels({
     verifiedAuthor: req.user.verified,
     authorPremiumPlan: req.user.premiumPlan,
-    authorId: req.user._id,
+    author: req.user._id,
     created: moment(),
     text: req.body.text,
     options: modOptions,

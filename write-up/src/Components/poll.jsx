@@ -6,6 +6,7 @@ import Tag from './Post/Tag';
 import mock from "./inkup.png";
 import { useSelector } from 'react-redux';
 const Poll = ({reel}) => {
+    console.log(reel)
     const [URL, setURL] = useState()
     const [disable, setDisable] = useState(false)
     const pollRef = useRef()

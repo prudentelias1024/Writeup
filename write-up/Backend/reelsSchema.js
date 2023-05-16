@@ -19,7 +19,8 @@ const reelsSchema = new mongoose.Schema({
 
     author:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'Users',
+        required: true
     
     },
     type: {
