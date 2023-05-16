@@ -67,7 +67,7 @@ const AdminDashboard = () => {
             <DetailsCard text="Total Posts" amount={posts.length}  color="bg-red-500" />
             <DetailsCard text="Total Drafts" amount={drafts.length}  color="bg-purple-500" />
             <DetailsCard text="Total Notifications" amount={notifications.length}  color="bg-orange-500" />
-            <DetailsCard text="Total Notifications" amount={reels.length}  color="bg-yellow-500" />
+            <DetailsCard text="Total Reels" amount={reels.length}  color="bg-yellow-500" />
         </div>
          <p className="font-[Outfit] text-2xl lg:text-3xl my-[1em] ml-[1em] lg:ml-[2em] font-bold"> Users ({users.length})</p>
          <div className='users flex flex-col gap-[1em] '>
