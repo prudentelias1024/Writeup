@@ -887,7 +887,7 @@ app.delete('/post/:id', verify, (req,res) => {
 })
 
 app.get('/reels', verify, async(req,res) => {
-    reels.find().exec((err,doc) => {
+    reels.find().populate('author').exec((err,doc) => {
         if(err) {throw err}
         if(doc){
             res.send(doc)

@@ -12,11 +12,13 @@ export default function Posts(){
     const inksRef = useRef()
     const [inkClicked, setInkClicked] = useState(false)
     const [reelsClicked, setReelClicked] = useState(false)
-    const {posts, reels} = useSelector(state => state)
+    const posts = useSelector(state => state.posts)
+    const {reels} = useSelector(state => state)
     useEffect(() => {
 
       inksRef.current.click()
-        // console.log(inksRef.current)
+      console.log(reels)
+      // console.log(inksRef.current)
     }, [])
     if (posts == null) {
          
@@ -64,10 +66,18 @@ export default function Posts(){
 }
       </div>
      { reelsClicked ? <ShortFormCreator/>: ''}
+   
          {
           reelsClicked == true? 
            reels && reels.length > 0 && reels.map((reel) => {
-            reel.type == 'poll' ? <Poll reel={reel} key={reel.reelId} /> : reels.type == 'Image' ? <ImageReel reel={reel} key={reel.reelId} /> : <p className="font-[Outfit] text-xl font-bold text-[#333] text-center">No Reels</p>
+             if(reel.type == "poll"){
+               return <Poll reel={reel} key={reel.reelId} /> 
+              }else if(reel.type == "image"){
+               return <ImageReel reel={reel} key={reel.reelId} /> 
+             } else{
+
+               return <p className="font-[Outfit] text-xl font-bold text-[#333] text-center">No Reels</p>
+             }
            }) : ''
          }
     {

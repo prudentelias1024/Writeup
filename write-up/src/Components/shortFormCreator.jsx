@@ -15,6 +15,7 @@ import mock from '../mock.jpg'
 const ShortFormCreator = () => {
     const  [URL,setURL] = useState(null)
     const [disableAddMore, setDisableAddMore] = useState(false)
+   
     const {user, reelsPlaceholder, showPollCreator, cancelImageStatus} = useSelector(state => state)
     const tagsRef = useRef()
     const quillRef = useRef()
