@@ -25,7 +25,7 @@ const Poll = ({reel}) => {
     }
     const updatePercentageValues = (reels) => {
         let totalVotes = 0
-        reels.map((option) => {
+        reels.options.map((option) => {
           totalVotes += option.votes
           
            
