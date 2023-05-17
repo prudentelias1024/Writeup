@@ -33,7 +33,7 @@ const Poll = ({reel}) => {
           reel.options.map((option,index) => {
            let vote = option.votes
            let percentage =  (vote/ totalVotes) * 100
-           reel.option = [...reel.option, {percentage: percentage}]
+           reel.options = [...reel.options, {percentage: percentage}]
           })
 
     }
