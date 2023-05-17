@@ -23,6 +23,20 @@ const Poll = ({reel}) => {
       
         countVoteAndUpdatePercentageValues(index)
     }
+    const updatePercentageValues = (reels) => {
+        let totalVotes = 0
+        reels.map((option) => {
+          totalVotes += option.votes
+          
+           
+          })
+          reels.map((reel,index) => {
+           let vote = reel.options[0].votes
+           let percentage =  (vote/ totalVotes) * 100
+           reel.options = [...reel.options[0], {percentage: percentage}]
+          })
+
+    }
     const countVoteAndUpdatePercentageValues = (index) => {
         reel.totalVotes += 1
      if(index == 1){
@@ -80,6 +94,7 @@ const Poll = ({reel}) => {
            setURL("http://localhost:5000")
                    
           }
+          updatePercentageValues(reel)
         setVotesReceived(reel.totalVotes)
         }, [])
         if( reel.viewedBy.some((voter) => {return voter.username == user.username}) == false){
