@@ -23,17 +23,17 @@ const Poll = ({reel}) => {
       
         countVoteAndUpdatePercentageValues(index)
     }
-    const updatePercentageValues = (reels) => {
+    const updatePercentageValues = (reel) => {
         let totalVotes = 0
-        reels.options.map((option) => {
+        reel.options.map((option) => {
           totalVotes += option.votes
           
            
           })
-          reels.map((reel,index) => {
-           let vote = reel.options[0].votes
+          reel.options.map((option,index) => {
+           let vote = option.votes
            let percentage =  (vote/ totalVotes) * 100
-           reel.options = [...reel.options[0], {percentage: percentage}]
+           reel.option = [...reel.option, {percentage: percentage}]
           })
 
     }
