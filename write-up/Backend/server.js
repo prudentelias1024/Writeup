@@ -978,23 +978,33 @@ rejectUnauthorized: false
    
 Dear ${name},
 
-We hope this email finds you filled with inspiration and creative energy. We wanted to take a moment to express our heartfelt appreciation for your contribution to our community by sharing captivating Reels. Your talent and unique perspective have truly made a difference and have captivated the hearts and minds of many.
-
+ <p style='font-family: Outfit; font-size: 1.5em;'> <br>We hope this email finds you filled with inspiration and creative energy. We wanted to take a moment to express our heartfelt appreciation for your contribution to our community by sharing captivating Reels. Your talent and unique perspective have truly made a difference and have captivated the hearts and minds of many.
+</p> 
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 We admire your ability to craft engaging content within the short and snappy format of Reels. Your creativity shines through, and it's evident that you have a natural knack for capturing attention in those brief moments. Your dedication to sharing valuable and entertaining content has not gone unnoticed, and we are incredibly grateful to have you as a part of our vibrant community.
-
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 While Reels provide an excellent platform for quick and impactful creation, we would also love to encourage you to explore the power of long-form content. By creating and sharing longer content, you open up even more opportunities to showcase your talent, provide in-depth insights, and connect with your audience on a deeper level.
-
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 Long-form content allows you to dive into subjects that require more time and attention, enabling you to share your expertise, tell compelling stories, or explore topics in greater detail. This format presents a unique chance to engage your audience in a more immersive and enriching way, and we believe your skills will shine just as brightly in this space.
-
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 We understand that transitioning from the brevity of Reels to longer-form content might feel like a challenge, but we assure you that it's a journey worth embarking upon. Our community is eager to experience your creativity in a new light, and we are confident that your dedication and talent will continue to resonate with your followers.
-
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 Please don't hesitate to reach out to us if you need any support, guidance, or ideas as you explore long-form content. We are here to help you every step of the way and provide you with the resources you need to make this transition seamless and successful.
+</p>
 
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 Thank you again for being an integral part of our creative community and for sharing your remarkable talent through Reels. We look forward to witnessing your continued growth and success as you embark on the exciting adventure of long-form content.
-
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
 Warm regards,
+<br>
 ${name}`
-  }
+}
+
 if(publishedBefore == false){
 
     let messageId =  await  (await transporter.sendMail(message)).messageId
