@@ -1,5 +1,5 @@
 import Post from "./Post";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Poll from "./poll";
 
 import ImageReel from './imageReel';
@@ -7,16 +7,24 @@ import ImageReel from './imageReel';
 import moment from 'moment';
 import ShortFormCreator from "./shortFormCreator";
 import { useEffect, useRef, useState } from "react";
+import { actions } from "../store";
 export default function Posts(){
     const reelsRef = useRef()
     const inksRef = useRef()
+    const dispatch = useDispatch()
     const [inkClicked, setInkClicked] = useState(false)
     const [reelsClicked, setReelClicked] = useState(false)
     const posts = useSelector(state => state.posts)
     const {reels} = useSelector(state => state)
+    const {justPublishedReels} = useSelector(state => state)
     useEffect(() => {
-
-      inksRef.current.click()
+      if(justPublishedReels == true){
+          reelsRef.current.click()
+          dispatch(actions.setJustPublishedReels(false))
+      } else {
+        
+        inksRef.current.click()
+      }
       console.log(reels)
       // console.log(inksRef.current)
     }, [])
@@ -70,6 +78,10 @@ export default function Posts(){
          {
           reelsClicked == true? 
            reels && reels.length > 0 && reels.map((reel) => {
+        
+      
+        
+    
              if(reel.type == "poll"){
                return <Poll reel={reel} key={reel.reelId} /> 
               }else if(reel.type == "image"){

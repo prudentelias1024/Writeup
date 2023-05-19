@@ -11,14 +11,17 @@ import {v4} from 'uuid'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../firebase';
 import mock from '../mock.jpg'
+import _ from 'lodash'
 
 const ShortFormCreator = () => {
     const  [URL,setURL] = useState(null)
     const [disableAddMore, setDisableAddMore] = useState(false)
-   
+    const [formReset, setFormReset] = useState(false)
     const {user, reelsPlaceholder, showPollCreator, cancelImageStatus} = useSelector(state => state)
+    const {reels} = useSelector(state => state)
     const tagsRef = useRef()
     const quillRef = useRef()
+    const formRef = useRef(null)
     const dispatch = useDispatch()
     const [tags, setTags] = useState('')
     const [prevTag,setPrevTag] = useState(null)
@@ -223,8 +226,10 @@ const ShortFormCreator = () => {
               
              }
         
-    const handleShortContent = async() => {
-       let reel = await (await axios.post(`${URL}/reels/create`,
+    const handleShortContent = async(event) => {
+      event.preventDefault()
+       
+          let reel = await (await axios.post(`${URL}/reels/create`,
          {
          reelId: v4(),
          tags: tags,
@@ -236,17 +241,25 @@ const ShortFormCreator = () => {
         }, {
             headers:{Authorization: localStorage.getItem('token')
         }})).data
+        setFormReset(true)
         console.log(reel)
-        if(reel.data){
-            let prevReels = reel
-            dispatch(actions.updateReels([reel.reel, ...prevReels]))
+        if(reel.reel){
+            let prevReels = _.cloneDeep(reels)
+            prevReels.push(reel.reel[0])
+           let  newReels = prevReels.reverse()
+           console.log(newReels)
+            dispatch(actions.updateReels(newReels))
+        
 
         }
-        
+        quillRef.current.getEditor().setText('')
+        formRef.current.reset()
+        dispatch(actions.setShowPollCreator(false))
+           
     }
     const addMorePollOption = () => {
         console.log(compToDuplicate)
-        const componentToDuplicate = <PollInput optionHandler={handleOptionFour}/>
+        const componentToDuplicate = <PollInput  optionHandler={handleOptionFour}/>
         if (compToDuplicate !== null) {
             
             setCompToDuplicate([...compToDuplicate, componentToDuplicate])
@@ -298,11 +311,12 @@ const ShortFormCreator = () => {
    
     }
     useEffect(() => {
-           console.log(showPollCreator)
-    }, []);
+           }, [formReset]);
     if( user !== null){
     return (
             <div className='rounded-md border bg-white font-[Outfit]lg:mt-0 mt-[2em] py-[1em] px-[.5em] flex flex-row gap-[1em] h-fit'>
+                  <form ref={formRef}>
+                    
             {/* <img src={user.public_picture} alt={user.name} className="h-[3em] w-[3em] rounded-full" />   */}
             <div className="creator flex flex-col">
             <ReactQuill className='w-[30em] font-[Outfit]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em',  background: "white", height: '100%', width: '100%'}} />
@@ -340,19 +354,19 @@ const ShortFormCreator = () => {
     }
 
                  <input type="file" onChange={handleReelImageUpload} ref={reelImageRef} className='opacity-0' />
-               {cancelImageStatus == true? '':   <div>
+               {cancelImageStatus == false? '':   <div>
                  <MdCancel className=' relative left-[2em] top-[1em] text-3xl ml-[-2em] mt-[.5em]' onClick={cancelImage}/>
    
              
                  </div> }
 {
  showPollCreator == true ?  <div className="flex flex-row gap-[2em]">
-    <MdCancel className='text-3xl ml-[-2em] mt-[.5em]' onClick={cancelPoll}/>
+    <MdCancel  className='text-3xl ml-[-2em] mt-[.5em]' onClick={cancelPoll}/>
     <div className='flex flex-col '>
-   
+  
      <PollInput optionHandler={handleOptionOne}/> 
-     <PollInput optionHandler={handleOptionTwo}/> 
-     <PollInput optionHandler={handleOptionThree}/> 
+     <PollInput  optionHandler={handleOptionTwo}/> 
+     <PollInput  optionHandler={handleOptionThree}/> 
      {
         compToDuplicate.length !== 0 ? 
               compToDuplicate.map((comp) =>{
@@ -381,12 +395,13 @@ const ShortFormCreator = () => {
             </div> : ''}
             <div >
                 
-                <button onClick={handleShortContent} className={showPollCreator  ? "font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[7em] relative left-[11em]" :"font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
+                <button onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :"font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
                 </button>
                 </div>
             </div>
             </div>
-
+              
+            </form>
             </div>
       
             );

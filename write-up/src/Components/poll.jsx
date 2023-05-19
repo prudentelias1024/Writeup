@@ -4,12 +4,17 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import Tag from './Post/Tag';
 import mock from "./inkup.png";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ReactQuill from 'react-quill';
+import _ from 'lodash'
+import { actions } from '../store';
 const Poll = ({reel}) => {
     console.log(reel)
     const [URL, setURL] = useState()
     const [disable, setDisable] = useState(false)
     const pollRef = useRef()
+    const dispatch = useDispatch()
+    const {reels} = useSelector(state => state)
     const [votesReceived, setVotesReceived] = useState(0)
     const optionRef = useRef()
     const valueOneRef = useRef()
@@ -23,27 +28,65 @@ const Poll = ({reel}) => {
       
         countVoteAndUpdatePercentageValues(index)
     }
-    const updatePercentageValues = (reel) => {
-        let totalVotes = 0
-        reel.options.map((option) => {
-          totalVotes += option.votes
-          
-           
-          })
-          reel.options.map((option,index) => {
-           let vote = option.votes
-           let percentage =  (vote/ totalVotes) * 100
-           option = [options, {percentage: percentage}]
-          })
+    const updatePercentage = (reels) => {
+        let options = []
+        let tempReels = _.cloneDeep(reels)
+        tempReels.map((reel) => {
 
+        
+            if(reel.options.length > 0){
+              let totalVotes = 0
+              reel.options.map((option) => {
+                totalVotes += option.vote
+                
+                 
+                })
+                reel.totalVotes = totalVotes
+                if(totalVotes !== 0){
+      
+                
+                reel.options.map((option,index) => {
+                 let vote = option.vote
+               
+      
+                 let percentage =  (vote/ totalVotes) * 100
+              option = {...option, percentage: percentage }
+              options.push(option)
+    
+            })
+               reel.options = options
+              options = []
+          
+             
+          } else {
+           
+              reel.options.map((option,index) => {
+                 option = {...option, percentage: 0 }
+                 options.push(option)
+    
+                 })
+                 reel.options = options
+                 options = []
+               
+              
+          
+                }
+              }
+            })
+            dispatch(actions.updateReels(tempReels))
+  
+    
     }
+
+  
     const countVoteAndUpdatePercentageValues = (index) => {
-        reel.totalVotes += 1
+        let tempReel = _.cloneDeep(reel)
+        tempReel.totalVotes += 1
      if(index == 1){
         let totalVotes = votesReceived + 1
         setVotesReceived(totalVotes)
-        reel.options[0].votes += 1
-       reel.options.map((option) => {
+        tempReel.options[0].vote += 1
+       tempReel.options.map((option) => {
         option.percentage = Math.round((option.votes /totalVotes) * 100)
      })
         
@@ -52,8 +95,9 @@ const Poll = ({reel}) => {
      if(index == 2){
         let totalVotes = votesReceived + 1
         setVotesReceived(totalVotes)
-        reel.options[1].votes += 1
-       reel.options.map((option) => {
+
+        tempReel.options[1].vote += 1
+       tempReel.options.map((option) => {
         option.percentage = Math.round((option.votes /totalVotes) * 100)
      })
         
@@ -62,8 +106,8 @@ const Poll = ({reel}) => {
      if(index == 3){
         let totalVotes = votesReceived + 1
         setVotesReceived(totalVotes)
-        reel.options[2].votes += 1
-       reel.options.map((option) => {
+        tempReel.options[2].vote += 1
+       tempReel.options.map((option) => {
         option.percentage = Math.round((option.votes /totalVotes) * 100)
      })
         
@@ -72,19 +116,32 @@ const Poll = ({reel}) => {
      if(index == 4){
         let totalVotes = votesReceived + 1
         setVotesReceived(totalVotes)
-        reel.options[3].votes += 1
-       reel.options.map((option) => {
+        tempReel.options[3].vote += 1
+       tempReel.options.map((option) => {
         option.percentage = Math.round((option.votes /totalVotes) * 100)
      })
         
         
-     }
-     reel.viewedBy.push(user._id)
-        
+    }
+    tempReel.viewedBy.push(user._id)
+    
+    let tempReels = _.cloneDeep(reels)
+    console.log(tempReels)
+    let foundIndex;
+    tempReels.map((reel,index) => {
+        if(reel.reelId == tempReel.reelId){
+         foundIndex = index
+            
+        }
+     })
+     tempReels[foundIndex] = tempReel
+     updatePercentage(tempReels)
+
     
       axios.put(`${URL}/reels/poll/${reel.reelId}`, 
-        reel, {headers: {Authorization: {Authorization:  localStorage.getItem('token')}}}
-      )}
+        tempReel, {headers: {Authorization:  localStorage.getItem('token')}}
+      )
+    }
    
     
     useEffect(() => {
@@ -94,10 +151,10 @@ const Poll = ({reel}) => {
            setURL("http://localhost:5000")
                    
           }
-          updatePercentageValues(reel)
         setVotesReceived(reel.totalVotes)
+        updatePercentage(reels)
         }, [])
-        if( reel.viewedBy.some((voter) => {return voter.username == user.username}) == false){
+        if( reel.viewedBy.some((voter) => {return voter == user._id}) == false){
     return (
        
         <div ref={pollRef} className='poll w-full border bg-white ml-[-.25em] font-[Outfit] rounded-xl pt-[1em]'>
@@ -122,12 +179,18 @@ const Poll = ({reel}) => {
             })
             }
             </div>
-            <div className='poll_text text-xl font-bold py-[1em] px-[1.5em] leading-8'>
+            {/* <div className='poll_text text-xl font-bold py-[1em] px-[1.5em] leading-8'>
             {reel.text}
             </div>
-          
+           */}
+           
+           <ReactQuill className='z-0 p-7'
+                  value={reel.text}
+                  readOnly={true}
+                  theme={"bubble"}
+                  style={{fontFamily: 'Outfit'}}
+                />
             {reel.options.map((option,index) => {
-                console.log(reel.options)
                 return !disable ?    <div className='h-[3.25em] cursor-pointer hover:scale-110 '>
                 <div ref={optionRef} onClick={() => {handlePollDisabled(index)}} className="border py-[.75em] px-[1em] z-1 bg-white flex flex-row justify-between">
                     
@@ -184,9 +247,14 @@ const Poll = ({reel}) => {
        })
        }
        </div>
-       <div className='poll_text text-xl font-bold py-[1em] px-[1.5em] leading-8'>
-       {reel.text}
-       </div>
+       {/* <div className='poll_text text-xl font-bold py-[1em] px-[1.5em] leading-8'> */}
+       <ReactQuill className='z-0 p-7'
+                  value={reel.text}
+                  readOnly={true}
+                  theme={"bubble"}
+                  style={{fontFamily: 'Outfit'}}
+                />
+       {/* </div> */}
      
        {reel.options.map((option,index) => {
            console.log(reel.options)

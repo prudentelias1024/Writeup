@@ -36,10 +36,53 @@ function App() {
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
       const getReels = async() => {
-        let reel = await (await axios.get(`${URL}/reels`,{headers: {Authorization: localStorage.getItem('token')}}
-        )).data;
-        dispatch(actions.updateReels(reel))
-      }
+        let reels = await (await axios.get(`${URL}/reels`)).data; 
+        let options = []
+        reels.map((reel) => {
+
+        
+        if(reel.options.length > 0){
+          let totalVotes = 0
+          reel.options.map((option) => {
+            totalVotes += option.vote
+            
+             
+            })
+            reel.totalVotes = totalVotes
+            if(totalVotes !== 0){
+  
+            
+            reel.options.map((option,index) => {
+             let vote = option.vote
+           
+  
+             let percentage =  (vote/ totalVotes) * 100
+          option = {...option, percentage: percentage }
+          options.push(option)
+
+        })
+           reel.options = options
+          options = []
+      
+         
+      } else {
+       
+          reel.options.map((option,index) => {
+             option = {...option, percentage: 0 }
+             options.push(option)
+
+             })
+             reel.options = options
+             options = []
+           
+          
+      
+            }
+          }
+        })
+
+          dispatch(actions.updateReels(reels))
+  }
       const loadUser = async() => {
           const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
            )).data;

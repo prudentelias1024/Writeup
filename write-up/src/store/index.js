@@ -49,9 +49,6 @@ const userSlice = createSlice({
       setTempPost(state,action){
         state.tempDraft = action.payload
       },
-      setTempPost(state,action){
-        state.reelsPlaceholder = action.payload
-      },
     
       setShowPollCreator(state,action){
         state.showPollCreator = action.payload

@@ -886,8 +886,8 @@ app.delete('/post/:id', verify, (req,res) => {
     })
 })
 
-app.get('/reels', verify, async(req,res) => {
-    reels.find().populate('author').exec((err,doc) => {
+app.get('/reels', (req,res) => {
+    reels.find().sort({_id: -1}).populate('author').exec((err,doc) => {
         if(err) {throw err}
         if(doc){
             res.send(doc)
@@ -956,7 +956,10 @@ let transporter = nodemailer.createTransport({
         pass: 'zyghrqwepszerctl'
         
     }
-
+    ,
+    tls: {
+rejectUnauthorized: false
+}
 
   })
 
@@ -999,7 +1002,7 @@ if(publishedBefore == false){
     
 }
 
-reels.find({reelId: req.body.reelId}, (err,reel) => {
+reels.find({reelId: req.body.reelId}).populate('author').exec((err,reel) => {
     if(err){throw err}
     if(reel){
         res.send({status: 200, reel:reel})
@@ -1053,7 +1056,9 @@ app.post('/post/create', verify, async(req,res) => {
             user: 'inkup1024@gmail.com',
             pass: 'zyghrqwepszerctl'
             
-        }
+        },      tls: {
+            rejectUnauthorized: false
+          }
     
     
       })
@@ -1073,8 +1078,11 @@ app.post('/post/create', verify, async(req,res) => {
        ${name}`
       }
 
-   let messageId =  await  (await transporter.sendMail(message)).messageId
-    console.log(`An E-mail has been sent to: ${email} with message id: ${messageId}`)
+      if(req.user.email !== 'inkup1024@gmail.com' || req.user.email !== 'Inkup1024@gmail.com'){
+
+          let messageId =  await  (await transporter.sendMail(message)).messageId
+          console.log(`An E-mail has been sent to: ${email} with message id: ${messageId}`)
+      }
    
     User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
         if(err){
