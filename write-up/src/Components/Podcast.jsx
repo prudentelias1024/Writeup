@@ -14,28 +14,37 @@ export default function  Podcast  ({podcast}) {
   const [currentSound,setCurrentSound] = useState()
   const [podcastTotalTime, setPodcastTotalTime] = useState(' 00: 00 ')
   const [podcastTimeExhausted, setPodcastTimeExhausted] = useState(' 00:00 ')
-
+  
   useEffect(() => {
+    const handleTimeUpdate = () => {
+      setPodcastTimeExhausted(`${Math.floor(podcastRef.current.currentTime / 60)} : ${Math.floor(
+        podcastRef.current.currentTime  % 60)}`)
+        if(podcastTimeExhausted == podcastTotalTime){
+          setIsFinished(true)
+        }
+  
+    }
+
+    const handleLoadedData = () => {
+      setPodcastTotalTime(`${Math.floor(podcastRef.current.duration /60).toFixed(0)} : ${Math.floor(podcastRef.current.duration % 60)}`)
+    }
+    const handleEnded = () => {
+      setIsPlaying(false)
+    }
+    podcastRef.current.addEventListener('timeupdate', handleTimeUpdate);
+    podcastRef.current.addEventListener('loadeddata', handleLoadedData);
+    podcastRef.current.addEventListener('ended', handleEnded);
    
+    return () => {
+      podcastRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+      podcastRef.current.removeEventListener('loadeddata', handleLoadedData);
+      podcastRef.current.removeEventListener('ended', handleEnded);
+    };
   },[])
   
   const playPodcast = () => {
-    setPodcastTotalTime(`${Math.floor(podcastRef.current.duration /60).toFixed(0)} : ${Math.floor(podcastRef.current.duration % 60)}`)
     setIsPlaying(true)
-    
    podcastRef.current.play()
-    setInterval(() => {
-      
-      setPodcastTimeExhausted(`${Math.floor(podcastRef.current.currentTime / 60)} : ${Math.floor(
-        podcastRef.current.currentTime  % 60
-       )}`)
-       if(podcastTimeExhausted == podcastTotalTime){
-        setIsFinished(true)
-       }
-      
-    }, 500);
-   
-     
   }
   const pausePodcast = () => {
    
@@ -52,7 +61,7 @@ export default function  Podcast  ({podcast}) {
         <p className="font-[Outfit] text-white font-bold">{podcastTotalTime}</p>
         </div>
        </div>
-       {isPlaying || isFinished ?
+       {isPlaying  ?
        <>
        
        <FaPause onClick={pausePodcast}/>
