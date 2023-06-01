@@ -7,6 +7,7 @@ import sound from './pod1.mp3'
 import ProgressBar from "@ramonak/react-progress-bar";
 import { duration } from "moment";
 import AuthorInfo from "./Post/AuthorInfo";
+import { Reactions } from "./Post/Reactions";
 export default function  Podcast  ({podcast}) {
   const podcastRef = useRef()
   const [isPlaying, setIsPlaying] = useState(false)
@@ -53,7 +54,7 @@ export default function  Podcast  ({podcast}) {
   }
    return (
      <> 
-     <div className="lg:mt-[5em] flex flex-col w-[30em] gap-[1em] border rounded-xl bg-orange-800 text-white h-fit p-[2em] ">
+     <div className="lg:mt-[5em] flex flex-col w-[100%] gap-[1em] border rounded-xl bg-orange-800 text-white h-fit p-[2em] ml-[-.25em] ">
       <audio  ref={podcastRef} src={podcast.podcastURL}></audio>
        <div className="podcastInfo flex flex-col">
         <div className="flex flex-row justify-between px-[1em]">
@@ -91,6 +92,10 @@ export default function  Podcast  ({podcast}) {
      <div className="lg:ml-[-2em]">
 
      <AuthorInfo author={podcast.author} timestamp={podcast.created} additionalStyles="text-white lg:text-white" />
+     </div>
+     <div className="lg:ml-[-1em]">
+
+     <Reactions post={podcast} additionalStyles="text-white lg:text-white" remove={false}/>
      </div>
     
       

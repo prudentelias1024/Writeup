@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 // import { io } from "socket.io-client";
-export function Like({likes,postId,username}){
+export function Like({likes,postId,username,additionalStyles}){
   let URL;
     const  checkLiked = (likers,username) => {
         console.log(username)
@@ -47,7 +47,7 @@ export function Like({likes,postId,username}){
        if (liked == true) {
       return (
         <div className="flex flex-row gap-3">
-        <FaHeart onClick={(event) => {likePost(postId)}} className="text-xl text-red-500"/> 
+        <FaHeart onClick={(event) => {likePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl bg-white":"text-xl text-red-500"}/> 
         <div className="flex gap-2">
         <p className="font-[Outfit] -mt-[.09em]">
             {
@@ -61,7 +61,7 @@ export function Like({likes,postId,username}){
        } else {
          return(
             <div className="flex flex-row gap-3">
-            <FaRegHeart onClick={(event) => {unlikePost(postId)}} className="text-xl text-red-500 "/> 
+            <FaRegHeart onClick={(event) => {unlikePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-red-500"}/> 
             <div className="flex gap-2">
             <p className="font-[Outfit] -mt-[.09em]">
                 {

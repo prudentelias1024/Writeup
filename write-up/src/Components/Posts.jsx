@@ -27,7 +27,8 @@ export default function Posts(){
           dispatch(actions.setJustPublishedReels(false))
       } else {
         
-        inksRef.current.click()
+        // inksRef.current.click()
+        podcastRef.current.click()
         
       }
       console.log(reels)

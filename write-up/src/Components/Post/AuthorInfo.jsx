@@ -27,13 +27,16 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
   }  </div>
 
         <div className=''>
-                <Link to={"/"+ author.username } className={additionalStyles + " author_title flex flex-row gap-1 text-md font-bold  text-[#171717] lg:text-xl font-[Sora]"}> {
+                <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]":
+                "text-[#171717]  author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]" 
+            }  > {
                 user !== null ?
                 author.name !== user.name ?
                 author.name: 'You':
                  author.name} {author.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}</Link>
                  
-                <Link to={"/"+ author.username } className={additionalStyles + " author_title flex flex-row gap-1 text-md font-bold  text-[#171717] lg:text-xl font-[Sora]"}>  {
+                <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles +" author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]" : 
+                " text-[#171717] author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]"}>  {
 
                     collaborators && collaborators.length > 0 ? collaborators.map((collaborator,index) => {
                         return (
@@ -46,7 +49,7 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
                 
                 </Link>
 
-                <p className={additionalStyles +" text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em] text-[#717171] font-[Maven]"}> {timePosted}</p>
+                <p className={additionalStyles ? additionalStyles + "text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em]  font-[Maven]" : "text-[#717171] text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em]  font-[Maven]"}> {timePosted}</p>
                 </div>
         </div>
         
