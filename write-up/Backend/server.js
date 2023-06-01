@@ -958,7 +958,8 @@ rejectUnauthorized: false
   let message = {
     from: "'Inkup' <Inkup1024@gmail.com>", //my email address
     to: `${req.user.email}`,
-    subject: ` Thank you for sharing your creativity on Reels! Explore the power of long-form content.
+    subject: ` Congratulations on Your Podcast and Keep Uploading! 
+ 
     `,
     text: 'Article Published',
     attachment: [{
