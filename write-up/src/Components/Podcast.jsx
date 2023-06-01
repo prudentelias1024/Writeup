@@ -35,11 +35,11 @@ export default function  Podcast  ({podcast}) {
     podcastRef.current.addEventListener('loadeddata', handleLoadedData);
     podcastRef.current.addEventListener('ended', handleEnded);
    
-    return () => {
-      podcastRef.current.removeEventListener('timeupdate', handleTimeUpdate);
-      podcastRef.current.removeEventListener('loadeddata', handleLoadedData);
-      podcastRef.current.removeEventListener('ended', handleEnded);
-    };
+    // return () => {
+    //   podcastRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+    //   podcastRef.current.removeEventListener('loadeddata', handleLoadedData);
+    //   podcastRef.current.removeEventListener('ended', handleEnded);
+    // };
   },[])
   
   const playPodcast = () => {
