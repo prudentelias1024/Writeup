@@ -8,22 +8,27 @@ import moment from 'moment';
 import ShortFormCreator from "./shortFormCreator";
 import { useEffect, useRef, useState } from "react";
 import { actions } from "../store";
+import Podcast from "./Podcast";
 export default function Posts(){
     const reelsRef = useRef()
     const inksRef = useRef()
+    const podcastRef = useRef()
     const dispatch = useDispatch()
     const [inkClicked, setInkClicked] = useState(false)
     const [reelsClicked, setReelClicked] = useState(false)
+    const [podcastClicked, setPodcastClicked] = useState(false)
     const posts = useSelector(state => state.posts)
     const {reels} = useSelector(state => state)
     const {justPublishedReels} = useSelector(state => state)
+    const {podcasts} = useSelector(state => state)
     useEffect(() => {
       if(justPublishedReels == true){
           reelsRef.current.click()
           dispatch(actions.setJustPublishedReels(false))
       } else {
         
-        inksRef.current.click()
+        // inksRef.current.click()
+        podcastRef.current.click()
       }
       console.log(reels)
       // console.log(inksRef.current)
@@ -43,14 +48,21 @@ export default function Posts(){
       const handleInksContentDisplay = () => {
         setInkClicked(true)
         setReelClicked(false)
+        setPodcastClicked(false)
       }
       const handleReelsDisplay = () => {
         setInkClicked(false)
         setReelClicked(true)
+        setPodcastClicked(false)
       }
+       const handlePodcastsDisplay = () => {
+        setInkClicked(false)
+        setReelClicked(false)
+        setPodcastClicked(true)
+       }
     
    return(
-    <div className="flex flex-col ml-[0.5em] m-auto md:mr-[3em] md:ml-[5em]  gap-1 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%] lg:mt-[0em]  lg:ml-[10em]">
+    <div className="flex flex-col ml-[0.5em] m-auto md:mr-[3em] md:ml-[5em]  gap-1 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%] lg:mt-[0em]  lg:ml-[2em]">
       <div className="flex flex-row w-full">
         {
         inkClicked ?
@@ -65,11 +77,20 @@ export default function Posts(){
         }
         {
     reelsClicked?
-    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels border w-1/2 bg-blue-500 text-white p-[1em] rounded-r-lg ">
+    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels border w-1/2 bg-blue-500 text-white p-[1em]  ">
             <p className="font-[Outfit] text-center text-xl font-semibold ">Reels</p>
             </div>:
-    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels border w-1/2 hover:bg-blue-500 hover:text-white p-[1em] rounded-r-lg ">
+    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels border w-1/2 hover:bg-blue-500 hover:text-white p-[1em]  ">
             <p className="font-[Outfit] text-center text-xl font-semibold ">Reels</p>
+            </div>
+}
+        {
+    podcastClicked?
+    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels border w-1/2 bg-blue-500 text-white p-[1em] rounded-r-lg ">
+            <p className="font-[Outfit] text-center text-xl font-semibold ">Podcasts</p>
+            </div>:
+    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels border w-1/2 hover:bg-blue-500 hover:text-white p-[1em] rounded-r-lg ">
+            <p className="font-[Outfit] text-center text-xl font-semibold ">Podcasts</p>
             </div>
 }
       </div>
@@ -92,6 +113,14 @@ export default function Posts(){
              }
            }) : ''
          }
+    {
+      podcastClicked == true?
+      podcasts.map((podcast) => {
+         return(<Podcast key={podcast._id} podcast={podcast} />)
+           
+      }) : ''
+      
+  }
     {
       inkClicked == true?
 

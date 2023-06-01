@@ -83,6 +83,12 @@ function App() {
 
           dispatch(actions.updateReels(reels))
   }
+  const getPodcasts = async() => {
+   const podcasts =  (await axios.get(`${URL}/podcasts`)).data.data
+   dispatch(actions.updatePodcasts([...podcasts]))
+
+   }
+
       const loadUser = async() => {
           const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
@@ -127,6 +133,7 @@ function App() {
     
         console.log(URL)
           getPosts();
+          getPodcasts()
           getReels()
         getBookmarkedPosts();
         if (localStorage.getItem('token') !== undefined) {

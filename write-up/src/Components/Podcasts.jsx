@@ -1,9 +1,15 @@
+import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import Podcast from "./Podcast";
 import SideNavBar from "./SideNavBar";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 const Podcasts = () => {
+  
+   const podcasts = useSelector(state => state.podcasts)
+
     return (
         <>
         <NavBar />

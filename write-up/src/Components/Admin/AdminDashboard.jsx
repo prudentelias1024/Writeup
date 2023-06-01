@@ -9,6 +9,7 @@ const AdminDashboard = () => {
     const [users, setUsers] = useState([])
     const [posts, setPosts] = useState([])
     const [reels, setReels] = useState([])
+    const [podcasts, setPodcasts] = useState([])
     const [notifications, setNotifications] = useState([])
     const [drafts, setDrafts] = useState([])
     const [isAdmin, setIsAdmin] = useState(false)
@@ -17,6 +18,10 @@ const AdminDashboard = () => {
 
         setUsers(usersRes)
 
+        const podRes = await ( await axios.get(`${URL}/podcasts`, {headers: {Authorization:localStorage.getItem('token') }})).data.data
+
+        setPodcasts(podRes)
+        
         const postsRes = await ( await axios.get(`${URL}/api/admin/posts`, {headers: {Authorization:localStorage.getItem('token') }})).data
         
         setPosts(postsRes)
@@ -62,12 +67,13 @@ const AdminDashboard = () => {
       isAdmin === false ? <Page404/> :
         <div className='flex flex-col gap-[1em]'>
         <p className="font-[Outfit] text-3xl my-[1em] lg:ml-[2em] font-bold">App Analytics</p>
-        <div className='lg:flex lg:flex-row grid grid-cols-2 px-[.5em] lg:px-[3em] '>
+        <div className='lg:grid lg:grid-cols-4 gap-[1em] grid grid-cols-2 px-[.5em] lg:px-[3em] '>
             <DetailsCard text="Total Users" amount={users.length}  color="bg-green-500" />
             <DetailsCard text="Total Posts" amount={posts.length}  color="bg-red-500" />
             <DetailsCard text="Total Drafts" amount={drafts.length}  color="bg-purple-500" />
             <DetailsCard text="Total Notifications" amount={notifications.length}  color="bg-orange-500" />
             <DetailsCard text="Total Reels" amount={reels.length}  color="bg-yellow-500" />
+            <DetailsCard text="Total Podcasts" amount={podcasts.length}  color="bg-blue-500" />
         </div>
          <p className="font-[Outfit] text-2xl lg:text-3xl my-[1em] ml-[1em] lg:ml-[2em] font-bold"> Users ({users.length})</p>
          <div className='users flex flex-col gap-[1em] '>

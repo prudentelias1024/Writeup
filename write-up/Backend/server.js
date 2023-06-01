@@ -7,6 +7,7 @@ const expressSession = require('express-session')
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const mailgen = require('mailgen')
+const Podcast = require('./podcastSchema')
 //Schemas
 const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
@@ -21,9 +22,6 @@ const http = require('http')
 const server = http.createServer(app)
 const nodemailer = require('nodemailer')
 const cron = require('node-cron');
-const draftPostSchema = require('./draftPostSchema');
-const publishedPostSchema = require('./publishedPostSchema');
-const usersSchema = require('./usersSchema');
 const reels = require('./reelsSchema');
 //Dynamic URL
 let URL;
@@ -295,6 +293,8 @@ User.findOneAndUpdate({email: req.user.email}, {$set :{lastActive: req.body.mome
     }
 })
 })
+
+
 app.get('/', (req,res) => {
     res.setHeader("Access-Control-Allow-Credentials","true")
     res.send('API is running....')
@@ -904,6 +904,119 @@ app.put('/reels/poll/:id', verify, async(req,res) => {
         if(doc){
              res.send({status:200 , data: doc})
             }
+    })
+})
+
+app.post('/podcast/create', verify, async(req,res) => {
+    const  {username,name,email} = req.user
+    let publishedBefore = false
+        Podcast.find({author: req.user._id}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            if(doc.length > 0){
+                publishedBefore = true
+            } else {
+                publishedBefore = false
+            }
+        }
+    })
+  let podcast = new Podcast({
+    verifiedAuthor: req.user.verified,
+    authorPremiumPlan: req.user.premiumPlan,
+    author: req.user._id,
+    created: moment(),
+    podcastId: req.body.podcastId,
+    podcastURL: req.body.podcastURL,
+    title: req.body.title,
+    tags: req.body.tags,
+   
+  })
+  podcast.save()
+  User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
+    if(err){
+        throw err
+    }
+    if(doc){
+        console.log(doc)
+    }
+})
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    
+    auth: {
+        user: 'inkup1024@gmail.com',
+        pass: 'zyghrqwepszerctl'
+        
+    }
+    ,
+    tls: {
+rejectUnauthorized: false
+}
+
+  })
+
+  let message = {
+    from: "'Inkup' <Inkup1024@gmail.com>", //my email address
+    to: `${req.user.email}`,
+    subject: ` Thank you for sharing your creativity on Reels! Explore the power of long-form content.
+    `,
+    text: 'Article Published',
+    attachment: [{
+        filename: 'inkup.png',
+        path: '/inkup.png',
+        cid: 'inkup.png'
+    }],
+    html: `
+   
+Dear ${name},
+
+ <p style='font-family: Outfit; font-size: 1.5em;'> <br>We hope this email finds you well. We wanted to take a moment to extend our heartfelt congratulations on successfully uploading your podcast to our platform. It's a significant achievement, and We're thrilled to see your content being shared with our audience.
+
+</p> 
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
+Your podcast brings a unique perspective and valuable insights to the table, and it's already making an impact. The positive feedback and engagement from listeners have been remarkable, and We wanted to commend you on the hard work and dedication you've put into creating such compelling episodes.
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
+Your voice matters, and your podcast has the potential to reach even greater heights. Ww encourage you to keep up the fantastic work and continue uploading more of your thought-provoking content. Your contributions are enriching the lives of our listeners and fostering a vibrant community around your podcast.
+
+</p>
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
+By consistently sharing your expertise, experiences, and passion through your podcast, you are creating a lasting impact and inspiring others. Remember, each episode is an opportunity to connect with new listeners, spark engaging discussions, and make a difference in the lives of your audience.
+</p>
+
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
+Once again, congratulations on your podcast's success, and I eagerly look forward to witnessing your continued growth and the exciting content you have in store for your listeners. Thank you for choosing our platform to share your valuable voice.
+</p>
+
+<br><p style='font-family: Outfit; font-size: 1.5em;'>
+Warm regards,
+<br>
+${name}
+</p>`
+}
+
+if(publishedBefore == false){
+
+    let messageId =  await  (await transporter.sendMail(message)).messageId
+    console.log(`An E-mail has been sent to: ${email} with message id: ${messageId}`)
+    
+}
+
+Podcast.find({podcastId: req.body.podcastId}).populate('author').populate('listenedBy').populate('comments').populate('likes').populate('bookmarks').populate('collaborators').exec((err,podcast) => {
+    if(err){throw err}
+    if(podcast){
+        res.send({status: 200, podcast:podcast})
+    }
+})
+
+})
+
+app.get('/podcasts',async(req,res) => {
+    Podcast.find().populate('author').populate('listenedBy').populate('comments').populate('likes').populate('bookmarks').populate('collaborators').exec((err,podcasts) => {
+        if(err){throw err}
+        if(podcasts){
+            res.send({data: podcasts, status: 200})
+        }
     })
 })
 

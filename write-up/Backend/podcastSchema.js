@@ -1,58 +1,44 @@
 const mongoose = require('mongoose')
-
-const reelsSchema = new mongoose.Schema({
+const Podcast = new mongoose.Schema({
     verifiedAuthor: {type: Boolean, default :() => false},
     authorPremiumPlan: {type:String, default: () => 'free'},
-    reelId: {
-        type: String,
-        required: true,
+    author: {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+        required:true
     },
+    
+    podcastId: {
+
+        type:String,
+        required:true
+    },
+    title: {
+        type:String,
+        required:true
+    },
+    tags: {
+        type: [String],
+        required:true
+    },
+   
+  
+   
     created: {
         type:Date,
         required:true
     },
-    reelImageURL: {
+    podcastURL: {
         type:String,
-        required:false
-    },
-
-    author:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true
-    
-    },
-    type: {
-        type: String,
-        required: true
-    }
-    ,
-    votes: {
-        type:Number,
-        required: false
-    },
-    tags:   {
-        type: [String],
         required:true
-    }  ,
-    options: [
-       {
-          pollname:  {type:String, required:true},
-          vote: {type:Number,
-            default: 0,
-             required:true},
-             percentage: {
-                type:Number,
-                required: false
-             }
-       }
-    ],
-    impressions: {
+    },
+   
+    listeners: {
         type:Number,
          default: 0,
         required:true
     },
-    viewedBy :[{
+    listenedBy :[{
         type: mongoose.Schema.Types.ObjectId,
     }],
     comments: [
@@ -101,11 +87,18 @@ const reelsSchema = new mongoose.Schema({
                 ref: 'Users',
             
         }],
-        text: {
-           type: String,
-           required: true
-        }
-       
-
+    bookmarks: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Users'
+                },
+         
+        
+        ],
+        collaborators: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Users',
+            required: false
+    }]
 })
-module.exports = mongoose.model('reels', reelsSchema)
+module.exports =  mongoose.model('Podcast',Podcast)
