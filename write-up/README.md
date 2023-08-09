@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# Project Structure of Ink Up
+# The whole project can be found in the write-up folder
+# The Backend folder contains the server code (an Express.js server ),  with middleware and API routes i.e endpoint the frontend calls
+# Public folder contains index.html, favicon and some manifest files 
+# Src folder contains:
+# Components : The app is splited into different components. Each Component has a folder, while all other files are just a template
+# Font: The fonts folder contains different font families (.ttf files), which are used on the app
+# Store: The store is simply a Redux store (index.js) which allows us to manage our state. A store contains many reducers that are used to mutate the state
+# .env: Of course, environment variable that are meant to stay hidden or rather encrypted in the production mode
+# App.js: The engine of the frontend, it mounts before other components would. All API request are sent and response are recieved in the App.js after the mounting of the application (before other components loads) which makes the app behaves in a fast manner. All data and information needed for each components are received and stored in the Redux store (see folder Store/index.js) once the App mounts.
+# App.test.js: contains test written for the app itself
+# firebase.js: Firebase configuration and some firebase credentials
+# index.css: Basically all css code and entry point for 
+# index.js: This contains all Providers e.g BrowserRouter for routing, GoogleOauthProvider for google account, Custom Redux Provider (see Provider store={store}>)
+# todo: contains algorithms to be implemented to make efficient recommendations
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# _____________Components ___________________________________
 
-## Available Scripts
+# Admin : Contains Dashboard for admin to monitor how many users, notifications, posts, podcast, reels have been created on the site rather going to the database to check
+# Billing: Still under construction but will contain Billing Services for Verified Members
+# Dashboard: Contains User Dashboard. It shows how many content a user has posted, how many drafts the users is working on, also contains followers and followings list
+# Navbar: Contains all navbar sub-component like App logo, notifications icons, button (displayed when user is not logged in) and user profile image, which when clicked shows a dropdown list.
 
-In the project directory, you can run:
+# Notifications: Contains all sub component for notifications including the different types of notifications that are porcessed which are Bookmarked, Collaborations (when the user gets a collaborations request), Comment (when a post receieved a comment), followed (when a user is followed), liked (when a content is liked), Welcome ( A default notification a new user sees)
 
-### `npm start`
+# Post : Contains Sub-component for a Post. A post basically contains Author information, Tags, Reactions like Like, comment and Bookmark buttons and the Body of the post.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# PreviewPosts: MyPost.jsx is a template for viewing every posts clicked on the homepage by a user.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Search: The Search folder contains sub-component for a search page which displays the search result i.e People, Post and Tags
 
-### `npm test`
+# Settings: For now, only contains a form that helps user to update their profile
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -30,6 +30,7 @@ import Podcasts from './Components/Podcasts';
 import CreatePodcast from './Components/createPodcast';
 import PostEditor from './Components/postEditor';
 import { async } from '@firebase/util';
+import Billing  from './Components/Billing/billing';
 function App() {
        
         let URL
@@ -183,6 +184,7 @@ function App() {
       <Route path='/podcasts' element={<Podcasts/>} />
       <Route path='/post/edit/:draftId' element={<PostEditor/>} />
        <Route path='/addPodcast' element={<CreatePodcast/>} />
+       <Route path='/billing' element={<Billing/>} />
     </Routes>
     
     </div>
