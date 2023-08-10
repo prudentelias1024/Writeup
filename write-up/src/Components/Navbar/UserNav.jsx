@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { IoIosAddCircleOutline, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
-import { VscBellDot } from "react-icons/vsc";
+import { VscBellDot, VscFlame } from "react-icons/vsc";
 import {AiOutlineHome} from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
@@ -88,10 +88,14 @@ export default function UserNav(){
       //       <Button additionalStyles="" to="/signup" name="Create account" borderColor="border-pink-500" textColor=" text-pink-500"/>
         
       //       </div> :
-             <div className="flex flex-row justify-around w-full p-[1em] bg-white fixed bottom-[0em]">
+             <div className="flex flex-row justify-around w-full p-[.5em] z-100 border-t bg-white fixed bottom-[0em]">
                 
             <Link to="/" >
             <AiOutlineHome className="text-3xl mt-1 block lg:hidden"  />
+            </Link>
+                
+            <Link to="/trends" >
+            <VscFlame className="text-3xl mt-1 block lg:hidden"  />
             </Link>
 
             <Link to='/search'>
@@ -109,10 +113,9 @@ export default function UserNav(){
         }
             
             </Link>
-            <button onClick={toggleHelper}>
-
+          <Link to='/Profile'>
             <img src={user.public_picture} alt={user.name} className='rounded-full h-8 w-8  mr-[1em] '  />
-            </button >
+          </Link>
             {/* <div ref={helperRef} style={{zIndex: 10}} className="hidden dropdown  fixed left-12  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
                 <Link to='/profile' className=" block px-2 py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><div className="flex flex-row">
                 {user.verified ? <HiBadgeCheck className="text-xl text-blue-500 mt-1"/> : ''} </div> <p>@{user.username}</p></Link>

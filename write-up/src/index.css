@@ -7,7 +7,7 @@
 
 body
 {
-    background-color: #f6f6f6;
+    /* background-color: #f6f6f6; */
 }
 @tailwind base;
 @tailwind components;
@@ -16,7 +16,15 @@ body
     font-family: Pacifico;
     src: url('./fonts/Pacifico-Regular.ttf');
 }
+@font-face {
+    font-family: Sen;
+    src: url('./fonts//Sen-Regular.ttf')
+}
 
+@font-face {
+    font-family: Avenir;
+    src: url('./fonts/AvenirLTStd-Book.otf')
+}
 @font-face {
     font-family: Montserrat;
     src: url('./fonts/Montserrat-VariableFont_wght.ttf');

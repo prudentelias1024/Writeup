@@ -8,6 +8,7 @@ import Commented from './Notifications/commented';
 import Welcome from './Notifications/welcome';
 import {useSelector} from 'react-redux'
 import Collaboration from './Notifications/collaboration';
+import UserNav from './Navbar/UserNav';
 // const socket = io('https://writeup-37ap.vercel.app')
 //Notification types
 //follow 
@@ -52,6 +53,7 @@ const Notifications = () => {
           
             <Welcome/>
         </div>
+        <UserNav/>
         </>
     );
 }

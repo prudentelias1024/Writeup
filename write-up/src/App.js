@@ -31,6 +31,8 @@ import CreatePodcast from './Components/createPodcast';
 import PostEditor from './Components/postEditor';
 import { async } from '@firebase/util';
 import Billing  from './Components/Billing/billing';
+import Search from './Components/Search/Search';
+import Trends from './Components/trends';
 function App() {
        
         let URL
@@ -156,7 +158,7 @@ function App() {
   
   return (
     <>
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden bg-white">
       
     <Routes>
 
@@ -165,6 +167,7 @@ function App() {
       <Route path='/tag/:name' element={<TagTemplate/>}/>
       <Route path='/p/:username/:postId' element={<MyPosts/>}/>
       <Route path='/' element={<Home/>}/>
+      <Route path='/trends' element={<Trends/>}/>
       <Route path='/settings' element={<Settings/>}/>
       <Route path='/login'  element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>
@@ -178,7 +181,8 @@ function App() {
       <Route path='/logout' element={<Logout/>}/>
       <Route path='/tags' element={<Tags/>}/>
       <Route path='/readlater' element={<ReadLater/>}/>
-      <Route path='/search' element={<SearchPage/>}/>
+      <Route path='/search' element={<Search/>}/>
+      <Route path='/search/results' element={<SearchPage/>}/>
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/admin' element={<AdminDashboard/>} />
       <Route path='/podcasts' element={<Podcasts/>} />

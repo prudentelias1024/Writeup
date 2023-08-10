@@ -4,7 +4,7 @@ import NavBar from '../NavBar';
 import axios from 'axios';
 import { actions } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import ProfileSearchResult from './ProfileSearchResults';
+import ProfileSearchResult from './ProfileSearchResult';
 import Post from '../Post';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -130,15 +130,15 @@ const SearchPage = () => {
         <>
         {showModal == true ? <LoginModal/>: ''}
         <NavBar searchWords={query}/>
-        <div className=" relative w-full lg:bg-white pb-[33%] flex flex-row gap-[5em]">
+        <div className="top-32 relative w-full lg:bg-white pb-[33%] flex flex-row gap-[5em]">
             <div className='flex flex-col'>
-            <div className='lg:ml-[9em] mt-[1em] flex gap-2 text-2xl lg:text-4xl font-bold text-gray-500 font-[Avenir] ml-[.25em]'><p> Results for</p> <p className='font-extrabold text-black'>{query}</p> </div>
+            <div className='lg:ml-[9em] mt-[1em] flex gap-2 text-3xl lg:text-4xl font-bold text-gray-500 font-[Outfit] ml-[1em]'><p> Results for</p> <p className='font-extrabold text-black'>{query}</p> </div>
         <div className='flex flex-col lg:w-2/3 lg:gap-[1em]'>
             
-            <ul className='flex flex-row ml-[0.3em] gap-[5em] lg:gap-[7em] w-full p-0 h-[2.6em] border-gray-300 border-b-[2px] mt-[2em] lg:ml-[20em]'>
-                <li onClick={filterPost} ref={tabRef} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Post</li>
-                <li onClick={filterPeople} ref={tab1Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>People</li>
-                <li onClick={filterTag} ref={tab2Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Tags</li>
+            <ul className='flex flex-row ml-[0.3em] gap-[5em] lg:gap-[7em] w-full p-0 h-[2.6em] border-gray-300 border-b-[2px] mt-[3em] lg:ml-[20em]'>
+                <li onClick={filterPost} ref={tabRef} className='block font-[Maven]  h-min text-gray-500 cursor-pointer'>Post</li>
+                <li onClick={filterPeople} ref={tab1Ref} className='block font-[Maven]  h-min text-gray-500 cursor-pointer'>People</li>
+                <li onClick={filterTag} ref={tab2Ref} className='block font-[Maven]  h-min text-gray-500 cursor-pointer'>Tags</li>
               
             </ul>
 
@@ -168,7 +168,7 @@ const SearchPage = () => {
             
             
             :
-            <p className='font-bold text-center lg:ml-[14em] w-full font-[Avenir]  rounded-md py-[2em] text-2xl text-gray-400'>No result found</p>
+            <p className='font-bold text-center lg:ml-[14em] w-full font-[Maven]  rounded-md py-[2em] text-2xl text-gray-400'>No result found</p>
              }
 
            
