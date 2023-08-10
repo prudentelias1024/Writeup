@@ -130,12 +130,12 @@ const SearchPage = () => {
         <>
         {showModal == true ? <LoginModal/>: ''}
         <NavBar searchWords={query}/>
-        <div className=" relative w-full lg:bg-white pb-[33%] flex flex-row gap-[5em]">
+        <div className=" relative w-full lg:bg-white pb-[33%] lg:flex lg:flex-row lg:gap-[5em]">
             <div className='flex flex-col'>
             <div className='lg:ml-[9em] mt-[1em] flex gap-2 text-2xl lg:text-4xl font-bold text-gray-500 font-[Avenir] ml-[.25em]'><p> Results for</p> <p className='font-extrabold text-black'>{query}</p> </div>
-        <div className='flex flex-col lg:w-2/3 lg:gap-[1em]'>
+        <div className='flex flex-col lg:w-2/3 lg:gap-[1em] w-full'>
             
-            <ul className='flex flex-row ml-[0.3em] gap-[5em] lg:gap-[7em] w-full p-0 h-[2.6em] border-gray-300 border-b-[2px] mt-[2em] lg:ml-[20em]'>
+            <ul className='flex flex-row ml-[0.3em] justify-around lg:gap-[7em] w-full p-0 h-[2.6em] border-gray-300 border-b-[1px] mt-[2em] lg:ml-[20em]'>
                 <li onClick={filterPost} ref={tabRef} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Post</li>
                 <li onClick={filterPeople} ref={tab1Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>People</li>
                 <li onClick={filterTag} ref={tab2Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Tags</li>
@@ -238,15 +238,15 @@ const SearchPage = () => {
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
                             <Link to={"/"+people.username} className="font-[Maven] w-full text-md font-bold">{people.name}</Link>
-                            <p  className="font-[Maven] text-ellipsis h w-[390px] overflow-hidden whitespace-nowrap">{people.bio}</p>
+                            <p  className="font-[Sen] text-ellipsis h w-[390px] overflow-hidden whitespace-nowrap">{people.bio}</p>
                         </div>
                           
                                          {
                                          user !== null?
                                          people.username !== user.username?
                           user.following.length !==  0 && user.following.some((followee)=> people.username == followee.username) 
-                           ? (<button  className='font-[Maven] m-auto text-green-500 px-[1em]  ml-[0em] mt-[-.751em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>)
-                            : (<button className='font-[Maven] m-auto text-red-500 px-[1em]  ml-[0em] mt-[-1.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-red-500 hover:border'>Following</button>): '' :<button  className='font-[Maven] m-auto text-green-500 px-[1em] ml-[0em] mt-[-.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>
+                           ? (<button  className='font-[Sen] m-auto text-green-500 px-[1em]  ml-[0em] mt-[-.751em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>)
+                            : (<button className='font-[Sen] m-auto text-red-500 px-[1em]  ml-[0em] mt-[-1.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-red-500 hover:border'>Following</button>): '' :<button  className='font-[Sen] m-auto text-green-500 px-[1em] ml-[0em] mt-[-.75em] w-[7em] h-[3em] p-1.5 rounded-full align-middle hover:border-green-500 hover:border'>Follow</button>
                      }
                     </div>)
                     }) : searchResult.user.map((people,index) => {

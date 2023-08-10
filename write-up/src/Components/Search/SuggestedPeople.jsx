@@ -4,7 +4,8 @@ import { HiBadgeCheck, HiHashtag } from 'react-icons/hi';
 
 export default function SuggestedPeople() {
   return (
-     <div className="flex flex-row ml-[.5em] border-b-[1px] py-[1em]">
+     <div className="flex flex-row justify-between border-b-[1px]">
+     <div className="flex flex-row ml-[.5em]  py-[1em]">
         <img src={Mock} className='h-9 w-9 rounded-full'/>
         <div className="profile ml-[.5em] ">
             <div className='flex flex-row'>
@@ -13,8 +14,9 @@ export default function SuggestedPeople() {
             </div>
             <p className="username text-sm font-[Sen] -mt-[.45em]">@emiliano</p>
         </div>
-        <button className='font-[Sen] relative left-[4em] bg-blue-500 text-white text-sm px-[1.25em] rounded-md py-[.5em] border font-bold'>Follow</button>
          
+     </div>
+        <button className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[2em] top-[1em] bg-blue-500 text-white text-sm px-[2.5em] rounded-md py-[.5em] border font-bold'>Follow</button>
 
      </div>
 
