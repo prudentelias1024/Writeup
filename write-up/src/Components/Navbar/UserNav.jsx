@@ -93,7 +93,10 @@ export default function UserNav(){
             <Link to="/" >
             <AiOutlineHome className="text-3xl mt-1 block lg:hidden"  />
             </Link>
+
+            <Link to='/search'>
             <IoIosSearch onClick={handleMobileSearch}   className="lg:hidden text-3xl mt-[.125em]"/>  
+            </Link>
         
            <Link to="/create">
             <IoIosAddCircleOutline className="text-3xl mt-1 block lg:hidden"/>
