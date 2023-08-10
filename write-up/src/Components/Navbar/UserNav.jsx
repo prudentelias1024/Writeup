@@ -90,7 +90,7 @@ export default function UserNav(){
       //       </div> :
              <div className="flex flex-row justify-around w-full p-[1em] bg-white fixed bottom-[0em]">
                 
-            <Link to="/">
+            <Link to="/" >
             <AiOutlineHome className="text-3xl mt-1 block lg:hidden"  />
             </Link>
             <IoIosSearch onClick={handleMobileSearch}   className="lg:hidden text-3xl mt-[.125em]"/>  
@@ -108,7 +108,7 @@ export default function UserNav(){
             </Link>
             <button onClick={toggleHelper}>
 
-            <img src={user.public_picture} alt={user.name} className='rounded-full h-7 w-7  mr-[1em] '  />
+            <img src={user.public_picture} alt={user.name} className='rounded-full h-8 w-8  mr-[1em] '  />
             </button >
             {/* <div ref={helperRef} style={{zIndex: 10}} className="hidden dropdown  fixed left-12  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
                 <Link to='/profile' className=" block px-2 py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><div className="flex flex-row">
