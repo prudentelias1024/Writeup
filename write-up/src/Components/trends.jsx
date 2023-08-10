@@ -10,7 +10,7 @@ export default function
     <>
         <NavBar />
     <div className='flex flex-col'>
-        <p className='relative ml-[.5em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending</p>
+        <p className='relative ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending🔥</p>
         <TrendLinks />
         <TrendLinks />
         <TrendLinks />

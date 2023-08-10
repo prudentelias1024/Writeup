@@ -88,7 +88,7 @@ export default function UserNav(){
       //       <Button additionalStyles="" to="/signup" name="Create account" borderColor="border-pink-500" textColor=" text-pink-500"/>
         
       //       </div> :
-             <div className="flex flex-row justify-around w-full p-[.5em] z-100 border-t bg-white fixed bottom-[0em]">
+             <div className="flex flex-row justify-around w-full p-[.5em] py-[1em] z-100 border-t bg-white fixed bottom-[0em]">
                 
             <Link to="/" >
             <AiOutlineHome className="text-3xl mt-1 block lg:hidden"  />
