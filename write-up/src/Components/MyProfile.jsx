@@ -70,7 +70,7 @@ const MyProfile = () => {
             <div className="flex flex-col ml-[2em] mt-[.75em]">
              <div className='flex flex-row'>
              <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
-             <HiBadgeCheck className="text-xl text-blue-500 relative top-[.25em]"/>
+             <HiBadgeCheck className="text-xl text-blue-500 relative top-[.2em]"/>
              </div> 
              <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
             </div>
