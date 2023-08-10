@@ -7,6 +7,7 @@ import Posts from './Posts';
 import SideNavBar from './SideNavBar';
 import TagTopics from './TagTopics';
 import Podcast from './Podcast'
+
 export default function Home(){
    useEffect(() => {
 
@@ -22,8 +23,10 @@ export default function Home(){
         {/* <Podcast/> */}
        
      <Posts/>
+  
      {/* <TagTopics/> */}
 </div>
+     <UserNav  />
        
         </>
     );
