@@ -19,6 +19,7 @@ export default function UserNav(){
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
    const dispatch = useDispatch()
+   const navigate = useNavigate()
      const helperRef   = useRef()
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
@@ -30,6 +31,10 @@ export default function UserNav(){
             dispatch(actions.updateURL("http://localhost:5000"))
             URL =  "http://localhost:5000" 
              socket = io(URL)
+          }
+          if(user == undefined || user == null){
+            navigate('/login')
+             
           }
        setInterval(() => {
         if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
@@ -43,6 +48,7 @@ export default function UserNav(){
               pollNotifications()
          
        }
+       
     },[])
     const pollNotifications = async() => {
         socket.emit('getNotifications', {headers:{Authorization: localStorage.getItem('token')}})
@@ -76,6 +82,9 @@ export default function UserNav(){
      const handleMobileSearch = () => {
       dispatch(actions.showMobileSearch(!showMobileSearch))
      }
+     if(user !== null){
+
+     
     return(
         <>
        {
@@ -138,4 +147,5 @@ export default function UserNav(){
         
        
     );
+}
 }
