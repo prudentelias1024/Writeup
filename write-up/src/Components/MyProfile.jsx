@@ -17,9 +17,9 @@ const MyProfile = () => {
     const user = useSelector((state) => state.user)
     const [myPosts, setMyPosts] = useState(null)
     const dispatch = useDispatch()
-   const loadUser = async() => {
+    const loadUser = async() => {
         const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
-         )).data;
+        )).data;
          dispatch(actions.updateUser(info))
          
      }
@@ -33,51 +33,58 @@ const MyProfile = () => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
           }else{
-            URL = "http://localhost:5000"
-                   
-          }
-        loadUser()
-        getMyPosts()
-       
-    }
-    , []);
-    if (user) {
-        
-    
-    return (
-        
+              URL = "http://localhost:5000"
+              
+            }
+            loadUser()
+            getMyPosts()
+            
+        }
+        , []);
+        if (user) {
+            
+            
+            return (
+                
         <div className='flex flex-col'>
             
             <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
-            {/* <Link to="/settings">
-            <button className='bg-blue-600 text-white w-[7em] h-[3em] font-bold text-sm absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
-            </Link> */}
-         <div  className="activity_info flex flex-row justify-start">
+         <div  className="activity_info flex flex-row justify-evenly">
              <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em]' src={user.public_picture} alt={user.name}  />
-                <div className="post_activity">
-                    <p className='text-xl font-[Sen] font-bold '> 3</p>
+                <div className="post_activity text-center">
+                    <p className='text-2xl font-[Sen] font-bold '> {myPosts? myPosts.length : 0}</p>
                     <p className='text-xs'>Posts</p>
                     
                 </div>
-                <div className="followers_activity">
-                    <p className='text-xl font-[Sen] font-bold'> 3</p>
+                <div className="followers_activity text-center">
+                    <p className='text-2xl font-[Sen] font-bold'> {user ?user.followers.length: 0}</p>
                     <p className='text-xs'>Followers</p>
                     
                 </div>
-                <div className="following_activity">
-                    <p className='text-xl font-[Sen] font-bold'> 3</p>
+                <div className="following_activity text-center">
+                    <p className='text-2xl font-[Sen] font-bold'> {user ?user.following.length: 0}</p>
                     <p className='text-xs'>Followings</p>
                     
                 </div>
              </div>
-            <div className="flex flex-col ml-[1em]">
+            <div className="flex flex-col ml-[2em] mt-[.75em]">
              <div className='flex flex-row'>
              <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
              <HiBadgeCheck className="text-xl text-blue-500 relative top-[.25em]"/>
              </div> 
              <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
             </div>
-                <div className="flex flex-row gap-4 justify-center mb-[1em] ml-[1.2em] lg:ml-[3em] lg:pb-[2em]">
+
+            <div className="profile_actions left-[2em] flex flex-row justify-evenly mt-[1em]">
+                            <Link to="/settings">
+            <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
+            </Link>
+                            <Link to="/settings">
+            <button className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
+            </Link>
+
+            </div>
+                {/* <div className="flex flex-row gap-4 justify-center mb-[1em] ml-[1.2em] lg:ml-[3em] lg:pb-[2em]">
                 <div className='joined flex flex-row text-[#acaaaa] font-[Montserrat] font-bold gap-2'>
                     <BsCalendarWeek className=' text-base lg:text-xl mt-1.5'/>
                     <p className='font-[Outfit] text-xs lg:text-xl'>{format(user.joined_on)}</p>
@@ -88,6 +95,7 @@ const MyProfile = () => {
                 </div>
 
                 </div>
+            */}
             </div>
 
 
