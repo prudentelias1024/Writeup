@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../store/index";
 import {format} from '../time'
 import ProfileVitals from './Profile/ProfileVitals';
+import UserNav from './Navbar/UserNav';
     
 const MyProfile = () => {
     let URL;
@@ -45,6 +46,7 @@ const MyProfile = () => {
             
             
             return (
+                <>
                 
         <div className='flex flex-col'>
             
@@ -76,6 +78,8 @@ const MyProfile = () => {
             </div>
         </div>
         </div>
+        <UserNav/>
+        </>
     )} else {
         return ''
     }
