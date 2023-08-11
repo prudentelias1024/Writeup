@@ -616,7 +616,7 @@ app.post('/api/notification/welcome',verify, (req,res) => {
 
 })
 app.post('/api/notification/follow',verify, async(req,res) => {
-    const {postId, author,post_name} = req.body
+    const {postId, author} = req.body
     const newNotification = new notifications({
         actionUserVerified: req.user.verified,
         userId: author._id,
