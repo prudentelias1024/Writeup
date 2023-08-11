@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Comment from './comment';
 import ReactQuill from 'react-quill';
 import { useParams, useLocation, Link } from 'react-router-dom';
+import { GoMention } from 'react-icons/go';
+
 import axios from 'axios';
 import { format } from "../../time";
 import { BsHeartFill } from 'react-icons/bs';
@@ -205,7 +207,7 @@ const MyPosts = () => {
                 </button>
                 }
                 <button className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <FaRegComment className='text-2xl lg:text-3xl text-black'/>
+                    <GoMention className='text-2xl lg:text-3xl text-black'/>
                     <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.comments.length}</p>
                 </button>
                 {
@@ -326,10 +328,9 @@ const MyPosts = () => {
           Follow
           </button>
 
-    
          }{}
             </div>
-            {
+            {/* {
               otherAuthorPost !== null &&  otherAuthorPost.length > 0  ?   <div className="more_posts z-2  w-full max-lg:py-7 lg:top-1/2 lg:absolute lg:right-[1em] lg:p-7 bg-white lg:w-[23em]  text-[#171717]">
               <p className='font font-bold text-xl ml-7'>More posts from {post.author.name}</p>
               <div className='flex flex-col w-full gap-8 max-lg:py-[1.5em] max-lg:mb-[1.5em]'>
@@ -350,7 +351,7 @@ const MyPosts = () => {
               </div>
              </div> : ''
             }
-          
+           */}
             
         </div>
         </>
