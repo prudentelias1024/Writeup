@@ -446,6 +446,7 @@ app.get('/api/admin/users', verifyAdmin, async(req,res) => {
 app.get('/api/users',  async(req,res) => {
     User.find().exec(async(err,doc) => {
         res.send(doc)
+        console.log(doc[0])
     })
 })
 app.get('/api/admin/reels', verifyAdmin, async(req,res) => {
