@@ -37,7 +37,7 @@ const Liked = ({notification}) => {
     }, []);
     return (
         <div>
-            <div className='flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%] lg:m-auto bg-white p-[.5em]   lg:pl-[7em] hover:scale-110'>
+            <div className='flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%] lg:m-auto bg-white p-[.5em]   lg:pl-[7em]'>
        
         <FaHeart  className='text-2xl text-red-500 mt-[1em]'/>
         
