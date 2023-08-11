@@ -35,29 +35,29 @@ const Bookmarked = ({notification}) => {
         setInterval(() => {
             setTimeCreated(time(notification.createdAt))  
         }, 500);
-    }, [timeCreated]);
+    }, []);
     return (
         <div>
-            <div className='flex flex-col lg:flex-row lg:gap-3 w-[115%] lg:w-[60%] lg:m-auto bg-white p-[1em] ml-auto justify-between lg:pl-[7em] hover:scale-110'>
-            {
-            notification.read == false? 
-            <p className='lg:ml-[-6em] font-[Outfit] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg '>Unread </p>
-           : <p className='lg:ml-[-6em] font-[Outfit] bg-red-200 text-red-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg '>Read </p> }
-        <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[3em] w-[3em] rounded-full m-auto lg:mt-[1em] lg:ml-[0em] ' />
-       <p className='relative left-[.5em] m-auto lg:left-[-2.5em] lg:top-3  -top-8 text-gray-600 text-3xl'>📌</p>
-        <div className='m-auto lg:-ml-[3.5em] lg:mt-[.25em] w-[70%] font-[Outfit] mt-[-1.5em]'>
+        <div className='flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%] lg:m-auto bg-white p-[.5em]   lg:pl-[7em] '>
+   
+    <FaBookmark  className='text-2xl text-purple-500 mt-[1em]'/>
+    
+    <div className=' flex flex-col w-fit font-[Sen] ml-0  gap-[.05em]  lg:ml-[2em]'>
+    <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[2.5em] w-[2.5em]  lg:mt-[1em] rounded-full' />
 
-        
-         <p className='font-[Mulish] text-xl m-auto lg:ml-[-.5em] lg:mt-[.5em]'><Link  className='font-bold font-[Outfit]'  to={notification.message[0].user[1].link}><p>{notification.message[0].user[0].name} </p>  {  notification.actionUserVerified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}  </Link> bookmarked   
-         <Link className='text-blue-600 font-bold ml-1' to={"/"+notification.message[0].post[1].link}> {notification.message[0].post[0].name}</Link>
-         </p> 
-        
-        </div>
-        <p className="font-[Outfit] text-gray-400 my-auto m-auto lg:ml-[-2em] font-bold">{timeCreated}</p>
-         
-  </div>
-        </div>
-    );
+    <div className='[.125em]'>
+  <Link className=' font-bold font-[Sen] text-sm inline-flex flex-wrap gap-[0.2em] ' to={notification.message[0].user[1].link}>
+    <p className='inline-flex'> 
+    {notification.message[0].user[0].name}  {  notification.actionUserVerified? <HiBadgeCheck  className="text-lg text-blue-500 m"  />: ''} </p>
+     <p> bookmarked your post </p> 
+  </Link> 
+        </div>        
+     
+    </div>
+     
+</div>
+    </div>
+);
 }
 
 export default Bookmarked;

@@ -9,6 +9,7 @@ import Welcome from './Notifications/welcome';
 import {useSelector} from 'react-redux'
 import Collaboration from './Notifications/collaboration';
 import UserNav from './Navbar/UserNav';
+import Header from './header';
 // const socket = io('https://writeup-37ap.vercel.app')
 //Notification types
 //follow 
@@ -24,8 +25,8 @@ const Notifications = () => {
     
     return (
         <>
-        <NavBar/>
-        <div className='pt-[1em] lg:pt-[8em] w-[100%] z-0 flex flex-col gap-[.75em]'>
+        <Header/>
+        <div className='pt-[.75em] lg:pt-[8em] w-[100%] z-0 flex flex-col '>
             {
             notifications && notifications.length !== 0?
             

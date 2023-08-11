@@ -1,9 +1,9 @@
-import { FaRegComment } from "react-icons/fa";
+import { GoMention } from 'react-icons/go';
 
 export function Comments({comments,postId,username}){
     return(
         <div className="flex flex-row gap-3">
-        <FaRegComment className="text-xl "/> 
+        <GoMention className="text-xl "/> 
         <div className="flex flex-row gap-2">
         <p className="font-[Outfit] -mt-[.09em]">{
             comments.length

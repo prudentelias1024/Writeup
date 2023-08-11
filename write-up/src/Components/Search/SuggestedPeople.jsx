@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Mock from '../../mock.jpg'
 import { HiBadgeCheck, HiHashtag } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
@@ -8,14 +8,14 @@ import axios from 'axios';
 export default function SuggestedPeople({people}) {
     const {user} = useSelector(state => state)
      let URL
-    // const follow = () => {
+    const follow = () => {
     //     axios.post(`${URL}/api/follow`,{author:user, user:people}, {headers: {'Authorization': localstorgs.getItem('token')}})
     //     axios.post(`${URL}/api/follow`,{author:user, user:people}, {headers: {'Authorization': localstorgs.getItem('token')}})
-    // }
-    // const unfollow = () => {
+    }
+    const unfollow = () => {
     //     axios.post(`${URL}/api/unfollow`,{author:user, user:people}, {headers: {'Authorization': localstorgs.getItem('token')}})
     //     axios.post(`${URL}/api/follow`,{author:user, user:people}, {headers: {'Authorization': localstorgs.getItem('token')}})
-    // }
+    }
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
@@ -26,9 +26,8 @@ export default function SuggestedPeople({people}) {
     
         }, [])
     
-    const unfollow = () => {}
   return (
-     <Link className="flex flex-row justify-between border-b-[1px]">
+     <Link to={'/'+user.username} className="flex flex-row justify-between border-b-[1px]">
      <div className="flex flex-row ml-[.5em]  py-[1em]">
         <img src={people.public_picture} className='h-9 w-9 rounded-full'/>
         <div className="profile ml-[.5em] flex flex-col gap-[.25em] ">

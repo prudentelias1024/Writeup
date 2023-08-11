@@ -157,8 +157,6 @@ function App() {
         const updateLastVisitation = async() => {
          let res =  (await axios.post(`${URL}/api/user/attendance`,{moment: new Date}, {headers: {Authorization: localStorage.getItem('token') }})).data
         }
-    
-       
           updateLastVisitation()
        
       }
