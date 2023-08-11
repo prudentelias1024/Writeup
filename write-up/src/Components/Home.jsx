@@ -7,10 +7,12 @@ import Posts from './Posts';
 import SideNavBar from './SideNavBar';
 import TagTopics from './TagTopics';
 import Podcast from './Podcast'
+import { useSelector } from 'react-redux';
 
 export default function Home(){
-   useEffect(() => {
-
+   const {user} = useSelector(state => state)
+    useEffect(() => {
+     
    },[<UserNav/>, <SideNavBar/>])
     return(
         <>

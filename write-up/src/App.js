@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useNavigate} from 'react-router-dom'
 import Home from './Components/Home';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
@@ -38,6 +38,8 @@ function App() {
         let URL
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
+      const navigate = useNavigate()
+   
       const getReels = async() => {
         let reels = await (await axios.get(`${URL}/reels`)).data; 
         let options = []
@@ -95,6 +97,12 @@ function App() {
       const loadUser = async() => {
           const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
            )).data;
+           if(info == null || info == undefined){
+            navigate('/login')
+             
+       
+    }
+
            let isAdmin = false
            if(info.username == 'InkupOfficial' && info.username == 'prudentelias'){
             isAdmin = false
@@ -179,7 +187,7 @@ function App() {
       <Route path='/Dashboard/following'  element={<Following/>}/>
       <Route path='/Profile' element={<MyProfile/>}/>
       <Route path='/logout' element={<Logout/>}/>
-      <Route path='/tags' element={<Tags/>}/>
+      <Route path='/hashtags' element={<Tags/>}/>
       <Route path='/readlater' element={<ReadLater/>}/>
       <Route path='/search' element={<Search/>}/>
       <Route path='/search/results' element={<SearchPage/>}/>

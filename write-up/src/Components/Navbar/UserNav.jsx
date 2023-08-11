@@ -32,11 +32,7 @@ export default function UserNav(){
             URL =  "http://localhost:5000" 
              socket = io(URL)
           }
-          if(user == undefined || user == null){
-            navigate('/login')
-             
-          }
-       setInterval(() => {
+        setInterval(() => {
         if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
             
             pollNotifications()

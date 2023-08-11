@@ -129,7 +129,7 @@ const Tags = () => {
     return (
         <>
         <NavBar/>
-        <div className="top-32 relative grid grid-cols-1  lg:grid-cols-3 gap-[2em] lg:mx-[10em] ">
+        <div className="top-32 relative  grid grid-cols-1  lg:grid-cols-3 gap-[2em] lg:mx-[10em] ">
            {tags && tags.map((tag,index) => 
            
           {return <Tag  tag={tag.tag} key={index} count={tag.publishedPosts}/>

@@ -53,7 +53,7 @@ export default function Search({content}) {
                     suggestedUser.map((user) => {
                        return( <SuggestedPeople key={user.id} people={user}/>)
 
-                    }): 'No User for now'
+                    }): ''
                 }
 
              </div>
