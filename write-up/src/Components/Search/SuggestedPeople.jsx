@@ -2,27 +2,28 @@ import React from 'react'
 import Mock from '../../mock.jpg'
 import { HiBadgeCheck, HiHashtag } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function SuggestedPeople({people}) {
     const {user} = useSelector(state => state)
 
   return (
-     <div className="flex flex-row justify-between border-b-[1px]">
+     <Link className="flex flex-row justify-between border-b-[1px]">
      <div className="flex flex-row ml-[.5em]  py-[1em]">
         <img src={people.public_picture} className='h-9 w-9 rounded-full'/>
-        <div className="profile ml-[.5em] ">
+        <div className="profile ml-[.5em] flex flex-col gap-[.25em] ">
             <div className='flex flex-row'>
-            <p className="name text-base font-[Sen] font-bold">{people.name}</p>
+            <p className="name text-sm font-[Sen] font-bold">{people.name}</p>
             {
                 people.verified !== true ? '':
-            <HiBadgeCheck className='text-base text-blue-500 relative top-[.25em]'/>
+            <HiBadgeCheck className='text-sm text-blue-500 relative top-[.25em]'/>
             }
             </div>
-            <p className="username text-sm font-[Sen] -mt-[.45em]">@{people.username}</p>
+            <p className="username text-sm font-[Sen] text-[#9e9e9e] font-bold -mt-[.45em]">@{people.username}</p>
         </div>
          
      </div>
-        <button className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1em] bg-blue-500 text-white text-sm px-[2.5em] rounded-md py-[.5em] border font-bold'>Follow</button>
+        <button className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1em] bg-blue-500 text-white text-sm px-[1.5em] rounded-md py-[.5em] border font-bold'>Follow</button>
         {/* {
             user.username !== people.username ?
 
@@ -39,7 +40,7 @@ export default function SuggestedPeople({people}) {
                      }
               */}
 
-     </div>
+     </Link>
 
     )
 }
