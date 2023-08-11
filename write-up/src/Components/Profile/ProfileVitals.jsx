@@ -23,7 +23,7 @@ export default function ProfileVitals({user,posts}) {
                
            </div>
         </div>
-       <div className="flex flex-col mt-[.75em] ml-[3em]">
+       <div className="flex flex-col mt-[.75em] relative left-[2em]">
         <div className='flex flex-row'>
         <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
         {user.verified ==true?
