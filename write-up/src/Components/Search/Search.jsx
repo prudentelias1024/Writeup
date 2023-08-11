@@ -6,10 +6,26 @@ import {BsFilter} from "react-icons/bs"
 import SearchResults from "./SearchResults";
 import SuggestedPeople from "./SuggestedPeople";
 export default function Search({content}) {
-   
+    const [suggestedUser, setSuggestedUser] = useState([])
+    let URL;
+    const getUsers = async() => {
+        let users = await (await axios.get(`${URL}/api/users`)).data
+        setSuggestedUser(users)
+       }
     const navigate =   useNavigate()
     const [searchWords, setSearchWords] = useState(null)
    
+    useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            URL = "https://inkup-api.onrender.com"
+          }else{
+            URL = "http://localhost:5000"
+                   
+          }
+        getUsers()
+      
+    }, [])
+    
     const handleSearch = async(event) => {
     event.preventDefault()
    
@@ -32,7 +48,13 @@ export default function Search({content}) {
              </Link>
              </form>
              <div >
-             <SuggestedPeople/>
+                {
+                    suggestedUser?
+                    suggestedUser.map((user) => {
+                       return( <SuggestedPeople key={user.id} people={user}/>)
+
+                    }): 'No User for now'
+                }
 
              </div>
         </div>

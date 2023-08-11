@@ -10,6 +10,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Tag from '../tags/tag';
 import LoginModal from '../loginModal';
+import SuggestedPeople from './SuggestedPeople';
 
 const SearchPage = () => {
     let URL;
@@ -151,7 +152,7 @@ const SearchPage = () => {
             }): filteredView !== null &&  filteredView.data.length !== 0 &&   filteredView.type == 'people'  ? 
             filteredView.data.map((user,index) => {
                
-                          return <ProfileSearchResult  people={user} key={index}/>
+                          return <SuggestedPeople  people={user} key={index}/>
             }): filteredView !== null && filteredView.data.length !== 0 && filteredView.type == 'tags' ? 
            
                 <div className='flex gap-2 lg:gap-5 flex-auto flex-wrap w-full mt-[1em]  lg:ml-[20em] '>
@@ -237,8 +238,8 @@ const SearchPage = () => {
                         return( <div className='flex flex-row pl-[1em] mb-[1em]' key={index}>
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
-                            <Link to={"/"+people.username} className="font-[Maven] w-full text-md font-bold">{people.name}</Link>
-                            <p  className="font-[Sen] text-ellipsis h w-[390px] overflow-hidden whitespace-nowrap">{people.bio}</p>
+                            <Link to={"/"+people.username} className="font-[Sen] w-full text-md font-bold">{people.name}</Link>
+                             
                         </div>
                           
                                          {
@@ -254,7 +255,6 @@ const SearchPage = () => {
                         <img className='h-[2em] w-[2em]  rounded-full' src={people.public_picture} alt={people.username} />
                         <div className="flex flex-col  ml-[1em]">
                               <Link to={"/"+people.username} className="font-[Maven] w-full text-md font-bold">{people.name}</Link>
-                            <p  className="font-[Maven] text-ellipsis w-[240px] overflow-hidden whitespace-nowrap">{people.bio}</p>
                         </div>
                         { user !== null?
                             people.username !== user.username?
