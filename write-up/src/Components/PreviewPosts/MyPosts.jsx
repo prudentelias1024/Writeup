@@ -1,4 +1,4 @@
-ssfdimport React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import { FaBookmark, FaHeart, FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import NavBar from '../NavBar';
 import tempImage from "../../mock.jpg";
