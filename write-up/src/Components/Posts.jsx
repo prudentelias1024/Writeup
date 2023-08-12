@@ -84,15 +84,17 @@ export default function Posts(){
             <p className="font-[Sen] text-center text-sm font-semibold ">Reels</p>
             </div>
 }
-        {
+        {/* {
     podcastClicked?
-    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]  ">
+    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="podcast cursor-none  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]  ">
             <p className="font-[Sen] text-center text-sm font-semibold ">Podcasts</p>
             </div>:
-    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels  w-1/2  p-[1em]  ">
-            <p className="font-[Sen] text-center text-sm font-semibold ">Podcasts</p>
+    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="podcast cursor-none  w-1/2  p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold inline-flex gap-1">Podcasts
+            <p className="font-[Sen] text-center text-xs font-semibold bg-green-200 -mt-1 text-white w-fit px-2 py-1 rounded-full "> Soon</p>
+            </p>
             </div>
-}
+} */}
       </div>
      { reelsClicked ? <ShortFormCreator/>: ''}
    
