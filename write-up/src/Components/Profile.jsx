@@ -72,6 +72,7 @@ const Profile = () => {
                 </div>
               
             </div>
+            
             <div className=' flex flex-col gap-4  lg:mt-[10em] '>
             {
              posts !== null && posts.map((myPost) => {

@@ -27,7 +27,7 @@ export default function SuggestedPeople({people}) {
         }, [])
     
   return (
-     <Link to={'/'+user.username} className="flex flex-row justify-between border-b-[1px]">
+     <Link to={'/'+people.username} className="flex flex-row justify-between border-b-[1px]">
      <div className="flex flex-row ml-[.5em]  py-[1em]">
         <img src={people.public_picture} className='h-9 w-9 rounded-full'/>
         <div className="profile ml-[.5em] flex flex-col gap-[.25em] ">
