@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+ssfdimport React, {useEffect, useMemo, useRef, useState} from 'react';
 import { FaBookmark, FaHeart, FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import NavBar from '../NavBar';
 import tempImage from "../../mock.jpg";
@@ -214,7 +214,7 @@ const MyPosts = () => {
                 bookmarked == true ?
                             
                 <button  onClick={(event) => unbookmarkPost(post.postId)} className='rounded-full flex  lg:flex-col gap-[1em]'>
-                <FaBookmark className='text-2xl lg:text-3xl text-black'/>
+                <FaBookmark className='text-2xl lg:text-3xl text-purple-500'/>
                 <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
             </button>:
             
