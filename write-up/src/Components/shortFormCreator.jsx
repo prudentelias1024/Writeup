@@ -314,41 +314,41 @@ const ShortFormCreator = () => {
            }, [formReset]);
     if( user !== null){
     return (
-            <div className='rounded-md border bg-white font-[Outfit]lg:mt-0 mt-[2em] py-[1em] px-[.5em] flex flex-row gap-[1em] h-fit'>
+            <div className=' border-t-[1px] bg-white font-[Sen]lg:mt-0  pb-[1em] px-[.5em] flex flex-row gap-[1em] h-fit'>
                   <form ref={formRef}>
                     
             {/* <img src={user.public_picture} alt={user.name} className="h-[3em] w-[3em] rounded-full" />   */}
             <div className="creator flex flex-col">
-            <ReactQuill className='w-[30em] font-[Outfit]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em',  background: "white", height: '100%', width: '100%'}} />
+            <ReactQuill className='w-[30em] font-[Sen]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Sen', paddingLeft: '1em',  background: "white", height: '100%', width: '100%'}} />
             <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                 className="rounded-md pl-[0em] outline-none ml-[.25em]   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-extralight text-lg text-gray-400 h-[3em] lg:pl-[0em]" />
+                 className="rounded-md pl-[0em] outline-none ml-[.25em]   font-[Sen]  w-full font-bold placeholder:font-[Sen] placeholder:font-extralight text-lg text-gray-400 h-[3em] lg:pl-[0em]" />
                  { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
         }) :''
     }
         { tagsError.muchTagsError && tagsError.muchTagsError !== '' ?   
-             <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsError.muchTagsError}</p> <br /> </>
+             <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsError.muchTagsError}</p> <br /> </>
             
         : ''
     }
         { tagsError.numberErrors && tagsError.numberErrors.length > 0 ?  tagsError.numberErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
         }) : ''
     }
         { tagsError.numberInTagsErrors && tagsError.numberInTagsErrors.length > 0 ?  tagsError.numberInTagsErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
         }) : ''
     }
         { tagsError.specialCharacterInTagsErrors && tagsError.specialCharacterInTagsErrors.length > 0 ?  tagsError.specialCharacterInTagsErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
         }) : ''
     }
         {tagsError.specialCharacterInTagsErrors &&  tagsError.specialCharactersErrors.length > 0 ?  tagsError.specialCharactersErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
             
         }) : ''
     }
@@ -360,7 +360,7 @@ const ShortFormCreator = () => {
              
                  </div> }
 {
- showPollCreator == true ?  <div className="flex flex-row gap-[2em]">
+ showPollCreator == true ?  <div className="flex flex-row gap-[2em] ml-[4em]">
     <MdCancel  className='text-3xl ml-[-2em] mt-[.5em]' onClick={cancelPoll}/>
     <div className='flex flex-col '>
   
@@ -375,11 +375,11 @@ const ShortFormCreator = () => {
 
      }
   {disableAddMore ?
-   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-200 text-white  gap-[1em] ml-[1em]' onClick={addMorePollOption}>
+   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Sen] rounded-md mb-[2em] bg-blue-200 text-white  gap-[1em] ml-[1em]' onClick={addMorePollOption}>
      <FaPlus className='mt-[.35em]'/>
     <p className='mt-0.5'> Add More Choices</p></button>
   
-  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Outfit] rounded-md mb-[2em] bg-green-500 text-white  gap-[1em]  ml-[1em]' onClick={addMorePollOption}>
+  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Sen] rounded-md mb-[2em] bg-blue-500 text-white  gap-[1em]  ml-[1em]' onClick={addMorePollOption}>
      <FaPlus className='mt-[.35em]'/>
     <p className='mt-0.5'> Add More Choices</p></button>
 }
@@ -395,7 +395,7 @@ const ShortFormCreator = () => {
             </div> : ''}
             <div >
                 
-                <button onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :"font-bold bg-green-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
+                <button onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-blue-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :"font-bold bg-blue-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
                 </button>
                 </div>
             </div>
