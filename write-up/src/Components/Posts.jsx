@@ -62,35 +62,35 @@ export default function Posts(){
        }
     
    return(
-    <div className="flex flex-col ml-[0.5em] m-auto md:mr-[3em] md:ml-[5em]  gap-1 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%] lg:mt-[0em]  lg:ml-[2em]">
+    <div className="flex flex-col md:mr-[3em] md:ml-[5em]  gap-0 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%] lg:mt-[0em]  lg:ml-[2em]">
       <div className="flex flex-row w-full">
         {
         inkClicked ?
         
-        <div ref={inksRef} onClick={handleInksContentDisplay} className="content border w-1/2  bg-blue-500 text-white p-[1em] rounded-l-lg  ">
-          <p className="font-[Outfit] text-center text-xl font-semibold ">Inks</p>
+        <div ref={inksRef} onClick={handleInksContentDisplay} className="content  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]   ">
+          <p className="font-[Sen] text-center text-sm font-semibold ">Inks</p>
         </div> :
-        <div ref={inksRef} onClick={handleInksContentDisplay} className="content border w-1/2  hover:bg-blue-500 hover:text-white p-[1em] rounded-l-lg  ">
-          <p className="font-[Outfit] text-center text-xl font-semibold ">Inks</p>
+        <div ref={inksRef} onClick={handleInksContentDisplay} className="content  w-1/2  p-[1em]   ">
+          <p className="font-[Sen] text-center text-sm font-semibold ">Inks</p>
         </div> 
 
         }
         {
     reelsClicked?
-    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels border w-1/2 bg-blue-500 text-white p-[1em]  ">
-            <p className="font-[Outfit] text-center text-xl font-semibold ">Reels</p>
+    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold ">Reels</p>
             </div>:
-    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels border w-1/2 hover:bg-blue-500 hover:text-white p-[1em]  ">
-            <p className="font-[Outfit] text-center text-xl font-semibold ">Reels</p>
+    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels  w-1/2   p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold ">Reels</p>
             </div>
 }
         {
     podcastClicked?
-    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels border w-1/2 bg-blue-500 text-white p-[1em] rounded-r-lg ">
-            <p className="font-[Outfit] text-center text-xl font-semibold ">Podcasts</p>
+    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold ">Podcasts</p>
             </div>:
-    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels border w-1/2 hover:bg-blue-500 hover:text-white p-[1em] rounded-r-lg ">
-            <p className="font-[Outfit] text-center text-xl font-semibold ">Podcasts</p>
+    <div ref={podcastRef} onClick={handlePodcastsDisplay} className="reels  w-1/2  p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold ">Podcasts</p>
             </div>
 }
       </div>
@@ -109,7 +109,7 @@ export default function Posts(){
                return <ImageReel reel={reel} key={reel.reelId} /> 
              } else{
 
-               return <p className="font-[Outfit] text-xl font-bold text-[#333] text-center">No Reels</p>
+               return <p className="font-[Sen] text-xl font-bold text-[#333] text-center">No Reels</p>
              }
            }) : ''
          }

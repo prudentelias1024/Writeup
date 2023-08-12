@@ -55,7 +55,7 @@ export function Bookmark({bookmarks,postId,username}){
     } else {
         return(
             <div className="flex flex-row gap-3 m-auto ">
-        <FaRegBookmark onClick={(event) => bookmarkPost(postId)} className="text-xl mt-[-.1em] ml-[0.25em] "/> 
+        <FaRegBookmark onClick={(event) => bookmarkPost(postId)} className="text-xl text-purple-500 mt-[-.1em] ml-[0.25em] "/> 
         <p className="font-[Outfit] -mt-[.09em]">{
            bookmarks.length
         } </p> 

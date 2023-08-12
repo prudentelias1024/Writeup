@@ -22,10 +22,7 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
      return (
         
            
-            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border  rounded-lg   lg:p-[1em]'} >
-             {      viewed ?                   
-          <p className='font-[Outfit] mt-[1em] lg:mr-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em] lg:mb-[1em]'>Viewed </p>: ''
-             }
+            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border    lg:p-[1em]'} >
            
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
