@@ -15,6 +15,7 @@ import { format } from "../../time";
 import { BsHeartFill } from 'react-icons/bs';
 import { actions } from '../../store';
 import LoginModal from '../loginModal';
+import { IoIosStats } from 'react-icons/io';
 const MyPosts = () => {
   let URL;
   useEffect(() => {
@@ -196,33 +197,37 @@ const MyPosts = () => {
         <NavBar/>
         <div className='flex flex-col gap-[1em] lg:top-32 lg:relative lg:flex lg:gap-[30em]'>
             <div className=" fixed flex impressions  z-[10em] border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[10em]  lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
-           
+            <button className='rounded-full flex lg:flex-col gap-[1em]'>
+                    <IoIosStats className='text-2xl lg:text-3xl text-green-500'/>
+                    <p className="font-[Sen] text-green-500 text-xl lg:ml-2">{post.comments.length}</p>
+                </button>
+             
                 {
                 liked == true ?
                             
                 <button  onClick={(event) => unlikePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
                     <BsHeartFill className='text-2xl lg:text-3xl text-red-500'/>
-                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.likes.length}</p>
+                    <p className="font-[Sen] text-red-500 text-xl lg:ml-2">{post.likes.length}</p>
                 </button> :  <button  onClick={(event) => likePost(post.postId,post.title,post.author)} className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <FaRegHeart className='text-2xl lg:text-3xl text-black'/>
-                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.likes.length}</p>
+                    <FaRegHeart className='text-2xl lg:text-3xl text-red-500'/>
+                    <p className="font-[Sen] text-red-500 text-xl lg:ml-2">{post.likes.length}</p>
                 </button>
                 }
                 <button className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <GoMention className='text-2xl lg:text-3xl text-black'/>
-                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.comments.length}</p>
+                    <GoMention className='text-2xl lg:text-3xl text-blue-500'/>
+                    <p className="font-[Sen] text-blue-500 text-xl lg:ml-2">{post.comments.length}</p>
                 </button>
                 {
                 bookmarked == true ?
                             
                 <button  onClick={(event) => unbookmarkPost(post.postId)} className='rounded-full flex  lg:flex-col gap-[1em]'>
                 <FaBookmark className='text-2xl lg:text-3xl text-purple-500'/>
-                <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
+                <p className="font-[Sen] text-purple-500 text-xl lg:ml-2">{post.bookmarks.length}</p>
             </button>:
             
             <button className='rounded-full flex  lg:flex-col gap-[1em]'>
-                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.title,post.author)} className='text-2xl flex  lg:text-3xl text-black'/>
-                    <p className="font-[Outfit] text-black text-xl lg:ml-2">{post.bookmarks.length}</p>
+                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.title,post.author)} className='text-2xl flex  lg:text-3xl text-purple-500'/>
+                    <p className="font-[Sen] text-purple-500 text-xl lg:ml-2">{post.bookmarks.length}</p>
                 </button>
                 }
 
@@ -230,7 +235,7 @@ const MyPosts = () => {
                 
             </div>
 
-            <div className="post lg:ml-[20em]  -z-10 flex flex-col pt-[8em] bg-white lg:w-2/5 text-[#171717] rounded-lg">
+            <div className="post lg:ml-[20em] z-0  flex flex-col lg:pt-[8em]  lg:w-2/5 text-[#171717] rounded-lg">
              
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
@@ -246,15 +251,16 @@ const MyPosts = () => {
                 <p className='text-2xl leading-8 font-black w-fit px-[.75em] lg:px-[1.5em] mb-[.25em] lg:text-4xl '>
                   {post.title}
                   </p>
-                <div className='font-[Outfit] flex flex-row gap-3 pl-3 lg:ml-[2.5em]'>
+                <div className='font-[Sen] flex flex-row gap-3 pl-3 lg:ml-[2.5em]'>
 
                   {
                 
                 post.tags.toString().split(',').map((tag,index) => {
                  
                   return(
-                    
+                    <>
                     <Tag key={index}   name={tag}/>
+                    </>
                     )
                   })
                   }
@@ -264,20 +270,19 @@ const MyPosts = () => {
                   value={post.body}
                   readOnly={true}
                   theme={"bubble"}
-                  style={{fontFamily: 'Outfit'}}
+                  style={{fontFamily: 'Sen'}}
                 />
               </div>
            {user !== null ?
             <div className="comments">
-                <p className='ml-[2em] lg:ml-[3.75em] font-bold text-xl mb-[3em]'>Add Comment</p>
-                <div className='add_comment m-auto rounded-lg pt-[1em] pl-[1em]  shadow-md w-4/5  flex flex-col mb-[5em] lg:ml-[5em]'>
+                <div className='add_comment m-auto rounded-lg pt-[1em] pl-[1em]   flex flex-col mb-[5em] lg:ml-[5em]'>
                  <img className='w-[2.5em] h-[2.5em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
                 <div className='flex flex-row'>
                </div>
               
-                <ReactQuill  modules={modules} defaultValue='' value={commented == true ? '' :comment } onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: '30%', width: '100%'}} />
+                <ReactQuill  modules={modules} defaultValue='' value={commented == true ? '' :comment } onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{fontFamily: 'Sen', color: 'grey', paddingLeft: '3em', paddingBottom: '2em', background: "white", height: 'fit-content', width: '100%'}} />
      
-                <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='bg-purple-500 text-white h-[2.5em] w-[10em] rounded-lg ml-[3em] mb-[1em] mt-[2em]'>Submit</button>
+                <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='bg-blue-500 text-white h-[2.5em] w-[90%] rounded-lg font-[Sen] mb-[1em] mt-[2em]'>Submit</button>
 
 
                 </div>
@@ -292,22 +297,22 @@ const MyPosts = () => {
                        
                       }
              </div>
-            <div className="author_Profile w-full lg:fixed lg:right-[1em] border z-20 mb-[1em] p-7 bg-white lg:w-[23em] text-[#171717] rounded-lg">
+            <div className="author_Profile w-full lg:fixed lg:right-[1em] border z-20 mb-[1em] p-7 bg-white lg:w-[23em] text-[#171717] ">
                 <div className='flex gap-[1em]'>
             <img src={post.author.public_picture} className='w-[3em] h-[3em] rounded-full object-cover' /> 
            <div>
 
-            <p className="font-[Outfit] text-xl font-extrabold">{post.author.name}</p>
-            <p className="font-[Outfit] -mt-1 text-[#717171] text-base font-extrabold">@{post.author.username} </p>
+            <p className="font-[Sen] text-xl font-extrabold">{post.author.name}</p>
+            <p className="font-[Sen] -mt-1 text-[#717171] text-base font-extrabold">@{post.author.username} </p>
                 </div>
                 
            </div>
           
-          <div className="bio ml-[.5em] font-[Outfit] font-semibold leading-7 text-[#717171] mt-[1em]">
+          <div className="bio ml-[.5em] font-[Sen] font-semibold leading-7 text-[#717171] mt-[1em]">
             {post.author.bio !== '' ? post.author.bio : <p className="text-center my-[1em]">No Bio Yet</p>}
           </div>
           <div className=''>
-            <p className='font-[Outfit] text-[#171717] font-extrabold mt-[1em] uppercase ml-2'>Joined On</p>
+            <p className='font-[Sen] text-[#171717] font-extrabold mt-[1em] uppercase ml-2'>Joined On</p>
                     <p className='text-[#717171] font-bold ml-[.5em] mt-[.25em]'>{format(post.author.joined_on)}</p>
           </div>
          {user !== null ?

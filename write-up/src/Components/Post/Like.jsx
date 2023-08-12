@@ -49,7 +49,7 @@ export function Like({likes,postId,username,additionalStyles}){
         <div className="flex flex-row gap-3">
         <FaHeart onClick={(event) => {likePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl bg-white":"text-xl text-red-500"}/> 
         <div className="flex gap-2">
-        <p className="font-[Outfit] -mt-[.09em]">
+        <p className="font-[Outfit] text-red-500 -mt-[.09em]">
             {
                 likes.length
             } 
@@ -63,7 +63,7 @@ export function Like({likes,postId,username,additionalStyles}){
             <div className="flex flex-row gap-3">
             <FaRegHeart onClick={(event) => {unlikePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-red-500"}/> 
             <div className="flex gap-2">
-            <p className="font-[Outfit] -mt-[.09em]">
+            <p className="font-[Outfit] text-red-500 -mt-[.09em]">
                 {
                     likes.length
                 } 

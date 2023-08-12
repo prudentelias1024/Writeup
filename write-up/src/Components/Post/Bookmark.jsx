@@ -45,7 +45,7 @@ export function Bookmark({bookmarks,postId,username}){
    return(
         <div className="flex flex-row gap-3 m-auto ">
         <FaBookmark onClick={(event) => unbookmarkPost(postId)} className="text-xl mt-[-.1em] ml-[0.25em] text-purple-500 "/> 
-        <p className="font-[Outfit] -mt-[.09em]">{
+        <p className="font-[Outfit] text-purple-500 -mt-[.09em]">{
            bookmarks.length
         } </p> 
         <p className="hidden lg:block font-[Outfit]  ml-[-.5em] -mt-[.09em]">Bookmarks </p> 
