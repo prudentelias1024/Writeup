@@ -28,12 +28,14 @@ const MyPosts = () => {
     setTimeout(() => {
   
      increasePostView()
+     console.log(post)
      
     }, 5000);
   
      
       getPost();
       getOtherAuthorPost();
+
   
       
     
@@ -245,16 +247,14 @@ const MyPosts = () => {
                   {post.title}
                   </p>
                 <div className='font-[Outfit] flex flex-row gap-3 pl-3 lg:ml-[2.5em]'>
+
                   {
                 
                 post.tags.toString().split(',').map((tag,index) => {
                  
                   return(
-                    <>
                     
-                  
-                    <Tag key={index} name={tag}/>
-                    </>
+                    <Tag key={index}   name={tag}/>
                     )
                   })
                   }

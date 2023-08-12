@@ -12,10 +12,10 @@ export function Reactions({post, remove, additionalStyles}){
         <div className={remove +  " flex flex-row justify-between ml-[3em] mt-5 md:ml-[1em]  lg:ml-[.45em] mb-[1em] lg:mt-3 max-lg:ml-8 lg:mb-4"}>
        <div className="flex flex-row gap-3">
         
+        <Impressions count={post.viewedBy}  username={user !== null ?user.username :''}/>
         <Like additionalStyles={additionalStyles} likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>
         <Comments comments={post.comments} postId={post.postId} username={user !== null ?user.username :''} />
         <Bookmark bookmarks={post.bookmarks} postId={post.postId} username={user !== null ?user.username :''}/>
-        <Impressions count={post.viewedBy}  username={user !== null ?user.username :''}/>
         {/* <div className='-mt-1 flex flex-row gap-1'>
                 <FaRegEye  className=' text-black-500 text-2xl'/>
                 <p className="total font-[Outfit]">{post.views} </p>  <p className="hidden lg:block">Views</p>

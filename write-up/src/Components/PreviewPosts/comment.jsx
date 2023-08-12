@@ -20,11 +20,12 @@ const Comment = ({commenter,timestamp,body}) => {
                <div className='flex gap-[1em] mt-[1em] ml-[6em] mb-[2em]'>
                <div className='flex gap-4'>
                <FaRegHeart className='text-2xl text-[#717171] '/>
-               <p className='text-lg -mt-1 text-[#717171]'>0 <p className='hidden lg:inline-block'>Likes</p></p>
+               {/* <p className='text-lg -mt-1 text-[#717171]'>0 <p className='hidden lg:inline-block'>Likes</p>
+               </p> */}
                </div>
                 <div className='flex gap-4'>
                     <FaRegComment className='text-2xl text-[#717171] '/>
-                    <p className='text-lg -mt-1 text-[#717171]'>0  <p className=' hidden lg:inline-block'>Comments</p></p>
+                    {/* <p className='text-lg -mt-1 text-[#717171]'>0  <p className=' hidden lg:inline-block'>Comments</p></p> */}
                     </div>
                </div>
 
