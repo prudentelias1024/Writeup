@@ -11,9 +11,9 @@ import { actions } from "../store";
 import Podcast from "./Podcast";
 export default function Posts(){
     const reelsRef = useRef()
-    const inksRef = useRef()
     const podcastRef = useRef()
     const dispatch = useDispatch()
+    const inksRef = useRef()
     const [inkClicked, setInkClicked] = useState(false)
     const [reelsClicked, setReelClicked] = useState(false)
     const [podcastClicked, setPodcastClicked] = useState(false)

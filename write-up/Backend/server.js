@@ -1560,6 +1560,21 @@ app.get('/api/posts/:username',(req,res) => {
    })
 
 })
+app.get('/api/reels/:username',(req,res) => {
+ User.find({username:req.params.username}).select('id').exec((err,doc) => {
+  if(err){throw err}
+  if(doc && doc.length > 0){
+    const userId = doc[0].id
+    reels.find({author:userId}).populate('author').populate('likes').populate('comments').populate('bookmarks').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){res.send(doc)}
+    })
+  } else {
+    res.send(null)
+  }
+   })
+
+})
 
 app.post('/api/user/edit', verify, (req,res) => {
     changes = req.body.profileChanges

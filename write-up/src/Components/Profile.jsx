@@ -13,13 +13,32 @@ import {format} from '../time'
 import Post from './Post';
 import Page404 from './Page404';
 import ProfileVitals from './Profile/ProfileVitals';
+import { useRef } from 'react';
+import Poll from './poll';
+import ImageReel from './imageReel';
     
 const Profile = () => {
     let URL;
+    const reelsRef = useRef()
+    const inksRef = useRef()
+    const [inkClicked, setInkClicked] = useState(false)
+    const [reelsClicked, setReelClicked] = useState(false)
+    const [reels, setReels] = useState(null)
     const [user,setUser] =useState(null)
     const [posts, setPosts] = useState(null)
     const dispatch = useDispatch()
     const {username} = useParams()
+    const handleInksContentDisplay = () => {
+        setInkClicked(true)
+        setReelClicked(false)
+    
+      }
+      const handleReelsDisplay = () => {
+        setInkClicked(false)
+        setReelClicked(true)
+    
+      }
+     
    const loadUser = async() => {
         const info = await (await axios.get(`${URL}/api/user/${username}`)).data;
          setUser(info)
@@ -27,8 +46,14 @@ const Profile = () => {
        
          
      }
-     const  getMyPosts = async() => {
+     const  getPosts = async() => {
         let res = await (await axios.get(`${URL}/api/posts/${username}`, )).data
+       console.log(res)
+       setPosts(res)
+       
+     }
+     const  getReels = async() => {
+        let res = await (await axios.get(`${URL}/api/reels/${username}`, )).data
        console.log(res)
        setPosts(res)
        
@@ -41,7 +66,8 @@ const Profile = () => {
                    
           }
         loadUser()
-        getMyPosts()
+        getPosts()
+        getReels()
        
     }
     , []);
@@ -72,12 +98,45 @@ const Profile = () => {
                 </div>
               
             </div>
-            
+            <div className="flex flex-row w-full -mt-[4em]">
+        {
+        inkClicked ?
+        
+        <div ref={inksRef} onClick={handleInksContentDisplay} className="content  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]   ">
+          <p className="font-[Sen] text-center text-sm font-semibold ">Inks</p>
+        </div> :
+        <div ref={inksRef} onClick={handleInksContentDisplay} className="content  w-1/2  p-[1em]   ">
+          <p className="font-[Sen] text-center text-sm font-semibold ">Inks</p>
+        </div> 
+
+        }
+        {
+    reelsClicked?
+    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold ">Reels</p>
+            </div>:
+    <div ref={reelsRef} onClick={handleReelsDisplay} className="reels  w-1/2   p-[1em]  ">
+            <p className="font-[Sen] text-center text-sm font-semibold ">Reels</p>
+            </div>
+}
+</div>
             <div className=' flex flex-col gap-4  lg:mt-[10em] '>
             {
-             posts !== null && posts.map((myPost) => {
-                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={myPost._id} post={myPost} />
+            inkClicked && posts !== null && posts.map((post) => {
+                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={post._id} post={post} />
              })
+            }
+            {
+            reelsClicked ?
+              reels !== null ? reels.map((reel) => {
+                // return <r readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={reel._id} post={reel} />
+                if(reel.type == "poll"){
+                    return <Poll reel={reel} key={reel.reelId} /> 
+                   }else if(reel.type == "image"){
+                    return <ImageReel reel={reel} key={reel.reelId} /> 
+                  }
+             }) :   <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
+             : ''     
             }
             
             </div>
