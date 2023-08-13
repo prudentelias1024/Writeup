@@ -30,7 +30,7 @@ export default function ImageReel({reel}) {
   return (
     <>
     
-   <div className=' bg-white w-full h-fit border  rounded-lg pt-[1em] '>
+   <div className=' bg-white w-full h-fit border   pt-[1em] '>
              {/* {      viewed ?                   
           <p className='font-[Outfit] mt-[1em] lg:mr-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em] lg:mb-[1em]'>Viewed </p>: ''
              } */}

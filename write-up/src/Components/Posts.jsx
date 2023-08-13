@@ -62,7 +62,7 @@ export default function Posts(){
        }
     
    return(
-    <div className="flex flex-col md:mr-[3em] md:ml-[5em]  gap-0 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%] lg:mt-[0em]  lg:ml-[2em]">
+    <div className="flex flex-col md:mr-[3em] md:ml-[5em] mb-[3em] gap-0 pt-[0em] w-full  lg:pt-[1em]  lg:w-[30%] lg:mt-[0em]  lg:ml-[2em]">
       <div className="flex flex-row w-full">
         {
         inkClicked ?
