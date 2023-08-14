@@ -69,7 +69,10 @@ const Profile = () => {
         loadUser()
         getPosts()
         getReels()
-        // inksRef.click()
+        setTimeout(() => {
+          
+          inksRef.click()
+        }, 3000);
     }
     , []);
     if (user !== null && posts !== null) {
