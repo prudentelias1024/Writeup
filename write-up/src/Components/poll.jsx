@@ -157,7 +157,7 @@ const Poll = ({reel}) => {
         if( reel.viewedBy.some((voter) => {return voter == user._id}) == false){
     return (
        
-        <div ref={pollRef} className='poll w-full border bg-white ml-[-.25em] font-[Outfit]  pt-[1em]'>
+        <div ref={pollRef} className='poll w-full border bg-white font-[Outfit]  pt-[1em]'>
           
          <div className="vote_received relative top-0 left-[55%] lg:left-[65%] mb-[.5em]">
             <p className='font[Outfit] font-extralight text-[#b3aaaa]'>{votesReceived} Votes received</p>
@@ -225,7 +225,7 @@ const Poll = ({reel}) => {
 
             }  else{
      return(
-    <div ref={pollRef} className='poll w-full border bg-white ml-[-.25em] font-[Outfit] rounded-xl pt-[1em]'>
+    <div ref={pollRef} className='poll w-full border bg-white font-[Outfit]  pt-[1em]'>
           
     <div className="vote_received relative top-0 left-[55%] lg:left-[65%] mb-[.5em]">
        <p className='font[Outfit] font-extralight text-[#b3aaaa]'>{votesReceived} Votes received</p>

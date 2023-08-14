@@ -1,0 +1,196 @@
+  const handlePostTags = (event) => {
+           let tempTags = []
+             const tags = event.target.value
+             //start with tags
+             let tagsRecurring = /^#{2,}/
+             let hashtagsDisplaced  = /[#a-zA-Z#]/g
+             let actualTag = /[#a-zA-Z]/g
+             let specialCharacterRegex = /[^a-zA-Z]/g;
+             
+        
+        
+             let specialCharacterWithoutTags = /[@#$%&*(){}-~!]/g
+             let alphabetRegex = /[a-zA-Z]/g
+             let numberTagRegex = /[0-9]/g
+             let realTags = tags.split(' ')
+             
+            console.log(realTags)
+              console.log(tagsError)
+              
+              if(realTags[0] !== ''){
+              realTags.map((tag,index) => {
+                  tag.trim()
+                
+        
+        
+                    setPrevTag(tag)
+                    if (realTags.length > 4) {
+                        setErrorInTag(true)
+                             
+                        setTagsError({...tagsError,muchTagsError:  "You cannot use more than 4 tags"})
+                    }
+                    
+                   //ignore every white-space from the user's input and retain every words that start with #
+                    if(tag.startsWith('#')){
+                      console.log(index)
+                      console.log(tag.split('#'))
+                        if (tag.split('#')[1] == '' && index > -1) {
+                            setTagsError(      {
+                                alphabetErrors: [],
+                                numberErrors:  [],
+                                specialCharactersErrors: [],
+                                numberInTagsErrors: [],
+                                specialCharacterInTagsErrors: [],
+                                muchTagsError: ''
+                                  
+                                    })
+                        }
+                         //If cursor is not moved and the tag is incorrect
+                         if(specialCharacterRegex.test(tag.split('#')[1]) === true && prevTag !== tag ){
+                            //if the user keep typing in the incorrect tag despite receiving error
+                             if ((tag.startsWith(prevTag) || prevTag.startsWith(tag) || tag.split('#')[0] == '' ) && tagsError.specialCharacterInTagsErrors.includes(`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`) == false) {
+                                setErrorInTag(true)
+                                setTagsError({ ...tagsError,specialCharacterInTagsErrors: [`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
+                             } else {
+                                setErrorInTag(true)
+                             
+                                setTagsError({ ...tagsError,specialCharacterInTagsErrors: [...tagsError.specialCharacterInTagsErrors,`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
+                             }
+                        }
+        
+                     if(numberTagRegex.test(tag.split('#')[1]) === true && tag !== prevTag){
+                       
+                          
+                                if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.numberInTagsErrors.includes(
+                                    `${tag} is an invalid tag. Tag cannot contain number`
+                                ) == false) {
+                                    setTagsError({...tagsError,numberInTagsErrors: [`${tag} is an invalid tag. Tag cannot contain number`]})
+                                    setErrorInTag(true)
+                             
+                                } else {
+                                setTagsError({...tagsError,numberInTagsErrors: [...tagsError.numberInTagsErrors,`${tag} is an invalid tag. Tag cannot contain number`]})
+                                setErrorInTag(true)
+                             
+                                }
+                       
+                      
+                     }
+                
+                        
+                    if(specialCharacterRegex.test(tag.split('#')[1]) === false  && numberTagRegex.test(tag.split('#')[1]) === false && alphabetRegex.test(tag.split('#')[1]) === true ){
+                        setTagsError(      {
+                            alphabetErrors: [],
+                            numberErrors:  [],
+                            specialCharactersErrors: [],
+                            numberInTagsErrors: [],
+                            specialCharacterInTagsErrors: [],
+                            muchTagsError: ''
+                              
+                                })
+                         tempTags.push(tag)
+                        
+                        let tagsAmount = tempTags.length
+                            console.log(tagsAmount)
+                            if (tagsAmount <= 4) {
+                             setErrorInTag(false)
+                             setTags(event.target.value)
+                             
+                            } else {
+                            setTagsError({muchTagsError: "You cannot use more than 4 tags"})
+                            setErrorInTag(true)
+                             
+                            }
+                        
+                    }
+                    
+                        
+                        
+                    
+                } else if(numberTagRegex.test(tag) && tag !== prevTag){
+                     if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.numberErrors.includes( `${tag} is an invalid tag. A valid tag cannot start with a number `) == false) {
+                        setTagsError({...tagsError,numberErrors: [ `${tag} is an invalid tag. A valid tag cannot start with a number `]})
+                        setErrorInTag(true)
+                             
+                     } else {
+                        setErrorInTag(true)
+                             
+                         setTagsError({...tagsError,numberErrors: [...tagsError.numberErrors, `${tag} is an invalid tag. A valid tag cannot start with a number `]})
+                        
+                     }
+                   
+                }   else if(alphabetRegex.test(tag) && tag !== prevTag ){
+                    if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.alphabetErrors.includes(`${tag} is an invalid tag. Tag cannot start with an alphabet`) == false) {
+                        setTagsError({...tagsError,alphabetErrors: [ `${tag} is an invalid tag. Tag cannot start with an alphabet`]})
+                        setErrorInTag(true)
+                             
+                    } else {
+                        setTagsError({...tagsError,alphabetErrors: [...tagsError.alphabetErrors, `${tag} is an invalid tag. Tag cannot start with an alphabet`]})
+                        setErrorInTag(true)
+                             
+                    }
+        
+                }    else if(specialCharacterWithoutTags.test(tag) && tag !== prevTag){
+                    if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.specialCharactersErrors.includes(`${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`) == false) {
+                        setTagsError({...tagsError,specialCharactersErrors: [`${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
+                        setErrorInTag(true)
+                             
+                    } else {
+                        setErrorInTag(true)
+                             
+                        setTagsError({...tagsError,specialCharactersErrors: [...tagsError.specialCharactersErrors, `${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
+                  
+                    }
+                
+                }     
+                 
+            })
+        } else {
+            setErrorInTag(false)
+          setTagsError(   
+            {
+        alphabetErrors: [],
+        numberErrors:  [],
+        specialCharactersErrors: [],
+        numberInTagsErrors: [],
+        specialCharacterInTagsErrors: [],
+        muchTagsError: ''
+          
+            })
+        }
+                
+              
+             }
+  
+
+     <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
+                 className="rounded-md pl-[0em] outline-none ml-[2.75em]   font-[Sen]  w-full font-bold placeholder:font-[Sen] placeholder:font-extralight text-lg text-gray-400 h-[3em] lg:pl-[0em]" />
+                 { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            
+        }) :''
+    }
+        { tagsError.muchTagsError && tagsError.muchTagsError !== '' ?   
+             <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsError.muchTagsError}</p> <br /> </>
+            
+        : ''
+    }
+        { tagsError.numberErrors && tagsError.numberErrors.length > 0 ?  tagsError.numberErrors.map((tagsErr) => {
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            
+        }) : ''
+    }
+        { tagsError.numberInTagsErrors && tagsError.numberInTagsErrors.length > 0 ?  tagsError.numberInTagsErrors.map((tagsErr) => {
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            
+        }) : ''
+    }
+        { tagsError.specialCharacterInTagsErrors && tagsError.specialCharacterInTagsErrors.length > 0 ?  tagsError.specialCharacterInTagsErrors.map((tagsErr) => {
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            
+        }) : ''
+    }
+        {tagsError.specialCharacterInTagsErrors &&  tagsError.specialCharactersErrors.length > 0 ?  tagsError.specialCharactersErrors.map((tagsErr) => {
+            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
+            
+        }) : ''
+    }

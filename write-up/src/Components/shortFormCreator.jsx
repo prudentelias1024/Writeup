@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaImage, FaPoll } from 'react-icons/fa';
+import { MdOutlinePoll } from 'react-icons/md';
+import { CiImageOn } from 'react-icons/ci';
 import {MdCancel} from 'react-icons/md'
 import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +18,7 @@ const ShortFormCreator = () => {
     const  [URL,setURL] = useState(null)
     const [disableAddMore, setDisableAddMore] = useState(false)
     const [formReset, setFormReset] = useState(false)
+    const [postable, setPostable] = useState(false)
     const {user, reelsPlaceholder, showPollCreator, cancelImageStatus} = useSelector(state => state)
     const {reels} = useSelector(state => state)
     const tagsRef = useRef()
@@ -55,6 +57,28 @@ const ShortFormCreator = () => {
           ["link"]
       ]
     }
+
+    const checkEmptiness = () =>{
+        let value = quillRef.current.value
+        console.log(value)
+        if (value == ' ') {
+            let tokens =  value.split(' ')
+            tokens.forEach((token) => {
+              if(token !== ' '){
+                  setPostable(true)
+                  return true
+              } else {
+                setPostable(false)
+                return false
+              }
+          })
+       
+        }else {
+            setPostable(true)
+            return true
+        }   
+    } 
+
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             setURL("https://inkup-api.onrender.com")
@@ -62,169 +86,8 @@ const ShortFormCreator = () => {
             setURL("http://localhost:5000")
                    
           }
-    })
-    const handlePostTags = (event) => {
-           let tempTags = []
-             const tags = event.target.value
-             //start with tags
-             let tagsRecurring = /^#{2,}/
-             let hashtagsDisplaced  = /[#a-zA-Z#]/g
-             let actualTag = /[#a-zA-Z]/g
-             let specialCharacterRegex = /[^a-zA-Z]/g;
-             
-        
-        
-             let specialCharacterWithoutTags = /[@#$%&*(){}-~!]/g
-             let alphabetRegex = /[a-zA-Z]/g
-             let numberTagRegex = /[0-9]/g
-             let realTags = tags.split(' ')
-             
-            console.log(realTags)
-              console.log(tagsError)
-              
-              if(realTags[0] !== ''){
-              realTags.map((tag,index) => {
-                  tag.trim()
-                
-        
-        
-                    setPrevTag(tag)
-                    if (realTags.length > 4) {
-                        setErrorInTag(true)
-                             
-                        setTagsError({...tagsError,muchTagsError:  "You cannot use more than 4 tags"})
-                    }
-                    
-                   //ignore every white-space from the user's input and retain every words that start with #
-                    if(tag.startsWith('#')){
-                      console.log(index)
-                      console.log(tag.split('#'))
-                        if (tag.split('#')[1] == '' && index > -1) {
-                            setTagsError(      {
-                                alphabetErrors: [],
-                                numberErrors:  [],
-                                specialCharactersErrors: [],
-                                numberInTagsErrors: [],
-                                specialCharacterInTagsErrors: [],
-                                muchTagsError: ''
-                                  
-                                    })
-                        }
-                         //If cursor is not moved and the tag is incorrect
-                         if(specialCharacterRegex.test(tag.split('#')[1]) === true && prevTag !== tag ){
-                            //if the user keep typing in the incorrect tag despite receiving error
-                             if ((tag.startsWith(prevTag) || prevTag.startsWith(tag) || tag.split('#')[0] == '' ) && tagsError.specialCharacterInTagsErrors.includes(`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`) == false) {
-                                setErrorInTag(true)
-                                setTagsError({ ...tagsError,specialCharacterInTagsErrors: [`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
-                             } else {
-                                setErrorInTag(true)
-                             
-                                setTagsError({ ...tagsError,specialCharacterInTagsErrors: [...tagsError.specialCharacterInTagsErrors,`${tag} is invalid. A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
-                             }
-                        }
-        
-                     if(numberTagRegex.test(tag.split('#')[1]) === true && tag !== prevTag){
-                       
-                          
-                                if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.numberInTagsErrors.includes(
-                                    `${tag} is an invalid tag. Tag cannot contain number`
-                                ) == false) {
-                                    setTagsError({...tagsError,numberInTagsErrors: [`${tag} is an invalid tag. Tag cannot contain number`]})
-                                    setErrorInTag(true)
-                             
-                                } else {
-                                setTagsError({...tagsError,numberInTagsErrors: [...tagsError.numberInTagsErrors,`${tag} is an invalid tag. Tag cannot contain number`]})
-                                setErrorInTag(true)
-                             
-                                }
-                       
-                      
-                     }
-                
-                        
-                    if(specialCharacterRegex.test(tag.split('#')[1]) === false  && numberTagRegex.test(tag.split('#')[1]) === false && alphabetRegex.test(tag.split('#')[1]) === true ){
-                        setTagsError(      {
-                            alphabetErrors: [],
-                            numberErrors:  [],
-                            specialCharactersErrors: [],
-                            numberInTagsErrors: [],
-                            specialCharacterInTagsErrors: [],
-                            muchTagsError: ''
-                              
-                                })
-                         tempTags.push(tag)
-                        
-                        let tagsAmount = tempTags.length
-                            console.log(tagsAmount)
-                            if (tagsAmount <= 4) {
-                             setErrorInTag(false)
-                             setTags(event.target.value)
-                             
-                            } else {
-                            setTagsError({muchTagsError: "You cannot use more than 4 tags"})
-                            setErrorInTag(true)
-                             
-                            }
-                        
-                    }
-                    
-                        
-                        
-                    
-                } else if(numberTagRegex.test(tag) && tag !== prevTag){
-                     if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.numberErrors.includes( `${tag} is an invalid tag. A valid tag cannot start with a number `) == false) {
-                        setTagsError({...tagsError,numberErrors: [ `${tag} is an invalid tag. A valid tag cannot start with a number `]})
-                        setErrorInTag(true)
-                             
-                     } else {
-                        setErrorInTag(true)
-                             
-                         setTagsError({...tagsError,numberErrors: [...tagsError.numberErrors, `${tag} is an invalid tag. A valid tag cannot start with a number `]})
-                        
-                     }
-                   
-                }   else if(alphabetRegex.test(tag) && tag !== prevTag ){
-                    if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.alphabetErrors.includes(`${tag} is an invalid tag. Tag cannot start with an alphabet`) == false) {
-                        setTagsError({...tagsError,alphabetErrors: [ `${tag} is an invalid tag. Tag cannot start with an alphabet`]})
-                        setErrorInTag(true)
-                             
-                    } else {
-                        setTagsError({...tagsError,alphabetErrors: [...tagsError.alphabetErrors, `${tag} is an invalid tag. Tag cannot start with an alphabet`]})
-                        setErrorInTag(true)
-                             
-                    }
-        
-                }    else if(specialCharacterWithoutTags.test(tag) && tag !== prevTag){
-                    if ((tag.startsWith(prevTag) || prevTag.startsWith(tag)) && tagsError.specialCharactersErrors.includes(`${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`) == false) {
-                        setTagsError({...tagsError,specialCharactersErrors: [`${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
-                        setErrorInTag(true)
-                             
-                    } else {
-                        setErrorInTag(true)
-                             
-                        setTagsError({...tagsError,specialCharactersErrors: [...tagsError.specialCharactersErrors, `${tag} is an invalid tag.  A valid tag cannot contain special characters like ?,$.%^*()!~|?<>'"`]})
-                  
-                    }
-                
-                }     
-                 
-            })
-        } else {
-            setErrorInTag(false)
-          setTagsError(   
-            {
-        alphabetErrors: [],
-        numberErrors:  [],
-        specialCharactersErrors: [],
-        numberInTagsErrors: [],
-        specialCharacterInTagsErrors: [],
-        muchTagsError: ''
-          
-            })
-        }
-                
-              
-             }
+    }, [])
+    
         
     const handleShortContent = async(event) => {
       event.preventDefault()
@@ -259,7 +122,7 @@ const ShortFormCreator = () => {
     }
     const addMorePollOption = () => {
         console.log(compToDuplicate)
-        const componentToDuplicate = <PollInput  optionHandler={handleOptionFour}/>
+        const componentToDuplicate = <PollInput index={4}  optionHandler={handleOptionFour}/>
         if (compToDuplicate !== null) {
             
             setCompToDuplicate([...compToDuplicate, componentToDuplicate])
@@ -310,63 +173,33 @@ const ShortFormCreator = () => {
         //delete from firebase bucket
    
     }
-    useEffect(() => {
-           }, [formReset]);
+    const checkPost = () => {
+        console.log(checkEmptiness())
+        checkEmptiness()
+    }
     if( user !== null){
     return (
-            <div className=' border-t-[1px] bg-white font-[Sen]lg:mt-0  pb-[1em] px-[.5em] flex flex-row gap-[1em] h-fit'>
+            <div className=' border-t-[1px] bg-white font-[Sen]lg:mt-0  pb-[1em] px-[.5em] gap-[1em] h-fit'>
                   <form ref={formRef}>
                     
-            {/* <img src={user.public_picture} alt={user.name} className="h-[3em] w-[3em] rounded-full" />   */}
-            <div className="creator flex flex-col">
-            <ReactQuill className='w-[30em] font-[Sen]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Sen', paddingLeft: '1em',  background: "white", height: '100%', width: '100%'}} />
-            <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                 className="rounded-md pl-[0em] outline-none ml-[.25em]   font-[Sen]  w-full font-bold placeholder:font-[Sen] placeholder:font-extralight text-lg text-gray-400 h-[3em] lg:pl-[0em]" />
-                 { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
-            
-        }) :''
-    }
-        { tagsError.muchTagsError && tagsError.muchTagsError !== '' ?   
-             <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsError.muchTagsError}</p> <br /> </>
-            
-        : ''
-    }
-        { tagsError.numberErrors && tagsError.numberErrors.length > 0 ?  tagsError.numberErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
-            
-        }) : ''
-    }
-        { tagsError.numberInTagsErrors && tagsError.numberInTagsErrors.length > 0 ?  tagsError.numberInTagsErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
-            
-        }) : ''
-    }
-        { tagsError.specialCharacterInTagsErrors && tagsError.specialCharacterInTagsErrors.length > 0 ?  tagsError.specialCharacterInTagsErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
-            
-        }) : ''
-    }
-        {tagsError.specialCharacterInTagsErrors &&  tagsError.specialCharactersErrors.length > 0 ?  tagsError.specialCharactersErrors.map((tagsErr) => {
-            return <> <p  className='ml-[3.5em] font-[Sen] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
-            
-        }) : ''
-    }
-
+            <img src={user.public_picture} alt={user.name} className="h-[2.5em] w-[2.5em] mt-[1em] rounded-full" />  
+            <div className="creator flex flex-col font-[Sen]">
+            <ReactQuill onChange={checkPost}  className='w-[30em] font-[Sen] placeholder:font-[Sen]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Sen', paddingLeft: '2.5em',  background: "white", height: '100%', width: '100%'}} />
+         
                  <input type="file" onChange={handleReelImageUpload} ref={reelImageRef} className='opacity-0' />
                {cancelImageStatus == false? '':   <div>
-                 <MdCancel className=' relative left-[2em] top-[1em] text-3xl ml-[-2em] mt-[.5em]' onClick={cancelImage}/>
+                 <MdCancel className=' relative right-[2em] top-[1em] text-3xl ml-[-2em] mt-[.5em]' onClick={cancelImage}/>
    
              
                  </div> }
 {
- showPollCreator == true ?  <div className="flex flex-row gap-[2em] ml-[4em]">
-    <MdCancel  className='text-3xl ml-[-2em] mt-[.5em]' onClick={cancelPoll}/>
-    <div className='flex flex-col '>
+ showPollCreator == true ?  <div className="w-full">
+    <MdCancel  className=' relative text-3xl left-[90%]' onClick={cancelPoll}/>
+    <div className='flex flex-col w-full '>
   
-     <PollInput optionHandler={handleOptionOne}/> 
-     <PollInput  optionHandler={handleOptionTwo}/> 
-     <PollInput  optionHandler={handleOptionThree}/> 
+     <PollInput index={1} optionHandler={handleOptionOne}/> 
+     <PollInput index={2} optionHandler={handleOptionTwo}/> 
+     <PollInput index={3} optionHandler={handleOptionThree}/> 
      {
         compToDuplicate.length !== 0 ? 
               compToDuplicate.map((comp) =>{
@@ -375,11 +208,11 @@ const ShortFormCreator = () => {
 
      }
   {disableAddMore ?
-   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Sen] rounded-md mb-[2em] bg-blue-200 text-white  gap-[1em] ml-[1em]' onClick={addMorePollOption}>
+   <button disabled className=' cursor-not-allowed w-full h-[2em] mt-[1em] flex justify-center font-[Sen] rounded-md mb-[2em] bg-blue-200 text-white  gap-[1em] ml-0' onClick={addMorePollOption}>
      <FaPlus className='mt-[.35em]'/>
     <p className='mt-0.5'> Add More Choices</p></button>
   
-  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Sen] rounded-md mb-[2em] bg-blue-500 text-white  gap-[1em]  ml-[1em]' onClick={addMorePollOption}>
+  : <button className='w-full h-[2em] mt-[1em] flex justify-center font-[Sen] rounded-md mb-[2em] bg-blue-500 text-white  gap-[1em]' onClick={addMorePollOption}>
      <FaPlus className='mt-[.35em]'/>
     <p className='mt-0.5'> Add More Choices</p></button>
 }
@@ -390,13 +223,22 @@ const ShortFormCreator = () => {
 }   
            <div className='flex flex-row justify-between '>
             {showPollCreator == false ? <div className="quick_tools flex flex-row gap-[1em] ml-[1em] lg:ml-[2em] ">
-                <FaPoll className='text-2xl mt-[1em]  text-[rgba(0,0,0,0.5)]' onClick={handlePollCreator}/>
-                {/* <FaImage className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handleImageReel} /> */}
+                <MdOutlinePoll className='text-2xl mt-[1em]  text-[rgba(0,0,0,0.5)]' onClick={handlePollCreator}/>
+                <CiImageOn className='text-2xl mt-[1em] text-[rgba(0,0,0,0.5)]' onClick={handleImageReel} />
             </div> : ''}
             <div >
-                
-                <button onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-blue-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :"font-bold bg-blue-500 px-[1em] ml-[7em] lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Publish
+                {
+                    postable == false ?
+                <button disabled onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-blue-200 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :
+
+                " font-bold bg-blue-200 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"} >Post
+                </button>:
+                <button onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-blue-500 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :
+
+                " font-bold bg-blue-500 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Post
                 </button>
+
+                }
                 </div>
             </div>
             </div>
