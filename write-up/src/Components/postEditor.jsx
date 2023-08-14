@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import CreatePosts from './createPosts';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-
 const PostEditor = () => {
    const location = useLocation()
    const {draftId}= useParams()
