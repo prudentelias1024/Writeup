@@ -71,8 +71,8 @@ const Profile = () => {
         getReels()
         setTimeout(() => {
           
-          inksRef.click()
-        }, 3000);
+          inksRef.current.click()
+        }, 5000);
     }
     , []);
     if (user !== null && posts !== null) {
@@ -124,10 +124,12 @@ const Profile = () => {
 </div>
             <div className=' flex flex-col gap-4  lg:mt-[10em] '>
             {
-            inkClicked && posts !== null && posts.map((post) => {
+            inkClicked && posts !== null ? posts.map((post) => {
                 return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={post._id} post={post} />
-             })
-            }
+             }):
+             <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
+             
+    }
             {
             reelsClicked ?
               reels !== null ? reels.map((reel) => {
@@ -137,7 +139,8 @@ const Profile = () => {
                    }else if(reel.type == "image"){
                     return <ImageReel reel={reel} key={reel.reelId} /> 
                   }
-             }) :   <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
+             }) :
+             <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
              : ''     
             }
             
