@@ -73,8 +73,6 @@ const Profile = () => {
     }
     , []);
     if (user !== null && posts !== null) {
-        
-    
     return (
         
         <div className='flex flex-col overflow-x-hidden'>
@@ -149,15 +147,15 @@ const Profile = () => {
         return (
             <>
             <div className='flex flex-col'>
-             <ThreeDots 
-height="80" 
-width="80" 
-radius="9"
-color="#4fa94d" 
-ariaLabel="three-dots-loading"
-wrapperStyle={{}}
-wrapperClassName=""
-visible={true}
+              <ThreeDots 
+  height="80" 
+  width="80" 
+  radius="9"
+  color="#4fa94d" 
+  ariaLabel="three-dots-loading"
+  wrapperStyle={{}}
+  wrapperClassName=""
+  visible={true}
  />            </div>
             </>
         )
