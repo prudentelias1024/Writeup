@@ -15,7 +15,15 @@ const reelsSchema = new mongoose.Schema({
         type:String,
         required:false
     },
+    reposts: [{
+        user:{ type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',}}],              
+        
+        bookmarks: [{
+                            user:{ type: mongoose.Schema.Types.ObjectId,
+                ref: 'Users',
 
+        }}],
     author:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
@@ -37,7 +45,7 @@ const reelsSchema = new mongoose.Schema({
     }  ,
     options: [
        {
-          pollname:  {type:String, required:true},
+          pollname:  {type:String, required:false},
           vote: {type:Number,
             default: 0,
              required:true},
@@ -84,6 +92,16 @@ const reelsSchema = new mongoose.Schema({
                     type:String,
                      required:true},
                 likes: [{
+                                    user:{ type: mongoose.Schema.Types.ObjectId,
+                        ref: 'Users',
+    
+                }}],
+
+                reposts: [{
+                user:{ type: mongoose.Schema.Types.ObjectId,
+                ref: 'Users',}}],              
+                
+                bookmarks: [{
                                     user:{ type: mongoose.Schema.Types.ObjectId,
                         ref: 'Users',
     

@@ -102,9 +102,6 @@ export default function Posts(){
           reelsClicked == true? 
            reels && reels.length > 0 && reels.map((reel) => {
         
-      
-        
-    
              if(reel.type == "poll"){
                return <Poll reel={reel} key={reel.reelId} /> 
               }else if(reel.type == "image"){

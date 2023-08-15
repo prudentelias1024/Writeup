@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactQuill from 'react-quill';
 import _ from 'lodash'
 import { actions } from '../store';
+import { Reactions } from './Post/Reactions';
 const Poll = ({reel}) => {
     console.log(reel)
     const [URL, setURL] = useState()
@@ -214,11 +215,13 @@ const Poll = ({reel}) => {
                            &thinsp;
                        
                        </div>
+                     
                    </div>
             })
             }
          
-          
+         <Reactions post={reel} remove={false}/>
+              
        
         </div>
     );
@@ -273,6 +276,8 @@ const Poll = ({reel}) => {
          </div>
   
         })}
+          <Reactions post={reel} remove={false}/>
+              
 </div>
 
 )

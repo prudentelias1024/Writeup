@@ -42,6 +42,7 @@ function App() {
    
       const getReels = async() => {
         let reels = await (await axios.get(`${URL}/reels`)).data; 
+        console.log(reels)
         let options = []
         reels.map((reel) => {
 

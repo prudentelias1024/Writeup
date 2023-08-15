@@ -1679,6 +1679,17 @@ connectToMongooseDB()
 //     console.log(`Updated ${result.upsertedCount} documents`)
 // }).catch(err => {
 //     console.log(err)
+// // })
+// reels.updateMany({}, {$set: {reposts:[], bookmarks:[]}}).then(result => {
+//     console.log(`Updated ${result.upsertedCount} documents`)
+// }).catch(err => {
+//     console.log(err)
+// })
+
+// PublishedPosts.updateMany({}, {$set: {reposts:[]}}).then(result => {
+//     console.log(`Updated ${result.upsertedCount} documents`)
+// }).catch(err => {
+//     console.log(err)
 // })
 
 // PublishedPosts.updateMany({}, {$set: {verifiedAuthor: false, authorPremiumPlan: 'free', collaborators:[], }}).then(result => {

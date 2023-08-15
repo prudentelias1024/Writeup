@@ -107,6 +107,14 @@ const PublishedPosts = new mongoose.Schema({
          
         
         ],
+    reposts: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Users'
+                },
+         
+        
+        ],
         collaborators: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Users',

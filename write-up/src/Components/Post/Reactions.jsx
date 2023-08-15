@@ -4,6 +4,7 @@ import { Bookmark } from "./Bookmark";
 import { Comments } from "./Comments";
 import { Like } from "./Like";
 import Impressions from "./Impressions";
+import Repost from "./Repost";
 
 export function Reactions({post, remove, additionalStyles}){
     const {user} = useSelector(state => state)
@@ -14,7 +15,10 @@ export function Reactions({post, remove, additionalStyles}){
         
         <Impressions count={post.viewedBy}  username={user !== null ?user.username :''}/>
         <Like additionalStyles={additionalStyles} likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>
+        <Repost reposts={post.reposts} postId={post.postId} username={user !== null ?user.username :''}/>
+        
         <Comments comments={post.comments} postId={post.postId} username={user !== null ?user.username :''} />
+
         <Bookmark bookmarks={post.bookmarks} postId={post.postId} username={user !== null ?user.username :''}/>
         {/* <div className='-mt-1 flex flex-row gap-1'>
                 <FaRegEye  className=' text-black-500 text-2xl'/>

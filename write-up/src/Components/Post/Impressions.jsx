@@ -4,9 +4,9 @@ import { IoIosStats } from 'react-icons/io'
 export default function Impressions({count,additionalStyles}) {
      return(
         <div className="flex flex-row gap-3">
-        <IoIosStats  className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-green-500"}/> 
+        <IoIosStats  className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-black"}/> 
         <div className="flex gap-2">
-        <p className="font-[Outfit] text-green-500 -mt-[.09em]">
+        <p className="font-[Outfit] text-black -mt-[.09em]">
             {
                 count.length
             } 

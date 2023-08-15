@@ -6,12 +6,10 @@ import Tag from './Post/Tag'
 import {  Link} from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import ReactQuill from 'react-quill';
 
 export default function ImageReel({reel}) {
   const [viewed,setViewed] = useState(false)
-  const user = {
-    username: 'elias1024', name:'Prudent Elias', public_picture: mock 
-}
     const commentRef = useRef()
   // useEffect(() => {
     // checkViewed() 
@@ -53,7 +51,11 @@ export default function ImageReel({reel}) {
                   }
                  
                   </div>
-                 <p className='font-[Outfit] px-[1em] text-start ml-[1em]  mx-[1.25em] leading-8 whitespace-normal font-extrabold text-2xl w-full my-[.5em] lg:text-3xl lg:mb-[.5em] pr-[1.25em]  lg:ml-auto'>{reel.text}</p>
+                 < ReactQuill   value={reel.text}
+                  readOnly={true}
+                  theme={"bubble"}
+                  style={{fontFamily: 'Sen'}}
+               className='font-[Outfit] px-[1em] text-start ml-[1em]  mx-[1.25em] leading-8 whitespace-normal font-extrabold text-3xl w-full my-[.5em] lg:text-3xl lg:mb-[.5em] pr-[1.25em]  lg:ml-auto'/>
                   
                   <img src={reel.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     
@@ -64,11 +66,11 @@ export default function ImageReel({reel}) {
 
    </div>
 
-<div className="comment__box flex flex-row justify-evenly bg-white py-[.5em] mb-[2em] rounded-lg">
+{/* <div className="comment__box flex flex-row justify-evenly bg-white py-[.5em] mb-[2em] rounded-lg">
     <img src={mock} alt={user.name} className='h-[2.5em] w-[2.5em] rounded-full' />
     <input ref={commentRef} type="text" className='w-[75%]   rounded-md h-[2em] mt-[.25em] ml-[-.25em] font-[Outfit] mb-[0em] font-bold placeholder:font-bold border-2' />
     <button onClick={handleComment} className='font-[Outfit] text-blue-500'>Send</button>
-</div>
+</div> */}
 </>
   )
 }
