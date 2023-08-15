@@ -17,16 +17,13 @@ import ImageReel from './imageReel';
 import Post from './Post';
     
 const MyProfile = () => {
+    const {posts} = useSelector(state => state)
+    const {reels} = useSelector(state => state)
     let URL;
     const reelsRef = useRef()
     const inksRef = useRef()
     const [inkClicked, setInkClicked] = useState(false)
     const [reelsClicked, setReelClicked] = useState(false)
-    const [reels, setReels] = useState(null)
-    const [posts, setPosts] = useState(null)
-
-
-
     const handleInksContentDisplay = () => {
         setInkClicked(true)
         setReelClicked(false)
@@ -54,53 +51,53 @@ const MyProfile = () => {
        
      }
      const  getReels = async() => {
-        let reels = await (await axios.get(`${URL}/api/reels/${user.username}`, )).data
-        console.log(reels)
-        let options = []
-        reels.map((reel) => {
+    //     let reels = await (await axios.get(`${URL}/api/reels/${user.username}`, )).data
+    //     console.log(reels)
+    //     let options = []
+    //     reels.map((reel) => {
 
         
-        if(reel.options.length > 0){
-          let totalVotes = 0
-          reel.options.map((option) => {
-            totalVotes += option.vote
+    //     if(reel.options.length > 0){
+    //       let totalVotes = 0
+    //       reel.options.map((option) => {
+    //         totalVotes += option.vote
             
              
-            })
-            reel.totalVotes = totalVotes
-            if(totalVotes !== 0){
+    //         })
+    //         reel.totalVotes = totalVotes
+    //         if(totalVotes !== 0){
   
             
-            reel.options.map((option,index) => {
-             let vote = option.vote
+    //         reel.options.map((option,index) => {
+    //          let vote = option.vote
            
   
-             let percentage =  (vote/ totalVotes) * 100
-          option = {...option, percentage: percentage }
-          options.push(option)
+    //          let percentage =  (vote/ totalVotes) * 100
+    //       option = {...option, percentage: percentage }
+    //       options.push(option)
 
-        })
-           reel.options = options
-          options = []
+    //     })
+    //        reel.options = options
+    //       options = []
       
          
-      } else {
+    //   } else {
        
-          reel.options.map((option,index) => {
-             option = {...option, percentage: 0 }
-             options.push(option)
+    //       reel.options.map((option,index) => {
+    //          option = {...option, percentage: 0 }
+    //          options.push(option)
 
-             })
-             reel.options = options
-             options = []
+    //          })
+    //          reel.options = options
+    //          options = []
            
           
       
-            }
-          }
-        })
+    //         }
+    //       }
+    //     })
 
-          setReels(reels)
+    //       setReels(reels)
   
      }
     useEffect(() => {
@@ -126,7 +123,7 @@ const MyProfile = () => {
                 
         <div className='flex flex-col'>
             
-                    <ProfileVitals user={user} total={myPosts.length + reels.length}/>
+                    <ProfileVitals user={user} total={myPosts}/>
 
         <div className=' w-full lg:flex lg:mt-[-9em] lg:flex-row justify-between '>
             <div className='hidden bg-white px-7 py-9 font-[Mulish] rounded-xl ml-[14em] mt-[10em] h-fit w-[20em] justify-start lg:flex lg:flex-col lg:gap-5 border '>
