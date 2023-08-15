@@ -127,7 +127,12 @@ const Profile = () => {
     return (
         
         <div className='flex flex-col overflow-x-hidden'>
+        {
+          posts && reels ?
         <ProfileVitals user={user} total={posts.length + reels.length}/>
+        : 'Loading.....'
+        }
+        
         <div className='lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
             <div className='mt-[10em] hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
             ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
