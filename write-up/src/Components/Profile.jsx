@@ -17,6 +17,7 @@ import { useRef } from 'react';
 import Poll from './poll';
 import ImageReel from './imageReel';
 import { ThreeDots } from 'react-loader-spinner';
+import { MdOutlinePodcasts } from 'react-icons/md';
     
 const Profile = () => {
     let URL;
@@ -29,6 +30,7 @@ const Profile = () => {
     const [posts, setPosts] = useState(null)
     const dispatch = useDispatch()
     const {username} = useParams()
+    const [userExists,setUserExists] = useState(true)
     const handleInksContentDisplay = () => {
         setInkClicked(true)
         setReelClicked(false)
@@ -42,9 +44,11 @@ const Profile = () => {
      
    const loadUser = async() => {
         const info = await (await axios.get(`${URL}/api/user/${username}`)).data;
+        if (info == null){
+          setUserExists(false)
+        }
          setUser(info)
          console.log(info)
-       
          
      }
      const  getPosts = async() => {
@@ -54,10 +58,55 @@ const Profile = () => {
        
      }
      const  getReels = async() => {
-        let res = await (await axios.get(`${URL}/api/reels/${username}`, )).data
-       console.log(res)
-       setPosts(res)
+        let reels = await (await axios.get(`${URL}/api/reels/${username}`, )).data
+        console.log(reels)
+        let options = []
+        reels.map((reel) => {
+
+        
+        if(reel.options.length > 0){
+          let totalVotes = 0
+          reel.options.map((option) => {
+            totalVotes += option.vote
+            
+             
+            })
+            reel.totalVotes = totalVotes
+            if(totalVotes !== 0){
+  
+            
+            reel.options.map((option,index) => {
+             let vote = option.vote
+           
+  
+             let percentage =  (vote/ totalVotes) * 100
+          option = {...option, percentage: percentage }
+          options.push(option)
+
+        })
+           reel.options = options
+          options = []
+      
+         
+      } else {
        
+          reel.options.map((option,index) => {
+             option = {...option, percentage: 0 }
+             options.push(option)
+
+             })
+             reel.options = options
+             options = []
+           
+          
+      
+            }
+          }
+        })
+
+          setReels(reels)
+          console.log(reels)
+
      }
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
@@ -69,17 +118,16 @@ const Profile = () => {
         loadUser()
         getPosts()
         getReels()
-          inksRef.current.click()
-    }
+        setInkClicked(true)
+        setReelClicked(false)
+       
+           }
     , []);
     if (user !== null && posts !== null) {
     return (
         
         <div className='flex flex-col overflow-x-hidden'>
-            <ProfileVitals user={user} posts={posts}/>
-            
-          
-
+        <ProfileVitals user={user} total={posts.length + reels.length}/>
         <div className='lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
             <div className='mt-[10em] hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
             ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
@@ -121,16 +169,19 @@ const Profile = () => {
 </div>
             <div className=' flex flex-col gap-4  lg:mt-[10em] '>
             {
-            inkClicked && posts !== null ? posts.map((post) => {
+            inkClicked ?
+            posts == null || posts.length == 0  ?
+            <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Post yet</p>
+            :  posts.map((post) => {
+                
                 return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={post._id} post={post} />
-             }):
-             <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
-             
+             })  
+             :''
     }
             {
             reelsClicked ?
-              reels !== null ? reels.map((reel) => {
-                // return <r readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={reel._id} post={reel} />
+              reels !== null && reels.length > 0  ? reels.map((reel) => {
+                
                 if(reel.type == "poll"){
                     return <Poll reel={reel} key={reel.reelId} /> 
                    }else if(reel.type == "image"){
@@ -146,7 +197,9 @@ const Profile = () => {
 
         </div>
     )
-} else {
+}else if(userExists == false){
+  return (<Page404/>)
+}else {
         return (
             <>
             <div className='flex flex-col'>

@@ -22,7 +22,7 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
      return (
         
            
-            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border-b-[1px]    lg:p-[1em]'} >
+            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border-b-[1px] pt-[1em]   lg:p-[1em]'} >
            
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            
@@ -53,8 +53,8 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
                 <Reactions post={post} remove={removeReactions}/>
                {post.readingTime !== null || post.readingTime !== undefined || post.readingTime !== ''?
                   //-top-2
-                <div className={readingTimeStyles + 'lg:relative lg:bottom-[0em] lg:left-[80%] md:relative md:left-[85%]  relative bottom-[1em]   left-[67.5%]'}>
-                  <p className='font-[Outfit] text-[#717171]'> {post.readingTime}</p>
+                <div className={readingTimeStyles + 'lg:relative lg:bottom-[0em] lg:left-[80%] md:relative md:left-[85%]  relative bottom-[.25em] mb-[1em]   left-[70%]'}>
+                  <p className='font-[Sen] text-[#717171]'> {post.readingTime}</p>
                   </div> : ''}
                 </div>
                  

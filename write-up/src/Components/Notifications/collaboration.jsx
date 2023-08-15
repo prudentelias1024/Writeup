@@ -45,10 +45,10 @@ const Collaboration = ({notification}) => {
         <div className=' flex flex-col w-fit font-[Sen] ml-0  gap-[.05em]  lg:ml-[2em]'>
         <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[2.5em] w-[2.5em]  lg:mt-[1em] rounded-full' />
 
-        <div className='font-bold font-[Sen] text-sm inline-flex flex-wrap gap-[0.2em] '>
+        <div className='font-bold font-[Sen] text-sm flex inline-flex flex-wrap pr-[4em] '>
         
       <Link  to={notification.message[0].user[1].link}>
-        <p className='inline-flex'> 
+        <p className='flex inline-flex'> 
         {notification.message[0].user[0].name}  {  notification.actionUserVerified? <HiBadgeCheck  className="text-lg text-blue-500 m"  />: ''} </p>
       </Link> 
          <p> added you as a Collaborator. Click to edit the content </p> 

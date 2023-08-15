@@ -1595,7 +1595,7 @@ app.post('/api/user/edit', verify, (req,res) => {
 })
 app.get('/api/user/posts/my', verify, (req,res) => {
     
-    PublishedPosts.find({author: req.user._id}, (err,doc) => {
+    PublishedPosts.find({author: req.user._id}).populate('likes').populate('author').populate("comments").exec((err,doc) => {
         if(err){throw err}
         if(doc){
             console.log(doc)
