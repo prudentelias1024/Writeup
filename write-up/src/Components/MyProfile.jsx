@@ -17,8 +17,9 @@ import ImageReel from './imageReel';
 import Post from './Post';
     
 const MyProfile = () => {
-    const {posts} = useSelector(state => state)
-    const {reels} = useSelector(state => state)
+    const {myPosts} = useSelector(state => state)
+    const {myReels} = useSelector(state => state)
+    const {user} = useSelector(state => state)
     let URL;
     const reelsRef = useRef()
     const inksRef = useRef()
@@ -35,71 +36,13 @@ const MyProfile = () => {
     
       }
    
-    const user = useSelector((state) => state.user)
-    const [myPosts, setMyPosts] = useState(null)
-    const dispatch = useDispatch()
-    const loadUser = async() => {
-        const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
-        )).data;
-         dispatch(actions.updateUser(info))
+    // const dispatch = useDispatch()
+    // const loadUser = async() => {
+    //     const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
+    //     )).data;
+    //      dispatch(actions.updateUser(info))
                 
-     }
-     const  getMyPosts = async() => {
-        let res = await (await axios.get(`${URL}/api/user/posts/my`, {headers: {Authorization:  localStorage.getItem('token')}})).data
-       console.log(res)
-       setMyPosts(res)
-       
-     }
-     const  getReels = async() => {
-    //     let reels = await (await axios.get(`${URL}/api/reels/${user.username}`, )).data
-    //     console.log(reels)
-    //     let options = []
-    //     reels.map((reel) => {
-
-        
-    //     if(reel.options.length > 0){
-    //       let totalVotes = 0
-    //       reel.options.map((option) => {
-    //         totalVotes += option.vote
-            
-             
-    //         })
-    //         reel.totalVotes = totalVotes
-    //         if(totalVotes !== 0){
-  
-            
-    //         reel.options.map((option,index) => {
-    //          let vote = option.vote
-           
-  
-    //          let percentage =  (vote/ totalVotes) * 100
-    //       option = {...option, percentage: percentage }
-    //       options.push(option)
-
-    //     })
-    //        reel.options = options
-    //       options = []
-      
-         
-    //   } else {
-       
-    //       reel.options.map((option,index) => {
-    //          option = {...option, percentage: 0 }
-    //          options.push(option)
-
-    //          })
-    //          reel.options = options
-    //          options = []
-           
-          
-      
-    //         }
-    //       }
-    //     })
-
-    //       setReels(reels)
-  
-     }
+    //  }
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
@@ -107,9 +50,7 @@ const MyProfile = () => {
               URL = "http://localhost:5000"
               
             }
-            loadUser()
-            getMyPosts()
-            getReels()
+            // loadUser()
             setInkClicked(true)
             setReelClicked(false)
      
@@ -123,8 +64,8 @@ const MyProfile = () => {
                 
         <div className='flex flex-col'>
         {
-          posts && reels ?
-        <ProfileVitals user={user} total={posts.length + reels.length}/>
+          myPosts && myReels ?
+        <ProfileVitals user={user} total={myPosts.length + myReels.length}/>
         : 'Loading.....'
         }
      
@@ -182,7 +123,7 @@ const MyProfile = () => {
     }
             {
             reelsClicked ?
-              reels !== null && reels.length > 0  ? reels.map((reel) => {
+              myReels !== null && myReels.length > 0  ? myReels.map((reel) => {
                 
                 if(reel.type == "poll"){
                     return <Poll reel={reel} key={reel.reelId} /> 

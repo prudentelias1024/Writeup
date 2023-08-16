@@ -121,6 +121,63 @@ function App() {
         
        dispatch(actions.updatePosts(res_posts))
      }
+
+     const  getMyPosts = async() => {
+      let res = await (await axios.get(`${URL}/api/user/posts/my`, {headers: {Authorization:  localStorage.getItem('token')}})).data
+      dispatch(actions.updateMyPosts([...res]))
+     
+   }
+   const  getMyReels = async() => {
+      let reels = await (await axios.get(`${URL}/api/user/reels/my`,  {headers: {Authorization:  localStorage.getItem('token')}})).data
+      console.log(reels)
+      let options = []
+      reels.map((reel) => {
+
+      
+      if(reel.options.length > 0){
+        let totalVotes = 0
+        reel.options.map((option) => {
+          totalVotes += option.vote
+          
+           
+          })
+          reel.totalVotes = totalVotes
+          if(totalVotes !== 0){
+
+          
+          reel.options.map((option,index) => {
+           let vote = option.vote
+         
+
+           let percentage =  (vote/ totalVotes) * 100
+        option = {...option, percentage: percentage }
+        options.push(option)
+
+      })
+         reel.options = options
+        options = []
+    
+       
+    } else {
+     
+        reel.options.map((option,index) => {
+           option = {...option, percentage: 0 }
+           options.push(option)
+
+           })
+           reel.options = options
+           options = []
+         
+        
+    
+          }
+        }
+      })
+
+          dispatch(actions.updateMyReels([...reels]))
+          console.log(reels)
+   }
+
        const getNotifications = async() => {
         let  notifications = await(await axios.get(`${URL}/api/notifications`,{headers: {Authorization: localStorage.getItem('token')}})).data
        dispatch(actions.updateNotifications(notifications))
@@ -147,6 +204,8 @@ function App() {
           getPodcasts()
           getReels()
         getBookmarkedPosts();
+          getMyPosts()
+          getMyReels()
         if (localStorage.getItem('token') !== undefined) {
           getPersonalisedPosts()
           loadUser();

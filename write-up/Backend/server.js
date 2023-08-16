@@ -1389,7 +1389,7 @@ app.get('/api/tags/:name', (req,res) => {
 })
 app.get('/api/posts',  (req,res) => {
     res.setHeader("Access-Control-Allow-Credentials","true")
-     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments.user').populate('collaborators').exec((err,doc) => {
+     PublishedPosts.find().populate('author').populate('likes').populate('bookmarks').populate('comments.user').populate('collaborators').sort({created: -1}).exec((err,doc) => {
        if (err) {
            throw err
        }
@@ -1550,7 +1550,7 @@ app.get('/api/posts/:username',(req,res) => {
   if(err){throw err}
   if(doc && doc.length > 0){
     const userId = doc[0].id
-    PublishedPosts.find({author:userId}).populate('author').populate('likes').populate('collaborators').populate('comments').populate('bookmarks').exec((err,doc) => {
+    PublishedPosts.find({author:userId}).populate('author').populate('likes').populate('collaborators').populate('comments').populate('bookmarks').sort({created: -1}).exec((err,doc) => {
         if(err){throw err}
         if(doc){res.send(doc)}
     })
@@ -1566,6 +1566,21 @@ app.get('/api/reels/:username',(req,res) => {
   if(doc && doc.length > 0){
     const userId = doc[0].id
     reels.find({author:userId}).populate('author').populate('likes').populate('comments').populate('bookmarks').exec((err,doc) => {
+        if(err){throw err}
+        if(doc){res.send(doc)}
+    })
+  } else {
+    res.send(null)
+  }
+   })
+
+})
+app.get('/api/user/reels/my',verify,(req,res) => {
+ User.find({username:req.user.username}).select('id').exec((err,doc) => {
+  if(err){throw err}
+  if(doc && doc.length > 0){
+    const userId = doc[0].id    
+    reels.find({author:userId}).populate('author').populate('likes').populate('comments').populate('bookmarks').sort({created: -1}).exec((err,doc) => {
         if(err){throw err}
         if(doc){res.send(doc)}
     })
@@ -1595,7 +1610,7 @@ app.post('/api/user/edit', verify, (req,res) => {
 })
 app.get('/api/user/posts/my', verify, (req,res) => {
     
-    PublishedPosts.find({author: req.user._id}).populate('likes').populate('author').populate("comments").exec((err,doc) => {
+    PublishedPosts.find({author: req.user._id}).populate('likes').populate('author').populate("comments").sort({created: -1}).exec((err,doc) => {
         if(err){throw err}
         if(doc){
             console.log(doc)

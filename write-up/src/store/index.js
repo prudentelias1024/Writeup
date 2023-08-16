@@ -2,13 +2,19 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: []},
+    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[]},
     reducers: {
       updateUser(state,action){
        state.user = action.payload
       }, 
       updateMobileNavStatus(state,action){
         state.navStatus =  action.payload
+      },
+      updateMyReels(state,action){
+        state.myReels =  action.payload
+      },
+      updateMyPosts(state,action){
+        state.myPosts =  action.payload
       },
       updateDrafts(state,action){
         state.drafts =  action.payload
