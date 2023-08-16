@@ -1298,12 +1298,28 @@ app.get('/api/user/findCollaborators/:username', (req,res) => {
 })
 
 app.get('/api/tags', (req,res) => {
-    PublishedPosts.find().select('tags title').exec((err,doc) => {
+    let tags = []
+    PublishedPosts.find().select('tags').exec((err,posts) => {
         if (err) {
             throw err
         }   
-        if (doc) {
-            res.send(doc)
+        if (posts) {
+            reels.find().select('tags').exec((err,reel) => {
+                if (err) {
+                    throw err
+                }   
+                if (reel) {
+                    console.log(reel)
+                   reel =  reel.filter((content) => {
+                         content.tags = content.tags[0].split(' ')
+                         return content.tags[0] !== ''
+                        
+                    })
+                    res.send([...posts, ...reel])
+                    console.log([...posts,...reel])
+                }
+            })
+        
         }
     })
 })
