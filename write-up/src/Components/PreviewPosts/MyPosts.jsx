@@ -16,6 +16,8 @@ import { BsHeartFill } from 'react-icons/bs';
 import { actions } from '../../store';
 import LoginModal from '../loginModal';
 import { IoIosStats } from 'react-icons/io';
+import { BiRepost } from 'react-icons/bi';
+import { Reactions } from '../Post/Reactions';
 const MyPosts = () => {
   let URL;
   useEffect(() => {
@@ -46,6 +48,7 @@ const MyPosts = () => {
  const [followed,setFollowed] = useState(false)
  const [bookmarked,setBookmarked] = useState()
  const [commented,setCommented] = useState(false)
+ const [reposted,setReposted] = useState(false)
   const params = useParams()
   const likeRef = useRef()
   const bookmarkRef = useRef()
@@ -63,7 +66,12 @@ const MyPosts = () => {
     setOtherAuthorPost(res)
 
   }
- 
+   const repost = async() => {
+    
+   }
+   const undoRepost = async() => {
+
+   }
   const getPost = async() => {
     let  res_post = await(await axios.get(`${URL}/post/${params.username}/${params.postId}`)).data
     setPost(res_post)
@@ -196,40 +204,8 @@ const MyPosts = () => {
       {showModal == true ? <LoginModal /> : ''}
         <NavBar/>
         <div className='flex flex-col gap-[1em] lg:top-32 lg:relative lg:flex lg:gap-[30em]'>
-            <div className=" fixed flex impressions  z-[10em] border-1 bg-white bottom-0 w-full flex-row pt-8 pl-12 p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[10em]  lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
-            <button className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <IoIosStats className='text-2xl lg:text-3xl text-green-500'/>
-                    <p className="font-[Sen] text-green-500 text-xl lg:ml-2">{post.comments.length}</p>
-                </button>
-             
-                {
-                liked == true ?
-                            
-                <button  onClick={(event) => unlikePost(post.postId)} className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <BsHeartFill className='text-2xl lg:text-3xl text-red-500'/>
-                    <p className="font-[Sen] text-red-500 text-xl lg:ml-2">{post.likes.length}</p>
-                </button> :  <button  onClick={(event) => likePost(post.postId,post.title,post.author)} className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <FaRegHeart className='text-2xl lg:text-3xl text-red-500'/>
-                    <p className="font-[Sen] text-red-500 text-xl lg:ml-2">{post.likes.length}</p>
-                </button>
-                }
-                <button className='rounded-full flex lg:flex-col gap-[1em]'>
-                    <GoMention className='text-2xl lg:text-3xl text-blue-500'/>
-                    <p className="font-[Sen] text-blue-500 text-xl lg:ml-2">{post.comments.length}</p>
-                </button>
-                {
-                bookmarked == true ?
-                            
-                <button  onClick={(event) => unbookmarkPost(post.postId)} className='rounded-full flex  lg:flex-col gap-[1em]'>
-                <FaBookmark className='text-2xl lg:text-3xl text-purple-500'/>
-                <p className="font-[Sen] text-purple-500 text-xl lg:ml-2">{post.bookmarks.length}</p>
-            </button>:
-            
-            <button className='rounded-full flex  lg:flex-col gap-[1em]'>
-                    <FaRegBookmark onClick={(event) => bookmarkPost(post.postId,post.title,post.author)} className='text-2xl flex  lg:text-3xl text-purple-500'/>
-                    <p className="font-[Sen] text-purple-500 text-xl lg:ml-2">{post.bookmarks.length}</p>
-                </button>
-                }
+            <div className=" fixed flex impressions  z-[100] border-1 bg-white bottom-0 w-full flex-row   p-4 lg:bg-inherit lg:w-fit lg:top-0 lg:ml-[10em]  lg:pt-[10em] lg:flex lg:flex-col gap-[2em]">
+           <Reactions post={post} />
 
              
                 
@@ -274,7 +250,7 @@ const MyPosts = () => {
                 />
               </div>
            {user !== null ?
-            <div className="comments">
+            <div className="comments -z-1">
                 <div className='add_comment m-auto rounded-lg pt-[1em] pl-[1em]   flex flex-col mb-[5em] lg:ml-[5em]'>
                  <img className='w-[2.5em] h-[2.5em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
                 <div className='flex flex-row'>
@@ -297,7 +273,7 @@ const MyPosts = () => {
                        
                       }
              </div>
-            <div className="author_Profile w-full lg:fixed lg:right-[1em] border z-20 mb-[1em] p-7 bg-white lg:w-[23em] text-[#171717] ">
+            <div className="author_Profile w-full lg:fixed lg:right-[1em] border z-3 mb-[1em] p-7 bg-white lg:w-[23em] text-[#171717] ">
                 <div className='flex gap-[1em]'>
             <img src={post.author.public_picture} className='w-[3em] h-[3em] rounded-full object-cover' /> 
            <div>
