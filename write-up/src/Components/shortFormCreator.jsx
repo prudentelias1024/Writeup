@@ -89,6 +89,7 @@ const ShortFormCreator = () => {
     
         
     const handleShortContent = async(event) => {
+      dispatch(actions.updatePosting(true))
       event.preventDefault()
        
           let reel = await (await axios.post(`${URL}/reels/create`,
@@ -111,7 +112,7 @@ const ShortFormCreator = () => {
            let  newReels = prevReels.reverse()
            console.log(newReels)
             dispatch(actions.updateReels(newReels))
-        
+            dispatch(actions.updatePosting(false))
 
         }
         quillRef.current.getEditor().setText('')

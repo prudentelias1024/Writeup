@@ -11,6 +11,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Tag from '../tags/tag';
 import LoginModal from '../loginModal';
 import SuggestedPeople from './SuggestedPeople';
+import Poll from '../poll';
+import ImageReel from '../imageReel';
 
 const SearchPage = () => {
     let URL;
@@ -53,7 +55,7 @@ const SearchPage = () => {
   
     const search = async(searchWords) => {
     let res =  await (await axios.post(`${URL}/api/search`, {query:  searchWords})).data
-   console.log(user)
+   console.log(res)
    setSearchResult(res)
    setTimeout(()=>
 { 
@@ -73,9 +75,28 @@ const SearchPage = () => {
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
     tab2Ref.current.classList.remove('underline')
     tab2Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab3Ref.current.classList.remove('underline')
+    tab3Ref.current.classList.remove('underline-offset-[1.5em]')
     console.log(tabRef.current)
    }
-     setFilteredView({data : searchResult.post, type: 'post'})
+     setFilteredView({data : searchResult.post, type: 'posts'})
+  
+   }
+   const filterReels = () => {
+   if(tab3Ref.current.classList.contains('underline')){
+        tab3Ref.current.classList.remove('underline')
+        tab3Ref.current.classList.remove('underline-offset-[1.5em]')
+   } else{
+    tab3Ref.current.className +=  ' underline underline-offset-[1.5em]'
+    tabRef.current.classList.remove('underline')
+    tabRef.current.classList.remove('underline-offset-[1.5em]')
+    tab1Ref.current.classList.remove('underline')
+    tab1Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab2Ref.current.classList.remove('underline')
+    tab2Ref.current.classList.remove('underline-offset-[1.5em]')
+    console.log(tabRef.current)
+   }
+     setFilteredView({data : searchResult.reels, type: 'reels'})
   
    }
    const filterPeople = () => {
@@ -88,6 +109,8 @@ const SearchPage = () => {
     tabRef.current.classList.remove('underline-offset-[1.5em]')
     tab2Ref.current.classList.remove('underline')
     tab2Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab3Ref.current.classList.remove('underline')
+    tab3Ref.current.classList.remove('underline-offset-[1.5em]')
   
   
    }
@@ -104,6 +127,8 @@ const SearchPage = () => {
     tabRef.current.classList.remove('underline-offset-[1.5em]')
     tab1Ref.current.classList.remove('underline')
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab3Ref.current.classList.remove('underline')
+    tab3Ref.current.classList.remove('underline-offset-[1.5em]')
    }
    setFilteredView({data : searchResult.tags, type: 'tags'})
    }
@@ -137,16 +162,34 @@ const SearchPage = () => {
         <div className='flex flex-col lg:w-2/3 lg:gap-[1em] w-full'>
             
             <ul className='flex flex-row ml-[0.3em] justify-around lg:gap-[7em] w-full p-0 h-[2.6em] border-gray-300 border-b-[1px] mt-[2em] lg:ml-[20em]'>
-                <li onClick={filterPost} ref={tabRef} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Post</li>
-                <li onClick={filterPeople} ref={tab1Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>People</li>
-                <li onClick={filterTag} ref={tab2Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Tags</li>
+
+                <li onClick={filterPost} ref={tabRef} className='block font-[Avenir] flex inline-flex h-min text-gray-500 cursor-pointer'>Post ({searchResult.post.length})
+                </li>
+                <li onClick={filterReels} ref={tab3Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Reels
+                ({searchResult.reels.length})
+                </li>
+                <li onClick={filterPeople} ref={tab1Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>People
+                ({searchResult.user.length})
+                </li>
+                <li onClick={filterTag} ref={tab2Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>
+                    Tags({searchResult.tags.length})
+                    </li>
               
             </ul>
 
          
              
             {filteredView !== null &&  filteredView.data.length !== 0 ?
-             filteredView.type == 'post'  ?
+                filteredView.type == 'reels'  ?
+                filteredView.data.map((reel,index) => {
+                           
+             if(reel.type == "poll"){
+                return <Poll reel={reel} key={reel.reelId} /> 
+               }else if(reel.type == "image"){
+                return <ImageReel reel={reel} key={reel.reelId} /> 
+            }
+                    }):
+             filteredView.type == 'posts'  ?
              filteredView.data.map((post,index) => {
                 return <Post key={index} post={post} showCoverImage="hidden" additionalStyles="lg:ml-[20em] mt-[1em]" removeReactions={true} />
             }): filteredView !== null &&  filteredView.data.length !== 0 &&   filteredView.type == 'people'  ? 

@@ -20,6 +20,7 @@ export default function Posts(){
     const posts = useSelector(state => state.posts)
     const {reels} = useSelector(state => state)
     const {justPublishedReels} = useSelector(state => state)
+    const {loadingShortFormCreator} = useSelector(state => state)
     const {podcasts} = useSelector(state => state)
     useEffect(() => {
       if(justPublishedReels == true){
@@ -96,7 +97,7 @@ export default function Posts(){
             </div>
 } */}
       </div>
-     { reelsClicked ? <ShortFormCreator/>: ''}
+     { reelsClicked || loadingShortFormCreator == false? <ShortFormCreator/>: ''}
    
          {
           reelsClicked == true? 

@@ -1052,7 +1052,7 @@ app.post('/reels/create', verify, async(req,res) => {
     created: moment(),
     text: req.body.text,
     options: modOptions,
-    tags: req.body.tags,
+    tags: req.body.tags.split('#'),
     type: req.body.type,
     reelId: req.body.reelId,
     reelImageURL: req.body.reelImageURL
@@ -1328,10 +1328,16 @@ app.post('/api/search', (req,res) => {
 
     
    let tags = []
-    PublishedPosts.find({title : {$regex: '^'+ req.body.query, $options: 'i'}}).populate('author').exec((err,post) => {
+    PublishedPosts.find(
+        {$or:
+            [
+                {title : {$regex: '^'+ req.body.query, $options: 'i'}},
+                {tags:  {$in : `#${req.body.query}`} },
+                {body:  {$regex: '^'+ req.body.query, $options: 'i' }},
+            ]}).populate('author').exec((err,posts) => {
       if(err){ 
         throw err
-      } if(post) {
+      } if(posts) {
         User.find({name : {$regex:'^'+ req.body.query, $options: 'i'}}, (err,user) => {
             if(err){ 
               throw err
@@ -1339,6 +1345,7 @@ app.post('/api/search', (req,res) => {
            PublishedPosts.find({tags:  {$in : `#${req.body.query}`} },(err,doc) => {
                if(err){throw err}
                if(doc){
+                 
                 doc.forEach((post) => {
                   post.tags.map(tag=> {
                     if(tags.indexOf(tag) == -1){
@@ -1346,9 +1353,20 @@ app.post('/api/search', (req,res) => {
                     }
                   })
                 })
-                res.send({post:post,user:user,tags:tags})
+            reels.find({$or:[
+                {tags : {$regex:'^'+ "#"+req.body.query, $options: 'i'}}, 
+                {text : {$regex:'^'+ req.body.query+':/m', $options: 'i'}}
+            ]}).populate('author').exec((err,reels) => {
+                if(err){throw err}
+                if(reels){
+                    console.log(reels)
+                    res.send({post:posts,user:user,tags:tags, reels:reels})
             }
-           })
+        })
+    }    
+    })
+         
+           
             
            
             }
