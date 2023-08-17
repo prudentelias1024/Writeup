@@ -179,7 +179,7 @@ const ShortFormCreator = () => {
         checkEmptiness()
     }
     if( user !== null ){
-        if (loadingShortFormCreator == true) {
+        if (loadingShortFormCreator == false) {
             
         
     return (
@@ -252,7 +252,7 @@ const ShortFormCreator = () => {
       
             );
         } else{
-            <>
+                        <>
             <div className='flex flex-col'>
               <ThreeDots 
   height="80" 

@@ -95,7 +95,7 @@ export default function Posts(){
             </div>
 } */}
       </div>
-     { reelsClicked ? <ShortFormCreator/>: ''}
+     { reelsClicked == true ? <ShortFormCreator/>: ''}
    
          {
           reelsClicked == true? 
