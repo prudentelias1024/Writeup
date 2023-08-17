@@ -1309,11 +1309,10 @@ app.get('/api/tags', (req,res) => {
                     throw err
                 }   
                 if (reel) {
-                   reel =  reel.filter((content) => {
-                         content.tags = content.tags[0].split(' ')
-                         return content.tags[0] !== ''
+                //    reel =  reel.filter((content) => {
+                //          return content.tags[0] !== ''
                         
-                    })
+                //     })
                     res.send([...posts, ...reel])
                     console.log([...posts,...reel])
                 }

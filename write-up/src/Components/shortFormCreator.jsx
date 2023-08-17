@@ -13,6 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../firebase';
 import mock from '../mock.jpg'
 import _ from 'lodash'
+import { ThreeDots } from 'react-loader-spinner';
 
 const ShortFormCreator = () => {
     const  [URL,setURL] = useState(null)
@@ -24,6 +25,7 @@ const ShortFormCreator = () => {
     const tagsRef = useRef()
     const quillRef = useRef()
     const formRef = useRef(null)
+    const {loadingShortFormCreator} = useSelector(state => state)
     const dispatch = useDispatch()
     const [tags, setTags] = useState('')
     const [prevTag,setPrevTag] = useState(null)
@@ -176,7 +178,10 @@ const ShortFormCreator = () => {
     const checkPost = () => {
         checkEmptiness()
     }
-    if( user !== null){
+    if( user !== null ){
+        if (loadingShortFormCreator == true) {
+            
+        
     return (
             <div className=' border-t-[1px] bg-white font-[Sen]lg:mt-0  pb-[1em] px-[.5em] gap-[1em] h-fit'>
                   <form ref={formRef}>
@@ -246,6 +251,22 @@ const ShortFormCreator = () => {
             </div>
       
             );
+        } else{
+            <>
+            <div className='flex flex-col'>
+              <ThreeDots 
+  height="80" 
+  width="80" 
+  radius="9"
+  color="#4fa94d" 
+  ariaLabel="three-dots-loading"
+  wrapperStyle={{}}
+  wrapperClassName=""
+  visible={true}
+ />            </div>
+            </>
+
+        }
             
         } else {
             return ''
