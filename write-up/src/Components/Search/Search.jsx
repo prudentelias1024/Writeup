@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserNav from "../Navbar/UserNav";
 import {BsFilter} from "react-icons/bs"
-import SearchResults from "./SearchResults";
 import SuggestedPeople from "./SuggestedPeople";
 export default function Search({content}) {
     const [suggestedUser, setSuggestedUser] = useState([])

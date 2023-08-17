@@ -21,13 +21,11 @@ export default function Trends() {
       getTags()
    }, 500);
       setPublishedCount({})
-      console.log(tags)
       
    }, [])
      const constructTagAndPublished = (tags,publishedCount) => {
       let  temp = []
      let keys = Object.keys(publishedCount)
-     console.log(publishedCount)
          tags.map((tag,i) => {
           keys.map((key,j) => {
              if(tag.tag === key){
@@ -37,7 +35,6 @@ export default function Trends() {
         })
       
         
-        console.log(temp)
       return temp
     
      }
@@ -63,7 +60,6 @@ export default function Trends() {
 
   const getTags = async() => {
    let res = await (await axios.get(`${URL}/api/tags`)).data
-   console.log(res)
    //Contains all tags without their title
    let tagsArray = []
    //temprary array
@@ -75,7 +71,6 @@ export default function Trends() {
       temp.push(tag.tags)
      
   })
-  console.log(temp)
  //Extract all tags
   temp.map((tag) => {
       for (let i = 0; i < tag.length ; i++){
@@ -117,9 +112,7 @@ export default function Trends() {
       
       
       
-      console.log(tagArray)
-      console.log(publishedCount)
-  
+    
 
    rankTags(constructTagAndPublished(tagArray, publishedCount))
    
@@ -132,10 +125,12 @@ export default function Trends() {
         <p className='relative ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending🔥🔥</p>
         {
         tags && tags.map((tag) => {
+
           return     <TrendLinks tag={tag.tag} count={tag.publishedPosts}/>
     
         })
-        }    </div>
+        }
+            </div>
     <UserNav/>
     </>
   )

@@ -60,7 +60,6 @@ const ShortFormCreator = () => {
 
     const checkEmptiness = () =>{
         let value = quillRef.current.value
-        console.log(value)
         if (value == ' ') {
             let tokens =  value.split(' ')
             tokens.forEach((token) => {
@@ -174,7 +173,6 @@ const ShortFormCreator = () => {
    
     }
     const checkPost = () => {
-        console.log(checkEmptiness())
         checkEmptiness()
     }
     if( user !== null){

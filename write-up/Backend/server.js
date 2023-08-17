@@ -1309,7 +1309,6 @@ app.get('/api/tags', (req,res) => {
                     throw err
                 }   
                 if (reel) {
-                    console.log(reel)
                    reel =  reel.filter((content) => {
                          content.tags = content.tags[0].split(' ')
                          return content.tags[0] !== ''
