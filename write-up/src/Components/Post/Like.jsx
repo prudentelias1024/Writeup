@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 // import { io } from "socket.io-client";
 export function Like({likes,postId,username,additionalStyles}){
-  let URL;
+     const [URL, setURL] = useState()
+     const [liked,setLiked] = useState(false)
+     
     const  checkLiked = (likers,username) => {
         console.log(username)
          if ( likers ) {
@@ -18,36 +20,46 @@ export function Like({likes,postId,username,additionalStyles}){
         }
     
       }
-    useEffect(() => {
-      if (process.env.NODE_ENV == 'production') {
-        URL = "https://inkup-api.onrender.com"
-      }else{
-        URL = "http://localhost:5000"
-               
-      }
+      useEffect(() => {
+        if (process.env.NODE_ENV == 'production') {
+            setURL("https://inkup-api.onrender.com")
+          }else{
+            setURL("http://localhost:5000")
+                   
+          }
         checkLiked(likes,username)
+        console.log(likes)
+        console.log(username)
+
     },[])
-    const [liked,setLiked] = useState(false)
 
     const likePost = async(postId) => {
-        setLiked(true)
-        let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      console.log(liked)
+    
+      console.log(URL)
+      let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
       
-        // setPost(res)
+      setLiked(true)
+        likes = res.likes
+        console.log(res.likes)
+        console.log(likes)
            
         } 
       const unlikePost = async(postId) => {
+        console.log(URL)
         let  res = await(await axios.post(`${URL}/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
         setLiked(false)
-        console.log(res)
-        // setPost(res)
+      
+        likes = res.likes
+        console.log(res.likes)
+        console.log(likes)
            
         } 
         
-       if (liked == true) {
+       if (liked == false) {
       return (
         <div className="flex flex-row gap-3">
-        <FaHeart onClick={(event) => {likePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl bg-white":"text-xl text-red-500"}/> 
+        <FaRegHeart onClick={(event) => {likePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl bg-white":"text-xl text-red-500"}/> 
         <div className="flex gap-2">
         <p className="font-[Outfit] text-red-500 -mt-[.09em]">
             {
@@ -61,7 +73,7 @@ export function Like({likes,postId,username,additionalStyles}){
        } else {
          return(
             <div className="flex flex-row gap-3">
-            <FaRegHeart onClick={(event) => {unlikePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-red-500"}/> 
+            <FaHeart onClick={(event) => {unlikePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-red-500"}/> 
             <div className="flex gap-2">
             <p className="font-[Outfit] text-red-500 -mt-[.09em]">
                 {

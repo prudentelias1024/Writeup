@@ -8,15 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Comment from './comment';
 import ReactQuill from 'react-quill';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { GoMention } from 'react-icons/go';
-
 import axios from 'axios';
 import { format } from "../../time";
-import { BsHeartFill } from 'react-icons/bs';
 import { actions } from '../../store';
 import LoginModal from '../loginModal';
-import { IoIosStats } from 'react-icons/io';
-import { BiRepost } from 'react-icons/bi';
 import { Reactions } from '../Post/Reactions';
 const MyPosts = () => {
   let URL;
@@ -196,7 +191,7 @@ const MyPosts = () => {
         setFollowed(false )
 
      }
-
+    
     if (post !== null) {
    
     return (
