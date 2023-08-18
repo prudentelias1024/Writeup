@@ -50,9 +50,6 @@ export function Like({likes,postId,username,additionalStyles}){
         let  res = await(await axios.post(`${URL}/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
         setLiked(false)
       
-        likes = res.likes
-        console.log(res.likes)
-        console.log(likes)
            
         } 
         
@@ -63,7 +60,7 @@ export function Like({likes,postId,username,additionalStyles}){
         <div className="flex gap-2">
         <p className="font-[Outfit] text-red-500 -mt-[.09em]">
             {
-                likes.length
+               likes.length
             } 
         </p>
         <p className="hidden lg:block font-[Outfit] -mt-[.09em]">Likes</p>
