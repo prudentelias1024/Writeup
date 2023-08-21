@@ -33,6 +33,7 @@ import { async } from '@firebase/util';
 import Billing  from './Components/Billing/billing';
 import Search from './Components/Search/Search';
 import Trends from './Components/trends';
+import ReelsFullContent from './Components/PreviewPosts/ReelsFullContent';
 function App() {
        
         let URL
@@ -231,6 +232,7 @@ function App() {
       <Route path='/notifications' element={<Notifications/>}/>
       <Route path='/tag/:name' element={<TagTemplate/>}/>
       <Route path='/p/:username/:postId' element={<MyPosts/>}/>
+      <Route path='/reels/:postId' element={<ReelsFullContent/>}/>
       <Route path='/' element={<Home/>}/>
       <Route path='/trends' element={<Trends/>}/>
       <Route path='/settings' element={<Settings/>}/>

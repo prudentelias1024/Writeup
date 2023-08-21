@@ -54,43 +54,14 @@ const PublishedPosts = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
     }],
     comments: [
-         {
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true
-            },
-            createdAt: {  type:Date, required:true, default:() => new Date.now()   },
-            user : { type: mongoose.Schema.Types.ObjectId,  ref: 'Users'},
-            message: {type:String, required:true},
-            likes: [
-                {
-                user:
-                {
-                     type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Users',
-
-            }
-        }
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comments',
+            required: false
+         
+    }
     ],
-            replies: [{
-                
-                user:
-                {
-                    type:mongoose.Schema.Types.ObjectId, 
-                     ref: 'Users'},
-                message: {
-                    type:String,
-                     required:true},
-                likes: [{
-                                    user:{ type: mongoose.Schema.Types.ObjectId,
-                        ref: 'Users',
-    
-                }}],
-            }]        
-        },
-          
-         ],
-   
+      
    
         likes: 
     [{

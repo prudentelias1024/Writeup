@@ -13,6 +13,7 @@ const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
 const notifications   = require('./notificationsSchema')
+const comments = require('./commentsSchema')
 const jwt = require('jsonwebtoken')
 const moment = require('moment');
 const { populate } = require('./usersSchema');
@@ -1027,6 +1028,15 @@ app.get('/podcasts',async(req,res) => {
 })
 
 /** CRUD Operation for Reels */
+
+app.get('/reels/:postId',verify,async(req,res) => {
+    reels.find({reelId: req.params.postId}).populate('author').populate('likes').populate('reposts').populate('comments').exec((err,reels) => {
+        if(err){throw err}
+        if(reels){
+            res.send(reels[0])
+        }
+    })
+})
 app.post('/reels/create', verify, async(req,res) => {
     console.log(req.body)
     const  {username,name,email} = req.user
@@ -1255,7 +1265,6 @@ app.get('/post/:username/:postId',  (req,res) => {
         }
     })
 })
-app.get('/api/user')
 app.post('/post/viewed', verify, (req,res) => {
     let viewers = [], views;
    PublishedPosts.find({postId: req.body.postId}).select('views viewedBy').exec((err,doc) => {
@@ -1264,6 +1273,23 @@ app.post('/post/viewed', verify, (req,res) => {
      views += 1;
      if(viewers.indexOf(req.user._id) == -1){
             PublishedPosts.findOneAndUpdate({postId: req.body.postId}, {$push: {viewedBy: req.user._id}, views: views}, {new: true}, (err,doc) => {
+          if(err){
+            throw err
+          }
+            })
+     }
+     
+   }) 
+
+})
+app.post('/reel/viewed', verify, (req,res) => {
+    let viewers = [], views;
+   PublishedPosts.find({reelId: req.body.reelId}).select('impresions viewedBy').exec((err,doc) => {
+     viewers = doc[0].viewedBy
+     views = doc[0].views
+     views += 1;
+     if(viewers.indexOf(req.user._id) == -1){
+            PublishedPosts.findOneAndUpdate({reelId: req.body.reelId}, {$push: {viewedBy: req.user._id}, views: views}, {new: true}, (err,doc) => {
           if(err){
             throw err
           }

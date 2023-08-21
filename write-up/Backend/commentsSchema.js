@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-const reelsSchema = new mongoose.Schema({
+const commentsSchema = new mongoose.Schema({
     verifiedAuthor: {type: Boolean, default :() => false},
     authorPremiumPlan: {type:String, default: () => 'free'},
-    reelId: {
+    postId: {
         type: String,
         required: true,
     },
@@ -11,10 +11,10 @@ const reelsSchema = new mongoose.Schema({
         type:Date,
         required:true
     },
-    reelImageURL: {
+    images: [{
         type:String,
         required:false
-    },
+    }],
     reposts: [{
         user:{ type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',}}],              
@@ -39,10 +39,7 @@ const reelsSchema = new mongoose.Schema({
         type:Number,
         required: false
     },
-    tags:   {
-        type: [String],
-        required:true
-    }  ,
+    
     options: [
        {
           pollname:  {type:String, required:false},
@@ -63,36 +60,35 @@ const reelsSchema = new mongoose.Schema({
     viewedBy :[{
         type: mongoose.Schema.Types.ObjectId,
     }],
-    comments: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Comments',
-            required: false
-         
-    }
-    ],
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comments',
+        required: false
      
+}],
                 reposts: [{
                 user:{ type: mongoose.Schema.Types.ObjectId,
-                ref: 'Users'}}],              
+                ref: 'Users'
+
+            }}],              
                 
                 bookmarks: [{
                                     user:{ type: mongoose.Schema.Types.ObjectId,
                         ref: 'Users',
     
                 }}],
-                   
-        
+    
           
-        
+  
    
-        likes: 
+        likes:  
     [{
             
              type: mongoose.Schema.Types.ObjectId,
                 ref: 'Users',
             
         }],
+  
         text: {
            type: String,
            required: true
@@ -100,4 +96,4 @@ const reelsSchema = new mongoose.Schema({
        
 
 })
-module.exports = mongoose.model('reels', reelsSchema)
+module.exports = mongoose.model('Comments', commentsSchema)

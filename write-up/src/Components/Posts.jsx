@@ -9,6 +9,7 @@ import ShortFormCreator from "./shortFormCreator";
 import { useEffect, useRef, useState } from "react";
 import { actions } from "../store";
 import Podcast from "./Podcast";
+import { Link } from "react-router-dom";
 export default function Posts(){
     const reelsRef = useRef()
     const podcastRef = useRef()
@@ -102,9 +103,13 @@ export default function Posts(){
            reels && reels.length > 0 && reels.map((reel) => {
         
              if(reel.type == "poll"){
-               return <Poll reel={reel} key={reel.reelId} /> 
+                return <Link to={'/reels/'+reel.reelId}>
+                      <Poll reel={reel} key={reel.reelId} /> 
+                </Link>
               }else if(reel.type == "image"){
-               return <ImageReel reel={reel} key={reel.reelId} /> 
+                return <Link to={'/reels/'+reel.reelId} >
+                <ImageReel reel={reel} key={reel.reelId} /> 
+                </Link>
              } else{
 
                return <p className="font-[Sen] text-xl font-bold text-[#333] text-center">No Reels</p>

@@ -6,7 +6,7 @@ export function Comments({comments,postId,username}){
         <GoMention className="text-xl text-blue-500 "/> 
         <div className="flex flex-row gap-2">
         <p className="font-[Outfit] text-blue-500 -mt-[.09em]">{
-            comments.length
+           comments ? comments.length : 0
         } </p> 
         <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Comments </p> 
         
