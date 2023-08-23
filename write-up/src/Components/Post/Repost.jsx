@@ -18,19 +18,19 @@ export default function Repost({reposts,postId,username}) {
          }
       }
     }
-    const bookmarkPost = async(postId) => {
+    const repost = async(postId) => {
          setReposted(true)
         let  res = await(await axios.post(`${URL}/post/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
        
         } 
         
-        const unbookmarkPost = async(postId) => {
+        const undoRepost = async(postId) => {
            setReposted(false)
         let  res = await(await axios.post(`${URL}/post/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
         } 
-
+1
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
@@ -46,7 +46,7 @@ export default function Repost({reposts,postId,username}) {
     if (reposted == true) {
    return(
         <div className="flex flex-row gap-3 m-auto ">
-        <BiRepost onClick={(event) => unbookmarkPost(postId)} className="text-2xl mt-[-.1em] ml-[0.25em] text-green-500 "/> 
+        <BiRepost onClick={(event) => undoRepost(postId)} className="text-2xl mt-[-.1em] ml-[0.25em] text-green-500 "/> 
         <p className="font-[Sen] text-green-500 -mt-[.09em]">{
            reposts.length
         } </p> 
@@ -57,7 +57,7 @@ export default function Repost({reposts,postId,username}) {
     } else {
         return(
             <div className="flex flex-row gap-3 m-auto ">
-        <BiRepost onClick={(event) => bookmarkPost(postId)} className="text-2xl text-black mt-[-.1em] ml-[0.25em] "/> 
+        <BiRepost onClick={(event) => repost(postId)} className="text-2xl text-black mt-[-.1em] ml-[0.25em] "/> 
         <p className="font-[Sen] text-black -mt-[.09em]">{
            reposts.length
         } </p> 
