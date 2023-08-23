@@ -30,7 +30,7 @@ export default function Repost({reposts,postId,username}) {
         let  res = await(await axios.post(`${URL}/post/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
         } 
-1
+
     useEffect(() => {
         if (process.env.NODE_ENV == 'production') {
             URL = "https://inkup-api.onrender.com"
