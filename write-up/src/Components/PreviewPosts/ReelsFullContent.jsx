@@ -7,9 +7,10 @@ import { useParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import NavBar from '../NavBar';
 import Header from '../header';
-import AddComment from '../Post/addComment';
+import AddComment from '../Post/addComment'
 export default function ReelsFullContent() {
-    const [URL,setURL] = useState("")
+    // const [URL,setURL] = useState("http://localhost:5000")
+    const [URL,setURL] = useState("https://inkup-api.onrender.com")
     const params = useParams()
     const {user} = useSelector(state => state)
     const [reel, setReel] = useState(null)
