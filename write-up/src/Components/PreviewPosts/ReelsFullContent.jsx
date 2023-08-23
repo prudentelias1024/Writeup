@@ -5,12 +5,11 @@ import  Poll  from "../poll";
 import  ImageReel from "../imageReel";
 import { useParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AddComment from '../Post/addComment';
 import NavBar from '../NavBar';
 import Header from '../header';
-
+import AddComment from '../Post/addComment';
 export default function ReelsFullContent() {
-    const [URL,setURL] = useState("https://inkup-api.onrender.com")
+    const [URL,setURL] = useState("")
     const params = useParams()
     const {user} = useSelector(state => state)
     const [reel, setReel] = useState(null)
