@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const reelsSchema = new mongoose.Schema({
     verifiedAuthor: {type: Boolean, default :() => false},
     authorPremiumPlan: {type:String, default: () => 'free'},
-    reelId: {
+    postId: {
         type: String,
         required: true,
     },
@@ -72,20 +72,7 @@ const reelsSchema = new mongoose.Schema({
     }
     ],
      
-                reposts: [{
-                user:{ type: mongoose.Schema.Types.ObjectId,
-                ref: 'Users'}}],              
-                
-                bookmarks: [{
-                                    user:{ type: mongoose.Schema.Types.ObjectId,
-                        ref: 'Users',
-    
-                }}],
-                   
-        
           
-        
-   
         likes: 
     [{
             

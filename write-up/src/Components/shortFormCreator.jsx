@@ -16,7 +16,7 @@ import _ from 'lodash'
 import { ThreeDots } from 'react-loader-spinner';
 
 const ShortFormCreator = () => {
-    const  [URL,setURL] = useState(null)
+    const  [URL,setURL] = useState("http://localhost:5000")
     const [disableAddMore, setDisableAddMore] = useState(false)
     const [formReset, setFormReset] = useState(false)
     const [postable, setPostable] = useState(false)
@@ -81,12 +81,7 @@ const ShortFormCreator = () => {
     } 
 
     useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            setURL("https://inkup-api.onrender.com")
-          }else{
-            setURL("http://localhost:5000")
-                   
-          }
+        
     }, [])
     
         
@@ -96,7 +91,7 @@ const ShortFormCreator = () => {
        
           let reel = await (await axios.post(`${URL}/reels/create`,
          {
-         reelId: v4(),
+         postId: v4(),
          tags: tags,
          type: showPollCreator == true? 'poll' : 'image',
          text: quillRef.current.value,

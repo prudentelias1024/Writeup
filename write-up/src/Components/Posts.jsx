@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import { actions } from "../store";
 import Podcast from "./Podcast";
 import { Link } from "react-router-dom";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 export default function Posts(){
     const reelsRef = useRef()
     const podcastRef = useRef()
@@ -103,12 +105,12 @@ export default function Posts(){
            reels && reels.length > 0 && reels.map((reel) => {
         
              if(reel.type == "poll"){
-                return <Link to={'/reels/'+reel.reelId}>
-                      <Poll reel={reel} key={reel.reelId} /> 
+                return <Link to={'/reels/'+reel.postId}>
+                      <Poll reel={reel} key={reel.postId} /> 
                 </Link>
               }else if(reel.type == "image"){
-                return <Link to={'/reels/'+reel.reelId} >
-                <ImageReel reel={reel} key={reel.reelId} /> 
+                return <Link to={'/reels/'+reel.postId} >
+                <ImageReel reel={reel} key={reel.postId} /> 
                 </Link>
              } else{
 

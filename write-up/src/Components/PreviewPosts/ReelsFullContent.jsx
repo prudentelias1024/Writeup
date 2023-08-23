@@ -6,9 +6,11 @@ import  ImageReel from "../imageReel";
 import { useParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AddComment from '../Post/addComment';
+import NavBar from '../NavBar';
+import Header from '../header';
 
 export default function ReelsFullContent() {
-    const [URL,setURL] = useState()
+    const [URL,setURL] = useState("http://localhost:5000")
     const params = useParams()
     const {user} = useSelector(state => state)
     const [reel, setReel] = useState(null)
@@ -24,8 +26,9 @@ export default function ReelsFullContent() {
         increasePostView()
     }, [])
     const increasePostView = async() => {
-        let res = await (await axios.post(`http://localhost:5000/reel/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let res = await (await axios.post(`${URL}/reel/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
+        setReel(res)
       }
     
       const getReel = async() => {
@@ -39,18 +42,19 @@ export default function ReelsFullContent() {
    
     if(reel.type == "poll"){
         return <>
-        <Poll reel={reel} key={reel.reelId} /> 
+        <Header  />
+        <Poll reel={reel} key={reel.postId} /> 
         {reel.comments.map(comment  => {
-            return <Comment body={comment.text} />
+            return <Comment commenter={comment.author}  comment={comment} />
         })}
         </>
        }else if(reel.type == "image"){
        return  <>
-        <ImageReel reel={reel} key={reel.reelId} /> 
+        <ImageReel reel={reel} key={reel.postId} URL={URL} /> 
         {reel.comments.map(comment  => {
-            return <Comment commenter={user} body={comment.text} />
+            return <Comment commenter={comment.author} comment={comment}  />
         })}
-         <AddComment post={reel} user={user} />
+         <AddComment reelUpdater={setReel} post={reel} user={user} url={URL} />
          </>
            }  else{
           return 'loading'

@@ -13,7 +13,7 @@ const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
 const notifications   = require('./notificationsSchema')
-const comments = require('./commentsSchema')
+const Comments = require('./commentsSchema')
 const jwt = require('jsonwebtoken')
 const moment = require('moment');
 const { populate } = require('./usersSchema');
@@ -78,23 +78,23 @@ User.find().select('lastPosted lastPosteNotified name email').exec((err,users) =
             path: '/inkup.png',
             cid: 'inkup.png'
         }],
-        html: `" <p style='font-family: Outfit; font-size: 1.5em;'>Dear ${user.name}</p> <br>
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+        html: `" <p style='font-family: Sen; font-size: 1.5em;'>Dear ${user.name}</p> <br>
+         <p style='font-family: Sen; font-size: 1.5em;'> 
         We hope this email finds you well. We wanted to send you a friendly reminder about our app, which we think could be very useful for you.
          </p> <br> 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          As you may recall, our app can help you as a Writer, Programmer and Podcaster. We noticed that you haven't posted since your last post and more often as you used to, and we wanted to encourage you to give it another try and help us build our  community.
          </p> <br> 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          So why not give it another try? We think you'll be pleasantly surprised by how much it can simplify your daily routine. If you have any questions or concerns, please don't hesitate to reach out to us.
 
          </p> <br> 
 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          Thank you for considering our app, and we look forward to hearing from you soon.
          </p> <br> 
 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          Thank you for considering our app, and we look forward to hearing from you soon.
          </p> <br> 
          
@@ -134,23 +134,23 @@ User.find().select('lastPosted lastPosteNotified name email').exec((err,users) =
             path: '/inkup.png',
             cid: 'inkup.png'
         }],
-        html: `" <p style='font-family: Outfit; font-size: 1.5em;'>Dear ${user.name}</p> <br>
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+        html: `" <p style='font-family: Sen; font-size: 1.5em;'>Dear ${user.name}</p> <br>
+         <p style='font-family: Sen; font-size: 1.5em;'> 
         We hope this email finds you well. We wanted to send you a friendly reminder about our app, which we think could be very useful for you.
          </p> <br> 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          As you may recall, our app can help you as a Writer, Programmer and Podcaster. We noticed that you haven't been using our application as often as you used to, and we wanted to encourage you to give it another try and help us build our  community.
          </p> <br> 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          So why not give it another try? We think you'll be pleasantly surprised by how much it can simplify your daily routine. If you have any questions or concerns, please don't hesitate to reach out to us.
 
          </p> <br> 
 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          Thank you for considering our app, and we look forward to hearing from you soon.
          </p> <br> 
 
-         <p style='font-family: Outfit; font-size: 1.5em;'> 
+         <p style='font-family: Sen; font-size: 1.5em;'> 
          Thank you for considering our app, and we look forward to hearing from you soon.
          </p> <br> 
          
@@ -759,7 +759,7 @@ app.post('/api/signup' ,async(req,res) => {
                 path: '/inkup.png',
                 cid: 'inkup.png'
             }],
-            html: `" <p style='font-family: Outfit; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> <b> Dear  ${req.body.name} </b>, I hope this email finds you well. I am reaching out to you on behalf of our app [Inkup], which is a platform that showcases articles written by users like yourself. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We believe that you have a unique perspective and valuable insights that our readers would love to hear about. We would be thrilled if you could join our community of writers and share your knowledge and experiences with us </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Not only will you have the opportunity to showcase your skills and expertise, but you will also be able to connect with other like-minded individuals who share your passion for writing. Our platform is user-friendly and provides a supportive environment for writers of all levels to grow and develop their skills</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> If you are interested in writing for us, please let us know and we will provide you with more information on how to get started. We would be honored to have you as part of our community and can't wait to see the amazing content you will create. To write another article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you for considering this opportunity. We look forward to hearing back from you soon.</p>  <p> Best regards, <br>
+            html: `" <p style='font-family: Sen; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p style='font-family: Sen; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> <b> Dear  ${req.body.name} </b>, I hope this email finds you well. I am reaching out to you on behalf of our app [Inkup], which is a platform that showcases articles written by users like yourself. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> We believe that you have a unique perspective and valuable insights that our readers would love to hear about. We would be thrilled if you could join our community of writers and share your knowledge and experiences with us </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> Not only will you have the opportunity to showcase your skills and expertise, but you will also be able to connect with other like-minded individuals who share your passion for writing. Our platform is user-friendly and provides a supportive environment for writers of all levels to grow and develop their skills</p> <br> <p style='font-family: Sen; font-size: 1.5em;'> If you are interested in writing for us, please let us know and we will provide you with more information on how to get started. We would be honored to have you as part of our community and can't wait to see the amazing content you will create. To write another article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Sen; font-size: 1.5em;' >Thank you for considering this opportunity. We look forward to hearing back from you soon.</p>  <p> Best regards, <br>
            ${req.body.name}"`
           }
 
@@ -857,7 +857,7 @@ app.post('/post/draft', verify, async(req,res) => {
             path: '/inkup.png',
             cid: 'inkup.png'
         }],
-        html: ` <p style='font-family: Outfit; font-size: 1.5em;'> <br> We want to personally congratulate you on your ${draftedBefore == false ?  'First Draft!' : 'Successful Draft'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to see you again and it’s great to see the insights and perspective that you have prepared for our community. Your article will gain a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> We know that writing can be a challenging process, but we wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that you are gifted and special to our community and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a creative set of people in our community of fellow writers and readers who appreciate and enjoy your  quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field, that's is why it is neccessary to take your time to draft your ideas and knowledge before showing it to the world</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, Inkup <br>
+        html: ` <p style='font-family: Sen; font-size: 1.5em;'> <br> We want to personally congratulate you on your ${draftedBefore == false ?  'First Draft!' : 'Successful Draft'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to see you again and it’s great to see the insights and perspective that you have prepared for our community. Your article will gain a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> We know that writing can be a challenging process, but we wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that you are gifted and special to our community and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> As a writer on Inkup, you have access to a creative set of people in our community of fellow writers and readers who appreciate and enjoy your  quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field, that's is why it is neccessary to take your time to draft your ideas and knowledge before showing it to the world</p> <br> <p style='font-family: Sen; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Sen; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, Inkup <br>
        ${req.user.name}"`
       }
 
@@ -977,25 +977,25 @@ rejectUnauthorized: false
    
 Dear ${name},
 
- <p style='font-family: Outfit; font-size: 1.5em;'> <br>We hope this email finds you well. We wanted to take a moment to extend our heartfelt congratulations on successfully uploading your podcast to our platform. It's a significant achievement, and We're thrilled to see your content being shared with our audience.
+ <p style='font-family: Sen; font-size: 1.5em;'> <br>We hope this email finds you well. We wanted to take a moment to extend our heartfelt congratulations on successfully uploading your podcast to our platform. It's a significant achievement, and We're thrilled to see your content being shared with our audience.
 
 </p> 
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Your podcast brings a unique perspective and valuable insights to the table, and it's already making an impact. The positive feedback and engagement from listeners have been remarkable, and We wanted to commend you on the hard work and dedication you've put into creating such compelling episodes.
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Your voice matters, and your podcast has the potential to reach even greater heights. Ww encourage you to keep up the fantastic work and continue uploading more of your thought-provoking content. Your contributions are enriching the lives of our listeners and fostering a vibrant community around your podcast.
 
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 By consistently sharing your expertise, experiences, and passion through your podcast, you are creating a lasting impact and inspiring others. Remember, each episode is an opportunity to connect with new listeners, spark engaging discussions, and make a difference in the lives of your audience.
 </p>
 
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Once again, congratulations on your podcast's success, and I eagerly look forward to witnessing your continued growth and the exciting content you have in store for your listeners. Thank you for choosing our platform to share your valuable voice.
 </p>
 
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Warm regards,
 <br>
 ${name}
@@ -1030,9 +1030,22 @@ app.get('/podcasts',async(req,res) => {
 /** CRUD Operation for Reels */
 
 app.get('/reels/:postId',verify,async(req,res) => {
-    reels.find({reelId: req.params.postId}).populate('author').populate('likes').populate('reposts').populate('comments').exec((err,reels) => {
+    reels.find({postId: req.params.postId}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+    populate:{path: 'author'}}).exec((err,reels) => {
         if(err){throw err}
         if(reels){
+            console.log(reels[0])
+            res.send(reels[0])
+        }
+    })
+})
+
+app.post('/reel/repost',verify,async(req,res) => {
+    reels.findOneAndUpdate({postId: req.body.postId}, {$push: {reposts: req.user._id}},{new:true}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+    populate:{path: 'author'}}).exec((err,reels) => {
+        if(err){throw err}
+        if(reels){
+            console.log(reels[0])
             res.send(reels[0])
         }
     })
@@ -1064,7 +1077,7 @@ app.post('/reels/create', verify, async(req,res) => {
     options: modOptions,
     tags: req.body.tags.split('#'),
     type: req.body.type,
-    reelId: req.body.reelId,
+    postId: req.body.postId,
     reelImageURL: req.body.reelImageURL
 
  })
@@ -1082,7 +1095,7 @@ let transporter = nodemailer.createTransport({
     
     auth: {
         user: 'inkup1024@gmail.com',
-        pass: 'zyghrqwepszerctl'
+        pass: 'aomlttxqzzwfplnh'
         
     }
     ,
@@ -1107,28 +1120,28 @@ rejectUnauthorized: false
    
 Dear ${name},
 
- <p style='font-family: Outfit; font-size: 1.5em;'> <br>We hope this email finds you filled with inspiration and creative energy. We wanted to take a moment to express our heartfelt appreciation for your contribution to our community by sharing captivating Reels. Your talent and unique perspective have truly made a difference and have captivated the hearts and minds of many.
+ <p style='font-family: Sen; font-size: 1.5em;'> <br>We hope this email finds you filled with inspiration and creative energy. We wanted to take a moment to express our heartfelt appreciation for your contribution to our community by sharing captivating Reels. Your talent and unique perspective have truly made a difference and have captivated the hearts and minds of many.
 </p> 
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 We admire your ability to craft engaging content within the short and snappy format of Reels. Your creativity shines through, and it's evident that you have a natural knack for capturing attention in those brief moments. Your dedication to sharing valuable and entertaining content has not gone unnoticed, and we are incredibly grateful to have you as a part of our vibrant community.
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 While Reels provide an excellent platform for quick and impactful creation, we would also love to encourage you to explore the power of long-form content. By creating and sharing longer content, you open up even more opportunities to showcase your talent, provide in-depth insights, and connect with your audience on a deeper level.
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Long-form content allows you to dive into subjects that require more time and attention, enabling you to share your expertise, tell compelling stories, or explore topics in greater detail. This format presents a unique chance to engage your audience in a more immersive and enriching way, and we believe your skills will shine just as brightly in this space.
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 We understand that transitioning from the brevity of Reels to longer-form content might feel like a challenge, but we assure you that it's a journey worth embarking upon. Our community is eager to experience your creativity in a new light, and we are confident that your dedication and talent will continue to resonate with your followers.
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Please don't hesitate to reach out to us if you need any support, guidance, or ideas as you explore long-form content. We are here to help you every step of the way and provide you with the resources you need to make this transition seamless and successful.
 </p>
 
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Thank you again for being an integral part of our creative community and for sharing your remarkable talent through Reels. We look forward to witnessing your continued growth and success as you embark on the exciting adventure of long-form content.
 </p>
-<br><p style='font-family: Outfit; font-size: 1.5em;'>
+<br><p style='font-family: Sen; font-size: 1.5em;'>
 Warm regards,
 <br>
 ${name}`
@@ -1141,7 +1154,7 @@ if(publishedBefore == false){
     
 }
 
-reels.find({reelId: req.body.reelId}).populate('author').exec((err,reel) => {
+reels.find({postId: req.body.postId}).populate('author').exec((err,reel) => {
     if(err){throw err}
     if(reel){
         res.send({status: 200, reel:reel})
@@ -1213,7 +1226,7 @@ app.post('/post/create', verify, async(req,res) => {
             path: '/inkup.png',
             cid: 'inkup.png'
         }],
-        html: ` <p style='font-family: Outfit; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> <br> Dear  ${name}, <br> We want to personally congratulate you on your ${publishedBefore == false ?  'First Article!' : 'Successful Post'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to read and it’s great to see the insights and perspective that you have shared with our community. Your article has already gained a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> I know that writing can be a challenging process, but I wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that your voice is unique and valuable, and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> As a writer on Inkup, you have access to a supportive community of fellow writers and readers who appreciate and enjoy quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field</p> <br> <p style='font-family: Outfit; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Outfit; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, <br>
+        html: ` <p style='font-family: Sen; font-size: 1.5em;'>Welcome to Inkup</p> <br> <p style='font-family: Sen; font-size: 1.5em;'> Join our community of writers and showcase your skills!. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> <br> Dear  ${name}, <br> We want to personally congratulate you on your ${publishedBefore == false ?  'First Article!' : 'Successful Post'} on Inkup Let\'s Keep the Momentum Going. It was a pleasure to read and it’s great to see the insights and perspective that you have shared with our community. Your article has already gained a lot of positive feedback and engagement from our readers. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> I know that writing can be a challenging process, but I wanted to encourage you to continue sharing your ideas and knowledge with us. We believe that your voice is unique and valuable, and we would love to see more of your work on our platform. </p> <br> <p style='font-family: Sen; font-size: 1.5em;'> As a writer on Inkup, you have access to a supportive community of fellow writers and readers who appreciate and enjoy quality content. By publishing more articles, you will have the opportunity to gain more exposure, connect with more people, and further establish yourself as an expert in your field</p> <br> <p style='font-family: Sen; font-size: 1.5em;'> Please let us know if you need any support, guidance or feedback to get started on your next article. We are here to help you succeed and grow as a writer. To publish again article. Click on <a href='https://writeup.vercel.app/create'>Write a post </a> </p> <br> <p style='font-family: Sen; font-size: 1.5em;' >Thank you again for your contribution to our platform. We are excited to see what you will create next.</p>  <p> Best regards, <br>
        ${name}`
       }
 
@@ -1282,18 +1295,78 @@ app.post('/post/viewed', verify, (req,res) => {
    }) 
 
 })
+app.post('/reel/comment',verify,(req,res) => {
+    console.log(req.body)
+    const  {username,name,email} = req.user     
+    let modOptions = []
+    req.body.options.map((option) => {
+    modOptions.push({pollname: option, vote: 0})
+})
+
+ let comment = new Comments({
+    verifiedAuthor: req.user.verified,
+    authorPremiumPlan: req.user.premiumPlan,
+    author: req.user._id,
+    created: moment(),
+    text: req.body.text,
+    options: modOptions.length == 0? [] : modOptions,
+    tags: [],
+    type: req.body.type,
+    postId: req.body.postId,
+    reelImageURL: req.body.reelImageURL
+
+ })
+ comment.save()
+ .then(newComment => {
+        reels.findOneAndUpdate({postId:req.body.reelsPostId}, {$push: {comments: newComment._id }},
+            {new:true}).populate('author').populate('comments').populate('likes').populate('bookmarks').populate('reposts').exec((err,post) =>{
+                if(err){throw err}
+                if(post){
+                    res.send(post)
+                                  }
+            }) 
+    
+
+}).catch((err) => {
+        throw err;
+    })
+        
+ 
+
+ User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}).exec((err,doc) => {
+    if(err){
+        throw err
+    }
+})
+
+
+})
 app.post('/reel/viewed', verify, (req,res) => {
-    let viewers = [], views;
-   PublishedPosts.find({reelId: req.body.reelId}).select('impresions viewedBy').exec((err,doc) => {
-     viewers = doc[0].viewedBy
-     views = doc[0].views
-     views += 1;
+    let viewers = [], views = 0;
+   reels.find({postId: req.body.postId}).select('impressions viewedBy').exec((err,reel) => {
+    if(err){ 
+        throw err
+    }
+    
+    if(reel.length !== 0){
+     viewers = reel[0].viewedBy
+     views = reel[0].impressions
+    } 
+    views += 1;
      if(viewers.indexOf(req.user._id) == -1){
-            PublishedPosts.findOneAndUpdate({reelId: req.body.reelId}, {$push: {viewedBy: req.user._id}, views: views}, {new: true}, (err,doc) => {
+    console.log(reel)
+    if(reel){
+
+            reels.findOneAndUpdate({postId: req.body.postId}, {$push: {viewedBy: req.user._id}, impressions: views}, {new: true}).populate('likes').populate('comments').populate('bookmarks').populate('reposts').populate('author').exec((err,doc) => {
           if(err){
             throw err
           }
+          if(doc){
+             res.send(doc)
+             console.log(doc)
+          }
             })
+     }
      }
      
    }) 

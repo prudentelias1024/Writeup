@@ -17,11 +17,12 @@ const commentsSchema = new mongoose.Schema({
     }],
     reposts: [{
         user:{ type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',}}],              
+        ref: 'Users',required:false}}],              
         
         bookmarks: [{
                             user:{ type: mongoose.Schema.Types.ObjectId,
                 ref: 'Users',
+                required:false
 
         }}],
     author:{
@@ -34,6 +35,11 @@ const commentsSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+    ,
+    tags: [{
+        type: String,
+        required: true
+    }]
     ,
     votes: {
         type:Number,
@@ -77,16 +83,11 @@ const commentsSchema = new mongoose.Schema({
                         ref: 'Users',
     
                 }}],
-    
-          
-  
    
         likes:  
     [{
-            
              type: mongoose.Schema.Types.ObjectId,
                 ref: 'Users',
-            
         }],
   
         text: {
