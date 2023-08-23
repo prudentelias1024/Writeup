@@ -16,11 +16,11 @@ export default function ReelsFullContent() {
     const [reel, setReel] = useState(null)
     
     useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            setURL("https://inkup-api.onrender.com")
-          }else{
-            setURL("http://localhost:5000")
-          }
+        // if (process.env.NODE_ENV == 'production') {
+        //     setURL("https://inkup-api.onrender.com")
+        //   }else{
+        //     setURL("http://localhost:5000")
+        //   }
 
         getReel()
         increasePostView()
@@ -32,7 +32,7 @@ export default function ReelsFullContent() {
       }
     
       const getReel = async() => {
-        let res = await (await axios.get(`http://localhost:5000/reels/${params.postId}`, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let res = await (await axios.get(`${URL}/reels/${params.postId}`, {headers: {Authorization: localStorage.getItem('token')}})).data
         setReel(res)
         console.log(res)
       }
