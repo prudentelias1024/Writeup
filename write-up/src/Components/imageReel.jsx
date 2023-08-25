@@ -7,6 +7,7 @@ import {  Link} from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
+import { BiRepost } from 'react-icons/bi'
 
 export default function ImageReel({reel}) {
   const [viewed,setViewed] = useState(false)
@@ -29,6 +30,11 @@ export default function ImageReel({reel}) {
     <>
     
    <div className=' bg-white w-full h-fit border   pt-[1em] '>
+   <div className='flex inline-flex w-full'>
+    <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
+    <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p>
+    
+    </div> 
              {/* {      viewed ?                   
           <p className='font-[Outfit] mt-[1em] lg:mr-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em] lg:mb-[1em]'>Viewed </p>: ''
              } */}

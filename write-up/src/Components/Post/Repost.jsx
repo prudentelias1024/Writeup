@@ -3,7 +3,7 @@ import { BiRepost } from "react-icons/bi";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Repost({reposts,postId,username}) {
+export default function Repost({reposts,post,postId,username}) {
     let URL;
     const  checkReposted = (reposter,username) => {
    
@@ -20,6 +20,11 @@ export default function Repost({reposts,postId,username}) {
     }
     const repost = async(postId) => {
          setReposted(true)
+        if(post.reelImageURL){
+            console.log(post.reelImageURL)
+        } else {
+            console.log('Position....')
+        }
         let  res = await(await axios.post(`${URL}/post/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
        

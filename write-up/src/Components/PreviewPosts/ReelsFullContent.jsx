@@ -9,18 +9,18 @@ import NavBar from '../NavBar';
 import Header from '../header';
 import AddComment from '../Post/addComment'
 export default function ReelsFullContent() {
-    // const [URL,setURL] = useState("http://localhost:5000")
-    const [URL,setURL] = useState("https://inkup-api.onrender.com")
+    const [URL,setURL] = useState("http://localhost:5000")
+    // const [URL,setURL] = useState("https://inkup-api.onrender.com")
     const params = useParams()
     const {user} = useSelector(state => state)
     const [reel, setReel] = useState(null)
     
     useEffect(() => {
-        // if (process.env.NODE_ENV == 'production') {
-        //     setURL("https://inkup-api.onrender.com")
-        //   }else{
-        //     setURL("http://localhost:5000")
-        //   }
+        if (process.env.NODE_ENV == 'production') {
+            setURL("https://inkup-api.onrender.com")
+          }else{
+            setURL("http://localhost:5000")
+          }
 
         getReel()
         increasePostView()

@@ -15,7 +15,7 @@ export function Reactions({post, remove, additionalStyles}){
         
         <Impressions count={post.viewedBy}  username={user !== null ?user.username :''}/>
         <Like additionalStyles={additionalStyles} likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>
-        <Repost reposts={post.reposts} postId={post.postId} username={user !== null ?user.username :''}/>
+        <Repost reposts={post.reposts} post={post} postId={post.postId} username={user !== null ?user.username :''}/>
         
         <Comments comments={post.comments} postId={post.postId} username={user !== null ?user.username :''} />
 

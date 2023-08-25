@@ -21,7 +21,6 @@ export default function AddComment({reelUpdater,post,user,url}) {
       }
       const commentPost = async(user,postId,name,author, commentWords) => {
         setCommented(true)
-   
            quillRef.current.value = ''
         let  res = await(await axios.post(`${url}/reel/comment`,{
             postId: v4(),
@@ -44,18 +43,22 @@ export default function AddComment({reelUpdater,post,user,url}) {
   return (
 
         <div className="comments -z-1 fixed w-full bottom-0 h-[3em] pb-[1em]">
-            <div className='add_comment   w-full m-auto rounded-full border pt-[0em] pl-[1em]   flex flex-row mb-[5em] lg:ml-[5em]'>
+            <div className='add_comment   w-full m-auto rounded-full border pt-[0em] pl-[1em] pr-[1em]  flex flex-row mb-[5em] lg:ml-[5em]'>
             <img className='w-[1.5em] m-auto h-[1.5em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
 
             <ReactQuill ref={quillRef}  modules={modules}  onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{fontFamily: 'Sen', color: 'grey', paddingLeft: '0em', paddingBottom: '0em', background: "white", height: 'fit-content', width: '100%'}} />
+            <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='text-blue-500 h-fit w-fit mt-[0.4em] ml-[-1em]  rounded-full font-[Sen] '>Post</button>
+
             <div>
 
-            <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='text-blue-500 h-fit w-fit mt-[0.4em] ml-[-3em] rounded-full font-[Sen] '>Post</button>
             </div>
+
+            </div>
+            {/* <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='bg-blue-500 h-fit w-fit mt-[0.4em]  rounded-full font-[Sen] '>Post</button> */}
 
 
             </div>
-            </div>
+
       
   )
 }
