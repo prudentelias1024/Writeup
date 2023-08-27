@@ -2,47 +2,45 @@ import React from 'react'
 import { BiRepost } from "react-icons/bi";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 
-export default function Repost({reposts,post,postId,username}) {
-    let URL;
-    const  checkReposted = (reposter,username) => {
+export default function Repost({reposts,post,reelUpdater,postId,username,posttype}) {
+    const {URL} = useSelector(state => state)
+    const {user} = useSelector(state => state)
+    
+    const  checkReposted = (reposters,username) => {
    
-        if (reposter) {
+        if (reposters) {
        
-        let currentUser = reposter.filter((bookmarker) => {
-          return bookmarker.username == username
+        let currentUser = reposters.filter((reposter) => {
+          return reposter == user._id
          })
-          console.log(currentUser)
          if(currentUser.length > 0){
           setReposted(true)
          }
       }
     }
-    const repost = async(postId) => {
+    const repost = async(post,postId) => {
          setReposted(true)
-        if(post.reelImageURL){
-            console.log(post.reelImageURL)
-        } else {
-            console.log('Position....')
+        if(posttype == 'reel'){
+            let  res = await(await axios.post(`${URL}/reel/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+            reelUpdater(res)
+            console.log(res)
         }
-        let  res = await(await axios.post(`${URL}/post/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
-        console.log(res)
-       
-        } 
         
-        const undoRepost = async(postId) => {
-           setReposted(false)
-        let  res = await(await axios.post(`${URL}/post/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
-        console.log(res)
+    } 
+    
+    const undoRepost = async(post,postId) => {
+        setReposted(false)
+        if(posttype == 'reel'){
+            let  res = await(await axios.post(`${URL}/reel/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
+            reelUpdater(res)
+            console.log(res)
+        }
+      
         } 
 
     useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            URL = "https://inkup-api.onrender.com"
-          }else{
-            URL = "http://localhost:5000"
-                   
-          }
         checkReposted(reposts,username)
     },[])
 
@@ -51,7 +49,7 @@ export default function Repost({reposts,post,postId,username}) {
     if (reposted == true) {
    return(
         <div className="flex flex-row gap-3 m-auto ">
-        <BiRepost onClick={(event) => undoRepost(postId)} className="text-2xl mt-[-.1em] ml-[0.25em] text-green-500 "/> 
+        <BiRepost onClick={(event) => undoRepost(post,postId)} className="text-2xl mt-[-.1em] ml-[0.25em] text-green-500 "/> 
         <p className="font-[Sen] text-green-500 -mt-[.09em]">{
            reposts.length
         } </p> 
@@ -62,7 +60,7 @@ export default function Repost({reposts,post,postId,username}) {
     } else {
         return(
             <div className="flex flex-row gap-3 m-auto ">
-        <BiRepost onClick={(event) => repost(postId)} className="text-2xl text-black mt-[-.1em] ml-[0.25em] "/> 
+        <BiRepost onClick={(event) => repost(post,postId)} className="text-2xl text-black mt-[-.1em] ml-[0.25em] "/> 
         <p className="font-[Sen] text-black -mt-[.09em]">{
            reposts.length
         } </p> 

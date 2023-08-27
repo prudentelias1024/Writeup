@@ -16,14 +16,14 @@ const reelsSchema = new mongoose.Schema({
         required:false
     },
     reposts: [{
-        user:{ type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',}}],              
+         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'}],              
         
-        bookmarks: [{
-                            user:{ type: mongoose.Schema.Types.ObjectId,
+        bookmarks: [
+                { type: mongoose.Schema.Types.ObjectId,
                 ref: 'Users',
 
-        }}],
+        }],
     author:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',

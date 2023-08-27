@@ -894,13 +894,54 @@ app.delete('/post/:id', verify, (req,res) => {
 })
 
 app.get('/reels', (req,res) => {
-    reels.find().sort({_id: -1}).populate('author').exec((err,doc) => {
+    reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+    populate:{path: 'author'}}).exec((err,reels) => {
         if(err) {throw err}
-        if(doc){
-            res.send(doc)
+        if(reels){
+            res.send(reels)
         }
     })
 })
+
+app.post('/reel/unlike', verify, (req,res) => {
+    reels.findOneAndUpdate({postId: req.body.postId},{$pull:{likes: req.user._id}}, {new:true}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+    populate:{path: 'author'}}).exec((err,reel) => {
+        if (err) {
+            throw err
+        } 
+        if(reel){
+            res.send(reel)
+        }
+     
+    })
+})
+
+
+
+app.post('/reel/like', verify, (req,res) => {
+    
+    reels.findOne({postId: req.body.postId}).select('likes').exec((err,doc) => {
+     if (err) {throw err  }
+     if (doc) {
+       
+         
+       if(   doc.likes.indexOf(req.user._id) == -1){
+         reels.findOneAndUpdate({postId: req.body.postId},{$push: {likes: req.user._id}}, {new:true}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+         populate:{path: 'author'}}).exec( (err,reel) => {
+             if (err) {
+                 throw err
+             } if(reel){
+                res.send(reel)
+             }
+     
+         })
+       }
+ 
+      }
+    }) 
+   
+ })
+ 
 //Update Poll
 app.put('/reels/poll/:id', verify, async(req,res) => {
     
@@ -1030,7 +1071,7 @@ app.get('/podcasts',async(req,res) => {
 /** CRUD Operation for Reels */
 
 app.get('/reels/:postId',verify,async(req,res) => {
-    reels.find({postId: req.params.postId}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+    reels.find({postId: req.params.postId}).populate('author').populate('likes').populate({path: 'comments',
     populate:{path: 'author'}}).exec((err,reels) => {
         if(err){throw err}
         if(reels){
@@ -1041,14 +1082,40 @@ app.get('/reels/:postId',verify,async(req,res) => {
 })
 
 app.post('/reel/repost',verify,async(req,res) => {
-    reels.findOneAndUpdate({postId: req.body.postId}, {$push: {reposts: req.user._id}},{new:true}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
-    populate:{path: 'author'}}).exec((err,reels) => {
-        if(err){throw err}
-        if(reels){
-            console.log(reels[0])
-            res.send(reels[0])
-        }
+    reels.find({postId: req.body.postId}).select('reposts').exec((err,doc) => {
+        if(doc[0].reposts.indexOf(req.user._id) == -1){
+            console.log(req.user._id)
+            reels.findOneAndUpdate({postId: req.body.postId}, {$push: {reposts: req.user._id}},{new:true}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+            populate:{path: 'author'}}).exec((err,reels) => {
+                if(err){throw err}
+                if(reels){
+                    res.send(reels)
+                }
+            })
+            
+        } 
     })
+
+
+})
+app.post('/reel/unrepost',verify,async(req,res) => {
+    reels.find({postId: req.body.postId}).select('reposts').exec((err,doc) => {
+        if(doc[0].reposts.indexOf(req.user._id) !== -1){
+            console.log(req.user._id)    
+            reels.findOneAndUpdate({postId: req.body.postId}, {$pull: {reposts: req.user._id}},{new:true}).populate('author').populate('likes').populate({path: 'comments',
+            populate:{path: 'author'}}).exec((err,reels) => {
+                if(err){throw err}
+                if(reels){
+                    console.log(reels)
+                    res.send(reels)
+                }
+            })
+            
+                }
+            })
+            
+
+
 })
 app.post('/reels/create', verify, async(req,res) => {
     console.log(req.body)

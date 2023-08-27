@@ -50,7 +50,7 @@ export default function ReelsFullContent() {
         </>
        }else if(reel.type == "image"){
        return  <>
-        <ImageReel reel={reel} key={reel.postId} URL={URL} /> 
+        <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={URL} /> 
         {reel.comments.map(comment  => {
             return <Comment commenter={comment.author} comment={comment}  />
         })}

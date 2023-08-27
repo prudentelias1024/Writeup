@@ -9,12 +9,27 @@ import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { BiRepost } from 'react-icons/bi'
 
-export default function ImageReel({reel}) {
+export default function ImageReel({reel,reelUpdater}) {
   const [viewed,setViewed] = useState(false)
+  const [reposted,setReposted] = useState(false)
     const commentRef = useRef()
-  // useEffect(() => {
+    const {user} = useSelector(state => state)
+    const  checkReposted = (reposters,username) => {
+      if (reposters) {
+     
+      let currentUser = reposters.filter((reposter) => {
+        return reposter == user._id
+       })
+       if(currentUser.length > 0){
+        setReposted(true)
+       }
+    }
+  }
+
+  useEffect(() => {
+    checkReposted(reel.reposts,user.username)
     // checkViewed() 
-  // }, [])
+  }, [])
     //  const checkViewed = () => {
     //   if (user !== null) {
     //     let status =  reel.viewedBy.some((viewer) => {return viewer !== user._id })
@@ -30,11 +45,11 @@ export default function ImageReel({reel}) {
     <>
     
    <div className=' bg-white w-full h-fit border   pt-[1em] '>
-   <div className='flex inline-flex w-full'>
+   {reposted ? <div className='flex inline-flex w-full'>
     <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
-    <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p>
-    
-    </div> 
+    <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: ''
+   } 
+     
              {/* {      viewed ?                   
           <p className='font-[Outfit] mt-[1em] lg:mr-[0em] bg-green-200 text-green-500 font-semibold m-auto w-fit h-fit px-2 py-1 rounded-lg mb-[1em] lg:mb-[1em]'>Viewed </p>: ''
              } */}
@@ -65,7 +80,7 @@ export default function ImageReel({reel}) {
                   
                   <img src={reel.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     
-                <Reactions post={reel} remove={false}/>
+                <Reactions reelUpdater={reelUpdater} post={reel} posttype={'reel'} remove={false}/>
                
    </div>
    

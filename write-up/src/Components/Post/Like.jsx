@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 // import { io } from "socket.io-client";
-export function Like({likes,postId,username,additionalStyles}){
-     const [URL, setURL] = useState()
+export function Like({likes,postId,username,reelUpdater,posttype,additionalStyles}){
+  const {URL} = useSelector(state => state)
+  const {user} = useSelector(state => state)
      const [liked,setLiked] = useState(false)
      
     const  checkLiked = (likers,username) => {
@@ -21,12 +23,6 @@ export function Like({likes,postId,username,additionalStyles}){
     
       }
       useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            setURL("https://inkup-api.onrender.com")
-          }else{
-            setURL("http://localhost:5000")
-                   
-          }
         checkLiked(likes,username)
         console.log(likes)
         console.log(username)
@@ -34,24 +30,30 @@ export function Like({likes,postId,username,additionalStyles}){
     },[])
 
     const likePost = async(postId) => {
-      console.log(liked)
-    
-      console.log(URL)
-      let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      
       setLiked(true)
-        likes = res.likes
-        console.log(res.likes)
-        console.log(likes)
-           
-        } 
-      const unlikePost = async(postId) => {
-        console.log(URL)
+      if(posttype == 'reel'){
+      let  res = await(await axios.post(`${URL}/reel/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      reelUpdater(res)
+      console.log(res)
+    }else {
+      let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      reelUpdater(res)
+    }
+    
+  } 
+  const unlikePost = async(postId) => {
+    setLiked(false)
+    if(posttype == 'reel'){
+      let  res = await(await axios.post(`${URL}/reel/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+      reelUpdater(res)
+      console.log(res)
+      } else {
         let  res = await(await axios.post(`${URL}/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-        setLiked(false)
-      
-           
-        } 
+        reelUpdater(res)
+        
+      } 
+      } 
+       
         
        if (liked == false) {
       return (
