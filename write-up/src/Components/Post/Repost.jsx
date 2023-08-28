@@ -8,19 +8,19 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
     const {URL} = useSelector(state => state)
     const {user} = useSelector(state => state)
     
-    const  checkReposted = (reposters,username) => {
+    const  checkReposted = (reposters) => {
    
         if (reposters) {
        
-        let currentUser = reposters.filter((reposter) => {
-          return reposter == user._id
+        let reposted = reposters.some((reposter) => {
+          return reposter._id == user._id
          })
-         if(currentUser.length > 0){
-          setReposted(true)
-         }
+         console.log(reposted)
+          setReposted(reposted)
+        
       }
     }
-    const repost = async(post,postId) => {
+    const repost = async(postId) => {
          setReposted(true)
         if(posttype == 'reel'){
             let  res = await(await axios.post(`${URL}/reel/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
@@ -30,7 +30,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
         
     } 
     
-    const undoRepost = async(post,postId) => {
+    const undoRepost = async(postId) => {
         setReposted(false)
         if(posttype == 'reel'){
             let  res = await(await axios.post(`${URL}/reel/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data

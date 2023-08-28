@@ -24,6 +24,7 @@ export default function ReelsFullContent() {
         let res = await (await axios.post(`${URL}/reel/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
         setReel(res)
+        
       }
     
       const getReel = async() => {
@@ -34,8 +35,7 @@ export default function ReelsFullContent() {
      
    if(reel){
 
-   
-    if(reel.type == "poll"){
+    if(reel.type === "poll"){
         return <>
         <Header  />
         <Poll reel={reel} key={reel.postId} /> 
@@ -43,7 +43,7 @@ export default function ReelsFullContent() {
             return <Comment commenter={comment.author}  comment={comment} />
         })}
         </>
-       }else if(reel.type == "image"){
+       }else if(reel.type === "image"){
        return  <>
         <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={URL} /> 
         {reel.comments.map(comment  => {

@@ -14,15 +14,14 @@ export default function ImageReel({reel,reelUpdater}) {
   const [reposted,setReposted] = useState(false)
     const commentRef = useRef()
     const {user} = useSelector(state => state)
-    const  checkReposted = (reposters,username) => {
+    const  checkReposted = (reposters) => {
       if (reposters) {
      
-      let currentUser = reposters.filter((reposter) => {
-        return reposter == user._id
+      let reposted = reposters.some((reposter) => {
+        return reposter._id == user._id
        })
-       if(currentUser.length > 0){
-        setReposted(true)
-       }
+        setReposted(reposted)
+       
     }
   }
 

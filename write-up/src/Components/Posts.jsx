@@ -103,7 +103,7 @@ export default function Posts(){
          {
           reelsClicked == true? 
            reels && reels.length > 0 && reels.map((reel) => {
-        
+            console.log(reel)
              if(reel.type == "poll"){
                 return <Link to={'/reels/'+reel.postId}>
                       <Poll reel={reel} key={reel.postId} /> 
