@@ -13,7 +13,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
         if (reposters) {
        
         let reposted = reposters.some((reposter) => {
-          return reposter._id == user._id
+          return reposter._id === user._id
          })
          console.log(reposted)
           setReposted(reposted)
@@ -22,7 +22,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
     }
     const repost = async(postId) => {
          setReposted(true)
-        if(posttype == 'reel'){
+        if(posttype === 'reel'){
             let  res = await(await axios.post(`${URL}/reel/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
             reelUpdater(res)
             console.log(res)
@@ -32,7 +32,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
     
     const undoRepost = async(postId) => {
         setReposted(false)
-        if(posttype == 'reel'){
+        if(posttype === 'reel'){
             let  res = await(await axios.post(`${URL}/reel/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
             reelUpdater(res)
             console.log(res)
@@ -46,7 +46,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
 
 
     const [reposted,setReposted] = useState(false)
-    if (reposted == true) {
+    if (reposted === true) {
    return(
         <div className="flex flex-row gap-3 m-auto ">
         <BiRepost onClick={(event) => undoRepost(post,postId)} className="text-2xl mt-[-.1em] ml-[0.25em] text-green-500 "/> 
