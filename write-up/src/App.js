@@ -16,8 +16,8 @@ import Settings from './Components/settings';
 import Notifications from './Components/Notifications';
 import MyPosts from './Components/PreviewPosts/MyPosts';
 import Logout from './Components/logout';
-import Followers from './Components/Dashboard/children/Followers';
-import Following from './Components/Dashboard/children/Following';
+import Followers from './Components/Profile/Followers';
+import Following from './Components/Profile/Following';
 import Tags from './Components/Tags';
 import TagTemplate from './Components/Tag/TagTemplate';
 import ReadLater from './Components/ReadLater';
@@ -242,8 +242,8 @@ function App() {
       <Route path='/create' element={<CreatePosts/>}/>
       <Route path='/Dashboard'  element={<Dashboard/>}/>
       <Route path='/:username'  element={<Profile/>}/>
-      <Route path='/Dashboard/followers'  element={<Followers/>}/>
-      <Route path='/Dashboard/following'  element={<Following/>}/>
+      <Route path='/:username/followers'  element={<Followers/>}/>
+      <Route path='/:username/following'  element={<Following/>}/>
       <Route path='/Profile' element={<MyProfile/>}/>
       <Route path='/logout' element={<Logout/>}/>
       <Route path='/hashtags' element={<Tags/>}/>

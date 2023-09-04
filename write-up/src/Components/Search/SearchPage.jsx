@@ -70,12 +70,21 @@ const SearchPage = () => {
         tabRef.current.classList.remove('underline')
         tabRef.current.classList.remove('underline-offset-[1.5em]')
    } else{
-    tabRef.current.className +=  ' underline underline-offset-[1.5em]'
+    tabRef.current.className +=  'underline decoration-blue-500 decoration-2 underline-offset-[1.5em]'
+    
     tab1Ref.current.classList.remove('underline')
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab1Ref.current.classList.remove('decoration-2')
+    tab1Ref.current.classList.remove('decoration-blue-500')
+    
     tab2Ref.current.classList.remove('underline')
     tab2Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab2Ref.current.classList.remove('decoration-2')
+    tab2Ref.current.classList.remove('decoration-blue-500')
+    
     tab3Ref.current.classList.remove('underline')
+    tab3Ref.current.classList.remove('decoration-2')
+    tab3Ref.current.classList.remove('decoration-blue-500')
     tab3Ref.current.classList.remove('underline-offset-[1.5em]')
     console.log(tabRef.current)
    }
@@ -87,13 +96,23 @@ const SearchPage = () => {
         tab3Ref.current.classList.remove('underline')
         tab3Ref.current.classList.remove('underline-offset-[1.5em]')
    } else{
-    tab3Ref.current.className +=  ' underline underline-offset-[1.5em]'
+    tab3Ref.current.className +=  ' underline decoration-blue-500 decoration-2 underline-offset-[1.5em]'
+    
     tabRef.current.classList.remove('underline')
     tabRef.current.classList.remove('underline-offset-[1.5em]')
+    tabRef.current.classList.remove('decoration-2')
+    tabRef.current.classList.remove('decoration-blue-500')
+  
     tab1Ref.current.classList.remove('underline')
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab1Ref.current.classList.remove('decoration-2')
+    tab1Ref.current.classList.remove('decoration-blue-500')
+  
     tab2Ref.current.classList.remove('underline')
     tab2Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab2Ref.current.classList.remove('decoration-2')
+    tab2Ref.current.classList.remove('decoration-blue-500')
+  
     console.log(tabRef.current)
    }
      setFilteredView({data : searchResult.reels, type: 'reels'})
@@ -104,13 +123,22 @@ const SearchPage = () => {
         tab1Ref.current.classList.remove('underline')
         tab1Ref.current.classList.remove('underline-offset-[1.5em]')
    } else{
-    tab1Ref.current.className +=  ' underline underline-offset-[1.5em]'
+    tab1Ref.current.className +=  ' underline decoration-blue-500 decoration-2 underline-offset-[1.5em]'
+
     tabRef.current.classList.remove('underline')
     tabRef.current.classList.remove('underline-offset-[1.5em]')
+    tabRef.current.classList.remove('decoration-2')
+    tabRef.current.classList.remove('decoration-blue-500')
+  
     tab2Ref.current.classList.remove('underline')
     tab2Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab2Ref.current.classList.remove('decoration-2')
+    tab2Ref.current.classList.remove('decoration-blue-500')
+  
     tab3Ref.current.classList.remove('underline')
     tab3Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab3Ref.current.classList.remove('decoration-2')
+    tab3Ref.current.classList.remove('decoration-blue-500')
   
   
    }
@@ -122,13 +150,23 @@ const SearchPage = () => {
         tab2Ref.current.classList.remove('underline')
         tab2Ref.current.classList.remove('underline-offset-[1.5em]')
    } else{
-    tab2Ref.current.className +=  ' underline underline-offset-[1.5em]'
+    tab2Ref.current.className +=  ' underline decoration-blue-500 decoration-2 underline-offset-[1.5em]'
+    
     tabRef.current.classList.remove('underline')
     tabRef.current.classList.remove('underline-offset-[1.5em]')
+    tabRef.current.classList.remove('decoration-2')
+    tabRef.current.classList.remove('decoration-blue-500')
+  
     tab1Ref.current.classList.remove('underline')
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab1Ref.current.classList.remove('decoration-2')
+    tab1Ref.current.classList.remove('decoration-blue-500')
+  
     tab3Ref.current.classList.remove('underline')
     tab3Ref.current.classList.remove('underline-offset-[1.5em]')
+    tab2Ref.current.classList.remove('decoration-2')
+    tab2Ref.current.classList.remove('decoration-blue-500')
+  
    }
    setFilteredView({data : searchResult.tags, type: 'tags'})
    }

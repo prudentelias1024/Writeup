@@ -53,16 +53,16 @@ export default function ProfileVitals({user, setUser, total}) {
                <p className='text-xs'>Posts</p>
                
            </div>
-           <div className="followers_activity text-center">
+           <Link to={`/${user.username}/followers`} className="followers_activity text-center">
                <p className='text-2xl font-[Sen] font-bold'> {user ?user.followers.length: 0}</p>
                <p className='text-xs'>Followers</p>
                
-           </div>
-           <div className="following_activity text-center">
+           </Link>
+           <Link to={`/${user.username}/following`} className="following_activity text-center">
                <p className='text-2xl font-[Sen] font-bold'> {user ?user.following.length: 0}</p>
-               <p className='text-xs'>Followings</p>
+               <p className='text-xs'>Following</p>
                
-           </div>
+           </Link >
         </div>
     
        <div className="flex flex-col mt-[.75em] relative left-[2em]">
