@@ -8,6 +8,7 @@ import axios from 'axios';
 export default function SuggestedPeople({people}) {
     const {user} = useSelector(state => state)
      let URL
+
     const follow = () => {
     //     axios.post(`${URL}/api/follow`,{author:user, user:people}, {headers: {'Authorization': localstorgs.getItem('token')}})
     //     axios.post(`${URL}/api/follow`,{author:user, user:people}, {headers: {'Authorization': localstorgs.getItem('token')}})
@@ -32,13 +33,13 @@ export default function SuggestedPeople({people}) {
         <img src={people.public_picture} className='h-9 w-9 rounded-full'/>
         <div className="profile ml-[.5em] flex flex-col gap-[.25em] ">
             <div className='flex flex-row'>
-            <p className="name text-sm font-[Sen] font-bold">{user && user.name == people.name? 'You':people.name}</p>
+            <p className="name text-[.75em] font-[Sen] font-bold">{user && user.name == people.name? 'You':people.name}</p>
             {
                 people.verified !== true ? '':
             <HiBadgeCheck className='text-sm text-blue-500 relative top-[.25em]'/>
             }
             </div>
-            <p className="username text-sm font-[Sen] text-[#9e9e9e] font-bold -mt-[.45em]">@{people.username}</p>
+            <p className="username text-[.75em] font-[Sen] text-[#9e9e9e] font-bold -mt-[.45em]">@{people.username}</p>
         </div>
          
      </div>
@@ -51,8 +52,8 @@ export default function SuggestedPeople({people}) {
 
             user && user.username == people.username ? ' ' :
         user && user.following.length !== 0 && user.following.some((user) => user.username == people.username)?
-        <button onClick={unfollow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1em] bg-red-500 text-white text-sm px-[1.5em] rounded-md py-[.5em] border font-bold'>Unfollow</button>:
-        <button onClick={follow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1em] bg-blue-500 text-white text-sm px-[1.5em] rounded-md py-[.5em] border font-bold'>Follow</button>
+        <button onClick={unfollow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1.5em] border-black  text-xs px-[1em] rounded-md py-[.5em] border font-bold'>Following</button>:
+        <button onClick={follow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1em] bg-blue-500 text-white text-xs px-[1.5em] rounded-md py-[.5em] border font-bold'>Follow</button>
         }
         {/* {
             user.username !== people.username ?
