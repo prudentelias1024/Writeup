@@ -1,12 +1,38 @@
 import React from 'react'
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import { HiBadgeCheck, HiHashtag } from 'react-icons/hi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import copy from 'copy-to-clipboard'
 import { ToastContainer ,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-export default function ProfileVitals({user,total}) {
-    const currentUser = useSelector(state => state.user)
+import axios from 'axios'
+import { actions } from '../../store';
+export default function ProfileVitals({user, setUser, total}) {
+    const currentUser = useSelector(state => state.user)  
+    const dispatch = useDispatch()
+
+    const {URL} = useSelector(state => state)  
+    const follow = async() => {
+       let res =  await axios.post(`${URL}/api/follow`, {username:user.username, id:user._id},{headers: {Authorization: localStorage.getItem('token') }})
+        setUser(res.data.followee)
+        console.log(res.data)
+        let isAdmin = false
+           if(currentUser.username == 'InkupOfficial' && currentUser.username == 'prudentelias'){
+            isAdmin = false
+           }
+        dispatch(actions.updateUser({...res.data.user, isAdmin: isAdmin}))
+     }
+    const unfollow = async() => {
+       let res =  await axios.post(`${URL}/api/unfollow`, {username:user.username, id:user._id},{headers: {Authorization: localStorage.getItem('token') }})
+       setUser(res.data.followee)
+        console.log(res.data)
+        let isAdmin = false
+           if(currentUser.username == 'InkupOfficial' && currentUser.username == 'prudentelias'){
+            isAdmin = false
+           }
+        dispatch(actions.updateUser({...res.data.user, isAdmin: isAdmin}))
+
+    }
     const navigate = useNavigate()
     const redirectToLogin = () => {
         navigate('/login')
@@ -46,6 +72,12 @@ export default function ProfileVitals({user,total}) {
         </div> 
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
        </div>
+       {
+         user.following.some((person) => person.username == currentUser.username) ?
+         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[2.5em] pb-[1em]'> Follows you</p>: ''
+        
+       }
+
         {
 
        currentUser ?
@@ -59,10 +91,10 @@ export default function ProfileVitals({user,total}) {
        <ToastContainer/>
        </div>:
          currentUser.following.some((person) => person.username == user.username) ?
-         <button className='text-black border-black font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Following</button>
+         <button onClick={unfollow} className='text-black border-black font-[Sen] font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Following</button>
        
        :
-        <button className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
+        <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
       :   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
     //   This will re
     }

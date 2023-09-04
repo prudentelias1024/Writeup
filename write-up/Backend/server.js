@@ -24,6 +24,7 @@ const server = http.createServer(app)
 const nodemailer = require('nodemailer')
 const cron = require('node-cron');
 const reels = require('./reelsSchema');
+const { profile } = require('console');
 //Dynamic URL
 let URL;
 
@@ -630,66 +631,79 @@ app.post('/api/notification/follow',verify, async(req,res) => {
 })
 
  app.post('/api/follow', verify,  (req,res) => {    
-    let {user,author} = req.body;
+    let {username, id} = req.body;
+        let alreadyFollowing = req.user.following.some((personId) => {
+            return personId._id.toString() == id.toString()
+            })
+        if (alreadyFollowing == false) {
+        User.findOneAndUpdate({username:req.user.username}, {$push: {following: mongoose.Types.ObjectId(id)}},{new:true} ).exec()
+            }
+    
+    User.findOne({username:username}).exec((err,user) => {
+        if(err){throw err}
+        if(user){
+          let alreadyAFollower =  user.followers.some((followersId) => {
+              return req.user._id.toString() == followersId.toString()
+            })
+        console.log(alreadyAFollower)
+         if(alreadyAFollower == false){
+            User.findOneAndUpdate({username:username}, {$push: {followers: req.user._id} }).exec()
+         }
+        }
+    })
+
+    
   
-    // add user to the author followers list
-    User.findOneAndUpdate({username:author.username}, {$push: {followers: req.user._id} }, {new:true},(err,doc) => {
-        if(err){throw err} 
-       console.log(doc)
-      
-    })
-            // Add the author the  user following list
-        User.findOneAndUpdate({username:user.username}, {$push: {following: mongoose.Types.ObjectId(author._id)} }, {new: true}, (err,doc1) => {
+   User.findOne({username:req.user.username}).populate('followers').populate('following').populate('followingTags').exec((err,currentUser) => {
+       if(err){ throw err}
+       if(currentUser){
+        User.findOne({username:username}).populate('followers').populate('following').populate('followingTags').exec((err,profile) => {    
             if(err){throw err}
-            
-            console.log(doc1)
-        
-    })
-   followers = []
-   following = []
-
- })
-
- app.post('/api/unfollow', verify,  (req,res) => {
-    let {user,author} = req.body;
-    let followers = [],following = [];
-    //get list of followers for the author
-    User.find({username:author.username} ,(err,doc) =>{
-    if(err){throw err}
-    if (doc) {
-        followers = doc[0].followers
-    }
-    })
-    //remove user from the list of followers followers and return new list of followers
-    followers = followers.filter((follower) => {
-        return  user._id  !==  follower
-    })
-    //get the list of following for the user
-    User.find({username:user.username},(err,doc) =>{
-    if(err){throw err}
-    if (doc) {
-        following = doc[0].following
-    }
-    })
-
-     following = following.filter((followinguser) => {
-        return followinguser !== author._id
-     })
-
-    //add user to the author followers list
-    User.findOneAndUpdate({username:author.username}, {followers: followers}, (err,doc) => {
-        if(err){throw err} else{
-        
-      
-            
-            //Add the author the  user following list
-        User.findOneAndUpdate({username:user.username}, {following: following}, {new: true}, (err,doc1) => {
-            if(err){throw err}
+            if(profile){
+                res.send({followee:profile, user:currentUser})
+            }
 
         })
-  
+
+       }
+   })
+   })
+
+ app.post('/api/unfollow', verify,  (req,res) => {
+    let {username, id} = req.body;
+    let alreadyFollowing = req.user.following.some((personId) => {
+        return personId._id.toString() == id.toString()
+        })
+    if (alreadyFollowing == true) {
+    User.findOneAndUpdate({username:req.user.username}, {$pull: {following: mongoose.Types.ObjectId(id)}}).exec()
+        }
+
+    User.findOne({username:username}).exec((err,user) => {
+        if(err){throw err}
+        if(user){
+        console.log(user.followers, req.user._id);
+        let alreadyAFollower =  user.followers.some((followersId) => {
+          return req.user._id.toString() == followersId.toString()
+        })
+    console.log(alreadyAFollower)
+     if(alreadyAFollower == true){
+        User.findOneAndUpdate({username:username}, {$pull: {followers: req.user._id} }).exec()
+     }
     }
-    })
+})
+
+
+
+User.findOne({username:username}).populate('followers').populate('following').populate('followingTags').exec((err,profile) => {
+   if(err){ throw err}
+   if(profile){
+        User.findOne({username:req.user.username}).populate('followers').populate('following').populate('followingTags').exec((err,currentUser) => {
+        
+            res.send({followee:profile, user:currentUser})
+
+        })
+   }
+})
    
  })
 

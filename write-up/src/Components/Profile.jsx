@@ -129,7 +129,7 @@ const Profile = () => {
         <div className='flex flex-col overflow-x-hidden'>
         {
           posts && reels ?
-        <ProfileVitals user={user} total={posts.length + reels.length}/>
+        <ProfileVitals user={user} setUser={setUser} total={posts.length + reels.length}/>
         : 'Loading.....'
         }
         
