@@ -21,6 +21,8 @@ export default function ProfileVitals({user, setUser, total}) {
             isAdmin = false
            }
         dispatch(actions.updateUser({...res.data.user, isAdmin: isAdmin}))
+        await axios.post(`${URL}/api/notification/follow`, {user:user},{headers: {Authorization: localStorage.getItem('token') }})
+
      }
     const unfollow = async() => {
        let res =  await axios.post(`${URL}/api/unfollow`, {username:user.username, id:user._id},{headers: {Authorization: localStorage.getItem('token') }})

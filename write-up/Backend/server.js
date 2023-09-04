@@ -617,17 +617,24 @@ app.post('/api/notification/bookmark',verify, async(req,res) => {
 app.post('/api/notification/welcome',verify, (req,res) => {
 
 })
-app.post('/api/notification/follow',verify, async(req,res) => {
-    const {postId, author} = req.body
-    const newNotification = new notifications({
-        actionUserVerified: req.user.verified,
-        userId: author._id,
-        message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: author.public_picture}]} ],
-        type: 'follow'
-       
-
+app.post('/api/notification/follow',verify, (req,res) => {
+    const {postId, user} = req.body
+    notifications.findOne({actionUserId:req.user._id, type: 'follow',userId:user._id}).exec(async(err,notification) => {
+        if(err){throw err}
+        if(!notification){
+            const newNotification = new notifications({
+                actionUserVerified: req.user.verified,
+                userId: user._id,
+                actionUserId: req.user._id,
+                message: [{user: [{name: req.user.name}, {link:`/@${req.user.username}`},{public_picture: req.user.public_picture}]} ],
+                type: 'follow'
+               
+        
+            })
+            await newNotification.save()
+        
+        }
     })
-    await newNotification.save()
 })
 
  app.post('/api/follow', verify,  (req,res) => {    
@@ -659,10 +666,9 @@ app.post('/api/notification/follow',verify, async(req,res) => {
        if(currentUser){
         User.findOne({username:username}).populate('followers').populate('following').populate('followingTags').exec((err,profile) => {    
             if(err){throw err}
-            if(profile){
+        
                 res.send({followee:profile, user:currentUser})
-            }
-
+        
         })
 
        }
