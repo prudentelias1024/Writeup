@@ -73,8 +73,15 @@ export default function ProfileVitals({user, setUser, total}) {
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
        </div>
        {
+
+         
+         user.following.some((person) => person.username == currentUser.username) && 
+         currentUser.following.some((person) => person.username == user.username) ?
+         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[2.5em] pb-[1em]'>You follow each other</p>: 
+         
          user.following.some((person) => person.username == currentUser.username) ?
-         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[2.5em] pb-[1em]'> Follows you</p>: ''
+         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[2.5em] pb-[1em]'> Follows you</p> :''
+        
         
        }
 
