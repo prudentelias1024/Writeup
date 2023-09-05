@@ -41,9 +41,16 @@ export default function Following() {
                 </li>
     </ul>
     {
-       following ? following.map((user) => {
+       following ? 
+       following.length > 0 ?
+       
+       following.map((user) => {
            return <SuggestedPeople people={user} key={user._id} />
-        }): <>
+        }):
+        <p className='font-[Sen] text-center text-[#a2a2a2] mt-[50%]'>Not following anyone yet</p>
+        :   
+    
+         <>
                       <ThreeDots 
   height="80" 
   width="80" 

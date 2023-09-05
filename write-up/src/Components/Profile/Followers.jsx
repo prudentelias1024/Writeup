@@ -43,9 +43,13 @@ export default function Followers() {
                 </Link>
     </ul>
     {
-       followers ? followers.map((user) => {
+       followers? 
+       followers.length > 0 ? followers.map((user) => {
            return <SuggestedPeople people={user} key={user._id} />
-        }): <>
+        }):
+        <p className='font-[Sen] text-center text-[#a2a2a2] mt-[50%]'>No Followers yet</p>
+        :
+        <>
                       <ThreeDots 
   height="80" 
   width="80" 
