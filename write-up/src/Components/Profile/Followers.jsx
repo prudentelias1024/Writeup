@@ -27,7 +27,7 @@ export default function Followers() {
      setFollowers(info.followers)
       }
 
-      if (userExists !== null || userExists == false) {
+      if (userExists == true) {
   return (
     <>
         

@@ -26,7 +26,7 @@ export default function Following() {
     }
      setFollowing(info.following)
  }
-  if(userExists !== null || userExists == false){
+  if(userExists == true){
   return (
     <>
      <div className="w-full z-[4em] bg-[#fff] border-b-[1px] font-[Maven] text-xl font-bold mt-[.25em] p-[.5em] pl-[.75em] ">
