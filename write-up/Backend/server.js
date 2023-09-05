@@ -621,7 +621,7 @@ app.post('/api/notification/follow',verify, (req,res) => {
     const {postId, user} = req.body
     notifications.findOne({actionUserId:req.user._id, type: 'follow',userId:user._id}).exec(async(err,notification) => {
         if(err){throw err}
-        if(!notification){
+        if(!notification && req.user._id !== user._id){
             const newNotification = new notifications({
                 actionUserVerified: req.user.verified,
                 userId: user._id,
