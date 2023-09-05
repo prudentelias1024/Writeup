@@ -59,8 +59,8 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
     )
     } else {
         return(
-            <div className="flex flex-row gap-3 m-auto ">
-        <BiRepost onClick={(event) => repost(post,postId)} className="text-2xl text-black mt-[-.1em] ml-[0.25em] "/> 
+            <div className="flex flex-row gap-3 m-auto text-[#a4a4a4]">
+        <BiRepost onClick={(event) => repost(post,postId)} className="text-2xl text-[#a4a4a4] mt-[-.1em] ml-[0.25em] "/> 
         <p className="font-[Sen] text-black -mt-[.09em]">{
            reposts.length
         } </p> 

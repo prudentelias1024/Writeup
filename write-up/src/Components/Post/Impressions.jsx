@@ -3,15 +3,14 @@ import { IoIosStats } from 'react-icons/io'
 
 export default function Impressions({count,additionalStyles}) {
      return(
-        <div className="flex flex-row gap-3">
-        <IoIosStats  className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-black"}/> 
+        <div className="flex flex-row gap-3 text-[#a4a4a4]">
+        <IoIosStats  className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-[#a4a4a4]"}/> 
         <div className="flex gap-2">
-        <p className="font-[Outfit] text-black -mt-[.09em]">
+        <p className="font-[Outfit]  -mt-[.09em]">
             {
                 count.length
             } 
         </p>
-        <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Likes</p>
             </div>
     </div>
      )
