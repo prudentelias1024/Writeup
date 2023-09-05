@@ -18,7 +18,7 @@ import Poll from './poll';
 import ImageReel from './imageReel';
 import { ThreeDots } from 'react-loader-spinner';
 import { MdOutlinePodcasts } from 'react-icons/md';
-    
+import {Helmet} from 'react-helmet'
 const Profile = () => {
     let URL;
     const reelsRef = useRef()
@@ -125,7 +125,14 @@ const Profile = () => {
     , []);
     if (user !== null && posts !== null) {
     return (
-        
+        <>
+        <Helmet>
+
+          <title> {user.name}</title>
+          <meta name='description'
+          content={user.name+ (user.username)+ 'on Inkup'}/>
+
+        </Helmet>
         <div className='flex flex-col overflow-x-hidden'>
         {
           posts && reels ?
@@ -201,6 +208,7 @@ const Profile = () => {
         </div>
 
         </div>
+        </>
     )
 }else if(userExists == false){
   return (<Page404/>)
