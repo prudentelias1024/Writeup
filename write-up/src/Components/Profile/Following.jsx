@@ -9,7 +9,7 @@ import Page404 from '../Page404';
 
 export default function Following() {
     const {username} = useParams()
-    const [userExists,setUserExists] = useState(null)
+    const [userExists,setUserExists] = useState(true)
     const [following,setFollowing] = useState(null)
     const URL = useSelector(state => state.URL)
     useEffect(() => {
