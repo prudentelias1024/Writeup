@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Input = ({handleChanges, label,placeholder,type, value}) => {
+const Input = ({handleChanges, label,placeholder,type, value, additionalStyle}) => {
     return (
         <div>
    
-        <label htmlFor={label} className="text-black font-[Outfit] text-xl font-bold float-left">{label}</label>
+        <label htmlFor={label} className="text-black font-[Sen] uppercase ml-[.5em] text-xs font-bold float-left">{label}</label>
         <br></br>
             <input 
             name={label}
@@ -12,7 +12,7 @@ const Input = ({handleChanges, label,placeholder,type, value}) => {
             type={type}
              placeholder={placeholder}
               value={value}
-               className="rounded-md  text-[#464646]  border font-[Maven] text-xl w-full font-bold placeholder:font-[Outfit] placeholder:font-light placeholder:ml-12 h-[2em]" />
+               className={additionalStyle +" rounded-md  text-[#464646]  border font-[Maven] pl-[.5em] text-xs w-[95%] font-bold placeholder:font-[Sen] placeholder:font-light ml-[.5em] placeholder:w-full placeholder:ml-12 h-[3em]"} />
         
         
         </div>

@@ -1812,18 +1812,19 @@ app.get('/api/user/reels/my',verify,(req,res) => {
 app.post('/api/user/edit', verify, (req,res) => {
     changes = req.body.profileChanges
     console.log(req.body)
-    console.log(req.user)
    
   console.log(changes)
     //we'll find difference and if any changes is made we update it in the Db
-    User.findByIdAndUpdate(req.user._id, {username: String(changes.username)},{new:true}, (err,doc) => {
+    User.updateOne({_id: req.user._id},changes).exec((err,message) => {
+        if(err){throw err}
+     User.findOne({_id: req.user._id}).exec((err,doc) => {
         if(err){throw err}
         if(doc){
-            console.log(doc)
-           let access_token =  jwt.sign(doc.username,process.env.INKUP_SECRET_KEY )
+          let access_token =  jwt.sign(doc.username,process.env.INKUP_SECRET_KEY )
            console.log(access_token)
            res.send({user:doc, Authorization: `Bearer ${access_token}` })
-        }
+    }
+     })
     })
 })
 app.get('/api/user/posts/my', verify, (req,res) => {

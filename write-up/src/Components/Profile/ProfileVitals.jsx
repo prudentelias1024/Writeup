@@ -73,6 +73,7 @@ export default function ProfileVitals({user, setUser, total}) {
         }
         </div> 
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
+        <p className=" text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl">{user.bio ?user.bio: ''}</p>
        </div>
        {
 
