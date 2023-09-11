@@ -2,7 +2,7 @@ import React from 'react';
 
 const Input = ({handleChanges, label,placeholder,type, value, additionalStyle}) => {
     return (
-        <div>
+        <div className='w-full'>
    
         <label htmlFor={label} className="text-black font-[Sen] uppercase ml-[.5em] text-xs font-bold float-left">{label}</label>
         <br></br>

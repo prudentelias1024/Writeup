@@ -16,7 +16,7 @@ const EditProfile = () => {
    useEffect(() => {
     
     console.log(user)
-    setProfileChanges({name: user.name,email: user.email,username: user.username,work : user.work,education: user.education,hobby: user.hobby,websiteUrl: user.websiteUrl,location: user.location,bio:user.bio})
+    setProfileChanges({name: user.name,email: user.email,username: user.username,websiteUrl: user.websiteUrl,location: user.location,bio:user.bio})
     console.log(profileChanges)
    }
    ,[user])
@@ -35,15 +35,15 @@ const EditProfile = () => {
        console.log(profileChanges)
       } 
        else if(event.target.name == 'Website URL'){
-       setProfileChanges({...profileChanges, websiteUrl: event.target.value})
+       setProfileChanges({...profileChanges, websiteUrl: event.target.value? event.target.value:''})
        console.log(profileChanges)
      }
        else if(event.target.name == 'Location'){
-       setProfileChanges({...profileChanges, location: event.target.value})
+       setProfileChanges({...profileChanges, location: event.target.value? event.target.value:''})
        console.log(profileChanges)
      }
        else if(event.target.name == 'Bio'){
-       setProfileChanges({...profileChanges, bio: event.target.value})
+       setProfileChanges({...profileChanges, bio: event.target.value? event.target.value:''})
        console.log(profileChanges)
      }
     }
@@ -69,22 +69,22 @@ const EditProfile = () => {
             <form className="flex flex-col lg:gap-[3em] gap-[2em]  lg:ml-[20em] ">
                 
             {/* <div className="user lg:ml-[1.5em] pt-5 p-4 lg:rounded-lg bg-white  lg:w-3/4"> */}
-            <div className='flex flex-row justify-evenly'>
+            <div className='w-full flex flex-row justify-between'>
              <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={profileChanges.name }/>
              <Input handleChanges={handleChanges} label="Email" placeholder="Update Name" value={profileChanges.email}/>
 
             </div>
-            <div className='flex flex-row justify-evenly'>
+            <div className='flex flex-row justify-between'>
              <Input handleChanges={handleChanges}  label="Username" placeholder="Update Name" value={profileChanges.username}/>
             <Input handleChanges={handleChanges} label="Website URL" placeholder="Add your Website Link" />
              <br></br>
              </div>
 
-             <div className='flex flex-col justify-evenly'>
+             <div className='flex flex-col justify-between'>
             
             <Input handleChanges={handleChanges} label="Location" placeholder="Oklahoma, Zurich, Munich e.t.c" />
              <br></br>
-            <Input handleChanges={handleChanges}additionalStyle={"w-[95%] h-[5em] placeholder:py-0"} label="Bio" placeholder="Express yourself" />
+            <Input handleChanges={handleChanges} value={profileChanges.bio} additionalStyle={"w-[95%] h-[5em] placeholder:py-0"} label="Bio" placeholder="Express yourself" />
       </div>     
       
             
