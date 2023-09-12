@@ -13,6 +13,7 @@ import LoginModal from '../loginModal';
 import SuggestedPeople from './SuggestedPeople';
 import Poll from '../poll';
 import ImageReel from '../imageReel';
+import { ThreeDots } from 'react-loader-spinner';
 
 const SearchPage = () => {
     let URL;
@@ -194,6 +195,7 @@ const SearchPage = () => {
         <>
         {showModal == true ? <LoginModal/>: ''}
         <NavBar searchWords={query}/>
+        {searchResult ?
         <div className=" relative w-full lg:bg-white pb-[33%] lg:flex lg:flex-row lg:gap-[5em]">
             <div className='flex flex-col'>
             <div className='lg:ml-[9em] mt-[1em] flex gap-2 text-2xl lg:text-4xl font-bold text-gray-500 font-[Avenir] ml-[.25em]'><p> Results for</p> <p className='font-extrabold text-black'>{query}</p> </div>
@@ -359,8 +361,17 @@ const SearchPage = () => {
 
             </div>
         </div>
-        </div>
-        </>
+        </div>:               <ThreeDots 
+  height="80" 
+  width="80" 
+  radius="9"
+  color="#4fa94d" 
+  ariaLabel="three-dots-loading"
+  wrapperStyle={{}}
+  wrapperClassName=""
+  visible={true}
+ />        }
+        </> 
     );
         }
 
