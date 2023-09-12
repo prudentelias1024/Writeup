@@ -8,7 +8,6 @@ import { FcCollaboration } from 'react-icons/fc';
 import { time } from "../../time";
 
 const Collaboration = ({notification}) => {
-    console.log(notification.message[0].post[1].link)
     const {notifications,URL} = useSelector(state => state)
     const dispatch = useDispatch()
     const [timeCreated,setTimeCreated] = useState()

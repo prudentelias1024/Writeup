@@ -14,7 +14,7 @@ import { HiBadgeCheck } from 'react-icons/hi';
 import { io } from "socket.io-client";
 export default function UserNav(){
   let socket
-    let URL;
+    const {URL} = useSelector(state => state)
     const { user, showMobileSearch} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
@@ -22,16 +22,10 @@ export default function UserNav(){
    const navigate = useNavigate()
      const helperRef   = useRef()
     useEffect(() => {
-        if (process.env.NODE_ENV == 'production') {
-            dispatch(actions.updateURL("https://inkup-api.onrender.com"))
-            URL = "https://inkup-api.onrender.com"
+      
              socket = io(URL)
-          }else{
-            
-            dispatch(actions.updateURL("http://localhost:5000"))
-            URL =  "http://localhost:5000" 
-             socket = io(URL)
-          }
+             console.log(URL)
+          
         setInterval(() => {
         if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
             
@@ -54,7 +48,6 @@ export default function UserNav(){
          const read =  newNotifications.filter((notification) => {
             return notification.read === false
          })
-    
        
        if(read.length == 0) {
          setAllRead(true)

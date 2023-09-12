@@ -10,7 +10,8 @@ import {useSelector} from 'react-redux'
 import Collaboration from './Notifications/collaboration';
 import UserNav from './Navbar/UserNav';
 import Header from './header';
-// const socket = io('https://writeup-37ap.vercel.app')
+import axios from 'axios';
+
 //Notification types
 //follow 
 //likes 
@@ -21,7 +22,21 @@ import Header from './header';
 //system
 const Notifications = () => {
     const {notifications} = useSelector(state => state)
-  
+    const {URL} = useSelector(state=>state)
+    const socket = io(URL)
+    // useEffect(async() => {
+    //     console.log(notifications)
+    //     const read =  notifications.filter((notification) => {
+    //       return notification.read === false
+    //    })
+    //    read.forEach(async(notification) => {
+    //      let newNotifications = await(await axios.post(`${URL}/api/notification/read`,{_id:notification._id},{headers:{Authorization: localStorage.getItem('token')}})).data
+         
+    //    })
+    //    console.log(read)
+       
+    // },[])
+      
     
     return (
         <>
@@ -31,7 +46,6 @@ const Notifications = () => {
             notifications && notifications.length !== 0?
             
               notifications.map((notification) => {
-                console.log(notification)
                 if(notification.type == 'like'){
                   return <Liked notification={notification}/>
                 }
