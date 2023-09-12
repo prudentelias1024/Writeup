@@ -79,16 +79,20 @@ export default function ProfileVitals({user, setUser, total}) {
         <div>
 
         <div className='flex flex-row gap-[.5em]'>
-
+        {user.location ? 
         <div className='inline-flex flex-row gap-[.25em]'>
             <CiLocationOn className="text-[#333] text-base" /> 
         <p className='text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl'>{user.location}</p> 
-        </div>
+        </div> : ''
+}
+{
+    user.websiteUrl ?
+
         <div className='inline-flex flex-row gap-[.25em]'>
             <AiOutlineLink className="text-blue-500 text-lg " /> 
         <Link to={user.websiteUrl} className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</Link> 
-        </div>
-        
+        </div> : ''
+}        
         </div>
         
              </div>
