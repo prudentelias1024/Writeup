@@ -76,13 +76,13 @@ const EditProfile = () => {
             </div>
             <div className='flex flex-row justify-between'>
              <Input handleChanges={handleChanges}  label="Username" placeholder="Update Name" value={profileChanges.username}/>
-            <Input handleChanges={handleChanges} label="Website URL" placeholder="Add your Website Link" />
+            <Input handleChanges={handleChanges} label="Website URL" placeholder="Add your Website Link" value={profileChanges.websiteUrl} />
              <br></br>
              </div>
 
              <div className='flex flex-col justify-between'>
             
-            <Input handleChanges={handleChanges} label="Location" placeholder="Oklahoma, Zurich, Munich e.t.c" />
+            <Input handleChanges={handleChanges} label="Location" placeholder="Oklahoma, Zurich, Munich e.t.c" value={profileChanges.location} />
              <br></br>
             <Input handleChanges={handleChanges} value={profileChanges.bio} additionalStyle={"w-[95%] h-[5em] placeholder:py-0"} label="Bio" placeholder="Express yourself" />
       </div>     

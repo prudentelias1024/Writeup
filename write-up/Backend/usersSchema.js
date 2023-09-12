@@ -4,6 +4,8 @@ const user = new mongoose.Schema({
      name:{type:String, required:true},
      lastActive:
       {type:Date, required:false},
+     lastProfileChange:
+      {type:Date, required:false},
       lastPosted:
       {type:Date, required:false},
       lastActiveNotified:
@@ -26,6 +28,7 @@ const user = new mongoose.Schema({
     followingTags: [
       {type:String, required:false }],
     bio: {type:String,default :() => ''},
+    websiteUrl: {type:String,default :() => ''},
     work: {type:String,default :() => ''},
     hobby: {type:String,default :() => ''},
     webUrl: {type:String, required:false},

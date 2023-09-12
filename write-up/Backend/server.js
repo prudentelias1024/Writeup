@@ -1812,7 +1812,7 @@ app.get('/api/user/reels/my',verify,(req,res) => {
 app.post('/api/user/edit', verify, (req,res) => {
     changes = req.body.profileChanges
     console.log(req.body)
-   
+    changes = {...changes,lastProfileChange: new Date}
   console.log(changes)
     //we'll find difference and if any changes is made we update it in the Db
     User.updateOne({_id: req.user._id},changes).exec((err,message) => {

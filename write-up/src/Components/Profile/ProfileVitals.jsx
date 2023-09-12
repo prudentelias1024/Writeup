@@ -7,6 +7,8 @@ import { ToastContainer ,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import { actions } from '../../store';
+import { AiOutlineLink } from 'react-icons/ai';
+import { CiLocationOn } from 'react-icons/ci';
 export default function ProfileVitals({user, setUser, total}) {
     const currentUser = useSelector(state => state.user)  
     const dispatch = useDispatch()
@@ -74,6 +76,22 @@ export default function ProfileVitals({user, setUser, total}) {
         </div> 
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
         <p className=" text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl">{user.bio ?user.bio: ''}</p>
+        <div>
+
+        <div className='flex flex-row gap-[.5em]'>
+
+        <div className='inline-flex flex-row gap-[.25em]'>
+            <CiLocationOn className="text-[#333] text-base" /> 
+        <p className='text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl'>{user.location}</p> 
+        </div>
+        <div className='inline-flex flex-row gap-[.25em]'>
+            <AiOutlineLink className="text-blue-500 text-lg " /> 
+        <Link to={user.websiteUrl} className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</Link> 
+        </div>
+        
+        </div>
+        
+             </div>
        </div>
        {
 
