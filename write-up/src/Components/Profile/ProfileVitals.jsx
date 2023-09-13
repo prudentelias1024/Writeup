@@ -46,6 +46,9 @@ export default function ProfileVitals({user, setUser, total}) {
         toast('Copied to Clipboard')
 
     }
+    const redirectToUserLink = (link) => {
+        window.location.replace(link)
+    }
    return (
     <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
     <div  className="activity_info flex flex-row justify-evenly">
@@ -90,7 +93,7 @@ export default function ProfileVitals({user, setUser, total}) {
 
         <div className='inline-flex flex-row gap-[.25em]'>
             <AiOutlineLink className="text-blue-500 text-lg " /> 
-        <Link to={user.websiteUrl} className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</Link> 
+        <a href={"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
         </div> : ''
 }        
         </div>
