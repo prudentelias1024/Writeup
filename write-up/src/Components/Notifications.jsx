@@ -43,7 +43,7 @@ const Notifications = () => {
         <Header/>
         <div className='pt-[.75em] lg:pt-[8em] w-[100%] z-0 flex flex-col '>
             {
-            notifications && notifications.length !== 0?
+            notifications && notifications.length > 0?
             
               notifications.map((notification) => {
                 if(notification.type == 'like'){
