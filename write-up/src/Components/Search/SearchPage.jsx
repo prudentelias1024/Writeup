@@ -174,6 +174,7 @@ const SearchPage = () => {
 //    const underline4 = () => {
 //     if(tab3Ref.current.classList.contains('underline')){
 //         tab3Ref.current.classList.remove('underline')
+
 //         tab3Ref.current.classList.remove('underline-offset-[1.5em]')
 //    } else{
 //     tab3Ref.current.className +=  ' underline underline-offset-[1.5em]'

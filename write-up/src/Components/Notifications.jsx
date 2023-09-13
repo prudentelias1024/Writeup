@@ -33,7 +33,7 @@ const Notifications = () => {
          let newNotifications = await(await axios.post(`${URL}/api/notification/read`,{_id:notification._id},{headers:{Authorization: localStorage.getItem('token')}})).data
          
        })
-       console.log(read)
+       console.log(notifications)
        
     },[])
       
