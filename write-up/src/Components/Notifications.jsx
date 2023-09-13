@@ -24,18 +24,18 @@ const Notifications = () => {
     const {notifications} = useSelector(state => state)
     const {URL} = useSelector(state=>state)
     const socket = io(URL)
-    useEffect(async() => {
-        console.log(notifications)
-        const read =  notifications.filter((notification) => {
-          return notification.read === false
-       })
-       read.forEach(async(notification) => {
-         let newNotifications = await(await axios.post(`${URL}/api/notification/read`,{_id:notification._id},{headers:{Authorization: localStorage.getItem('token')}})).data
+    // useEffect(async() => {
+    //     console.log(notifications)
+    //     const read =  notifications.filter((notification) => {
+    //       return notification.read === false
+    //    })
+    //    read.forEach(async(notification) => {
+    //      let newNotifications = await(await axios.post(`${URL}/api/notification/read`,{_id:notification._id},{headers:{Authorization: localStorage.getItem('token')}})).data
          
-       })
-       console.log(read)
+    //    })
+    //    console.log(read)
        
-    },[])
+    // },[])
       
     
     return (
