@@ -71,7 +71,7 @@ const SearchPage = () => {
         tabRef.current.classList.remove('underline')
         tabRef.current.classList.remove('underline-offset-[1.5em]')
    } else{
-    tabRef.current.className +=  'underline decoration-blue-500 decoration-2 underline-offset-[1.5em]'
+    tabRef.current.className +=  ' underline decoration-blue-500 decoration-2 underline-offset-[1.5em] '
     
     tab1Ref.current.classList.remove('underline')
     tab1Ref.current.classList.remove('underline-offset-[1.5em]')
@@ -205,13 +205,13 @@ const SearchPage = () => {
 
                 <li onClick={filterPost} ref={tabRef} className='block font-[Avenir] flex inline-flex h-min text-gray-500 cursor-pointer'>Post ({searchResult.post.length})
                 </li>
-                <li onClick={filterReels} ref={tab3Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>Reels
+                <li onClick={filterReels} ref={tab3Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer '>Reels
                 ({searchResult.reels.length})
                 </li>
-                <li onClick={filterPeople} ref={tab1Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>People
+                <li onClick={filterPeople} ref={tab1Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer '>People
                 ({searchResult.user.length})
                 </li>
-                <li onClick={filterTag} ref={tab2Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer'>
+                <li onClick={filterTag} ref={tab2Ref} className='block font-[Avenir]  h-min text-gray-500 cursor-pointer '>
                     Tags({searchResult.tags.length})
                     </li>
               
