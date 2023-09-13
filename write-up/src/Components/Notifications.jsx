@@ -11,6 +11,7 @@ import Collaboration from './Notifications/collaboration';
 import UserNav from './Navbar/UserNav';
 import Header from './header';
 import axios from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 
 //Notification types
 //follow 
@@ -36,7 +37,7 @@ const Notifications = () => {
        
     },[])
       
-    
+    if(notifications){
     return (
         <>
         <Header/>
@@ -70,6 +71,20 @@ const Notifications = () => {
         <UserNav/>
         </>
     );
+      }else {
+        return (
+          <ThreeDots 
+          height="80" 
+          width="80" 
+          radius="9"
+          color="#4fa94d" 
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+         />        
+        )
+      }
 }
 
 export default Notifications;
