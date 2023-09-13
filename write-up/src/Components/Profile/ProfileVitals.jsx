@@ -93,7 +93,7 @@ export default function ProfileVitals({user, setUser, total}) {
 
         <div className='inline-flex flex-row gap-[.25em]'>
             <AiOutlineLink className="text-blue-500 text-lg " /> 
-        <a href={"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
+        <a href={user.websiteUrl.startsWith('https://')? user.websiteUrl :"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
         </div> : ''
 }        
         </div>
