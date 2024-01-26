@@ -350,7 +350,7 @@ muchTagsError: ''
      const tagsGenerator = async() => {
         const {title} = post
          const body = quillRef.current.unprivilegedEditor.getText();
-         let tags = await (await axios.post('http://localhost:8000/ai/generateTags', {title:title, content:body})).data
+         let tags = await (await axios.post('https://inkup-ai.onrender.com/ai/generateTags', {title:title, content:body})).data
          tags = tags.map((tag) => {return "#" + tag.word})
          tagsRef.current.value = tags.join(' ')
      }
