@@ -178,6 +178,7 @@ function App() {
           dispatch(actions.updateMyReels([...reels]))
           console.log(reels)
    }
+      
 
        const getNotifications = async() => {
         let  notifications = await(await axios.get(`${URL}/api/notifications`,{headers: {Authorization: localStorage.getItem('token')}})).data

@@ -12,19 +12,33 @@ import Podcast from "./Podcast";
 import { Link } from "react-router-dom";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import BioMatcher from "./BioMatcher";
+import axios from "axios";
 export default function Posts(){
     const reelsRef = useRef()
     const podcastRef = useRef()
     const dispatch = useDispatch()
     const inksRef = useRef()
-    const [inkClicked, setInkClicked] = useState(false)
+    const [inkClicked, setInkClicked] = useState(false)                                                                                                                                                          
     const [reelsClicked, setReelClicked] = useState(false)
     const [podcastClicked, setPodcastClicked] = useState(false)
+    const [recommendedUser, setRecommendedUser] = useState([])
     const posts = useSelector(state => state.posts)
     const {reels} = useSelector(state => state)
     const {justPublishedReels} = useSelector(state => state)
     const {podcasts} = useSelector(state => state)
+    const {user} = useSelector(state => state) 
+    const {URL} = useSelector(state => state)
+    const getRecommendedUser = async() => {
+      const  all_user = await(await axios.get(`${URL}/api/users`,{headers: {Authorization: localStorage.getItem('token')}})).data
+      console.log(user)
+      // const recommendedUser = await(await axios.post(`https://inkup-ai.onrender.com/api/recommendUser`, {all_profile: all_user, user:user},{headers: {Authorization: localStorage.getItem('token')}})).data
+      const recommendedUser = await(await axios.post(`http://localhost:8000/api/recommendUser`, {all_profile: all_user, user:user})).data
+      console.log(recommendedUser)
+      setRecommendedUser(recommendedUser)
+    }
     useEffect(() => {
+      getRecommendedUser()
       if(justPublishedReels == true){
           reelsRef.current.click()
           dispatch(actions.setJustPublishedReels(false))
@@ -129,7 +143,11 @@ export default function Posts(){
     {
       inkClicked == true?
 
-      posts.map((post) => {
+      posts.map((post,index) => {
+          if(index  == Math.round(posts.length / 2 )){
+           return  <BioMatcher users={recommendedUser
+          } key={index}/>
+          }
          return(<Post key={post._id} post={post} />)
            
       }) : ''

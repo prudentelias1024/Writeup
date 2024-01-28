@@ -442,7 +442,7 @@ app.get('/api/admin/users', verifyAdmin, async(req,res) => {
         res.send(doc)
     } else {
         res.send({status: 403})
-    } ddd
+    } 
     })
 })
 app.get('/api/users',  async(req,res) => {
