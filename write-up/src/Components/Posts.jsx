@@ -1,9 +1,7 @@
 import Post from "./Post";
 import { useDispatch, useSelector } from "react-redux";
 import Poll from "./poll";
-
 import ImageReel from './imageReel';
-
 import moment from 'moment';
 import ShortFormCreator from "./shortFormCreator";
 import { useEffect, useRef, useState } from "react";

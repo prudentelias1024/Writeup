@@ -12,23 +12,23 @@ export default function ReelsFullContent() {
 
   const params = useParams()
     const {user} = useSelector(state => state)
-    const {URL} = useSelector(state => state)
+    
     const [reel, setReel] = useState(null)
     
     useEffect(() => {
-  
+        console.log(process.env.REACT_APP_PRODUCTION_URL)
         getReel()
         increasePostView()
     }, [])
     const increasePostView = async() => {
-        let res = await (await axios.post(`${URL}/reel/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let res = await (await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/reel/viewed`, {postId: params.postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
         console.log(res)
         setReel(res)
         
       }
     
       const getReel = async() => {
-        let res = await (await axios.get(`${URL}/reels/${params.postId}`, {headers: {Authorization: localStorage.getItem('token')}})).data
+        let res = await (await axios.get(`${process.env.REACT_APP_PRODUCTION_URL}/reels/${params.postId}`, {headers: {Authorization: localStorage.getItem('token')}})).data
         setReel(res)
         console.log(res)
       }
@@ -45,11 +45,11 @@ export default function ReelsFullContent() {
         </>
        }else if(reel.type === "image"){
        return  <>
-        <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={URL} /> 
+        <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={process.env.REACT_APP_PRODUCTION_URL} /> 
         {reel.comments.map(comment  => {
             return <Comment commenter={comment.author} comment={comment}  />
         })}
-         <AddComment reelUpdater={setReel} post={reel} user={user} url={URL} />
+         <AddComment reelUpdater={setReel} post={reel} user={user} url={process.env.REACT_APP_PRODUCTION_URL} />
          </>
            }  else{
           return 'loading'
