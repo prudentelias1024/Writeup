@@ -11,7 +11,9 @@ const Comment = ({commenter,timestamp,comment}) => {
         <div className=' flex flex-row gap-[.5em] ml-[1em] lg:ml-[4em]'>
                <img src={commenter.public_picture} className='ml-1 w-[2em] h-[2em] rounded-full object-cover lg:ml-0' /> 
                 <div className="w-[80%] font-[Sen]">
-                    <div className='-mt-1'>
+                    <div className='-mt-1 flex flex- gap-[.25em]'>
+                    {/* <p className="font-bold text-xs text-[#9e9e9e]  ">Replying to @{}</p> */}
+
                     <p className="font-bold">{commenter.name}</p>
                     <p className="font-bold text-xs text-[#9e9e9e]  ">@{commenter.username}</p>
 
