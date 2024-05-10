@@ -27,7 +27,7 @@ export default function SideNavBar(){
   )
     
     return(
-        <div ref={navRef} className=" lg:bg-[#f6f6f6] hidden overflow-y-auto fixed h-full pb-[4em] pt-[0em] w-full  text-center  z-30 md:w-full
+        <div ref={navRef} className=" lg:bg-white hidden overflow-y-auto fixed h-full pb-[4em] pt-[0em] w-full  text-center  z-30 md:w-full
          md:flex md:flex-col md:w-[15em] md:relative md:bg-[#f6f6f6] md:ml-[3em] md:mr-[3em] lg:mt-20 lg: p-2 md:gap-2 
           pl-[0em]
             bg-white lg:flex lg:flex-col lg:gap-4 lg:ml-32  lg:mt-32 lg:p-2 lg:h-[60em] lg:w-[15em] lg:relative ">    

@@ -97,8 +97,14 @@ function App() {
    }
 
       const loadUser = async() => {
-          const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: localStorage.getItem('token')}}
+         const token = localStorage.getItem('token')
+          if(token == null || token == undefined){
+            navigate('/login')
+          }
+        
+          const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: token}}
            )).data;
+           console.log(info)
            if(info == null || info == undefined){
             navigate('/login')
              
@@ -212,6 +218,7 @@ function App() {
           getPersonalisedPosts()
           loadUser();
           getNotifications()
+
           
         }
 

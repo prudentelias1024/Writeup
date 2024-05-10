@@ -17,7 +17,7 @@ export default function Home(){
     return(
         <>
          
-        <NavBar />
+        {/* <NavBar /> */}
         <div className=' flex flex-row gap-3 overflow-x-hidden lg:overflow-x-hidden lg:ml-4'>
           
         <SideNavBar/>

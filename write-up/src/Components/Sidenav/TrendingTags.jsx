@@ -117,7 +117,7 @@ export default function TrendingTags(){
     }, [])
     return(
         <>
-        <div className=" hidden bg-[#f6f6f6] lg:block h-[40em] overflow-x-hidden md:block md:ml-[-3em] lg:ml-[-3em]">
+        <div className=" hidden  lg:block h-fit overflow-x-hidden md:block md:ml-[-3em] lg:ml-[-3em]">
         <p className=" text-lg font-bold font-[Maven] mb-3 ml-[3em]  ">Trending Tags</p>
         <div className="flex flex-col text-center m:auto pl-10 w-[25em] lg:ml-[4.5em] h-[15em] overflow-y-auto overflow-x-hidden px-10 ">
         {tags && tags.map((tag,index) => 

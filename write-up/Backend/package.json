@@ -34,7 +34,7 @@
         "mysql": "^2.18.1",
         "node-cron": "^3.0.2",
         "nodemailer": "^6.9.1",
-        "nodemon": "^2.0.15",
+        "nodemon": "^2.0.22",
         "react-twitter-login-button": "^1.5.9",
         "socket.io": "^4.6.1",
         "socket.io-client": "^4.6.1",
