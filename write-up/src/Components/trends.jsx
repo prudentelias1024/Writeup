@@ -62,13 +62,18 @@ export default function Trends() {
    let res = await (await axios.get(`${URL}/api/tags`)).data
    //Contains all tags without their title
    let tagsArray = []
-   //temprary array
+
+   //temporary array
    let temp = []
+
    //contains all tags with their title with uniqueness
    let tagArray = []
  
   res.map(tag => {
+    if(tag.tags != ''){
+
       temp.push(tag.tags)
+    }
      
   })
  //Extract all tags
@@ -124,8 +129,8 @@ export default function Trends() {
     <div className='flex flex-col'>
         <p className='relative ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending🔥🔥</p>
         {
-        tags && tags.map((tag) => {
-
+        tags && tags.map((tag) => { 
+         
           return     <TrendLinks tag={tag.tag} count={tag.publishedPosts}/>
     
         })
