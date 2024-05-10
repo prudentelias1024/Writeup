@@ -74,24 +74,53 @@ const SignUp = () => {
         <div className="ml-7">
       <p className="font-[Pacifico] mt-5 text-3xl font-extrabold text-center">Ink Up</p>
   </div>
-          <div className='flex flex-col  mb-[10em] ml-[-.5em]'>
+     
+          <div className='flex flex-col  mb-[4em] ml-[-.5em]'>
+            
+          <p className="text-[Sen] font-bold text-2xl mt-[1em] ml-[1.5em] ">Sign Up</p>
+       
          
-          <button onClick={() => {signUpWithGoogle()}} className="bg-black text-white w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[6em] h-[4em]" type="submit">
+          <button onClick={() => {signUpWithGoogle()}} className="bg-black text-white w-[90%] ml-6 lg:ml-12 rounded-lg lg:w-[45em] mt-[3em] h-[4em]" type="submit">
               <FcGoogle className='text-4xl mr-3 ml-3'/>
               <p className='font-[Sen] text-xl font-semibold -mt-8 ml-6 '>Continue With Google</p>
+         </button>
+
+          <p className="text-[Sen] font-semibold text-lg mt-[2em] ml-[50%]">OR</p>
+      
+         <div className="flex flex-col gap-[1.5em] ml-[1.5em] mt-[5em]">
+        
+         <div className='flex flex-col gap-[1em]'>
+        <p className="text-[Sen] font-semibold text-lg ml-[1em] ">Full name</p>
+          <input type="text" name="email" className='h-[2.5em] p-4 border  ml-[1em] w-[80%] text-[Outfit] ' placeholder='Enter your Email' />
+         </div>
+      
+
+        <div className='flex flex-col gap-[1em]'>
+        
+        <p className="text-[Sen] font-semibold text-lg ml-[1em] ">Username</p>
+          <input type="text" name="username" className='h-[2.5em] p-4 border  ml-[1em] w-[80%] text-[Outfit] ' placeholder='Enter your username' />
+        </div>
+        
+        <div className='flex flex-col gap-[1em]'>
+        
+        <p className="text-[Sen] font-semibold text-lg ml-[1em] ">Email</p>
+          <input type="text" name="email" className='h-[2.5em] p-4 border  ml-[1em] w-[80%] text-[Outfit] ' placeholder='Enter your username' />
+        </div>
+        
+
+         <div className='flex flex-col gap-[1em]'>
+         <p className="text-[Sen] font-semibold text-lg ml-[1em] ">Password</p>
+          <input type="password" name="password" className='h-[2.5em] p-4 border  ml-[1em] w-[80%] text-[Outfit] ' placeholder='Enter password' />
+         </div>
+
+
+         <button onClick={() => {signUpWithGoogle()}} className="bg-black w-[90%] ml-4 text-white lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
+            <p className='font-[Sen] text-xl font-semibold  ml-3 '>Sign Up</p>
 
           </button>
-          <button className="bg-black text-white  ml-3 lg:ml-12 rounded-lg w-[95%] lg:w-[45em] mt-[2em] h-[4em]" type="submit">
-              <BsTwitter className='text-[1d9bf0] text-4xl mr-3 ml-3'/>
-              <p className='font-[Sen] text-xl font-semibold -mt-8 ml-3 '>Continue With Twitter</p>
-
-          </button>
-          <button className="bg-black text-white w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
-              <AiFillInstagram className='text-[1d9bf0] text-4xl mr-10 ml-3'/>
-              <p className='font-[Sen] text-xl font-semibold -mt-8 ml-12 '>Continue With Instagram</p>
-
-          </button>
-          
+  
+         </div>
+   
           <div className='flex flex-col m-auto lg:flex-row mt-9 mb-72'>
 
           <p className="font-[Sen] text-2xl">

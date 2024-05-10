@@ -65,54 +65,43 @@ const Login = () => {
     }
     
 })
-    const loginWithFacebook = async() => {
-     try {
-        const response = await login({
-            scope: 'public_profile,email'
-        })
-       setToken(response.authResponse.accessToken)
-            console.log(profile)
-        
-     } catch (error) {
-        console.log(error.message)
-     }
-    }
- 
-     const loginWihTwitter = () => {
-      
-    
-     }
-     
-  
-        
-
-
 
     return (
         <div className='bg-white flex flex-col  '>
         <div className="ml-7">
       <p className="font-[Pacifico] mt-5 text-3xl font-extrabold text-center">Ink Up</p>
   </div>
-          <div className='flex flex-col lg:place-self-center mB-12'>
-      
+          <div className='flex flex-col lg:place-self-center mb-12'>
+       
+          <p className="text-[Sen] font-bold text-3xl ml-[.5em] ">Login</p>
+       
           <button onClick={() => {loginWithGoogle()}} className="bg-black w-[95%] ml-3 text-white lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
           <FcGoogle className='text-4xl ml-3'/>
               <p className='font-[Sen] text-xl font-semibold -mt-8 ml-3 '>Login With Google</p>
 
           </button>
-         <button onClick={loginWithFacebook} disabled={isLoading} className="bg-black w-[95%] ml-3 text-white lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
-              <BsFacebook className='text-[1d9bf0]  text-4xl ml-3'/>
-              <p className='font-[Sen] text-xl font-semibold -mt-8 ml-3 '>Login With Facebook</p>
+          <p className="text-[Sen] font-semibold text-lg mt-[2em] ml-[50%]">OR</p>
+      
+         <div className="flex flex-col gap-[1.5em] mt-[5em]">
+        
+         <div className='flex flex-col gap-[1em]'>
+        <p className="text-[Sen] font-semibold text-lg ml-[1em] ">Email</p>
+          <input type="text" name="email" className='h-[2.5em] p-4 border  ml-[1em] w-[80%] text-[Outfit] ' placeholder='Enter your Email' />
+         </div>
+        
+         <div className='flex flex-col gap-[1em]'>
+         <p className="text-[Sen] font-semibold text-lg ml-[1em] ">Password</p>
+          <input type="password" name="password" className='h-[2.5em] p-4 border  ml-[1em] w-[80%] text-[Outfit] ' placeholder='Enter password' />
+         </div>
+
+
+         <button onClick={() => {loginWithGoogle()}} className="bg-black w-[95%] ml-3 text-white lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
+            <p className='font-[Sen] text-xl font-semibold  ml-3 '>Login</p>
 
           </button>
-         
-          <button onClick={() => {loginWihTwitter()}} className="bg-black text-white  w-[95%] ml-3 lg:ml-12 rounded-lg lg:w-[45em] mt-[2em] h-[4em]" type="submit">
-              <BsTwitter className='text-[1d9bf0] text-4xl ml-3'/>
-              <p className='font-[Sen] text-xl font-semibold -mt-8 ml-3 '>Login With Twitter</p>
+  
+         </div>
 
-          </button>
-         
-         
           <div className='flex flex-col m-auto lg:flex-row mt-9 mb-72'>
 
           <p className="font-[Sen] text-xl lg:text-2xl">

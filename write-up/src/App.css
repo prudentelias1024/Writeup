@@ -1468,6 +1468,16 @@ video {
   margin-top: 1.5em;
 }
 
+.mb-12
+{
+  margin-bottom: 3rem;
+}
+
+.mt-\[5em\]
+{
+  margin-top: 5em;
+}
+
 .block
 {
   display: block;
@@ -1956,6 +1966,11 @@ video {
 .gap-\[6em\]
 {
   gap: 6em;
+}
+
+.gap-\[1\.5em\]
+{
+  gap: 1.5em;
 }
 
 .overflow-hidden
@@ -2736,6 +2751,11 @@ video {
   font-weight: 300;
 }
 
+.font-normal
+{
+  font-weight: 400;
+}
+
 .uppercase
 {
   text-transform: uppercase;
@@ -2941,6 +2961,16 @@ video {
 {
   --tw-text-opacity: 1;
   color: rgb(45 45 45 / var(--tw-text-opacity));
+}
+
+.text-\[Outfit\]
+{
+  color: Outfit;
+}
+
+.text-\[Sen\]
+{
+  color: Sen;
 }
 
 .underline
