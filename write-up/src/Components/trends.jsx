@@ -126,7 +126,7 @@ export default function Trends() {
  
   return (
     <>
-       <div className='ml-[10em]'>
+       <div className='lg:ml-[10em]'>
      
     <div className='flex flex-col'>
         <p className='relative lg:ml-[6em] ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending🔥</p>

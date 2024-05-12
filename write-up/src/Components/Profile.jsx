@@ -142,7 +142,7 @@ const Profile = () => {
         
         <div className='lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
             <div className='mt-[10em] hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
-            ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
+           lg:ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
             <div className='flex gap-2 w-fit'>
                     <SlNote className='text-xl ' />
                     <p className='font-[Outfit] w-[10em] font-light text-sm'> {posts? posts.length : 0} Posts published</p>

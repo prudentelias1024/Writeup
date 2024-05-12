@@ -43,7 +43,7 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
                         return (
                         author.name !== collaborator.name  ?
                        "&" + collaborator.name:  '& You' &&
-                        collaborator.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''
+                        collaborator.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-0"  />: ''
                         )        
                     }): ''
                 }

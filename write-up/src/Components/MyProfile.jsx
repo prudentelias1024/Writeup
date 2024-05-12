@@ -62,7 +62,7 @@ const MyProfile = () => {
             return (
                 <>
                 
-        <div className='flex flex-col ml-[10em] lg:ml-[7em] lg:w-full'>
+        <div className='flex flex-col lg:ml-[10em] lg:ml-[7em] lg:w-full'>
         {
           myPosts && myReels ?
         <ProfileVitals user={user} total={myPosts.length + myReels.length}/>

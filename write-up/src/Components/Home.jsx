@@ -23,7 +23,7 @@ export default function Home(){
           
         
         {/* <Podcast/> */}
-       <div className="ml-[10em] w-full">
+       <div className="lg:ml-[10em] w-full">
         
      <Posts/>
        </div>

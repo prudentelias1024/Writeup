@@ -74,7 +74,7 @@ export default function ProfileVitals({user, setUser, total}) {
         <div className='inline-flex'>
         <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
         {user.verified ==true?
-        <HiBadgeCheck className="text-xl text-blue-500 mt-[1.5em] "/>: ''
+        <HiBadgeCheck className="text-xl text-blue-500 lg:mt-[1.5em] mt-1"/>: ''
         }
         </div> 
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
@@ -122,7 +122,7 @@ export default function ProfileVitals({user, setUser, total}) {
        <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-[-10em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
        </Link>
                        
-       <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] hidden font-bold text-sm  lg:absolute top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
+       <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm  lg:absolute top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
        <ToastContainer/>
        </div>:
          currentUser.following.some((person) => person.username == user.username) ?

@@ -1438,6 +1438,16 @@ video {
   margin-top: 4em;
 }
 
+.ml-auto
+{
+  margin-left: auto;
+}
+
+.ml-\[6em\]
+{
+  margin-left: 6em;
+}
+
 .block
 {
   display: block;
@@ -2524,6 +2534,11 @@ video {
 .pt-\[9em\]
 {
   padding-top: 9em;
+}
+
+.pl-0
+{
+  padding-left: 0px;
 }
 
 .text-center
@@ -3953,6 +3968,11 @@ video {
   .lg\:ml-\[35em\]
 {
     margin-left: 35em;
+  }
+
+  .lg\:mt-\[1\.5em\]
+{
+    margin-top: 1.5em;
   }
 
   .lg\:block

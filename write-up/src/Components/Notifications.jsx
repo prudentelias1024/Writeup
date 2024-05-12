@@ -39,9 +39,9 @@ const Notifications = () => {
       
     if(notifications){
     return (
-        <div className='ml-[10em]'>
+        <div className='lg:ml-[10em]'>
         <Header/>
-        <div className='pt-[.75em] ml-[4em] w-[100%] z-0 flex flex-col '>
+        <div className='pt-[.75em] lg:ml-[4em] pl-[1em] w-[100%] z-0 flex flex-col '>
             {
             notifications && notifications.length > 0?
             
