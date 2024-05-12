@@ -38,7 +38,7 @@ const Commented = ({notification}) => {
     }, [timeCreated]);
     return (
         <div>
-        <div className='flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%] lg:m-auto bg-white p-[.5em]   lg:pl-[7em] hover:scale-110'>
+        <div className='flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%]  bg-white p-[.5em]  lg:border-[.4px]  lg:pl-[2em] hover:scale-110'>
    
     <GoMention  className='text-2xl text-blue-500 mt-[1em]'/>
     

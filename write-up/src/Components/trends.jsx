@@ -126,17 +126,20 @@ export default function Trends() {
  
   return (
     <>
+       <div className='ml-[10em]'>
+     
     <div className='flex flex-col'>
-        <p className='relative ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending🔥🔥</p>
-        {
-        tags && tags.map((tag) => { 
-         
-          return     <TrendLinks tag={tag.tag} count={tag.publishedPosts}/>
-    
-        })
-        }
+        <p className='relative lg:ml-[6em] ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Trending🔥</p>
+         {
+            tags && tags.map((tag) => { 
+              
+              return     <TrendLinks tag={tag.tag} count={tag.publishedPosts}/>
+              
+            })
+          }
             </div>
     <UserNav/>
+            </div>
     </>
   )
 }

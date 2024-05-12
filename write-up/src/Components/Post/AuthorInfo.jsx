@@ -33,7 +33,8 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
                 user !== null ?
                 author.name !== user.name ?
                 author.name: 'You':
-                 author.name} {author.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-0"  />: ''}</Link>
+                 author.name} {author.verified?
+                  <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}</Link>
                  
                 <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles +" author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]" : 
                 " text-[#171717] author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]"}>  {

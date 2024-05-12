@@ -8,7 +8,7 @@ export function Comments({comments,postId,username}){
         <p className="font-[Outfit] text-blue-500 -mt-[.09em]">{
            comments ? comments.length : 0
         } </p> 
-        <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Comments </p> 
+        {/* <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Comments </p>  */}
         
             
             </div>

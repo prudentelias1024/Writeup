@@ -18,17 +18,21 @@ export default function Home(){
         <>
          
         {/* <NavBar /> */}
-        <div className=' flex flex-row gap-3 overflow-x-hidden lg:overflow-x-hidden lg:ml-4'>
+        <div className=' flex flex-row gap-3 w-full overflow-x-hidden lg:overflow-x-hidden lg:pl-[10em] '>
+        <UserNav  />
           
-        <SideNavBar/>
         
         {/* <Podcast/> */}
-       
+       <div className="ml-[10em] w-full">
+        
      <Posts/>
+       </div>
   
      {/* <TagTopics/> */}
 </div>
+        <div className="lg:hidden">
      <UserNav  />
+        </div>
        
         </>
     );

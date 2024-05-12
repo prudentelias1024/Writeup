@@ -14,6 +14,7 @@ import SuggestedPeople from './SuggestedPeople';
 import Poll from '../poll';
 import ImageReel from '../imageReel';
 import { ThreeDots } from 'react-loader-spinner';
+import UserNav from '../Navbar/UserNav';
 
 const SearchPage = () => {
     let URL;
@@ -194,10 +195,12 @@ const SearchPage = () => {
     },[])
     return (
         <>
+          <UserNav/>
+      
         {showModal == true ? <LoginModal/>: ''}
-        <NavBar searchWords={query}/>
+        {/* <NavBar searchWords={query}/> */}
         {searchResult ?
-        <div className=" relative w-full lg:bg-white pb-[33%] lg:flex lg:flex-row lg:gap-[5em]">
+        <div className=" relative lg:w-[75%] lg:ml-[-7em] w-full lg:bg-white pb-[33%] lg:flex lg:flex-row lg:gap-[5em]">
             <div className='flex flex-col'>
             <div className='lg:ml-[9em] mt-[1em] flex gap-2 text-2xl lg:text-4xl font-bold text-gray-500 font-[Avenir] ml-[.25em]'><p> Results for</p> <p className='font-extrabold text-black'>{query}</p> </div>
         <div className='flex flex-col lg:w-2/3 lg:gap-[1em] w-full'>
@@ -262,7 +265,7 @@ const SearchPage = () => {
           </div>   
         </div>
 
-        <div className="hidden others lg:fixed lg:right-1 lg:mr-[.25em] lg:pl-[2em] lg:w-1/3 lg:flex lg:flex-col">
+        <div className="hidden others lg:fixed lg:right-1  lg:ml-[6em] lg:pl-[2em] lg:w-1/3 lg:flex lg:flex-col">
             <div className="tags">
             <p className='font-[Maven] font-bold mb-7 ml-[1.5em] mt-[2em]'>Tags Matching {query}</p>
             <div className='flex gap-5 flex-auto flex-wrap ml-[1em] mr-[8em]'>

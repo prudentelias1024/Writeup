@@ -50,7 +50,7 @@ export default function ProfileVitals({user, setUser, total}) {
         window.location.replace(link)
     }
    return (
-    <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[4.5em] relative flex-col lg:mt-[5em] lg:w-4/5  lg:ml-[10em]  lg:pt-[4em]">
+    <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[1.5em] relative flex-col lg:mt-[1em] lg:w-4/5  lg:ml-[1em]  lg:pt-[1em]">
     <div  className="activity_info flex flex-row justify-evenly">
         <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em]' src={user.public_picture} alt={user.name}  />
            <div className="post_activity text-center">
@@ -70,11 +70,11 @@ export default function ProfileVitals({user, setUser, total}) {
            </Link >
         </div>
     
-       <div className="flex flex-col mt-[.75em] relative left-[2em]">
-        <div className='flex flex-row'>
+       <div className="flex flex-col mt-[.75em] relative left-[2em] lg:ml-[8em]">
+        <div className='inline-flex'>
         <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
         {user.verified ==true?
-        <HiBadgeCheck className="text-xl text-blue-500 relative top-[.2em]"/>: ''
+        <HiBadgeCheck className="text-xl text-blue-500 mt-[1.5em] "/>: ''
         }
         </div> 
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
@@ -84,7 +84,7 @@ export default function ProfileVitals({user, setUser, total}) {
         <div className='flex flex-row gap-[.5em]'>
         {user.location ? 
         <div className='inline-flex flex-row gap-[.25em]'>
-            <CiLocationOn className="text-[#333] text-base" /> 
+            <CiLocationOn className="text-[#333] text-base lg:text-2xl" /> 
         <p className='text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl'>{user.location}</p> 
         </div> : ''
 }
@@ -92,7 +92,7 @@ export default function ProfileVitals({user, setUser, total}) {
     user.websiteUrl ?
 
         <div className='inline-flex flex-row gap-[.25em]'>
-            <AiOutlineLink className="text-blue-500 text-lg " /> 
+            <AiOutlineLink className="text-blue-500 text-lg lg:text-2xl " /> 
         <a href={user.websiteUrl.startsWith('https://')? user.websiteUrl :"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
         </div> : ''
 }        
@@ -119,10 +119,10 @@ export default function ProfileVitals({user, setUser, total}) {
        currentUser !== null && user.username == currentUser.username   ? 
             <div className="profile_actions left-[2em] flex flex-row justify-evenly mt-[1em]">
                        <Link to="/settings">
-       <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
+       <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-[-10em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
        </Link>
                        
-       <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
+       <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] hidden font-bold text-sm  lg:absolute top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
        <ToastContainer/>
        </div>:
          currentUser.following.some((person) => person.username == user.username) ?

@@ -65,7 +65,7 @@ export function Like({likes,postId,username,reelUpdater,posttype,additionalStyle
                likes.length
             } 
         </p>
-        <p className="hidden lg:block font-[Outfit] -mt-[.09em]">Likes</p>
+        {/* <p className="hidden lg:block font-[Outfit] -mt-[.09em]">Likes</p> */}
             </div>
     </div>
       )
@@ -79,7 +79,7 @@ export function Like({likes,postId,username,reelUpdater,posttype,additionalStyle
                     likes.length
                 } 
             </p>
-            <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Likes</p>
+            {/* <p className="hidden md:block lg:block font-[Outfit] -mt-[.09em]">Likes</p> */}
                 </div>
         </div>
          )

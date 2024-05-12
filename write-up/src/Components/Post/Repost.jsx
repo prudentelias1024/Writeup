@@ -53,7 +53,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
         <p className="font-[Sen] text-green-500 -mt-[.09em]">{
            reposts.length
         } </p> 
-        <p className="hidden lg:block font-[Sen]  ml-[-.5em] -mt-[.09em]">Reposts </p> 
+        {/* <p className="hidden lg:block font-[Sen]  ml-[-.5em] -mt-[.09em]">Reposts </p>  */}
         
     </div>
     )
@@ -64,7 +64,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
         <p className="font-[Sen] text-black -mt-[.09em]">{
            reposts.length
         } </p> 
-        <p className="hidden md:block lg:block font-[Sen] ml-[-.5em] -mt-[.09em]">Reposts </p> 
+        {/* <p className="hidden md:block lg:block font-[Sen] ml-[-.5em] -mt-[.09em]">Reposts </p>  */}
         
     </div>
         )

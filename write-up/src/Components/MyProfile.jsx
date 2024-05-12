@@ -62,31 +62,14 @@ const MyProfile = () => {
             return (
                 <>
                 
-        <div className='flex flex-col'>
+        <div className='flex flex-col ml-[10em] lg:ml-[7em] lg:w-full'>
         {
           myPosts && myReels ?
         <ProfileVitals user={user} total={myPosts.length + myReels.length}/>
         : 'Loading.....'
         }
      
-        <div className=' w-full lg:flex lg:mt-[-9em] lg:flex-row justify-between '>
-            <div className='hidden bg-white px-7 py-9 font-[Mulish] rounded-xl ml-[14em] mt-[10em] h-fit w-[20em] justify-start lg:flex lg:flex-col lg:gap-5 border '>
-              
-                <div className='flex gap-2'>
-                    <SlNote className='text-2xl' />
-                    <p className='font-[Mulish] font-semibold text-xl'> {myPosts? myPosts.length : 0} Posts published</p>
-                </div>
-                <div className='flex gap-2'>
-                    <HiHashtag className='text-2xl' />
-                    <p className='font-[Mulish] font-semibold text-xl'> {user ?user.followingTags.length : 0} Tags Followed</p>
-                </div>
-                <div className='flex gap-2 '>
-                    <FaRegComment className='text-2xl' />
-                    <p className='font-[Mulish] font-semibold text-xl'> 0 Comment Added</p>
-                </div>
-            </div>
-           </div>
-           <div className="flex flex-row w-full -mt-[4em]">
+           <div className="flex flex-row w-full lg:w-[50%] lg:ml-[3em] -mt-[4em]">
         {
         inkClicked ?
         
@@ -108,7 +91,7 @@ const MyProfile = () => {
             </div>
 }
 </div>
-            <div className=' flex flex-col gap-4  lg:mt-[10em] mb-[7em] '>
+            <div className=' flex flex-col gap-4 lg:ml-[10em] lg:mt-[1em] mb-[7em] '>
             {
             inkClicked ?
             myPosts == null || myPosts.length == 0  ?
@@ -137,8 +120,8 @@ const MyProfile = () => {
             
             </div>
 
-        </div>
         <UserNav/>
+        </div>
         </>
     )} else {
         return ''

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Welcome = () => {
     return (
         
-        <div className='flex flex-col lg:flex-row gap-3 w-[115%] lg:w-[60%] lg:m-auto bg-white p-[1em] ml-0 justify-between hover:scale-110'>
+        <div className=' lg:border-[.4px] flex flex-col lg:flex-row gap-3 w-[115%] lg:w-[60%]  bg-white p-[1em] ml-0 justify-between hover:scale-110'>
             
     <div className=' w-[85%] font-[Outfit] lg:m-auto font-semibold leading-8 mb-[1em]'>
 

@@ -59,7 +59,7 @@ export function Bookmark({bookmarks,postId,username}){
         <p className="font-[Sen] text-purple-500 -mt-[.09em]">{
            bookmarks.length
         } </p> 
-        <p className="hidden md:block lg:block font-[Sen] ml-[-.5em] -mt-[.09em]">Bookmarks </p> 
+        {/* <p className="hidden md:block lg:block font-[Sen] ml-[-.5em] -mt-[.09em]">Bookmarks </p>  */}
         
     </div>
         )

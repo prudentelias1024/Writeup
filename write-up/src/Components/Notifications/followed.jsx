@@ -8,7 +8,7 @@ const Followed = ({notification}) => {
 
       <div>
       <Link  to={'/'+notification.message[0].user[1].link.split('@')[1]}
- className='flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%] lg:m-auto bg-white p-[.5em]   lg:pl-[7em] hover:scale-110'>
+ className=' flex flex-row lg:flex-row gap-3  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%]  bg-white p-[.5em] lg:border-[0.1px]   lg:pl-[2em] hover:scale-110'>
  
   <FaUserFriends  className='text-2xl text-blue-500 mt-[1em]'/>
   

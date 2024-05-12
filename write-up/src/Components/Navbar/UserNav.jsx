@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { IoIosAddCircleOutline, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
+import { IoIosAddCircleOutline, IoIosMail, IoIosNotifications, IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import { VscBellDot, VscFlame } from "react-icons/vsc";
 import {AiOutlineHome} from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom";
@@ -78,31 +78,29 @@ export default function UserNav(){
         <>
        {
       
-      //  ( user == undefined || user.name == undefined) 
-      //  ? <div className="flex lg:flex-row ">
-        
-      //       <Button additionalStyles=" hidden lg:block" to="/login" name="Login" borderColor="border-none" textColor="text-blue-500"/>
-     
-      //       <Button additionalStyles="" to="/signup" name="Create account" borderColor="border-pink-500" textColor=" text-pink-500"/>
-        
-      //       </div> :
-             <div className="flex flex-row justify-around w-full p-[.5em] py-[1em] z-100 border-t bg-white fixed bottom-[0em]">
+             <div className=" lg:fixed lg:flex-col lg:h-full  lg:mt-[2.5em] lg:w-fit lg:justify-between flex flex-row justify-around w-full p-[.5em] py-[1em] z-100 border-t bg-white  fixed bottom-[0em]">
                 
             <Link to="/" >
-            <AiOutlineHome className="text-3xl mt-1 block lg:hidden"  />
+            <AiOutlineHome className="text-3xl mt-1 block "  />
             </Link>
                 
             <Link to="/trends" >
-            <VscFlame className="text-3xl mt-1 block lg:hidden"  />
+            <VscFlame className="text-3xl mt-1 block "  />
             </Link>
 
             <Link to='/search'>
-            <IoIosSearch onClick={handleMobileSearch}   className="lg:hidden text-3xl mt-[.125em]"/>  
+            <IoIosSearch onClick={handleMobileSearch}   className=" text-3xl mt-[.125em]"/>  
             </Link>
         
            <Link to="/create">
-            <IoIosAddCircleOutline className="text-3xl mt-1 block lg:hidden"/>
+            <IoIosAddCircleOutline className="text-3xl mt-1 block "/>
            </Link>
+
+           <Link to="/create">
+            <IoIosMail className="text-3xl mt-1 block "/>
+           </Link>
+
+
             <Link to="/notifications">
            {
              allRead == false ?
@@ -114,21 +112,6 @@ export default function UserNav(){
           <Link to='/Profile'>
             <img src={user.public_picture} alt={user.name} className='rounded-full h-8 w-8  mr-[1em] '  />
           </Link>
-            {/* <div ref={helperRef} style={{zIndex: 10}} className="hidden dropdown  fixed left-12  mt-16 bg-white  flex-col  border gap-2 w-[17em] py-4 rounded-lg lg:right-32">
-                <Link to='/profile' className=" block px-2 py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underlineflex flex-col gap-1"><div className="flex flex-row">
-                {user.verified ? <HiBadgeCheck className="text-xl text-blue-500 mt-1"/> : ''} </div> <p>@{user.username}</p></Link>
-                <p>{user.name}</p>
-                <hr />
-                <Link to='/Dashboard' className="block px-2  py-3 ml-4 font-[Maven] font-semibold  hover:bg-gray-100 hover:underline">Dashboard</Link>
-                <Link to='/create' className="block px-2 py-3  ml-4 font-[Maven] font-semibold hover:bg-gray-100 hover:underline">Create Post</Link>
-                <Link to='/readlater' className="block px-2 py-3  ml-4 font-[Maven] font-semibold hover:bg-gray-100 hover:underline">Read Later</Link>
-                <Link to='/settings' className="block px-2 py-3  ml-4 font-[Maven] font-semibold hover:bg-gray-100 hover:underline">Settings</Link>
-                <hr />
-                <Link to='/logout'  className="block px-2 py-2  text-start ml-4 font-[Maven]  font-semibold hover:bg-gray-100 hover:underline">Logout</Link >
-            </div>
-            */}
-          
-           
             </div>
         }
         {/* <MobileSearch/> */}
