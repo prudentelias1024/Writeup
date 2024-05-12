@@ -34,6 +34,7 @@ import Billing  from './Components/Billing/billing';
 import Search from './Components/Search/Search';
 import Trends from './Components/trends';
 import ReelsFullContent from './Components/PreviewPosts/ReelsFullContent';
+import Messages from './Components/Messages/Messages';
 function App() {
        
         let URL
@@ -253,6 +254,7 @@ function App() {
       <Route path='/:username/followers'  element={<Followers/>}/>
       <Route path='/:username/following'  element={<Following/>}/>
       <Route path='/Profile' element={<MyProfile/>}/>
+      <Route path='/Messages' element={<Messages/>}/>
       <Route path='/logout' element={<Logout/>}/>
       <Route path='/hashtags' element={<Tags/>}/>
       <Route path='/readlater' element={<ReadLater/>}/>

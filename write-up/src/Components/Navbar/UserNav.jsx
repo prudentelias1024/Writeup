@@ -96,7 +96,7 @@ export default function UserNav(){
             <IoIosAddCircleOutline className="text-3xl mt-1 block "/>
            </Link>
 
-           <Link to="/create">
+           <Link to="/messages">
             <IoIosMail className="text-3xl mt-1 block "/>
            </Link>
 
