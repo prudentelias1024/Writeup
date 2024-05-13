@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 export default function Message() {
     const {user} = useSelector(state => state)
   return (
-    <div className='hover:bg-[#f4f4f4]  py-[1em] px-[1em] lg:px-[2em]'>
+    <div className='hover:bg-[#f4f4f4] hover:scale-[.5em] py-[1em] px-[1em] lg:px-[2em]'>
       <div className="flex flex-row">
       <img src={user.public_picture} alt={user.name} className='rounded-full h-10 w-10 lg:h-12 lg:w-12 mr-[1em] '  />
     
