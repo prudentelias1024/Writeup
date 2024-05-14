@@ -692,11 +692,6 @@ video {
   bottom: 4.5em;
 }
 
-.right-auto
-{
-  right: auto;
-}
-
 .top-\[4em\]
 {
   top: 4em;
@@ -762,11 +757,6 @@ video {
   top: 5em;
 }
 
-.left-auto
-{
-  left: auto;
-}
-
 .z-\[1000\]
 {
   z-index: 1000;
@@ -805,11 +795,6 @@ video {
 .row-span-2
 {
   grid-row: span 2 / span 2;
-}
-
-.float-right
-{
-  float: right;
 }
 
 .float-left
@@ -886,6 +871,12 @@ video {
 {
   margin-left: 2%;
   margin-right: 2%;
+}
+
+.my-\[0em\]
+{
+  margin-top: 0em;
+  margin-bottom: 0em;
 }
 
 .ml-\[1em\]
@@ -1283,6 +1274,11 @@ video {
   margin-top: 4em;
 }
 
+.mb-\[8em\]
+{
+  margin-bottom: 8em;
+}
+
 .mt-\[-\.5em\]
 {
   margin-top: -.5em;
@@ -1366,6 +1362,16 @@ video {
 .ml-\[1\.8em\]
 {
   margin-left: 1.8em;
+}
+
+.ml-10
+{
+  margin-left: 2.5rem;
+}
+
+.ml-\[10em\]
+{
+  margin-left: 10em;
 }
 
 .ml-\[0\.3em\]
@@ -1463,19 +1469,14 @@ video {
   margin-top: 1.5em;
 }
 
-.mb-\[8em\]
+.mr-\[4em\]
 {
-  margin-bottom: 8em;
+  margin-right: 4em;
 }
 
-.-ml-\[\.5em\]
+.-mt-\[1em\]
 {
-  margin-left: -.5em;
-}
-
-.-ml-\[1em\]
-{
-  margin-left: -1em;
+  margin-top: -1em;
 }
 
 .block
@@ -1808,41 +1809,6 @@ video {
   width: 13em;
 }
 
-.w-\[30\%\]
-{
-  width: 30%;
-}
-
-.w-\[60\%\]
-{
-  width: 60%;
-}
-
-.max-w-\[10em\]
-{
-  max-width: 10em;
-}
-
-.max-w-\[20em\]
-{
-  max-width: 20em;
-}
-
-.max-w-\[15em\]
-{
-  max-width: 15em;
-}
-
-.max-w-\[12em\]
-{
-  max-width: 12em;
-}
-
-.max-w-\[4em\]
-{
-  max-width: 4em;
-}
-
 .max-w-\[8em\]
 {
   max-width: 8em;
@@ -1888,6 +1854,16 @@ video {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-4
+{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-cols-5
+{
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .flex-row
 {
   flex-direction: row;
@@ -1911,11 +1887,6 @@ video {
 .justify-start
 {
   justify-content: flex-start;
-}
-
-.justify-end
-{
-  justify-content: flex-end;
 }
 
 .justify-center
@@ -2031,11 +2002,6 @@ video {
 .self-end
 {
   align-self: flex-end;
-}
-
-.self-center
-{
-  align-self: center;
 }
 
 .overflow-hidden
@@ -4014,6 +3980,11 @@ video {
     margin-left: -10em;
   }
 
+  .lg\:mb-\[4em\]
+{
+    margin-bottom: 4em;
+  }
+
   .lg\:ml-\[63m\]
 {
     margin-left: 63m;
@@ -4124,9 +4095,14 @@ video {
     margin-left: 35em;
   }
 
-  .lg\:mb-\[4em\]
+  .lg\:ml-\[3\.5em\]
 {
-    margin-bottom: 4em;
+    margin-left: 3.5em;
+  }
+
+  .lg\:ml-\[34em\]
+{
+    margin-left: 34em;
   }
 
   .lg\:block
@@ -4304,11 +4280,6 @@ video {
   .lg\:w-\[35\%\]
 {
     width: 35%;
-  }
-
-  .lg\:max-w-\[12em\]
-{
-    max-width: 12em;
   }
 
   .lg\:grid-cols-3

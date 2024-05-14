@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { BiRepost } from 'react-icons/bi'
+import { InReactions } from './Post/InReactions'
 
 export default function ImageReel({reel,reelUpdater}) {
   const [viewed,setViewed] = useState(false)
@@ -43,8 +44,8 @@ export default function ImageReel({reel,reelUpdater}) {
   return (
     <>
     
-   <div className=' bg-white w-full h-fit border   pt-[1em] '>
-   {reposted ? <div className='flex inline-flex w-full'>
+   <div className=' bg-white w-full h-fit pr-[4em] mt-[1em]  pt-[1em] '>
+   {reposted ? <div className=' inline-flex w-full'>
     <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
     <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: ''
    } 
@@ -75,7 +76,7 @@ export default function ImageReel({reel,reelUpdater}) {
                   readOnly={true}
                   theme={"bubble"}
                   style={{fontFamily: 'Sen'}}
-               className='font-[Outfit] px-[1em] text-start ml-[1em]  mx-[1.25em] leading-8 whitespace-normal font-extrabold text-3xl w-full my-[.5em] lg:text-3xl lg:mb-[.5em] pr-[1.25em]  lg:ml-auto'/>
+               className='font-[Outfit] px-[1em] text-start ml-[1em] w-fit mx-[1.25em] leading-8 whitespace-normal font-extrabold text-3xl  my-[.5em] lg:text-3xl lg:mb-[.5em] pr-[1.25em]  '/>
                   
                   <img src={reel.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     

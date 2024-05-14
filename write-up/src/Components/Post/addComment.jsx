@@ -42,9 +42,9 @@ export default function AddComment({reelUpdater,post,user,url}) {
      const [commented, setCommented] = useState(false)
   return (
 
-        <div className="comments -z-1 fixed w-full bottom-0 h-[3em] pb-[1em]">
-            <div className='add_comment   w-full m-auto rounded-full border pt-[0em] pl-[1em] pr-[1em]  flex flex-row mb-[5em] lg:ml-[5em]'>
-            <img className='w-[1.5em] m-auto h-[1.5em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
+        <div className="comments -z-1 lg:relative fixed w-full ml-[0em] my-[2em] bottom-0 h-[3em] pb-[1em]">
+            <div className='add_comment  w-full  py-[1em]  pl-[1em] pr-[1em]  flex flex-row mb-[5em] lg:ml-[0em]'>
+            <img className='w-[3em] m-auto h-[3em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
 
             <ReactQuill ref={quillRef}  modules={modules}  onChange={HandleComment} placeholder='Add Comment' theme='bubble'  style={{fontFamily: 'Sen', color: 'grey', paddingLeft: '0em', paddingBottom: '0em', background: "white", height: 'fit-content', width: '100%'}} />
             <button onClick={(event) => {commentPost(user._id,post.postId,post.title,post.author,comment)}}  className='text-blue-500 h-fit w-fit mt-[0.4em] ml-[-1em]  rounded-full font-[Sen] '>Post</button>

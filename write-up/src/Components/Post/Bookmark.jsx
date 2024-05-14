@@ -43,19 +43,19 @@ export function Bookmark({bookmarks,postId,username}){
     const [bookmarked,setBookmarked] = useState(false)
     if (bookmarked == true) {
    return(
-        <div className="flex flex-row gap-3 m-auto ">
-        <FaBookmark onClick={(event) => unbookmarkPost(postId)} className="text-xl mt-[-.1em] ml-[0.25em] text-purple-500 "/> 
+        <div className="flex flex-row gap-3  ">
+        <FaBookmark onClick={(event) => unbookmarkPost(postId)} className="text-xl  text-purple-500 "/> 
         <p className="font-[Sen] text-purple-500 -mt-[.09em]">{
            bookmarks.length
         } </p> 
-        <p className="hidden lg:block font-[Sen]  ml-[-.5em] -mt-[.09em]">Bookmarks </p> 
+        {/* <p className="hidden lg:block font-[Sen]  ml-[-.5em] -mt-[.09em]">Bookmarks </p>  */}
         
     </div>
     )
     } else {
         return(
-            <div className="flex flex-row gap-3 m-auto ">
-        <FaRegBookmark onClick={(event) => bookmarkPost(postId)} className="text-xl text-purple-500 mt-[-.1em] ml-[0.25em] "/> 
+            <div className="flex flex-row gap-3  ">
+        <FaRegBookmark onClick={(event) => bookmarkPost(postId)} className="text-xl text-purple-500 mt-[-.1em]  "/> 
         <p className="font-[Sen] text-purple-500 -mt-[.09em]">{
            bookmarks.length
         } </p> 
