@@ -7,7 +7,7 @@ import { InReactions } from '../Post/InReactions';
 
 const Comment = ({commenter,timestamp,comment}) => {
      return (
-        <div className='comments font-[Sen]  border-b-[1px] w-full   py-[2em]  flex flex-col z-0' >
+        <div className='comments font-[Sen]  border-b-[1px] w-full   py-[1.25em]  flex flex-col z-0' >
 
         <div className=' flex flex-row gap-[.5em] w-full ml-[1.25em] '>
                <img src={commenter.public_picture} className='ml-1 w-[3em] h-[3em] rounded-full object-cover lg:ml-0' /> 

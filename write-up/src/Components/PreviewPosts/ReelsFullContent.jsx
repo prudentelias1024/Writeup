@@ -38,7 +38,7 @@ export default function ReelsFullContent() {
    if(reel){
 
     if(reel.type === "poll"){
-        return <div className='ml-10'>
+        return <div className='lg:ml-10'>
         <UserNav/>
         <Header  />
         <Poll reel={reel} key={reel.postId} /> 
@@ -49,13 +49,13 @@ export default function ReelsFullContent() {
        }else if(reel.type === "image"){
        return  <div className="lg:ml-[10em]">
         <UserNav/>
-       <div className='ml-[10em] w-1/2 flex flex-col mb-[4em] border '>
+       <div className='lg:ml-[10em] lg:w-1/2 flex flex-col mb-[4em] border '>
 
         <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={process.env.REACT_APP_PRODUCTION_URL} /> 
         <hr />
         <AddComment reelUpdater={setReel} post={reel} user={user} url={process.env.REACT_APP_PRODUCTION_URL} />
         <hr />
-        <div className="flex">
+        <div className="flex flex-col">
 
         {reel.comments.map(comment  => {
           return <Comment commenter={comment.author} comment={comment}  />

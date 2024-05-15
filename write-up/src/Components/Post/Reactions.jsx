@@ -10,8 +10,8 @@ export function Reactions({post, remove, posttype, reelUpdater, additionalStyles
     const {user} = useSelector(state => state)
     // const user = {username: 'elias1024', name:'Prudent Elias'}
     return(
-        <div className={remove +  " flex flex-row justify-between w-full  ml-[2.5em] mt-5 md:ml-[1em]  lg:ml-[4.5em] mb-[1em] lg:mt-3 max-lg:ml-auto lg:mb-4"}>
-       <div className="grid grid-cols-5 w-full">
+        <div className={remove +  " flex flex-row justify-between w-full  ml-[2.5em] mt-5 md:ml-[1em]  lg:ml-[2em] lg:pr-[2em] mb-[1em] lg:mt-3 max-lg:ml-auto lg:mb-4"}>
+        <div className="grid grid-cols-5 w-full ml-[1em] pr-[1em] ">
         
         <Impressions count={post.viewedBy}  username={user !== null ?user.username :''}/>
         <Like reelUpdater={reelUpdater}  posttype={posttype} additionalStyles={additionalStyles} likes={post.likes} postId={post.postId} username={user !== null ?user.username :''}/>

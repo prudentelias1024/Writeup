@@ -42,7 +42,7 @@ export default function AddComment({reelUpdater,post,user,url}) {
      const [commented, setCommented] = useState(false)
   return (
 
-        <div className="comments -z-1 lg:relative fixed w-full ml-[0em] my-[2em] bottom-0 h-[3em] pb-[1em]">
+        <div className="comments -z-1 lg:relative fixed w-full ml-[0em] my-[1.5em] bottom-0 h-[3em] pb-[1em]">
             <div className='add_comment  w-full  py-[1em]  pl-[1em] pr-[1em]  flex flex-row mb-[5em] lg:ml-[0em]'>
             <img className='w-[3em] m-auto h-[3em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
 

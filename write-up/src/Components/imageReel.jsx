@@ -44,7 +44,8 @@ export default function ImageReel({reel,reelUpdater}) {
   return (
     <>
     
-   <div className=' bg-white w-full h-fit pr-[4em] mt-[1em]  pt-[1em] '>
+   <div className=' bg-white w-full h-fit lg:border lg:pr-[4em] mt-[1em]  pt-[1em] '>
+    
    {reposted ? <div className=' inline-flex w-full'>
     <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
     <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: ''
@@ -56,7 +57,7 @@ export default function ImageReel({reel,reelUpdater}) {
            
            
             <div>        
-                  <AuthorInfo timestamp={reel.created}   author={reel.author}/>
+                <AuthorInfo timestamp={reel.created}   author={reel.author}/>
                 <div className="tags w-full flex-wrap  flex flex-row ml-[2em] lg:pl-[4em] pr-[1.5em]  m-auto gap-2 mb-[1em]  lg:gap-[.5em] lg:ml-[0em] ">
                   {
                     
@@ -72,6 +73,7 @@ export default function ImageReel({reel,reelUpdater}) {
                   }
                  
                   </div>
+                  <Link to={'/reels/'+reel.postId} >
                  < ReactQuill   value={reel.text}
                   readOnly={true}
                   theme={"bubble"}
@@ -80,6 +82,8 @@ export default function ImageReel({reel,reelUpdater}) {
                   
                   <img src={reel.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     
+                    </Link>
+            
                 <Reactions reelUpdater={reelUpdater} post={reel} posttype={'reel'} remove={false}/>
                
    </div>

@@ -103,21 +103,24 @@ const MyProfile = () => {
                  readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={post._id} post={post} />
              })  
              :''
-    }
+    } 
+          <div className='w-1/2'>
+
             {
-            reelsClicked ?
+              reelsClicked ?
               myReels !== null && myReels.length > 0  ? myReels.map((reel) => {
                 
                 if(reel.type == "poll"){
-                    return <Poll reel={reel} key={reel.reelId} /> 
-                   }else if(reel.type == "image"){
-                    return <ImageReel reel={reel} key={reel.reelId} /> 
-                  }
-             }) :
-             <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
-             : ''     
+                  return <Poll reel={reel} key={reel.reelId} /> 
+                }else if(reel.type == "image"){
+                  return <ImageReel reel={reel} key={reel.reelId} /> 
+                }
+              }) :
+              <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
+              : ''     
             }
             
+            </div>
             </div>
 
         <UserNav/>

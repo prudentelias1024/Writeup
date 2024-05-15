@@ -61,7 +61,7 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
         return(
             <div className="flex flex-row gap-3  text-[#a4a4a4]">
         <BiRepost onClick={(event) => repost(post,postId)} className="text-2xl text-[#a4a4a4] mt-[-.1em]    "/> 
-        <p className="font-[Sen] text-black -mt-[.09em]">{
+        <p className="font-[Sen] text-[#a4a4a4] -mt-[.09em]">{
            reposts.length
         } </p> 
         {/* <p className="hidden md:block lg:block font-[Sen] ml-[-.5em] -mt-[.09em]">Reposts </p>  */}

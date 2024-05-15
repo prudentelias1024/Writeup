@@ -121,9 +121,8 @@ export default function Posts(){
                       <Poll reel={reel} key={reel.postId} /> 
                 </Link>
               }else if(reel.type == "image"){
-                return <Link to={'/reels/'+reel.postId} >
-                <ImageReel reel={reel} key={reel.postId} /> 
-                </Link>
+                return <ImageReel reel={reel} key={reel.postId} /> 
+              
              } else{
 
                return <p className="font-[Sen] text-xl font-bold text-[#333] text-center">No Reels</p>
