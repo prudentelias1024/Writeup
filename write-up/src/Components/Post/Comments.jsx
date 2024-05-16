@@ -1,6 +1,6 @@
 import { GoMention } from 'react-icons/go';
 
-export function Comments({comments,postId,username}){
+export function Comments({comments,postId,username, setReel}){
     return(
         <div className="flex flex-row gap-3">
         <GoMention className="text-xl text-blue-500 "/> 

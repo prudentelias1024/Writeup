@@ -4,10 +4,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 
-export default function Repost({reposts,post,reelUpdater,postId,username,posttype}) {
+export default function Repost({reposts,post,setReel,setRepostedDisplay,postId,username,posttype}) {
     const {URL} = useSelector(state => state)
     const {user} = useSelector(state => state)
-    
     const  checkReposted = (reposters) => {
    
         if (reposters) {
@@ -23,9 +22,10 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
     const repost = async(postId) => {
          setReposted(true)
         if(posttype === 'reel'){
-            let  res = await(await axios.post(`${URL}/reel/repost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
-            reelUpdater(res)
-            console.log(res)
+            let  res = await(await axios.post(`${URL}/reel/repost`,postId , {headers: {Authorization: localStorage.getItem('token')}})).data
+            setReel(res)
+            setReposted(true)
+            setRepostedDisplay(true)
         }
         
     } 
@@ -33,11 +33,13 @@ export default function Repost({reposts,post,reelUpdater,postId,username,posttyp
     const undoRepost = async(postId) => {
         setReposted(false)
         if(posttype === 'reel'){
-            let  res = await(await axios.post(`${URL}/reel/unrepost`,{ postId:postId }, {headers: {Authorization: localStorage.getItem('token')}})).data
-            reelUpdater(res)
+            let  res = await(await axios.post(`${URL}/reel/unrepost`,postId , {headers: {Authorization: localStorage.getItem('token')}})).data
+            setReel(res)
+       
             console.log(res)
         }
-      
+        setRepostedDisplay(false)
+       
         } 
 
     useEffect(() => {

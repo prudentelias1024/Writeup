@@ -10,9 +10,10 @@ import ReactQuill from 'react-quill';
 import { BiRepost } from 'react-icons/bi'
 import { InReactions } from './Post/InReactions'
 
-export default function ImageReel({reel,reelUpdater}) {
+export default function ImageReel({reel,reelUpdate}) {
   const [viewed,setViewed] = useState(false)
   const [reposted,setReposted] = useState(false)
+  const [post, setPost] = useState(reel)
     const commentRef = useRef()
     const {user} = useSelector(state => state)
     const  checkReposted = (reposters) => {
@@ -27,12 +28,12 @@ export default function ImageReel({reel,reelUpdater}) {
   }
 
   useEffect(() => {
-    checkReposted(reel.reposts,user.username)
+    checkReposted(post.reposts,user.username)
     // checkViewed() 
   }, [])
     //  const checkViewed = () => {
     //   if (user !== null) {
-    //     let status =  reel.viewedBy.some((viewer) => {return viewer !== user._id })
+    //     let status =  post.viewedBy.some((viewer) => {return viewer !== user._id })
     //     setViewed(status)
     //   }
      
@@ -57,11 +58,11 @@ export default function ImageReel({reel,reelUpdater}) {
            
            
             <div>        
-                <AuthorInfo timestamp={reel.created}   author={reel.author}/>
+                <AuthorInfo timestamp={post.created}   author={post.author}/>
                 <div className="tags w-full flex-wrap  flex flex-row ml-[2em] lg:pl-[4em] pr-[1.5em]  m-auto gap-2 mb-[1em]  lg:gap-[.5em] lg:ml-[0em] ">
                   {
                     
-                    reel.tags.toString().split(',').map((tag) => {
+                    post.tags.toString().split(',').map((tag) => {
                       return(
                       <>
                       
@@ -73,18 +74,18 @@ export default function ImageReel({reel,reelUpdater}) {
                   }
                  
                   </div>
-                  <Link to={'/reels/'+reel.postId} >
-                 < ReactQuill   value={reel.text}
+                  <Link to={'/reels/'+post.postId} >
+                 < ReactQuill   value={post.text}
                   readOnly={true}
                   theme={"bubble"}
                   style={{fontFamily: 'Sen'}}
                className='font-[Outfit] px-[1em] text-start ml-[1em] w-fit mx-[1.25em] leading-8 whitespace-normal font-extrabold text-3xl  my-[.5em] lg:text-3xl lg:mb-[.5em] pr-[1.25em]  '/>
                   
-                  <img src={reel.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
+                  <img src={post.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     
                     </Link>
             
-                <Reactions reelUpdater={reelUpdater} post={reel} posttype={'reel'} remove={false}/>
+                <Reactions setReposted={setReposted} reelUpdater={setPost} post={reel} posttype={'reel'} remove={false}/>
                
    </div>
    

@@ -16,7 +16,6 @@ export default function ReelsFullContent() {
     
     const {URL} = useSelector(state => state)
     const [reel, setReel] = useState(null)
-    
     useEffect(() => {
         console.log(URL)
         getReel()
@@ -53,7 +52,7 @@ export default function ReelsFullContent() {
 
         <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={process.env.REACT_APP_PRODUCTION_URL} /> 
         <hr />
-        <AddComment reelUpdater={setReel} post={reel} user={user} url={process.env.REACT_APP_PRODUCTION_URL} />
+        <AddComment reelUpdate={setReel} post={reel} user={user} url={process.env.REACT_APP_PRODUCTION_URL} />
         <hr />
         <div className="flex flex-col">
 

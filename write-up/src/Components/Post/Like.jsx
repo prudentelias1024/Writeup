@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 // import { io } from "socket.io-client";
-export function Like({likes,postId,username,reelUpdater,posttype,additionalStyles}){
+export function Like({likes,postId,username,setReel,posttype,additionalStyles}){
   const {URL} = useSelector(state => state)
   const {user} = useSelector(state => state)
      const [liked,setLiked] = useState(false)
@@ -33,11 +33,11 @@ export function Like({likes,postId,username,reelUpdater,posttype,additionalStyle
       setLiked(true)
       if(posttype == 'reel'){
       let  res = await(await axios.post(`${URL}/reel/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      reelUpdater(res)
+      setReel(res)
       console.log(res)
     }else {
       let  res = await(await axios.post(`${URL}/post/like`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      reelUpdater(res)
+      setReel(res)
     }
     
   } 
@@ -45,11 +45,11 @@ export function Like({likes,postId,username,reelUpdater,posttype,additionalStyle
     setLiked(false)
     if(posttype == 'reel'){
       let  res = await(await axios.post(`${URL}/reel/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-      reelUpdater(res)
+      setReel(res)
       console.log(res)
       } else {
         let  res = await(await axios.post(`${URL}/post/unlike`,{ postId:postId}, {headers: {Authorization: localStorage.getItem('token')}})).data
-        reelUpdater(res)
+        setReel(res)
         
       } 
       } 
