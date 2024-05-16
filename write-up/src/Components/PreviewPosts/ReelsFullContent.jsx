@@ -52,12 +52,12 @@ export default function ReelsFullContent() {
 
         <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={process.env.REACT_APP_PRODUCTION_URL} /> 
         <hr />
-        <AddComment reelUpdate={setReel} post={reel} user={user} url={process.env.REACT_APP_PRODUCTION_URL} />
+        <AddComment reelUpdater={setReel} post={reel} user={user} url={URL} />
         <hr />
         <div className="flex flex-col">
 
         {reel.comments.map(comment  => {
-          return <Comment commenter={comment.author} comment={comment}  />
+          return <Comment reelUpdater={setReel} commenter={comment.author} comment={comment}  />
         })}
         </div>
          </div>

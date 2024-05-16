@@ -49,7 +49,7 @@ export default function ImageReel({reel,reelUpdate}) {
     
    {reposted ? <div className=' inline-flex w-full'>
     <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
-    <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: ''
+    <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: '' 
    } 
      
              {/* {      viewed ?                   
@@ -85,7 +85,7 @@ export default function ImageReel({reel,reelUpdate}) {
                     
                     </Link>
             
-                <Reactions setReposted={setReposted} reelUpdater={setPost} post={reel} posttype={'reel'} remove={false}/>
+                <Reactions setReposted={setReposted} reelUpdater={setPost} post={post} posttype={'reel'} remove={false}/>
                
    </div>
    
