@@ -21,7 +21,7 @@ export function Reactions({post, remove, posttype, setReposted, additionalStyles
         
         <Comments setReel={setReel} comments={reel.comments} postId={reel.postId} username={user !== null ?user.username :''} />
 
-        <Bookmark posttype={posttype} bookmarks={reel.bookmarks} postId={reel.postId} username={user !== null ?user.username :''}/>
+        <Bookmark setReel={setReel} posttype={posttype} bookmarks={reel.bookmarks} postId={reel.postId} username={user !== null ?user.username :''}/>
         {/* <div className='-mt-1 flex flex-row gap-1'>
                 <FaRegEye  className=' text-black-500 text-2xl'/>
                 <p className="total font-[Outfit]">{reel.views} </p>  <p className="hidden lg:block">Views</p>

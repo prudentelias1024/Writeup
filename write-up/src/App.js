@@ -35,6 +35,7 @@ import Search from './Components/Search/Search';
 import Trends from './Components/trends';
 import ReelsFullContent from './Components/PreviewPosts/ReelsFullContent';
 import Messages from './Components/Messages/Messages';
+import Bookmarks from './Components/Bookmarks/bookmarks';
 function App() {
        
         let URL
@@ -243,6 +244,7 @@ function App() {
       <Route path='/p/:username/:postId' element={<MyPosts/>}/>
       <Route path='/reels/:postId' element={<ReelsFullContent/>}/>
       <Route path='/' element={<Home/>}/>
+      <Route path='/bookmarks' element={<Bookmarks/>}/>
       <Route path='/trends' element={<Trends/>}/>
       <Route path='/settings' element={<Settings/>}/>
       <Route path='/login'  element={<Login/>}/>

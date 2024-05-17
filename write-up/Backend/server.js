@@ -13,6 +13,7 @@ const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
 const notifications   = require('./notificationsSchema')
+const bookmarks = require('./bookmarkSchema')
 const Comments = require('./commentsSchema')
 const jwt = require('jsonwebtoken')
 const moment = require('moment');
@@ -1705,16 +1706,66 @@ app.post('/post/unlike', verify, (req,res) => {
 app.post('/post/bookmark', verify, (req,res) => {
     console.log(req.body.postId);
     console.log(req.user._id);
+    if (req.body.type == 'reel') {
+        reels.findOne({postId: req.body.postId}).select('bookmarks').exec((err,doc) => {
+            if (err) {throw err  }
+            if (doc) {
+            console.log(doc.bookmarks.indexOf(req.user._id))
+              if(doc.bookmarks.indexOf(req.user._id) == -1){
+        reels.findOneAndUpdate({postId: req.body.postId},{$push: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
+            if (err) {
+                throw err
+            }
+            reels.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').populate('viewedBy').exec((err,populatedDoc) => {
+            if (err) {
+                throw err
+            }
+            if (populatedDoc) {
+                res.send(populatedDoc[0])
+            }
+            
+        })
+        })
+    }
+    }
+    })
+     
+    }else {
     PublishedPosts.findOne({postId: req.body.postId}).select('bookmarks').exec((err,doc) => {
         if (err) {throw err  }
         if (doc) {
-            
-          if(doc.bookmarks.indexOf(req.user._id) == -1){
+          if(doc.bookmarks.indexOf(req.user._id) != -1){
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$push: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
         }
-        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').exec((err,populatedDoc) => {
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').populate('viewedBy').exec((err,populatedDoc) => {
+        if (err) {
+            throw err
+        }
+        if (populatedDoc) {
+            res.send(populatedDoc[0])
+            console.log('pop',populatedDoc)
+        }
+        
+    })
+    })
+}
+}
+})
+
+    }
+})
+app.post('/post/unbookmark', verify, (req,res) => {
+    
+    if (req.body.type == 'reel') {
+    
+    reels.findOneAndUpdate({postId: req.body.postId},{$pull: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
+        if (err) {
+            throw err
+        }
+        console.log(doc)
+        reels.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').populate('viewedBy').exec((err,populatedDoc) => {
         if (err) {
             throw err
         }
@@ -1724,18 +1775,12 @@ app.post('/post/bookmark', verify, (req,res) => {
         
     })
     })
-}
-}
-})
-})
-app.post('/post/unbookmark', verify, (req,res) => {
-    console.log(req.body.postId);
-    console.log(req.user._id);
+}else{
     PublishedPosts.findOneAndUpdate({postId: req.body.postId},{$pull: {bookmarks: req.user._id}}, {new:false}, (err,doc) => {
         if (err) {
             throw err
         }
-        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').exec((err,populatedDoc) => {
+        PublishedPosts.find({postId: req.body.postId}).populate('likes').populate('bookmarks').populate('author').populate('viewedBy').exec((err,populatedDoc) => {
         if (err) {
             throw err
         }
@@ -1745,6 +1790,7 @@ app.post('/post/unbookmark', verify, (req,res) => {
         
     })
     })
+    }
 })
 
 app.post('/api/publicPicture', async(req,res) => {
@@ -1905,7 +1951,67 @@ app.get('/api/user/posts/totalBookmarks', verify, (req,res) => {
     })
 })
 
+app.post('/api/user/bookmarks',verify, async(req,res) => {
+    if(req.body.type == 'reel'){
 
+        const bookmark = new bookmarks({
+            userId: req.user.userId,
+            reelsId:  req.body.postId ,
+            bookmarked_on: moment()
+            
+          })
+          await  bookmark.save()
+
+    } else {
+        
+        const bookmark = new bookmarks({
+            userId: req.user.userId,
+            postId:  req.body.postId ,
+            bookmarked_on: moment()
+            
+        })
+        await  bookmark.save()
+
+    }
+
+  
+})
+
+app.get('/api/user/bookmarks',verify, (req,res) => {
+    bookmarks.find({userId:req.user.userId}).populate('postId').populate('reelsId').exec((err,doc) => {
+        if(err){
+            throw err;
+        } 
+        if(doc) {
+            res.send(doc)
+        }
+    })
+})
+
+app.delete('/api/user/bookmark',verify, (req,res) => {
+    if(req.body.type == 'reels'){
+        bookmarks.findOneAndDelete({reelsId:req.body.postId }).exec((err,doc) => {
+            if(err){
+                throw err
+            }
+            if(doc){
+                res.send({status: 200})
+            }
+            
+        })
+    } else {
+        bookmarks.findOneAndDelete({postId:req.body.postId }).exec((err,doc) => {
+            if(err){
+                throw err
+            }
+            if(doc){
+                res.send({status: 200})
+            }
+            
+        })
+
+    }
+})
 
 connectToMongooseDB()
 

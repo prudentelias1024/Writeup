@@ -12,6 +12,7 @@ import MobileSearch from "./mobileSearch";
 
 import { HiBadgeCheck } from 'react-icons/hi';
 import { io } from "socket.io-client";
+import { FaRegBookmark } from "react-icons/fa";
 export default function UserNav(){
   let socket
     const {URL} = useSelector(state => state)
@@ -84,8 +85,13 @@ export default function UserNav(){
             <AiOutlineHome className="text-3xl mt-1 block "  />
             </Link>
                 
+                
             <Link to="/trends" >
             <VscFlame className="text-3xl mt-1 block "  />
+            </Link>
+
+            <Link to="/Bookmarks" >
+            <FaRegBookmark className="text-2xl mt-1  hidden lg:block "  />
             </Link>
 
             <Link to='/search'>

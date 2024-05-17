@@ -178,7 +178,7 @@ const ShortFormCreator = () => {
             
         
     return (
-            <div className=' border-t-[1px] bg-white font-[Sen]lg:mt-0  pb-[1em] px-[.5em] gap-[1em] h-fit'>
+            <div className=' border-t-[1px] bg-white font-[Sen] lg:mt-0  pb-[1em] px-[.5em] gap-[1em] h-fit'>
                   <form ref={formRef}>
                     
             <img src={user.public_picture} alt={user.name} className="h-[2.5em] w-[2.5em] mt-[1em] rounded-full" />  
