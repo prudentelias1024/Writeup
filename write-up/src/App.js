@@ -36,6 +36,7 @@ import Trends from './Components/trends';
 import ReelsFullContent from './Components/PreviewPosts/ReelsFullContent';
 import Messages from './Components/Messages/Messages';
 import Bookmarks from './Components/Bookmarks/bookmarks';
+import NotisTimeline from './Components/Notifications/notisTimeline';
 function App() {
        
         let URL
@@ -247,6 +248,7 @@ function App() {
       <Route path='/bookmarks' element={<Bookmarks/>}/>
       <Route path='/trends' element={<Trends/>}/>
       <Route path='/settings' element={<Settings/>}/>
+      <Route path='/notis/timeline' element={<NotisTimeline/>}/>
       <Route path='/login'  element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/register' element={<SignUp/>}/>
