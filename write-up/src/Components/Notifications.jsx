@@ -8,6 +8,7 @@ import Commented from './Notifications/commented';
 import Welcome from './Notifications/welcome';
 import {useSelector} from 'react-redux'
 import Collaboration from './Notifications/collaboration';
+import Notis from './Notifications/notis';
 import UserNav from './Navbar/UserNav';
 import Header from './header';
 import axios from 'axios';
@@ -41,6 +42,9 @@ const Notifications = () => {
     return (
         <div className='lg:ml-[10em]'>
         <Header/>
+
+         <Notis />
+
         <div className='pt-[.75em] lg:ml-[4em] pl-[1em] w-[100%] z-0 flex flex-col '>
             {
             notifications && notifications.length > 0?
