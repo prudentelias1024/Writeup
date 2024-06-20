@@ -7,6 +7,11 @@ const Bookmarks = new mongoose.Schema({
         required: true    
     },
 
+    type: {
+        type: String,
+        required: true
+    },
+
     reelsId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'reels',

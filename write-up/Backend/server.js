@@ -1957,7 +1957,9 @@ app.post('/api/user/bookmarks',verify, async(req,res) => {
         const bookmark = new bookmarks({
             userId: req.user.userId,
             reelsId:  req.body.postId ,
-            bookmarked_on: moment()
+            bookmarked_on: moment(),     
+            type: req.body.posttype
+      
             
           })
           await  bookmark.save()
@@ -1967,7 +1969,8 @@ app.post('/api/user/bookmarks',verify, async(req,res) => {
         const bookmark = new bookmarks({
             userId: req.user.userId,
             postId:  req.body.postId ,
-            bookmarked_on: moment()
+            bookmarked_on: moment(),
+            type: req.body.posttype,
             
         })
         await  bookmark.save()
@@ -1985,6 +1988,7 @@ app.get('/api/user/bookmarks',verify, (req,res) => {
         if(doc) {
             res.send(doc)
         }
+        
     })
 })
 

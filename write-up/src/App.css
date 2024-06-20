@@ -1460,6 +1460,11 @@ video {
   margin-top: 1.5em;
 }
 
+.-ml-\[\.5em\]
+{
+  margin-left: -.5em;
+}
+
 .block
 {
   display: block;
@@ -4547,6 +4552,11 @@ video {
   .lg\:pt-\[1em\]
 {
     padding-top: 1em;
+  }
+
+  .lg\:pt-\[40\%\]
+{
+    padding-top: 40%;
   }
 
   .lg\:pr-\[20em\]
