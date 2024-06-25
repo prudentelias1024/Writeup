@@ -43,9 +43,10 @@ const Notifications = () => {
         <div className='lg:ml-[10em]'>
         <Header/>
 
-         <Notis />
-
+       
         <div className='pt-[.75em] lg:ml-[4em] pl-[1em] w-[100%] z-0 flex flex-col '>
+        <Notis />
+
             {
             notifications && notifications.length > 0?
             

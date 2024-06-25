@@ -42,7 +42,7 @@ const Collaboration = ({notification}) => {
         <FcCollaboration  className='text-2xl text-red-500 mt-[1em]'/>
         
         <div className=' flex flex-col w-fit font-[Sen] ml-0  gap-[.05em]  lg:ml-[2em]'>
-        <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[2.5em] w-[2.5em]  lg:mt-[1em] rounded-full' />
+        <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[30px] w-[30px] lg:w-[2em]  lg:mt-[1em] rounded-full' />
 
         <div className='font-bold font-[Sen] text-sm flex inline-flex flex-wrap pr-[4em] '>
         

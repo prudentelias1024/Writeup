@@ -39,10 +39,10 @@ const Liked = ({notification}) => {
         <div>
             <div className='flex flex-row lg:flex-row gap-3 lg:border-[.2px]  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%]  bg-white p-[.5em] pl-0  lg:pl-[2em]'>
        
-        <FaHeart  className='text-2xl text-red-500 mt-[1em]'/>
+        <FaHeart  className='text-xl text-red-500 mt-[1em]'/>
         
         <div className=' flex flex-col w-fit font-[Sen] ml-0  gap-[.05em]  lg:ml-[2em]'>
-        <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[2.5em] w-[2.5em]  lg:mt-[1em] rounded-full' />
+        <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[30px] w-[30px] lg:w-[2em]  lg:mt-[1em] rounded-full' />
 
         <div className='[.125em]'>
       <Link className=' font-bold font-[Sen] text-sm inline-flex flex-wrap gap-[0.2em] ' to={notification.message[0].user[1].link}>
