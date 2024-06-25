@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const user = new mongoose.Schema({
      premiumPlan: {type:String, default: () => 'free'},
      name:{type:String, required:true},
+  
      lastActive:
       {type:Date, required:false},
      lastProfileChange:
@@ -18,6 +19,11 @@ const user = new mongoose.Schema({
     public_picture:{type:String, required:true},
     joined_on: {type:Date, required:true},
     followers: [
+      {type:mongoose.Schema.Types.ObjectId,
+      ref: 'Users'
+      }
+    ],
+    notis: [
       {type:mongoose.Schema.Types.ObjectId,
       ref: 'Users'
       }

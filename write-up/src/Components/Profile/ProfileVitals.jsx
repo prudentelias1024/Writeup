@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, redirect, useNavigate } from 'react-router-dom';
-import { HiBadgeCheck, HiHashtag, HiOutlineBell } from 'react-icons/hi';
+import { HiBadgeCheck, HiBell, HiHashtag, HiOutlineBell } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import copy from 'copy-to-clipboard'
 import { ToastContainer ,toast} from 'react-toastify';
@@ -16,6 +16,7 @@ export default function ProfileVitals({user, setUser, total}) {
     const {URL} = useSelector(state => state)  
     const follow = async() => {
        let res =  await axios.post(`${URL}/api/follow`, {username:user.username, id:user._id},{headers: {Authorization: localStorage.getItem('token') }})
+
         setUser(res.data.followee)
         console.log(res.data)
         let isAdmin = false
@@ -36,6 +37,14 @@ export default function ProfileVitals({user, setUser, total}) {
            }
         dispatch(actions.updateUser({...res.data.user, isAdmin: isAdmin}))
 
+    }
+
+    const turnOnNotification = async() => {
+        const res = axios.get(`${URL}/api/notis/on`, {noticee: user.id},{headers: {Authorization: localStorage.getItem('token') }})
+    }
+
+    const turnOffNotification = async() => {
+        const res = axios.get(`${URL}/api/notis/off`, {noticee: user.id},{headers: {Authorization: localStorage.getItem('token') }})
     }
     const navigate = useNavigate()
     const redirectToLogin = () => {
@@ -125,16 +134,33 @@ export default function ProfileVitals({user, setUser, total}) {
        <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm lg:hidden  lg:absolute top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
        <ToastContainer/>
 
-       <HiOutlineBell  className='text-3xl mt-1 -ml-[.5em]' />
        
        </div>:
-         currentUser.following.some((person) => person.username == user.username) ?
-         <button onClick={unfollow} className='text-black border-black font-[Sen] font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Following</button>
-       
+        currentUser.following.some((person) => person.username == user.username) ?
+            <div className='flex flex-row gap-[1.5em]'>
+         
+         <button onClick={unfollow} className='text-black border-black font-[Sen] font-[Sen] border-2 px-[1em] w-[75%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Following</button>
+       {
+        currentUser.length > 0 ?
+            currentUser.notis.map((noticer) => {
+            
+             if(noticer.username == user.username){
+            return <HiBell onClick={turnOffNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
+            
+            } else{
+
+            return <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
+            }
+            })
+            :
+             <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
+            
+        
+       }
+         </div>
        :
         <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
       :   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
-    //   This will re
     }
     </div>
 )

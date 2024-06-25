@@ -173,7 +173,7 @@ User.find().select('lastPosted lastPosteNotified name email').exec((err,users) =
 
 //sockets 
 io.on('connection',(socket) => {
-    console.log(`Connected : ${socket.id}`)
+    // console.log(`Connected : ${socket.id}`)
     //How to pass headers to socket
     socket.on('getNotifications', (data) => {
     //  console.log(data)
@@ -301,6 +301,20 @@ User.findOneAndUpdate({email: req.user.email}, {$set :{lastActive: req.body.mome
 app.get('/', (req,res) => {
     res.setHeader("Access-Control-Allow-Credentials","true")
     res.send('API is running....')
+})
+
+app.post('/api/notis/on', verify, async(req,res) => {
+   User.findOneAndUpdate({userId: req.user._id}, {$push:{notis: mongoose.Types.ObjectId(req.body.noticee) }}).exec((err,doc) => {
+    if(err){throw err}
+    if(doc) {res.send({status: 200})}
+   })
+})
+
+app.post('/api/notis/off', verify, async(req,res) => {
+   User.findOneAndUpdate({userId: req.user._id}, {$pull:{notis: mongoose.Types.ObjectId(req.body.noticee) }}).exec((err,doc) => {
+    if(err){throw err}
+    if(doc) {res.send({status: 200})}
+   })
 })
 
 app.get('/api/notifications', verify, async(req,res) => {
@@ -2019,11 +2033,18 @@ app.delete('/api/user/bookmark',verify, (req,res) => {
 
 connectToMongooseDB()
 
-// User.updateMany({}, {$set: {lastActiveNotified: '', lastPostedNotified: ''}}).then(result => {
-//     console.log(`Updated ${result.upsertedCount} documents`)
-// }).catch(err => {
+// User.updateMany({}, {$set: {notis: []}}).then(result => {
+//     console.log(`Updated ${result} documents`)
+//     User.find().exec((err,doc) => {
+//             console.log(doc[0])  
+// })
+// })
+// .catch(err => {
 //     console.log(err)
-// // })
+// })
+
+
+
 // reels.updateMany({}, {$set: {reposts:[], bookmarks:[]}}).then(result => {
 //     console.log(`Updated ${result.upsertedCount} documents`)
 // }).catch(err => {
