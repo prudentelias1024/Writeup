@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import { HiBadgeCheck, HiBell, HiHashtag, HiOutlineBell } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,9 @@ import { AiOutlineLink } from 'react-icons/ai';
 import { CiLocationOn } from 'react-icons/ci';
 export default function ProfileVitals({user, setUser, total}) {
     const currentUser = useSelector(state => state.user)  
+    const [addedToNotis, setAddedToNotis] = useState(false)
     const dispatch = useDispatch()
-
+    console.log(currentUser);
     const {URL} = useSelector(state => state)  
     const follow = async() => {
        let res =  await axios.post(`${URL}/api/follow`, {username:user.username, id:user._id},{headers: {Authorization: localStorage.getItem('token') }})
@@ -23,7 +24,7 @@ export default function ProfileVitals({user, setUser, total}) {
            if(currentUser.username == 'InkupOfficial' && currentUser.username == 'prudentelias'){
             isAdmin = false
            }
-        dispatch(actions.updateUser({...res.data.user, isAdmin: isAdmin}))
+         dispatch(actions.updateUser({...res.data.user, isAdmin: isAdmin}))
         await axios.post(`${URL}/api/notification/follow`, {user:user},{headers: {Authorization: localStorage.getItem('token') }})
 
      }
@@ -40,11 +41,19 @@ export default function ProfileVitals({user, setUser, total}) {
     }
 
     const turnOnNotification = async() => {
-        const res = axios.get(`${URL}/api/notis/on`, {noticee: user.id},{headers: {Authorization: localStorage.getItem('token') }})
+        const res = await (await axios.post(`${URL}/api/notis/on`, {noticee: user._id},{headers: {Authorization: localStorage.getItem('token') }})).data
+        console.log(res)
+        if(res.status == 200){
+            setAddedToNotis(true)
+        }
     }
 
     const turnOffNotification = async() => {
-        const res = axios.get(`${URL}/api/notis/off`, {noticee: user.id},{headers: {Authorization: localStorage.getItem('token') }})
+        const res = await (await axios.post(`${URL}/api/notis/off`, {noticee: user.id},{headers: {Authorization: localStorage.getItem('token') }})).data
+        if(res.status == 200){
+            setAddedToNotis(false)
+        }
+    
     }
     const navigate = useNavigate()
     const redirectToLogin = () => {
@@ -141,19 +150,12 @@ export default function ProfileVitals({user, setUser, total}) {
          
          <button onClick={unfollow} className='text-black border-black font-[Sen] font-[Sen] border-2 px-[1em] w-[75%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Following</button>
        {
-        currentUser.length > 0 ?
-            currentUser.notis.map((noticer) => {
-            
-             if(noticer.username == user.username){
-            return <HiBell onClick={turnOffNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
-            
-            } else{
-
-            return <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
-            }
-            })
+            currentUser.notis.some((person) => person.username == user.username)  || addedToNotis ?
+              <HiBell onClick={turnOffNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
             :
+
              <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
+            
             
         
        }

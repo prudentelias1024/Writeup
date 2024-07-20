@@ -200,9 +200,10 @@ const verify = (req,res,next) => {
             if(err){res.status(401).json("Token is invalid")}
             if(user){
             
-                User.findOne({username: user}).populate('followers').populate('following').exec((err,userDoc) => {
+                User.findOne({username: user}).populate('followers').populate('following').populate('notis').exec((err,userDoc) => {
                     if(err){throw err} 
                      if(userDoc){
+                        console.log(userDoc);
                         req.user = userDoc;
                         next();
                      } else {
@@ -304,16 +305,23 @@ app.get('/', (req,res) => {
 })
 
 app.post('/api/notis/on', verify, async(req,res) => {
-   User.findOneAndUpdate({userId: req.user._id}, {$push:{notis: mongoose.Types.ObjectId(req.body.noticee) }}).exec((err,doc) => {
+    User.findOneAndUpdate({username: req.user.username}, {$push:{notis: req.body.noticee }}).exec((err,doc) => {
     if(err){throw err}
-    if(doc) {res.send({status: 200})}
+    if(doc) {
+        res.send({status: 200});
+         console.log('Added to notis')
+        }
    })
 })
 
 app.post('/api/notis/off', verify, async(req,res) => {
-   User.findOneAndUpdate({userId: req.user._id}, {$pull:{notis: mongoose.Types.ObjectId(req.body.noticee) }}).exec((err,doc) => {
+   User.findOneAndUpdate({username: req.user.username}, {$pull:{notis: mongoose.Types.ObjectId(req.body.noticee) }}).exec((err,doc) => {
     if(err){throw err}
-    if(doc) {res.send({status: 200})}
+    if(doc) {
+        res.send({status: 200})
+        consoe.log('Removed from notis')
+    
+    }
    })
 })
 
@@ -1816,7 +1824,7 @@ app.post('/api/publicPicture', async(req,res) => {
 })
 
 app.get('/api/user/:username',(req,res) => {
-    User.find({username:req.params.username}).populate('followers').populate('following').populate('followingTags').exec((err,doc) => {
+    User.find({username:req.params.username}).populate('followers').populate('following').populate('followingTags').populate('notis').exec((err,doc) => {
         if(err){throw err}
         if(doc && doc.length > 0){res.send(doc[0])}else{
             res.send('null')
