@@ -19,6 +19,7 @@ import ImageReel from './imageReel';
 import { ThreeDots } from 'react-loader-spinner';
 import { MdOutlinePodcasts } from 'react-icons/md';
 import {Helmet} from 'react-helmet'
+import UserNav from './Navbar/UserNav';
 const Profile = () => {
     let URL;
     const reelsRef = useRef()
@@ -133,30 +134,16 @@ const Profile = () => {
           content={user.name+ (user.username)+ 'on Inkup'}/>
 
         </Helmet>
-        <div className='flex flex-col overflow-x-hidden'>
+        <div className="lg:ml-[10em] overflow-x-hidden flex flex-col gap-[.5em] mt-[.5em] bg-white">    
+     
         {
           posts && reels ?
         <ProfileVitals user={user} setUser={setUser} total={posts.length + reels.length}/>
         : 'Loading.....'
         }
-        
-        <div className='lg:flex lg:mt-[-9em] lg:flex-row gap-[5em] '>
-            <div className='mt-[10em] hidden bg-white px-7 py-9 font-[Outfit] rounded-xl 
-           lg:ml-[10em]  h-fit  justify-start lg:flex lg:flex-col lg:gap-5 border  '>
-            <div className='flex gap-2 w-fit'>
-                    <SlNote className='text-xl ' />
-                    <p className='font-[Outfit] w-[10em] font-light text-sm'> {posts? posts.length : 0} Posts published</p>
-                </div>
-                <div className='flex gap-2'>
-                    <HiHashtag className='text-xl' />
-                    <p className='font-[Outfit] font-light text-sm'> {user ?user.followingTags.length : 0} Tags Followed</p>
-                </div>
-                <div className='flex gap-2 '>
-                    <FaRegComment className='text-xl' />
-                    <p className='font-[Outfit] font-light text-sm'> 0 Comment Added</p>
-                </div>
-              
-            </div>
+      
+        <div className='lg:flex lg:mt-[0em] lg:w-1/2 lg:ml-[4em] lg:flex-row gap-[5em] '>
+       
             <div className="flex flex-row w-full -mt-[4em]">
         {
         inkClicked ?
@@ -179,14 +166,15 @@ const Profile = () => {
             </div>
 }
 </div>
-            <div className=' flex flex-col gap-4  lg:mt-[10em] '>
+</div>
+            <div className=' flex flex-col gap-4  lg:mt-[2em] relative left-[8em]'>
             {
             inkClicked ?
             posts == null || posts.length == 0  ?
-            <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Post yet</p>
+            <p className="font-[Sen] text-lg font-bold w-1/2 lg:ml-[-1em]  text-[#9e9e9e] mt-[1em] text-center">No Post yet</p>
             :  posts.map((post) => {
                 
-                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={post._id} post={post} />
+                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[0.5em] lg:w-[30em] " key={post._id} post={post} />
              })  
              :''
     }
@@ -200,14 +188,14 @@ const Profile = () => {
                     return <ImageReel reel={reel} key={reel.reelId} /> 
                   }
              }) :
-             <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Reels</p>
+             <p className="font-[Sen] text-lg font-bold lg:ml-[-1em] text-[#9e9e9e] w-1/2 mt-[1em] text-center">No Reels</p>
              : ''     
             }
             
             </div>
-        </div>
-
-        </div>
+    
+        <UserNav/>
+                  </div>
         </>
     )
 }else if(userExists == false){

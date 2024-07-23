@@ -32,7 +32,7 @@ export default function Notis() {
                   
 
       </div>
-    <p className="font-[Sen] text-xs ml-[0em] lg:ml-[4em] pb-2 mt-[.5em] lg:mt-[.5em] font-semibold pr-[5em]">New Post Notification from {mostRecentNotis} and 2 others</p>
+    <p className="font-[Sen] text-xs ml-[0em] lg:ml-[0em] pb-2 mt-[.5em] lg:mt-[1em] font-semibold pr-[5em]">New Post Notification from {mostRecentNotis} and 2 others</p>
       </div>
         </div>
 

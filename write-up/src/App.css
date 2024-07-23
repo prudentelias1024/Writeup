@@ -757,6 +757,26 @@ video {
   top: 5em;
 }
 
+.left-\[1\.5em\]
+{
+  left: 1.5em;
+}
+
+.left-\[1em\]
+{
+  left: 1em;
+}
+
+.left-\[0em\]
+{
+  left: 0em;
+}
+
+.right-\[4em\]
+{
+  right: 4em;
+}
+
 .z-\[1000\]
 {
   z-index: 1000;
@@ -1305,6 +1325,11 @@ video {
   margin-top: .125em;
 }
 
+.mr-2
+{
+  margin-right: 0.5rem;
+}
+
 .ml-\[0em\]
 {
   margin-left: 0em;
@@ -1313,6 +1338,11 @@ video {
 .mt-\[\.75em\]
 {
   margin-top: .75em;
+}
+
+.ml-\[em\]
+{
+  margin-left: em;
 }
 
 .mt-\[50\%\]
@@ -1465,14 +1495,59 @@ video {
   margin-top: 1.5em;
 }
 
-.ml-\[em\]
+.ml-\[5em\]
 {
-  margin-left: em;
+  margin-left: 5em;
 }
 
-.-mt-\[2wm\]
+.ml-\[\.2em\]
 {
-  margin-top: -2wm;
+  margin-left: .2em;
+}
+
+.ml-\[15em\]
+{
+  margin-left: 15em;
+}
+
+.-mt-\[1em\]
+{
+  margin-top: -1em;
+}
+
+.ml-\[10em\]
+{
+  margin-left: 10em;
+}
+
+.-mt-\[3em\]
+{
+  margin-top: -3em;
+}
+
+.mt-\[-3em\]
+{
+  margin-top: -3em;
+}
+
+.ml-\[11em\]
+{
+  margin-left: 11em;
+}
+
+.mt-\[-2\.5em\]
+{
+  margin-top: -2.5em;
+}
+
+.ml-\[10\.5em\]
+{
+  margin-left: 10.5em;
+}
+
+.ml-\[0\.5em\]
+{
+  margin-left: 0.5em;
 }
 
 .block
@@ -1750,11 +1825,6 @@ video {
   width: 30px;
 }
 
-.w-\[2em\]
-{
-  width: 2em;
-}
-
 .w-\[98\%\]
 {
   width: 98%;
@@ -1768,6 +1838,11 @@ video {
 .w-\[310px\]
 {
   width: 310px;
+}
+
+.w-\[2em\]
+{
+  width: 2em;
 }
 
 .w-3\/4
@@ -1808,6 +1883,11 @@ video {
 .w-\[13em\]
 {
   width: 13em;
+}
+
+.w-\[50\%\]
+{
+  width: 50%;
 }
 
 .max-w-\[8em\]
@@ -3727,6 +3807,36 @@ video {
     right: 0.25rem;
   }
 
+  .lg\:left-\[2em\]
+{
+    left: 2em;
+  }
+
+  .lg\:right-\[10em\]
+{
+    right: 10em;
+  }
+
+  .lg\:right-\[0em\]
+{
+    right: 0em;
+  }
+
+  .lg\:left-\[1em\]
+{
+    left: 1em;
+  }
+
+  .lg\:top-4
+{
+    top: 1rem;
+  }
+
+  .lg\:top-1
+{
+    top: 0.25rem;
+  }
+
   .lg\:m-auto
 {
     margin: auto;
@@ -4120,6 +4230,21 @@ video {
   .lg\:ml-\[35em\]
 {
     margin-left: 35em;
+  }
+
+  .lg\:mr-\[1em\]
+{
+    margin-right: 1em;
+  }
+
+  .lg\:mr-\[3em\]
+{
+    margin-right: 3em;
+  }
+
+  .lg\:ml-\[\.75em\]
+{
+    margin-left: .75em;
   }
 
   .lg\:block

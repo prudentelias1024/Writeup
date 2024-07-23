@@ -305,6 +305,8 @@ app.get('/', (req,res) => {
 })
 
 app.post('/api/notis/on', verify, async(req,res) => {
+
+    
     User.findOneAndUpdate({username: req.user.username}, {$push:{notis: req.body.noticee }}).exec((err,doc) => {
     if(err){throw err}
     if(doc) {

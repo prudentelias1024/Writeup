@@ -13,7 +13,6 @@ export default function ProfileVitals({user, setUser, total}) {
     const currentUser = useSelector(state => state.user)  
     const [addedToNotis, setAddedToNotis] = useState(false)
     const dispatch = useDispatch()
-    console.log(currentUser);
     const {URL} = useSelector(state => state)  
     const follow = async() => {
        let res =  await axios.post(`${URL}/api/follow`, {username:user.username, id:user._id},{headers: {Authorization: localStorage.getItem('token') }})
@@ -68,8 +67,8 @@ export default function ProfileVitals({user, setUser, total}) {
         window.location.replace(link)
     }
    return (
-    <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[1.5em] relative flex-col lg:mt-[1em] lg:w-4/5  lg:ml-[1em]  lg:pt-[1em]">
-    <div  className="activity_info flex flex-row justify-evenly">
+    <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[1.5em] relative flex-col lg:mt-[1em] lg:w-1/2 lg:ml-[1em]  lg:pt-[1em]">
+    <div  className="activity_info flex flex-row justify-evenly lg:ml-[5em]">
         <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em]' src={user.public_picture} alt={user.name}  />
            <div className="post_activity text-center">
                <p className='text-2xl font-[Sen] font-bold '> {total ? total : 0}</p>
@@ -88,14 +87,53 @@ export default function ProfileVitals({user, setUser, total}) {
            </Link >
         </div>
     
-       <div className="flex flex-col mt-[.75em] relative left-[2em] lg:ml-[8em]">
+       <div className="flex flex-col mt-[.75em] relative left-[1em] lg:ml-[8em]">
+
+        <div className='flex flex-row'>
+        <div className='-ml-[1em]'> 
         <div className='inline-flex'>
         <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
         {user.verified ==true?
         <HiBadgeCheck className="text-xl text-blue-500 lg:mt-[1.5em] mt-1"/>: ''
-        }
+    }
         </div> 
         <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
+        </div>
+        {
+
+currentUser ?
+currentUser !== null && user.username == currentUser.username   ? 
+     <div className="profile_actions lg:mt-[0em] flex flex-row justify-evenly mt-[1em]">
+                <Link to="/settings">
+    <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm   top-4 right-6 lg:right-[0em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:ml-[1.5em] lg:mt-[1.5em] '>Edit Profile</button>
+    </Link>
+                
+    <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm lg:hidden   top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
+    <ToastContainer/>
+
+
+    </div>:
+    currentUser.following.some((person) => person.username == user.username) ?
+        <div className='flex flex-row gap-[1.5em]'>
+    
+    <button onClick={unfollow} className='text-black border-black  font-[Sen] border-2 px-[1em] w-[75%] ml-[9em] mt-[2em] h-[3em] font-bold text-sm  lg:right-0  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] '>Following</button>
+    {
+        currentUser.notis.some((person) => person.username == user.username)  || addedToNotis ?
+        <HiBell onClick={turnOffNotification}  className='text-3xl absolute mt-[1em] lg:ml-[.75em] ml-[.2em]' />
+        :
+
+        <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-[1.25em] absolute lg:ml-[2.5em] ml-[.2em]' />
+        
+        
+    
+    }
+  </div>
+:
+ <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] 
+ ml-[7em] mt-[2em] h-[3em] font-bold text-sm    rounded-lg lg:p-3 lg:w-[10em]  '>Follow</button>
+:   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm   top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
+}
+    </div>
         <p className=" text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl">{user.bio ?user.bio: ''}</p>
         <div>
 
@@ -123,47 +161,15 @@ export default function ProfileVitals({user, setUser, total}) {
          
          user.following.some((person) => person.username == currentUser.username) && 
          currentUser.following.some((person) => person.username == user.username) ?
-         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[2.5em] pb-[1em]'>You follow each other</p>: 
+         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold mt-[-2.5em] ml-[10.5em] pb-[1em]'>You follow each other</p>: 
          
          user.following.some((person) => person.username == currentUser.username) ?
-         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[2.5em] pb-[1em]'> Follows you</p> :''
+         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[10.5em] mt-[-2.5em] pb-[1em]'> Follows you</p> :''
         
         
        }
 
-        {
-
-       currentUser ?
-       currentUser !== null && user.username == currentUser.username   ? 
-            <div className="profile_actions left-[2em] flex flex-row justify-evenly mt-[1em]">
-                       <Link to="/settings">
-       <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-[-10em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Edit Profile</button>
-       </Link>
-                       
-       <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm lg:hidden  lg:absolute top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
-       <ToastContainer/>
-
-       
-       </div>:
-        currentUser.following.some((person) => person.username == user.username) ?
-            <div className='flex flex-row gap-[1.5em]'>
-         
-         <button onClick={unfollow} className='text-black border-black font-[Sen] font-[Sen] border-2 px-[1em] w-[75%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Following</button>
-       {
-            currentUser.notis.some((person) => person.username == user.username)  || addedToNotis ?
-              <HiBell onClick={turnOffNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
-            :
-
-             <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-1.5  -ml-[.2em]' />
-            
-            
-        
-       }
-         </div>
-       :
-        <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
-      :   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm  lg:absolute top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
-    }
+     
     </div>
 )
 }
