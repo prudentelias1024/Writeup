@@ -25,7 +25,7 @@ import { ThreeDots } from 'react-loader-spinner';
 const Notifications = () => {
     const {notifications} = useSelector(state => state)
     const {URL} = useSelector(state=>state)
-    const socket = io(URL)
+    // const socket = io(URL)
     useEffect(() => {
           const read =  notifications.filter((notification) => {
           return notification.read === false

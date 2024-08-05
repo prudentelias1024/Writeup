@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, redirect, useNavigate } from 'react-router-dom';
-import { HiBadgeCheck, HiBell, HiHashtag, HiOutlineBell } from 'react-icons/hi';
+import { HiBadgeCheck, HiBell, HiHashtag, HiMail, HiOutlineBell, HiOutlineMail } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import copy from 'copy-to-clipboard'
 import { ToastContainer ,toast} from 'react-toastify';
@@ -53,6 +53,14 @@ export default function ProfileVitals({user, setUser, total}) {
             setAddedToNotis(false)
         }
     
+    }
+    const startConversation = async() => {
+        const res = await (await axios.post(`${URL}/api/conversation` ,{receiver:user._id, sender: currentUser._id },{headers: {Authorization: localStorage.getItem('token') }})).data
+        if(res.status == 200){
+        console.log(res.conversation_id)
+        navigate(`/message/${res.conversation_id}`,{state: {user:user, convo_id: res.conversation_id}})
+
+    }
     }
     const navigate = useNavigate()
     const redirectToLogin = () => {
@@ -115,6 +123,7 @@ currentUser !== null && user.username == currentUser.username   ?
     </div>:
     currentUser.following.some((person) => person.username == user.username) ?
         <div className='flex flex-row gap-[1.5em]'>
+        <HiOutlineMail onClick={startConversation}   className='text-3xl absolute mt-[1em] lg:ml-[2.5em] ml-[.2em]' />
     
     <button onClick={unfollow} className='text-black border-black  font-[Sen] border-2 px-[1em] w-[75%] ml-[9em] mt-[2em] h-[3em] font-bold text-sm  lg:right-0  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] '>Following</button>
     {
@@ -122,15 +131,19 @@ currentUser !== null && user.username == currentUser.username   ?
         <HiBell onClick={turnOffNotification}  className='text-3xl absolute mt-[1em] lg:ml-[.75em] ml-[.2em]' />
         :
 
-        <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-[1.25em] absolute lg:ml-[2.5em] ml-[.2em]' />
+        <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-[1em] absolute lg:ml-[.75em] ml-[.2em]' />
         
         
     
     }
   </div>
 :
+<div className='flex'>
+<HiOutlineMail onClick={startConversation}   className='text-3xl absolute mt-[1.25em] lg:ml-[1.5em] ml-[.2em]' />
+    
  <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] 
  ml-[7em] mt-[2em] h-[3em] font-bold text-sm    rounded-lg lg:p-3 lg:w-[10em]  '>Follow</button>
+ </div>
 :   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm   top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
 }
     </div>

@@ -1,51 +1,111 @@
 import moment from 'moment'
-import React from 'react'
+import React, { useState , useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import MessageInput from './MessageInput'
+import SentMessage from './sentMessage'
+import ReceivedMessage from './receivedMessage'
+import {io } from 'socket.io-client'
+export default function MessageRoom({ enterRoom, recipient, conversationId }) {
+  
+  const [allMessages, setAllMessages] = useState(null)
+  const {user,URL} = useSelector(state => state)
+  const socket = io(URL, {
+    auth: {
+      token: localStorage.getItem('token')
+    }
+    })
+    
+    useEffect(() => {
+      socket.on('send-message', (new_message) => {
+        console.log(new_message)
+        setAllMessages(message => [...message, new_message])
+       
+      })
 
-export default function MessageRoom() {
-    const {user} = useSelector(state => state)
+      if (enterRoom) {
 
+      socket.emit('get_messages', {sender: user._id, receiver: recipient})
+      socket.on('get-messages', (data) => {
+        setAllMessages(data)
+        console.log(data)
+        console.log(user)
+         })
+        socket.emit('join-one-v-one', {roomId: conversationId })
+        }
+    //    return () => {
+    //     socket.close()
+    // };
+    }, [enterRoom])
+    
+     if(allMessages !== null && recipient !== null){
+
+    
   return (
+    
     <div className='lg:flex flex-col ml-[1em] overflow-y-auto hidden  lg:ml-[-10em] pt-[1.5em]'>
         <div className="flex flex-row gap-1">
-    <img src={user.public_picture} alt={user.name} className='rounded-full h-12 w-12 mr-[1em] '  />
+    <img src={recipient.public_picture} alt={recipient.name} className='rounded-full h-12 w-12 mr-[1em] '  />
     <div>
 
-      <p className="font-[Avenir] font-semibold">{user.name}</p>
-      <p className="font-[Avenir] text-[#a0a0a0] font-semibold">Last seen on </p>
+      <p className="font-[Avenir] font-semibold">{recipient.name}</p>
+      <p className="font-[Avenir] text-[#a0a0a0] font-semibold">Last seen  {
+      moment().diff(recipient.lastActive, 'day') > 1?
+    
+       'on ' +  moment(recipient.lastActive).format('MMM DD YYYY h:mm a') :
+      
+      moment().diff(recipient.lastActive, 'hour') + ' ago'
+      
+
+      }  </p>
 
      </div>
     
     </div>
     <div className="flex flex-col text-center lg:pr-[20em] pt-[2em] lg:pt-[5em] gap-2 -indent-8">
-    <img src={user.public_picture} alt={user.name} className='rounded-full m-auto h-20 w-20  '  />
-    <p className="font-[Avenir] font-semibold">{user.name}</p>
-    <p className="font-[Avenir] text-[#a0a0a0] font-semibold">@{user.username}</p>
-    <p className="font-[Avenir] font-semibold ">{user.bio}</p>
-    {/* <div className="flex flex-row w-full"> */}
-    {/* <p className="font-[Avenir] text-[#a0a0a0] font-semibold">Joined on: {moment(user.joined_on)} </p> */}
-    <p className="font-[Avenir] text-[#a0a0a0] font-semibold text-center">{ user.followers.length} Followers</p>
+    <img src={recipient.public_picture} alt={recipient.name} className='rounded-full m-auto h-20 w-20  '  />
+    <p className="font-[Avenir] font-semibold">{recipient.name}</p>
+    <p className="font-[Avenir] text-[#a0a0a0] font-semibold">@{recipient.username}</p>
+    <p className="font-[Avenir] font-semibold ">{recipient.bio}</p>
+    
+    <p className="font-[Avenir] text-[#a0a0a0] font-semibold text-center">{ recipient.followers.length} Followers</p>
 
     {/* </div> */}
    
     </div>
-    <div className="message   relative lg:w-[60%] w-full mt-[4em] overflow-x-hidden overflow-y-auto flex flex-col gap-4 mb-[8em] pr-[1em]  lg:mb-[4em]">
+    <div className="messages   relative lg:w-[60%] w-full mt-[4em] overflow-x-hidden overflow-y-auto flex flex-col gap-4 mb-[8em] pr-[1em]  lg:mb-[4em]">
+    {
+     allMessages !== null ?
+      allMessages.map((message,index) => {
+       if(message.sender == user._id){
+       return <SentMessage key={index} text={message.text}/>
+       } else {
+        return <ReceivedMessage key={index} text={message.text}/> 
 
-   <div className="sent relative max-w-[8em] ">
-    <p className="font-[Sen] bg-blue-500  text-white h-fit w-fit p-[.5em] rounded-lg"> Hi</p>
-   </div>
+       }
+      }): ''
+    }
    
    
-   
-   
-   <div className="received relative self-end max-w-[8em]  ">
-    <p className="font-[Sen] bg-gray-500 text-white h-fit w-fit p-[.5em] rounded-lg"> How are you?</p>
-   </div>
+  
   
    
     </div>
-    <MessageInput />
+    <MessageInput 
+    recipient={recipient} 
+    
+    message={allMessages}
+    
+    setMessage={setAllMessages} 
+    
+    conversationId={conversationId} />
     </div>
   )
+} else {
+  return(
+  <div className='lg:pt-[15em] w-full lg:ml-[-2em] '>
+    <p className="font-[Sen] text-2xl font-bold">Select a message </p>
+    <p className='font-[Sen] text-base'> Choose from your conversations list  </p>
+  </div>
+  )
+}
 }

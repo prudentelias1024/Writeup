@@ -13,6 +13,8 @@ const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
 const notifications   = require('./notificationsSchema')
+const Messages = require('./messageSchema')
+const Conversations = require('./conversationSchema')
 const bookmarks = require('./bookmarkSchema')
 const Comments = require('./commentsSchema')
 const jwt = require('jsonwebtoken')
@@ -26,6 +28,7 @@ const nodemailer = require('nodemailer')
 const cron = require('node-cron');
 const reels = require('./reelsSchema');
 const { profile } = require('console');
+const socketIo  = require('socket.io');
 //Dynamic URL
 let URL;
 
@@ -35,10 +38,9 @@ if (process.env.NODE_ENV == 'production') {
     URL = "http://localhost:3000"
            
   }
-const io  = require('socket.io')(server, {
-    
+const io = socketIo(server, {
     cors:{
-    origin: URL,
+    origin: "http://localhost:3000",
     method: ["GET", "POST"],
     
 }
@@ -171,13 +173,85 @@ User.find().select('lastPosted lastPosteNotified name email').exec((err,users) =
 
 })
 
+//socket middleware for socket authentication
+io.use((socket,next) => {
+   
+    if(socket.handshake.auth.token == null || socket.handshake.auth.token == undefined){
+        return next(new Error('Authentication error'));
+   
+    }else{
+        const token = socket.handshake.auth.token.toString().split(' ')[1]
+        jwt.verify(token,process.env.INKUP_SECRET_KEY, (err,user) => {
+
+            if(user){
+                User.findOne({username: user}).populate('followers').populate('following').populate('notis').exec((err,userDoc) => {
+                     if(userDoc){
+                        socket.user = userDoc;
+                        next();
+                     } else {
+                   
+                        return next(new Error('Authentication error'));
+   
+
+                     }
+                    
+                })
+            } 
+        })
+    }
+})
+
 //sockets 
 io.on('connection',(socket) => {
-    // console.log(`Connected : ${socket.id}`)
-    //How to pass headers to socket
-    socket.on('getNotifications', (data) => {
-    //  console.log(data)
- })
+    socket.on('join-one-v-one', (data) => {
+        console.log(`${socket.user.username} joined room ${data.roomId}`)
+        socket.join(data.roomId)
+    })
+
+    socket.on('get_messages', async(data) =>
+    {
+        console.log('getting message.....')
+        Messages.find({sender: {$in: [ data.sender, data.receiver]}}).sort({sent_on: 1}).exec((err,messages) => {
+            if(err){throw err}
+            if(messages){
+                console.log(messages.length)
+                socket.emit('get-messages',messages)
+            }
+        })
+    })
+    socket.on('send_message', async(data) => {
+        console.log(data)
+        const newMessage = new  Messages({
+            receiver: data.receiver,
+            sender: data.sender,
+            text: data.text,
+          
+        })
+        await newMessage.save()
+        let convo = await  Conversations.findOneAndUpdate({participants: {$in: data.sender}}, {$set : {lastMessage: newMessage._id }})
+
+        console.log(convo)
+
+        console.log(data.roomId)
+        io.to(data.roomId).emit('send-message',newMessage )  
+        socket.emit('get-conversations',convo)
+    }) 
+  
+  
+    
+    socket.on('get_conversations', async(data) => {
+        Conversations.find({participants: {$in: [data.user]}}).populate('participants').populate('lastMessage').sort({ lastMessageTimestamp: -1 }).exec((err,conversations) => {
+            console.log(conversations)
+            if(err){throw err}
+              socket.emit('get-conversations', conversations)
+        })
+        
+    })
+
+   
+    // socket.on('disconnect', () => {
+    //     console.log('user disconnected:', socket.id);
+    // });
 })
 
 //Middleware
@@ -203,7 +277,7 @@ const verify = (req,res,next) => {
                 User.findOne({username: user}).populate('followers').populate('following').populate('notis').exec((err,userDoc) => {
                     if(err){throw err} 
                      if(userDoc){
-                        console.log(userDoc);
+                        // console.log(userDoc);
                         req.user = userDoc;
                         next();
                      } else {
@@ -286,6 +360,34 @@ let interestedUserPosts = []
     return interestedUserPosts
 }
 
+// Messages
+
+app.post('/api/conversation', verify, async(req,res) => {
+    //check if it exists
+    Conversations.findOne({participants: {$in: req.body.receiver, $in: req.body.sender}}).exec(async(err,doc) => {
+       if(err){throw err}
+       if(!doc){
+        const conversation = new Conversations({
+            participants: [req.body.receiver, req.body.sender],
+            
+            status: 'unread'
+        })
+
+        await conversation.save()
+        res.send({status:200,conversation_id:conversation._id})
+       }
+    })
+
+   
+
+})
+app.get('/api/conversations/:id', verify, async(req,res) => {
+   const conversations = Conversations.find({participants: {$in: [req.params.id]}}).populate('participants').populate('lastMessage').sort({lastMessageTimestamp: -1})
+   res.send({conversations: conversations})
+})
+
+
+
 app.post('/api/user/attendance',verify, async(req,res) => {
     console.log(req.body)
 User.findOneAndUpdate({email: req.user.email}, {$set :{lastActive: req.body.moment}}, (err,doc) => {
@@ -297,6 +399,10 @@ User.findOneAndUpdate({email: req.user.email}, {$set :{lastActive: req.body.mome
     }
 })
 })
+
+// app.post('/api/username'){
+    // return 
+// }
 
 
 app.get('/', (req,res) => {
@@ -321,7 +427,7 @@ app.post('/api/notis/off', verify, async(req,res) => {
     if(err){throw err}
     if(doc) {
         res.send({status: 200})
-        consoe.log('Removed from notis')
+        console.log('Removed from notis')
     
     }
    })
@@ -390,7 +496,7 @@ app.post('/api/notification/like',verify, async(req,res) => {
    if (err) { throw err;}
     if (doc) {
         console.log(doc)
-        console.log(req.user._id, author._id)
+        // console.log(req.user._id, author._id)
           //incase there's nothing in the db
      
   if (doc.length == 0 ) {
@@ -531,8 +637,8 @@ app.post('/api/notification/comment',verify, async(req,res) => {
     notifications.find({actionUserId: req.user._id, postId:postId}).select('type').exec(async(err,doc)=> {
      if (err) { throw err;}
       if (doc) {
-          console.log(doc)
-          console.log(req.user._id, author._id)
+        //   console.log(doc)
+        //   // console.log(req.user._id, author._id)
             //incase there's nothing in the db
        
     if (doc.length == 0 ) {
@@ -741,7 +847,7 @@ User.findOne({username:username}).populate('followers').populate('following').po
 app.post('/api/login' ,(req,res) => {
     console.log(req.body)
      User.findOne({googleId: req.body.googleId},(err,user) => {
-        console.log(user)
+        // console.log(user)
         if(err){throw err}
         if(!user){
           res.send({message: 'User Doesn\t Exists'})
@@ -754,7 +860,7 @@ app.post('/api/login' ,(req,res) => {
     })
 
 app.get('/api/user' , verify, (req,res) => {
-    // console.log(req.user)
+    // // console.log(req.user)
   res.send(req.user)
 })
 
@@ -1129,7 +1235,7 @@ app.get('/reels/:postId',verify,async(req,res) => {
 app.post('/reel/repost',verify,async(req,res) => {
     reels.find({postId: req.body.postId}).select('reposts').exec((err,doc) => {
         if(doc[0].reposts.indexOf(req.user._id) == -1){
-            console.log(req.user._id)
+            // // console.log(req.user._id)
             reels.findOneAndUpdate({postId: req.body.postId}, {$push: {reposts: req.user._id}},{new:true}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
             populate:{path: 'author'}}).exec((err,reels) => {
                 if(err){throw err}
@@ -1146,7 +1252,7 @@ app.post('/reel/repost',verify,async(req,res) => {
 app.post('/reel/unrepost',verify,async(req,res) => {
     reels.find({postId: req.body.postId}).select('reposts').exec((err,doc) => {
         if(doc[0].reposts.indexOf(req.user._id) !== -1){
-            console.log(req.user._id)    
+            // console.log(req.user._id)    
             reels.findOneAndUpdate({postId: req.body.postId}, {$pull: {reposts: req.user._id}},{new:true}).populate('author').populate('likes').populate({path: 'comments',
             populate:{path: 'author'}}).exec((err,reels) => {
                 if(err){throw err}
@@ -1729,7 +1835,7 @@ app.post('/post/unlike', verify, (req,res) => {
 
 app.post('/post/bookmark', verify, (req,res) => {
     console.log(req.body.postId);
-    console.log(req.user._id);
+    // console.log(req.user._id);
     if (req.body.type == 'reel') {
         reels.findOne({postId: req.body.postId}).select('bookmarks').exec((err,doc) => {
             if (err) {throw err  }

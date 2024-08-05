@@ -2,13 +2,18 @@ import React , {useEffect, useState} from 'react'
 import { IoIosNotifications } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import io from 'socket.io-client'
 
 export default function Notis() {
+
   useEffect(() => {
      setMostRecentNotis(user.notis[0].name)
   }, [])
   
     const {user} = useSelector((state => state) )
+    const {URL} = useSelector(state=>state)
+    const socket = io(URL)
+ 
     const [mostRecentNotis, setMostRecentNotis] = useState('')
       return (
     <div className='flex flex-row lg:flex-row gap-3 lg:border-[.2px]  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%]  bg-white p-[.5em] pl-0  lg:pl-[2em]'>

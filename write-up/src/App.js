@@ -46,7 +46,7 @@ function App() {
    
       const getReels = async() => {
         let reels = await (await axios.get(`${URL}/reels`)).data; 
-        console.log(reels)
+        // console.log(reels)
         let options = []
         reels.map((reel) => {
 
@@ -107,7 +107,7 @@ function App() {
         
           const info = await (await axios.get(`${URL}/api/user`,{headers: {Authorization: token}}
            )).data;
-           console.log(info)
+           // console.log(info)
            if(info == null || info == undefined){
             navigate('/login')
              
@@ -123,7 +123,7 @@ function App() {
        }
        const getPosts = async() => {
         let  res_posts = await(await axios.get(`${URL}/api/posts`)).data
-         console.log(res_posts)
+         // console.log(res_posts)
        dispatch(actions.updatePosts(res_posts))
      }
        const getPersonalisedPosts = async() => {
@@ -139,7 +139,7 @@ function App() {
    }
    const  getMyReels = async() => {
       let reels = await (await axios.get(`${URL}/api/user/reels/my`,  {headers: {Authorization:  localStorage.getItem('token')}})).data
-      console.log(reels)
+      // console.log(reels)
       let options = []
       reels.map((reel) => {
 
@@ -185,19 +185,19 @@ function App() {
       })
 
           dispatch(actions.updateMyReels([...reels]))
-          console.log(reels)
+          // console.log(reels)
    }
       
 
        const getNotifications = async() => {
         let  notifications = await(await axios.get(`${URL}/api/notifications`,{headers: {Authorization: localStorage.getItem('token')}})).data
        dispatch(actions.updateNotifications(notifications))
-       console.log(notifications)
+       // console.log(notifications)
      }
 
      const getBookmarkedPosts = async() => {
       let bookmarked_post = await (await axios.get(`${URL}/api/bookmarked`,{headers: {Authorization: localStorage.getItem('token')}})).data
-      console.log(bookmarked_post)
+      // console.log(bookmarked_post)
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
@@ -259,6 +259,7 @@ function App() {
       <Route path='/:username/following'  element={<Following/>}/>
       <Route path='/Profile' element={<MyProfile/>}/>
       <Route path='/Messages' element={<Messages/>}/>
+      <Route path='/Message/:convoId' element={<Messages/>}/>
       <Route path='/logout' element={<Logout/>}/>
       <Route path='/hashtags' element={<Tags/>}/>
       <Route path='/readlater' element={<ReadLater/>}/>

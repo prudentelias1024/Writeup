@@ -11,11 +11,10 @@ import { locale } from "moment";
 import MobileSearch from "./mobileSearch";
 
 import { HiBadgeCheck } from 'react-icons/hi';
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { FaRegBookmark } from "react-icons/fa";
 export default function UserNav(){
-  let socket
-    const {URL} = useSelector(state => state)
+   const {URL} = useSelector(state => state)
     const { user, showMobileSearch} = useSelector((state) => state)
     const [toggled, setToggled] = useState(true) 
     const [allRead, setAllRead] = useState(true) 
@@ -24,25 +23,24 @@ export default function UserNav(){
      const helperRef   = useRef()
     useEffect(() => {
       
-             socket = io(URL)
-             console.log(URL)
+            //  console.log(URL)
           
-        setInterval(() => {
-        if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
+      //   setInterval(() => {
+      //   if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
             
-            pollNotifications()
-        }
-       }, 50000);
-       if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
+      //       pollNotifications()
+      //   }
+      //  }, 50000);
+      //  if (localStorage.getItem('token') !== undefined || localStorage.getItem('token') !== null) {
        
             
-              pollNotifications()
+      //         pollNotifications()
          
-       }
+      //  }
        
     },[])
     const pollNotifications = async() => {
-        socket.emit('getNotifications', {headers:{Authorization: localStorage.getItem('token')}})
+        // socket.emit('getNotifications', {headers:{Authorization: localStorage.getItem('token')}})
           let newNotifications = await(await axios.get(`${URL}/api/notifications`,{headers:{Authorization: localStorage.getItem('token')}})).data
        
         dispatch(actions.updateNotifications(newNotifications))
