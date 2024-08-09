@@ -2,10 +2,13 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false},
+    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false},
     reducers: {
       updateRefreshConvo(state,action){
         state.refreshConvos = action.payload
+      },
+      updateMobileRoom(state,action){
+        state.openMobileRoom = action.payload
       },
       updateNotis(state,action){
         state.user = action.payload

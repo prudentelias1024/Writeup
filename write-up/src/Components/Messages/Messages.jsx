@@ -31,7 +31,7 @@ const Messages = () => {
           //Click from conversation list
           displayRoom  && conversations !== null?
 
-          <MessageRoom enterRoom={displayRoom}  recipient={recipient} conversationId={conversations}  />:
+          <MessageRoom enterRoom={displayRoom} updateConvo={setConversations}  recipient={recipient} conversationId={conversations}  />:
 
 
           //loading using message icon

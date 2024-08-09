@@ -7,10 +7,10 @@ import {actions} from '../../store/index'
 
 export default function MessagersList({openRoom, setRecipient, setConversations}) {
  
-  const {URL, user, refreshConvos} = useSelector(state => state)
+  const {URL, user, openMobileRoom, refreshConvos} = useSelector(state => state)
   const [convo , setConvo] = useState([])
-  const dispatch = useDispatch
-  const socket = io(URL, {
+  const dispatch = useDispatch()
+ const socket = io(URL, {
   auth: {
     token: localStorage.getItem('token')
   }
@@ -28,13 +28,16 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
     }
 
     
-    // return () => {
+    return () => {
+      dispatch(actions.updateMobileRoom(false))
     //   socket.close()
-    // }
+    }
   }, [refreshConvos])  
 
   return (
-    <div className='flex flex-col  w-full overflow-y-auto lg:w-fit' >
+    <div className={
+      !openMobileRoom ? 
+     "flex flex-col  w-full overflow-y-auto lg:w-fit" :"hidden" } >
     <p className='relative lg:ml-[63m]  lg:mt-[1.5em] ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Messages</p>
    
     <div className='flex flex-col gap-[.5em] '>
@@ -61,7 +64,7 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
   
     }): 
     
-  <div className='lg:pt-[10em] w-full inline-flex gap-2  '>
+  <div className='lg:pt-[10em] pt-[10em] w-full lg:inline-flex gap-2 px-[1.5em] '>
   <p className='font-[Sen] text-base text-[#b5b4b4]'> Search for users to start a convo with.  </p>
   <Link to='/search' className='text-blue-500'>Click here</Link>
 </div>

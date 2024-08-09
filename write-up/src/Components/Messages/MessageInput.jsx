@@ -3,7 +3,7 @@ import { IoIosImage, IoIosSend } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import io from 'socket.io-client'
 import { actions } from "../../store/index";
-export default function MessageInput({message, recipient,setMessage, conversationId}) {
+export default function MessageInput({ recipient, conversationId}) {
   const dispatch = useDispatch()
    
   const {user,URL} = useSelector(state => state)

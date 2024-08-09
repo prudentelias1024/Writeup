@@ -228,13 +228,13 @@ io.on('connection',(socket) => {
           
         })
         await newMessage.save()
-        let convo = await  Conversations.findOneAndUpdate({participants: {$in: data.sender}}, {$set : {lastMessage: newMessage._id }})
+        let convo = await  Conversations.findOneAndUpdate({participants: {$in: data.sender}}, {$set : {lastMessage: newMessage._id }}).populate('lastMessage')
 
-        console.log(convo)
+        console.log('convo:',convo)
 
         console.log(data.roomId)
         io.to(data.roomId).emit('send-message',newMessage )  
-        socket.emit('get-conversations',convo)
+        io.to(data.roomId).emit('get-conversations',convo)
     }) 
   
   

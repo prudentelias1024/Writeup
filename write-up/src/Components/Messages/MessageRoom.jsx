@@ -1,24 +1,36 @@
 import moment from 'moment'
 import React, { useState , useEffect} from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import MessageInput from './MessageInput'
 import SentMessage from './sentMessage'
 import ReceivedMessage from './receivedMessage'
 import {io } from 'socket.io-client'
-export default function MessageRoom({ enterRoom, recipient, conversationId }) {
+import {  IoMdArrowRoundBack } from 'react-icons/io'
+import { actions } from '../../store'
+export default function MessageRoom({ enterRoom, recipient, conversationId, updateConvo }) {
   
   const [allMessages, setAllMessages] = useState(null)
-  const {user,URL} = useSelector(state => state)
+  const {user,URL, openMobileRoom} = useSelector(state => state)
+  const dispatch = useDispatch()
   const socket = io(URL, {
     auth: {
       token: localStorage.getItem('token')
     }
-    })
+    }) 
     
+    const backToMessageList = () => {
+      dispatch(actions.updateMobileRoom(false))
+      }
     useEffect(() => {
       socket.on('send-message', (new_message) => {
         console.log(new_message)
         setAllMessages(message => [...message, new_message])
+       
+      })
+
+      socket.on('get-conversations', (convo) => {
+        console.log(convo)
+        updateConvo(convo)
        
       })
 
@@ -42,8 +54,16 @@ export default function MessageRoom({ enterRoom, recipient, conversationId }) {
     
   return (
     
-    <div className='lg:flex flex-col ml-[1em] overflow-y-auto hidden  lg:ml-[-10em] pt-[1.5em]'>
+    <div className={openMobileRoom == true?
+       " lg:flex flex-col ml-[1em] overflow-y-auto  lg:ml-[-10em] pt-[1.5em]":
+       " hidden lg:flex flex-col ml-[1em] overflow-y-auto   lg:ml-[-10em] pt-[1.5em]"
+    }>
+        
+     
         <div className="flex flex-row gap-1">
+       <IoMdArrowRoundBack onClick={backToMessageList}
+         className='text-3xl mt-2 mr-3'
+         ></IoMdArrowRoundBack>
     <img src={recipient.public_picture} alt={recipient.name} className='rounded-full h-12 w-12 mr-[1em] '  />
     <div>
 
@@ -72,7 +92,7 @@ export default function MessageRoom({ enterRoom, recipient, conversationId }) {
     {/* </div> */}
    
     </div>
-    <div className="messages   relative lg:w-[60%] w-full mt-[4em] overflow-x-hidden overflow-y-auto flex flex-col gap-4 mb-[8em] pr-[1em]  lg:mb-[4em]">
+    <div className="messages   relative lg:w-[60%] w-full mt-[4em] overflow-x-hidden overflow-y-auto flex flex-col gap-4 mb-[8em] pr-[1em]  lg:mb-[8em]">
     {
      allMessages !== null ?
       allMessages.map((message,index) => {
@@ -102,7 +122,7 @@ export default function MessageRoom({ enterRoom, recipient, conversationId }) {
   )
 } else {
   return(
-  <div className='lg:pt-[15em] w-full lg:ml-[-2em] '>
+  <div className='lg:pt-[15em] hidden w-full lg:ml-[-2em] '>
     <p className="font-[Sen] text-2xl font-bold">Select a message </p>
     <p className='font-[Sen] text-base'> Choose from your conversations list  </p>
   </div>
