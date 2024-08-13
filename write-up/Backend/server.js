@@ -40,7 +40,7 @@ if (process.env.NODE_ENV == 'production') {
   }
 const io = socketIo(server, {
     cors:{
-    origin: "http://localhost:3000",
+    origin: URL,
     method: ["GET", "POST"],
     
 }
@@ -203,10 +203,15 @@ io.use((socket,next) => {
 
 //sockets 
 io.on('connection',(socket) => {
-    socket.on('join-one-v-one', (data) => {
-        console.log(`${socket.user.username} joined room ${data.roomId}`)
-        socket.join(data.roomId)
+    socket.on('join-one-v-one', ({roomId}) => {
+        console.log(`${socket.user.username} joined room ${roomId}`)
+        socket.join(roomId)
     })
+    
+    socket.on('leave-one-v-one', ({ roomId }) => {
+        socket.leave(roomId);
+        console.log(`User ${socket.user.username} left room: ${roomId}`);
+    });
 
     socket.on('get_messages', async(data) =>
     {
@@ -219,6 +224,9 @@ io.on('connection',(socket) => {
             }
         })
     })
+
+   
+
     socket.on('send_message', async(data) => {
         console.log(data)
         const newMessage = new  Messages({

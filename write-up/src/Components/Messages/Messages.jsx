@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import {io} from 'socket.io-client'
 
 const Messages = () => {
-  const {URL, user} = useSelector(state => state)
+  const {URL, user, closeRoom} = useSelector(state => state)
   const [conversations , setConversations] = useState(null)
   const [messages , setMessages] = useState(null)
   const [displayRoom, setDisplayRoom] = useState(false)
@@ -29,9 +29,9 @@ const Messages = () => {
         {
           
           //Click from conversation list
-          displayRoom  && conversations !== null?
+          (displayRoom  && conversations !== null) && (closeRoom == false) ?
 
-          <MessageRoom enterRoom={displayRoom} updateConvo={setConversations}  recipient={recipient} conversationId={conversations}  />:
+          <MessageRoom enterRoom={displayRoom} updateConvo={setConversations}  recipient={recipient} conversationId={conversations} setRecipient={setRecipient}  />:
 
 
           //loading using message icon

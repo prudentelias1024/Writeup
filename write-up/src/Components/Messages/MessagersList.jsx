@@ -29,8 +29,12 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
 
     
     return () => {
-      dispatch(actions.updateMobileRoom(false))
+      
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile){
+          dispatch(actions.updateMobileRoom(false))
     //   socket.close()
+    }
     }
   }, [refreshConvos])  
 

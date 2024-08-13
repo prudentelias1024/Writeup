@@ -12,7 +12,13 @@ export default function Message({convo,  setConversations, roomPermission,setRec
     roomPermission(true)
    setConversations(convo._id)
     setRecip(recipient)
-    dispatch(actions.updateMobileRoom(true))
+    dispatch(actions.updateCloseRoom(false))
+
+    const isMobile = window.innerWidth <= 768;
+   if (isMobile){
+        dispatch(actions.updateMobileRoom(true))
+        //   socket.close()
+      } 
   }
   useEffect(() => {
     

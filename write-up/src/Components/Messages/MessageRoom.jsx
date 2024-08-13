@@ -7,7 +7,7 @@ import ReceivedMessage from './receivedMessage'
 import {io } from 'socket.io-client'
 import {  IoMdArrowRoundBack } from 'react-icons/io'
 import { actions } from '../../store'
-export default function MessageRoom({ enterRoom, recipient, conversationId, updateConvo }) {
+export default function MessageRoom({ enterRoom, recipient, conversationId, updateConvo , setRecipient}) {
   
   const [allMessages, setAllMessages] = useState(null)
   const {user,URL, openMobileRoom} = useSelector(state => state)
@@ -19,8 +19,12 @@ export default function MessageRoom({ enterRoom, recipient, conversationId, upda
     }) 
     
     const backToMessageList = () => {
+
       dispatch(actions.updateMobileRoom(false))
-      }
+      dispatch(actions.updateCloseRoom(true))
+     
+      
+    }
     useEffect(() => {
       socket.on('send-message', (new_message) => {
         console.log(new_message)
@@ -44,9 +48,12 @@ export default function MessageRoom({ enterRoom, recipient, conversationId, upda
          })
         socket.emit('join-one-v-one', {roomId: conversationId })
         }
-    //    return () => {
-    //     socket.close()
-    // };
+       return () => {
+        socket.off('leave-one-v-one',{roomId: conversationId})
+        socket.off('get-messages')
+        socket.off('send-message')
+        socket.off('get-conversations')
+    };
     }, [enterRoom])
     
      if(allMessages !== null && recipient !== null){
