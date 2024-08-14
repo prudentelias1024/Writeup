@@ -95,25 +95,25 @@ export default function ProfileVitals({user, setUser, total}) {
            </Link >
         </div>
     
-       <div className="flex flex-col mt-[.75em] relative left-[1em] lg:ml-[8em]">
+       <div className="flex flex-col mt-[.75em] relative lg:left-[1em] left-[2em] lg:ml-[8em]">
 
         <div className='flex flex-row'>
         <div className='-ml-[1em]'> 
-        <div className='inline-flex'>
-        <p className=" text-lg font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em]">{user.name}</p>
+        <div className='inline-flex w-full'>
+        <p className=" text-sm font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em] -ml-[.5em] w-max">{user.name}</p>
         {user.verified ==true?
-        <HiBadgeCheck className="text-xl text-blue-500 lg:mt-[1.5em] mt-1"/>: ''
+        <HiBadgeCheck className="text-xl text-blue-500 lg:mt-[1.5em] mt-0"/>: ''
     }
         </div> 
-        <p className=" text-sm font-[Avenir]  text-[#a2a2a2] font-semibold  mb-[1em] lg:text-xl">@{user.username}</p>
+        <p className=" text-xs font-[Avenir] mt-[0.5em] lg:mt-[1em] text-[#a2a2a2] font-semibold  -ml-[.5em]  mb-[1em] lg:text-xs">@{user.username}</p>
         </div>
         {
 
 currentUser ?
 currentUser !== null && user.username == currentUser.username   ? 
-     <div className="profile_actions lg:mt-[0em] flex flex-row justify-evenly mt-[1em]">
+     <div className="profile_actions lg:mt-[0em] relative gap-[2em] w-full top-[7em] flex flex-row justify-evenl -ml-[10em] mb-[1em]">
                 <Link to="/settings">
-    <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] font-bold text-sm   top-4 right-6 lg:right-[0em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:ml-[1.5em] lg:mt-[1.5em] '>Edit Profile</button>
+    <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em]  h-[3em] font-bold text-sm   top-4 right-6 lg:right-[0em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:ml-[1.5em] lg:mt-[1.5em] '>Edit Profile</button>
     </Link>
                 
     <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm lg:hidden   top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
@@ -123,15 +123,16 @@ currentUser !== null && user.username == currentUser.username   ?
     </div>:
     currentUser.following.some((person) => person.username == user.username) ?
         <div className='flex flex-row gap-[1.5em]'>
-        <HiOutlineMail onClick={startConversation}   className='text-3xl absolute mt-[1em] lg:ml-[2.5em] ml-[.2em]' />
+        <HiOutlineMail onClick={startConversation}   className='text-xl lg:text-3xl absolute mt-[.25em] lg:ml-[2.5em] ml-[1.75em] ' />
     
-    <button onClick={unfollow} className='text-black border-black  font-[Sen] border-2 px-[1em] w-[75%] ml-[9em] mt-[2em] h-[3em] font-bold text-sm  lg:right-0  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] '>Following</button>
+    <button onClick={unfollow} className='text-black border-black 
+     font-[Sen] border-2 px-[.5em] w-fit lg:ml-[9em] ml-[5.5em] -mt-[.5em] h-[3em] font-bold text-xs  lg:right-0  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] '>Following</button>
     {
         currentUser.notis.some((person) => person.username == user.username)  || addedToNotis ?
-        <HiBell onClick={turnOffNotification}  className='text-3xl absolute mt-[1em] lg:ml-[.75em] ml-[.2em]' />
+        <HiBell onClick={turnOffNotification}  className='text-xl lg:text-3xl absolute lg:mt-[1em] mt-[.25em] lg:ml-[.75em] ml-[.5em]' />
         :
 
-        <HiOutlineBell onClick={turnOnNotification}  className='text-3xl mt-[1em] absolute lg:ml-[.75em] ml-[.2em]' />
+        <HiOutlineBell onClick={turnOnNotification}  className='text-xl lg:text-3xl mt-[2.5em] absolute lg:ml-[.75em] ml-[.5em]' />
         
         
     
@@ -139,7 +140,7 @@ currentUser !== null && user.username == currentUser.username   ?
   </div>
 :
 <div className='flex'>
-<HiOutlineMail onClick={startConversation}   className='text-3xl absolute mt-[1.25em] lg:ml-[1.5em] ml-[.2em]' />
+<HiOutlineMail onClick={startConversation} className='text-xl lg:text-3xl absolute mt-[1.5em] lg:ml-[1.5em] ml-[.5em]' />
     
  <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] 
  ml-[7em] mt-[2em] h-[3em] font-bold text-sm    rounded-lg lg:p-3 lg:w-[10em]  '>Follow</button>
@@ -147,10 +148,10 @@ currentUser !== null && user.username == currentUser.username   ?
 :   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm   top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
 }
     </div>
-        <p className=" text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl">{user.bio ?user.bio: ''}</p>
+        <p className=" text-xs font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] -ml-[2em] -mt-[.5em] lg:text-xl">{user.bio ?user.bio: ''}</p>
         <div>
 
-        <div className='flex flex-row gap-[.5em]'>
+        <div className='flex flex-row gap-[.5em] -ml-[1.5em] lg:ml-[0em]'>
         {user.location ? 
         <div className='inline-flex flex-row gap-[.25em]'>
             <CiLocationOn className="text-[#333] text-base lg:text-2xl" /> 
@@ -160,7 +161,7 @@ currentUser !== null && user.username == currentUser.username   ?
 {
     user.websiteUrl ?
 
-        <div className='inline-flex flex-row gap-[.25em]'>
+        <div className='inline-flex flex-row w-[50%] overflow-hidden text-ellipsis  gap-[.25em]'>
             <AiOutlineLink className="text-blue-500 text-lg lg:text-2xl " /> 
         <a href={user.websiteUrl.startsWith('https://')? user.websiteUrl :"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
         </div> : ''
@@ -174,7 +175,7 @@ currentUser !== null && user.username == currentUser.username   ?
          
          user.following.some((person) => person.username == currentUser.username) && 
          currentUser.following.some((person) => person.username == user.username) ?
-         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold mt-[-2.5em] ml-[10.5em] pb-[1em]'>You follow each other</p>: 
+         <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold mt-[.5em] ml-[1.5em]  lg:ml-[10.5em] pb-[1em]'>You follow each other</p>: 
          
          user.following.some((person) => person.username == currentUser.username) ?
          <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold ml-[10.5em] mt-[-2.5em] pb-[1em]'> Follows you</p> :''

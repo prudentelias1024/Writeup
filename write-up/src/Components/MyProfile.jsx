@@ -62,14 +62,14 @@ const MyProfile = () => {
             return (
                 <>
                 
-        <div className='flex flex-col lg:ml-[10em] lg:ml-[7em] lg:w-full'>
+        <div className='flex flex-col ml-[0em]  lg:ml-[7em] lg:w-full'>
         {
           myPosts && myReels ?
         <ProfileVitals user={user} total={myPosts.length + myReels.length}/>
         : 'Loading.....'
         }
      
-           <div className="flex flex-row w-full lg:w-[50%] lg:ml-[3em] -mt-[4em]">
+           <div className="flex flex-row w-full lg:w-[50%] lg:ml-[3em] -mt-[3em]">
         {
         inkClicked ?
         
@@ -91,7 +91,7 @@ const MyProfile = () => {
             </div>
 }
 </div>
-            <div className=' flex flex-col gap-4 lg:ml-[10em] lg:mt-[1em] mb-[7em] '>
+            <div  className=' flex flex-col ml-[0em] gap-4  lg:ml-[10em] lg:mt-[1em]  '>
             {
             inkClicked ?
             myPosts == null || myPosts.length == 0  ?
@@ -99,8 +99,10 @@ const MyProfile = () => {
             :  myPosts.map((post) => {
                 console.log(post.author)
                 
-                return <Post
-                 readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[.5em] lg:w-[30em] " key={post._id} post={post} />
+                return  <div className='lg:ml-[0em]'>
+                <Post
+                 readingTimeStyles="top-[-3em]" additionalStyles=" ml-[0em] ml-[.5em] lg:w-[30em] w-full " key={post._id} post={post} />
+                 </div>
              })  
              :''
     } 

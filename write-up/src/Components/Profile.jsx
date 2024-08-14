@@ -167,7 +167,7 @@ const Profile = () => {
 }
 </div>
 </div>
-            <div className=' flex flex-col gap-4  lg:mt-[2em] relative left-[8em]'>
+            <div className=' flex flex-col gap-4  lg:mt-[2em] '>
             {
             inkClicked ?
             posts == null || posts.length == 0  ?
