@@ -111,7 +111,7 @@ export default function ProfileVitals({user, setUser, total}) {
 
 currentUser ?
 currentUser !== null && user.username == currentUser.username   ? 
-     <div className="profile_actions lg:mt-[0em] relative gap-[2em] w-full top-[7em] flex flex-row justify-evenl -ml-[10em] mb-[1em]">
+     <div className="profile_actions lg:mt-[0em] relative gap-[2em] w-full top-[7em] flex flex-row justify-evenl -ml-[9em] mb-[1em]">
                 <Link to="/settings">
     <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em]  h-[3em] font-bold text-sm   top-4 right-6 lg:right-[0em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:ml-[1.5em] lg:mt-[1.5em] '>Edit Profile</button>
     </Link>
@@ -161,7 +161,7 @@ currentUser !== null && user.username == currentUser.username   ?
 {
     user.websiteUrl ?
 
-        <div className='inline-flex flex-row w-[50%] overflow-hidden text-ellipsis  gap-[.25em]'>
+        <div className='inline-flex flex-row w-[15em]  overflow-hidden text-ellipsis  gap-[.25em]'>
             <AiOutlineLink className="text-blue-500 text-lg lg:text-2xl " /> 
         <a href={user.websiteUrl.startsWith('https://')? user.websiteUrl :"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
         </div> : ''
