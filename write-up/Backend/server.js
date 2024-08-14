@@ -372,17 +372,20 @@ let interestedUserPosts = []
 
 app.post('/api/conversation', verify, async(req,res) => {
     //check if it exists
+    console.log(req.body);
     Conversations.findOne({participants: {$in: req.body.receiver, $in: req.body.sender}}).exec(async(err,doc) => {
        if(err){throw err}
        if(!doc){
         const conversation = new Conversations({
-            participants: [req.body.receiver, req.body.sender],
-            
+            participants: [req.body.receiver, req.body.sender],    
             status: 'unread'
         })
 
         await conversation.save()
         res.send({status:200,conversation_id:conversation._id})
+       } else{
+       res.send({status:409,conversation_id:doc._id})
+       
        }
     })
 

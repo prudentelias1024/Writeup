@@ -134,7 +134,7 @@ const Profile = () => {
           content={user.name+ (user.username)+ 'on Inkup'}/>
 
         </Helmet>
-        <div className="lg:ml-[10em] overflow-x-hidden flex flex-col gap-[.5em] mt-[.5em] bg-white">    
+        <div className="lg:ml-[10em] mx-auto w-full overflow-x-hidden flex flex-col gap-[.5em] mt-[.5em] bg-white">    
      
         {
           posts && reels ?
@@ -174,18 +174,22 @@ const Profile = () => {
             <p className="font-[Sen] text-lg font-bold w-1/2 lg:ml-[-1em]  text-[#9e9e9e] mt-[1em] text-center">No Post yet</p>
             :  posts.map((post) => {
                 
-                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[0.5em] lg:w-[30em] " key={post._id} post={post} />
+                return <Post readingTimeStyles="top-[-3em]" additionalStyles="w-[95%] ml-[0.5em] lg:w-[30em] lg:ml-[7em] " key={post._id} post={post} />
              })  
              :''
     }
             {
             reelsClicked ?
               reels !== null && reels.length > 0  ? reels.map((reel) => {
-                
+
                 if(reel.type == "poll"){
-                    return <Poll reel={reel} key={reel.reelId} /> 
+                    return <div className=' w-1/2'>
+                      <Poll reel={reel} key={reel.reelId} /> 
+                    </div> 
                    }else if(reel.type == "image"){
-                    return <ImageReel reel={reel} key={reel.reelId} /> 
+                    return <div className=' w-1/2 ml-[7em]'>
+                      <ImageReel reel={reel} key={reel.reelId} /> 
+                      </div>
                   }
              }) :
              <p className="font-[Sen] text-lg font-bold lg:ml-[-1em] text-[#9e9e9e] w-1/2 mt-[1em] text-center">No Reels</p>

@@ -13,11 +13,12 @@ const Messages = () => {
   const [messages , setMessages] = useState(null)
   const [displayRoom, setDisplayRoom] = useState(false)
   const [recipient, setRecipient] = useState(false)
+
   
 
     const location = useLocation()
     
-    
+  console.log(location.state)  
     
         return (
         <>
@@ -35,11 +36,11 @@ const Messages = () => {
 
 
           //loading using message icon
-            location.state !== null  ?
-            <MessageRoom enterRoom={displayRoom} recipient={location.state.user} conversationId={location.state.convoId}  />
+           location.state !== null  ?
+            <MessageRoom enterRoom={true} recipient={location.state.user} conversationId={location.state.convo_id}  />
             :
             //loading using URL
-        <MessageRoom enterRoom={displayRoom}  recipient={null} conversationId={location.state == undefined || location.state == null ? null : location.state.convoId} />
+        <MessageRoom enterRoom={displayRoom}  recipient={null} conversationId={location.state == undefined || location.state == null ? null : location.state.convo_id} />
         }
     </div>
 

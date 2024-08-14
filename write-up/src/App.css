@@ -737,6 +737,21 @@ video {
   top: 20em;
 }
 
+.right-\[5\.5em\]
+{
+  right: 5.5em;
+}
+
+.right-\[3em\]
+{
+  right: 3em;
+}
+
+.right-\[7em\]
+{
+  right: 7em;
+}
+
 .top-\[\.25em\]
 {
   top: .25em;
@@ -765,6 +780,31 @@ video {
 .top-\[5em\]
 {
   top: 5em;
+}
+
+.right-\[6em\]
+{
+  right: 6em;
+}
+
+.right-\[5\.75em\]
+{
+  right: 5.75em;
+}
+
+.left-\[1em\]
+{
+  left: 1em;
+}
+
+.left-\[\.5em\]
+{
+  left: .5em;
+}
+
+.left-auto
+{
+  left: auto;
 }
 
 .z-\[1000\]
@@ -1175,6 +1215,11 @@ video {
   margin-left: 0.5em;
 }
 
+.ml-\[7em\]
+{
+  margin-left: 7em;
+}
+
 .mb-\[-3em\]
 {
   margin-bottom: -3em;
@@ -1435,9 +1480,9 @@ video {
   margin-left: -.5em;
 }
 
-.-ml-\[10em\]
+.-ml-\[9em\]
 {
-  margin-left: -10em;
+  margin-left: -9em;
 }
 
 .ml-\[1\.75em\]
@@ -1465,11 +1510,6 @@ video {
   margin-top: 1.5em;
 }
 
-.ml-\[7em\]
-{
-  margin-left: 7em;
-}
-
 .ml-\[1\.2em\]
 {
   margin-left: 1.2em;
@@ -1483,11 +1523,6 @@ video {
 .-ml-\[1\.5em\]
 {
   margin-left: -1.5em;
-}
-
-.ml-\[10\.5em\]
-{
-  margin-left: 10.5em;
 }
 
 .mt-\[-2\.5em\]
@@ -1548,11 +1583,6 @@ video {
 .ml-\[-7em\]
 {
   margin-left: -7em;
-}
-
-.-ml-\[9em\]
-{
-  margin-left: -9em;
 }
 
 .block
@@ -2373,6 +2403,12 @@ video {
 {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#e7e7e7\]
+{
+  --tw-bg-opacity: 1;
+  background-color: rgb(231 231 231 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#f6f6f6\]
@@ -4147,6 +4183,16 @@ video {
     margin-left: 8em;
   }
 
+  .lg\:-ml-\[1em\]
+{
+    margin-left: -1em;
+  }
+
+  .lg\:-ml-\[1\.25em\]
+{
+    margin-left: -1.25em;
+  }
+
   .lg\:ml-\[1\.5em\]
 {
     margin-left: 1.5em;
@@ -4157,9 +4203,19 @@ video {
     margin-right: 5em;
   }
 
+  .lg\:mt-\[\.75em\]
+{
+    margin-top: .75em;
+  }
+
   .lg\:ml-\[9em\]
 {
     margin-left: 9em;
+  }
+
+  .lg\:mt-\[\.9em\]
+{
+    margin-top: .9em;
   }
 
   .lg\:ml-\[\.75em\]
@@ -4167,9 +4223,14 @@ video {
     margin-left: .75em;
   }
 
-  .lg\:ml-\[10\.5em\]
+  .lg\:-ml-\[2\.5em\]
 {
-    margin-left: 10.5em;
+    margin-left: -2.5em;
+  }
+
+  .lg\:ml-\[7\.5em\]
+{
+    margin-left: 7.5em;
   }
 
   .lg\:ml-\[14em\]
@@ -4789,12 +4850,6 @@ video {
 {
     font-size: 0.875rem;
     line-height: 1.25rem;
-  }
-
-  .lg\:text-xs
-{
-    font-size: 0.75rem;
-    line-height: 1rem;
   }
 
   .lg\:text-lg
