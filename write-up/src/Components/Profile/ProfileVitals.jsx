@@ -113,46 +113,7 @@ export default function ProfileVitals({user, setUser, total}) {
         </div> 
         <p className=" relative left-auto text-xs lg:text-xl font-[Avenir] mt-[0.5em] lg:mt-[.5em] text-[#a2a2a2] font-semibold lg:-ml-[1.25em]   -ml-[.5em]  mb-[1em] ">@{user.username}</p>
         </div>
-        {
-
-currentUser ?
-currentUser !== null && user.username == currentUser.username   ? 
-     <div className="profile_actions lg:mt-[0em]  gap-[2em] w-full top-[7em] flex flex-row justify-evenl -ml-[9em] mb-[1em]">
-                <Link to="/settings">
-    <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em]  h-[3em] font-bold text-sm   top-4 right-6 lg:right-[0em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:ml-[1.5em] lg:mt-[1.5em] '>Edit Profile</button>
-    </Link>
-                
-    <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm lg:hidden   top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
-    <ToastContainer/>
-
-
-    </div>:
-    currentUser.following.some((person) => person.username == user.username) ?
-        <div className='flex flex-row gap-[1.5em]'>
-        <HiOutlineMail onClick={startConversation}   className='text-xl lg:text-3xl absolute right-[5.75em] mt-[.25em] lg:mt-[.75em] lg:ml-[2.5em] ml-[1.75em] ' />
-    
-    <button onClick={unfollow} className='text-black border-black 
-     font-[Sen] border-2 px-[.5em] w-fit lg:ml-[9em] ml-[5.5em] -mt-[.5em] h-[3em] font-bold text-xs absolute right-[3em] lg:right-[1em]  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:mt-[.9em] lg:text-sm '>Following</button>
-    {
-        currentUser.notis.some((person) => person.username == user.username)  || addedToNotis ?
-        <HiBell onClick={turnOffNotification}  className='text-xl lg:text-3xl absolute lg:mt-[.75em] mt-[.25em] lg:ml-[.75em] right-[7em] ' />
-        :
-
-        <HiOutlineBell onClick={turnOnNotification}  className='text-xl lg:text-3xl lg:mt-[.75em] mt-[2.5em] absolute lg:ml-[.75em] ml-[.5em]' />
-        
-        
-    
-    }
-  </div>
-:
-<div className='flex'>
-<HiOutlineMail onClick={startConversation} className='text-xl lg:text-3xl right-[5.75em]  lg:mt-[1em] mt-[1.5em] lg:ml-[1.5em] ml-[.5em]' />
-    
- <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] absolute right-[3em] lg:right-[1em]
- ml-[7em] mt-[2em] h-[3em] font-bold text-sm    rounded-lg lg:p-3 lg:w-[10em]  '>Follow</button>
- </div>
-:   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm   top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
-}
+ 
     </div>
         <p className=" relative left-auto text-xs font-[Avenir] w-[90%] lg:w-fit text-[#aaa] font-semibold  mb-[1em] -ml-[2em] -mt-[.5em] lg:text-xl">{user.bio ?user.bio: ''}</p>
         <div>
@@ -189,7 +150,46 @@ currentUser !== null && user.username == currentUser.username   ?
         
        }
 
-     
+{
+
+currentUser ?
+currentUser !== null && user.username == currentUser.username   ? 
+     <div className="profile_actions lg:mt-[0em] relative  gap-[2em] w-full  flex flex-row justify-evenly ml-[1em] lg:ml-[5em] mb-[1em]">
+                <Link to="/settings">
+    <button className='border-purple-600 text-purple-500 font-[Sen] border-2 px-[1em]  h-[3em] font-bold text-sm   top-4 right-6 lg:right-[0em] lg:top-6 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:ml-[1.5em] lg:mt-[.em] '>Edit Profile</button>
+    </Link>
+                
+    <button onClick={copyInClipboard} className='border-blue-600 text-blue-500 font-[Sen] border-2 px-[1em] w-fit h-[3em] bg:hidden font-bold text-sm   top-[20em] right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Share Profile</button>
+    <ToastContainer/>
+
+
+    </div>:
+    currentUser.following.some((person) => person.username == user.username) ?
+        <div className='flex flex-row gap-[1.5em]'>
+        <HiOutlineMail onClick={startConversation}   className='text-xl lg:text-3xl absolute right-[5.75em] mt-[.25em] lg:mt-[.75em] lg:ml-[2.5em] ml-[1.75em] ' />
+    
+    <button onClick={unfollow} className='text-black border-black 
+     font-[Sen] border-2 px-[.5em] w-fit lg:ml-[9em] ml-[5.5em] -mt-[.5em] h-[3em] font-bold text-xs absolute right-[3em] lg:right-[1em]  rounded-lg lg:p-3 lg:w-[10em] lg:mr-[0em] lg:mt-[.9em] lg:text-sm '>Following</button>
+    {
+        currentUser.notis.some((person) => person.username == user.username)  || addedToNotis ?
+        <HiBell onClick={turnOffNotification}  className='text-xl lg:text-3xl absolute lg:mt-[.75em] mt-[.25em] lg:ml-[.75em] right-[7em] ' />
+        :
+
+        <HiOutlineBell onClick={turnOnNotification}  className='text-xl lg:text-3xl lg:mt-[.75em] mt-[2.5em] absolute lg:ml-[.75em] ml-[.5em]' />
+        
+        
+    
+    }
+  </div>
+:
+<div className='flex'>
+<HiOutlineMail onClick={startConversation} className='text-xl lg:text-3xl right-[5.75em]  lg:mt-[1em] mt-[1.5em] lg:ml-[1.5em] ml-[.5em]' />
+    
+ <button onClick={follow} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] absolute right-[3em] lg:right-[1em]
+ ml-[7em] mt-[2em] h-[3em] font-bold text-sm    rounded-lg lg:p-3 lg:w-[10em]  '>Follow</button>
+ </div>
+:   <button onClick={redirectToLogin} className='text-white bg-blue-500 font-[Sen] border-2 px-[1em] w-[90%] ml-[1.2em] h-[3em] font-bold text-sm   top-4 right-6 lg:right-0 lg:top-7 rounded-lg lg:p-3 lg:w-[10em] lg:mr-[5em] '>Follow</button>
+}
     </div>
 )
 }

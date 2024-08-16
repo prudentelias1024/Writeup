@@ -91,11 +91,11 @@ const MyProfile = () => {
             </div>
 }
 </div>
-            <div  className=' flex flex-col ml-[0em] gap-4  lg:ml-[10em] lg:mt-[1em]  '>
+            <div  className=' flex flex-col ml-[0em] gap-4 lg:w-1/2 lg:ml-[5em] lg:mt-[1em]  '>
             {
             inkClicked ?
             myPosts == null || myPosts.length == 0  ?
-            <p className="font-[Sen] text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Post yet</p>
+            <p className="font-[Sen]  text-lg font-bold text-[#9e9e9e] mt-[1em] text-center">No Post yet</p>
             :  myPosts.map((post) => {
                 console.log(post.author)
                 
@@ -106,7 +106,7 @@ const MyProfile = () => {
              })  
              :''
     } 
-          <div className='w-1/2'>
+          <div className='w-full'>
 
             {
               reelsClicked ?

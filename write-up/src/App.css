@@ -797,6 +797,16 @@ video {
   top: 10em;
 }
 
+.top-\[8em\]
+{
+  top: 8em;
+}
+
+.top-auto
+{
+  top: auto;
+}
+
 .z-\[1000\]
 {
   z-index: 1000;
@@ -1573,6 +1583,11 @@ video {
 .ml-\[-7em\]
 {
   margin-left: -7em;
+}
+
+.mt-\[7em\]
+{
+  margin-top: 7em;
 }
 
 .block
@@ -4261,6 +4276,26 @@ video {
   .lg\:ml-\[35em\]
 {
     margin-left: 35em;
+  }
+
+  .lg\:-ml-\[9em\]
+{
+    margin-left: -9em;
+  }
+
+  .lg\:ml-\[15em\]
+{
+    margin-left: 15em;
+  }
+
+  .lg\:ml-\[\.5em\]
+{
+    margin-left: .5em;
+  }
+
+  .lg\:mt-\[\.em\]
+{
+    margin-top: .em;
   }
 
   .lg\:block
