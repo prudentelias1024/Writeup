@@ -165,7 +165,7 @@ currentUser !== null && user.username == currentUser.username   ?
 
     </div>:
     currentUser.following.some((person) => person.username == user.username) ?
-        <div className='flex flex-row gap-[1.5em]'>
+        <div className='flex flex-row gap-[1.5em] absolute lg:top-[9em] right-[-1.5em] top-[6.25em] '>
         <HiOutlineMail onClick={startConversation}   className='text-xl lg:text-3xl absolute right-[5.75em] mt-[.25em] lg:mt-[.75em] lg:ml-[2.5em] ml-[1.75em] ' />
     
     <button onClick={unfollow} className='text-black border-black 
