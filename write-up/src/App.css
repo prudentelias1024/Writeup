@@ -722,6 +722,11 @@ video {
   left: 2em;
 }
 
+.left-auto
+{
+  left: auto;
+}
+
 .top-\[7em\]
 {
   top: 7em;
@@ -737,9 +742,9 @@ video {
   top: 20em;
 }
 
-.right-\[5\.5em\]
+.right-\[5\.75em\]
 {
-  right: 5.5em;
+  right: 5.75em;
 }
 
 .right-\[3em\]
@@ -782,29 +787,14 @@ video {
   top: 5em;
 }
 
-.right-\[6em\]
+.top-\[9em\]
 {
-  right: 6em;
+  top: 9em;
 }
 
-.right-\[5\.75em\]
+.top-\[10em\]
 {
-  right: 5.75em;
-}
-
-.left-\[1em\]
-{
-  left: 1em;
-}
-
-.left-\[\.5em\]
-{
-  left: .5em;
-}
-
-.left-auto
-{
-  left: auto;
+  top: 10em;
 }
 
 .z-\[1000\]
