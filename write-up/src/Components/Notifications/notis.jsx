@@ -7,7 +7,12 @@ import io from 'socket.io-client'
 export default function Notis() {
 
   useEffect(() => {
-     setMostRecentNotis(user.notis[0].name)
+    if (user.notis.length == 0) {
+      setMostRecentNotis('')
+    } else {
+      setMostRecentNotis(user.notis[0].name)
+      
+    }
   }, [])
   
     const {user} = useSelector((state => state) )

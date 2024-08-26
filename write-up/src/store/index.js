@@ -2,11 +2,18 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false, closeRoom: false},
+    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false, closeRoom: false, enterRoom:false,  currentChatRecipient: null},
     reducers: {
+      updateChatRecipient(state,action){
+        state.currentChatRecipient = action.payload
+      },
+      updateEnterRoom(state,action){
+        state.enterRoom = action.payload
+      },
       updateCloseRoom(state,action){
         state.closeRoom = action.payload
       },
+    
       updateRefreshConvo(state,action){
         state.refreshConvos = action.payload
       },

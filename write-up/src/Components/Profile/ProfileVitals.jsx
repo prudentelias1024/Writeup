@@ -51,7 +51,7 @@ export default function ProfileVitals({user, setUser, total}) {
         const res = await (await axios.post(`${URL}/api/notis/off`, {noticee: user.id},{headers: {Authorization: localStorage.getItem('token') }})).data
         if(res.status == 200){
             setAddedToNotis(false)
-        }
+        } 
     
     }
     const startConversation = async() => {
@@ -61,12 +61,14 @@ export default function ProfileVitals({user, setUser, total}) {
         if(res.status == 200){
         console.log(res.conversation_id)
         navigate(`/message/${res.conversation_id}`,{state: {user:user, convo_id: res.conversation_id}})
+        dispatch(actions.updateMobileRoom(true))
  
     } else if(res.status == 409){
         navigate(`/message/${res.conversation_id}`,{state: {user:user, convo_id: res.conversation_id}})
  
 
     }
+
     }
     const navigate = useNavigate()
     const redirectToLogin = () => {

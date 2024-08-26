@@ -216,7 +216,18 @@ io.on('connection',(socket) => {
     socket.on('get_messages', async(data) =>
     {
         console.log('getting message.....')
-        Messages.find({sender: {$in: [ data.sender, data.receiver]}}).sort({sent_on: 1}).exec((err,messages) => {
+      console.log('receiver: '+ data.receiver._id, 'sender: ' + data.sender)
+        Messages.find({    
+                $or: [
+                    { sender: data.sender, receiver: data.receiver._id },
+                     // A sent to B
+                   
+                    { sender: data.receiver._id, receiver: data.sender }
+                      // B sent to A
+                  ]
+                 
+        
+        }).sort({sent_on: 1}).exec((err,messages) => {
             if(err){throw err}
             if(messages){
                 console.log(messages.length)
@@ -249,7 +260,7 @@ io.on('connection',(socket) => {
     
     socket.on('get_conversations', async(data) => {
         Conversations.find({participants: {$in: [data.user]}}).populate('participants').populate('lastMessage').sort({ lastMessageTimestamp: -1 }).exec((err,conversations) => {
-            console.log(conversations)
+            // console.log(conversations)
             if(err){throw err}
               socket.emit('get-conversations', conversations)
         })
@@ -373,7 +384,8 @@ let interestedUserPosts = []
 app.post('/api/conversation', verify, async(req,res) => {
     //check if it exists
     console.log(req.body);
-    Conversations.findOne({participants: {$in: req.body.receiver, $in: req.body.sender}}).exec(async(err,doc) => {
+        Conversations.findOne({participants: {$all: [req.body.receiver, req.body.sender]}}).exec(async(err,doc) => {
+        console.log('Conversations found...')
        if(err){throw err}
        if(!doc){
         const conversation = new Conversations({

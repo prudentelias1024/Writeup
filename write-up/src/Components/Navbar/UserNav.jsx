@@ -102,6 +102,7 @@ export default function UserNav(){
 
            <Link to="/messages">
             <IoIosMail className="text-3xl mt-1 block "/>
+            {/* <p className="relative -top-[3.25em] bg-blue-500 text-xs p-[0.25em] ml-[1.25em]  left-0.5 rounded-full text-white">{unreadMessages}</p> */}
            </Link>
 
 

@@ -7,10 +7,9 @@ import ReceivedMessage from './receivedMessage'
 import {io } from 'socket.io-client'
 import {  IoMdArrowRoundBack } from 'react-icons/io'
 import { actions } from '../../store'
-export default function MessageRoom({ enterRoom, recipient, conversationId, updateConvo , setRecipient}) {
-  
-  const [allMessages, setAllMessages] = useState(null)
-  const {user,URL, openMobileRoom} = useSelector(state => state)
+export default function MessageRoom({  recipient, conversationId, updateConvo , setRecipient}) {
+ const [allMessages, setAllMessages] = useState(null)
+  const {user,URL, openMobileRoom, currentChatRecipient, enterRoom, closeRoom} = useSelector(state => state)
   const dispatch = useDispatch()
   const socket = io(URL, {
     auth: {
@@ -20,12 +19,15 @@ export default function MessageRoom({ enterRoom, recipient, conversationId, upda
     
     const backToMessageList = () => {
 
+      socket.emit('leave-one-v-one',{roomId: conversationId})
       dispatch(actions.updateMobileRoom(false))
       dispatch(actions.updateCloseRoom(true))
-     
+      // setAllMessages(null)
+      
       
     }
-    useEffect(() => {
+    useEffect(() => { 
+      setAllMessages(null)
       socket.on('send-message', (new_message) => {
         console.log(new_message)
         setAllMessages(message => [...message, new_message])
@@ -37,31 +39,36 @@ export default function MessageRoom({ enterRoom, recipient, conversationId, upda
         updateConvo(convo)
        
       })
-
-      if (enterRoom) {
-
+      if (enterRoom && conversationId !== null) {
       socket.emit('get_messages', {sender: user._id, receiver: recipient})
       socket.on('get-messages', (data) => {
+        console.log(data)
         setAllMessages(data)
         console.log(data)
         console.log(user)
          })
         socket.emit('join-one-v-one', {roomId: conversationId })
+
         }
+     
+ 
        return () => {
+      
         socket.off('leave-one-v-one',{roomId: conversationId})
         socket.off('get-messages')
         socket.off('send-message')
         socket.off('get-conversations')
-    };
-    }, [enterRoom])
     
+    };
+    }, [closeRoom, recipient])
+    console.log(recipient, allMessages)
+  
      if(allMessages !== null && recipient !== null){
 
     
   return (
     
-    <div className={openMobileRoom == true?
+    <div className={openMobileRoom == true || enterRoom == true?
        " lg:flex flex-col ml-[1em] overflow-y-auto  lg:ml-[-10em] pt-[1.5em]":
        " hidden lg:flex flex-col ml-[1em] overflow-y-auto   lg:ml-[-10em] pt-[1.5em]"
     }>
