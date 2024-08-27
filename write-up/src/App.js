@@ -4,7 +4,7 @@ import Home from './Components/Home';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import CreatePosts from './Components/createPosts';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Page404 from './Components/Page404';
 import Dashboard from './Components/Dashboard';
 import Profile from './Components/Profile';
@@ -37,13 +37,14 @@ import ReelsFullContent from './Components/PreviewPosts/ReelsFullContent';
 import Messages from './Components/Messages/Messages';
 import Bookmarks from './Components/Bookmarks/bookmarks';
 import NotisTimeline from './Components/Notifications/notisTimeline';
+import { SocketContext } from './socketProvider';
 function App() {
        
         let URL
         const user = useSelector((state) => state.user)
       const dispatch = useDispatch()
       const navigate = useNavigate()
-   
+      const socket = useContext(SocketContext)
       const getReels = async() => {
         let reels = await (await axios.get(`${URL}/reels`)).data; 
         // console.log(reels)
@@ -201,6 +202,7 @@ function App() {
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
+       
         if (process.env.NODE_ENV == 'production') {
           dispatch(actions.updateURL("https://inkup-api.onrender.com"))
           URL = "https://inkup-api.onrender.com"

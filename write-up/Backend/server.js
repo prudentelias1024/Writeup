@@ -202,8 +202,32 @@ io.use((socket,next) => {
     }
 })
 
+const GLOBAL_ROOM = 'inkup'
 //sockets 
+const global_room = []
 io.on('connection',(socket) => {
+    socket.join(GLOBAL_ROOM)
+    global_room.push(socket.user._id)
+
+    socket.on('unactive', () => {
+        User.findOneAndUpdate({_id: socket.user._id }, 
+            {$set: { lastActive: moment()}}
+        )
+    } )
+
+    socket.on('check_recipient_activeness', ({userId}) => {
+        const index = global_room.findIndex((id) => id == userId )
+        console.log('index :'+index)
+        if(index !== -1){
+            socket.emit('recipient_status',{recipientStatus: 'Online'})
+        } else {
+            socket.emit('recipient_status',{recipientStatus: 'Offline' })
+        }
+
+
+    })
+
+
     socket.on('join-one-v-one', ({roomId}) => {
         console.log(`${socket.user.username} joined room ${roomId}`)
         socket.join(roomId)

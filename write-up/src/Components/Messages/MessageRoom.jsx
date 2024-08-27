@@ -1,21 +1,19 @@
 import moment from 'moment'
-import React, { useState , useEffect} from 'react'
+import React, { useState , useEffect, useContext} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageInput from './MessageInput'
 import SentMessage from './sentMessage'
 import ReceivedMessage from './receivedMessage'
-import {io } from 'socket.io-client'
 import {  IoMdArrowRoundBack } from 'react-icons/io'
 import { actions } from '../../store'
+import { SocketContext } from '../../socketProvider'
 export default function MessageRoom({  recipient, conversationId, updateConvo , setRecipient}) {
  const [allMessages, setAllMessages] = useState(null)
+ const [recipientActiveStatus, setRecipientActiveStatus] = useState('')
   const {user,URL, openMobileRoom, currentChatRecipient, enterRoom, closeRoom} = useSelector(state => state)
   const dispatch = useDispatch()
-  const socket = io(URL, {
-    auth: {
-      token: localStorage.getItem('token')
-    }
-    }) 
+  const socket = useContext(SocketContext);
+
     
     const backToMessageList = () => {
 
@@ -34,6 +32,10 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
        
       })
 
+      socket.on('online', ({recipientStatus}) => {
+        setRecipientActiveStatus(recipientStatus)
+      })
+
       socket.on('get-conversations', (convo) => {
         console.log(convo)
         updateConvo(convo)
@@ -41,6 +43,16 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
       })
       if (enterRoom && conversationId !== null) {
       socket.emit('get_messages', {sender: user._id, receiver: recipient})
+      socket.emit('check_recipient_activeness',{userId: recipient._id})
+
+      socket.on('recipient_status',({recipientStatus}) =>{
+       if(recipientStatus == 'Online'){
+         setRecipientActiveStatus(recipientStatus)
+
+       } else {
+         setRecipientActiveStatus(recipient.lastActive)
+       }
+      })
       socket.on('get-messages', (data) => {
         console.log(data)
         setAllMessages(data)
@@ -82,12 +94,13 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     <div>
 
       <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 lg font-semibold">{recipient.name}</p>
-      <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 text-[#a0a0a0] font-semibold">Last seen  {
-      moment().diff(recipient.lastActive, 'day') > 1?
+      <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 text-[#a0a0a0] font-semibold">  {
+      recipientActiveStatus == 'Online'? recipientActiveStatus:
+     moment().diff(recipient.lastActive, 'day') > 1?
     
-       'on ' +  moment(recipient.lastActive).format('MMM DD YYYY h:mm a') :
+       'Last seen on ' +  moment(recipient.lastActive).format('MMM DD YYYY h:mm a') :
       
-      moment().diff(recipient.lastActive, 'hour') + ' ago'
+      'Last seen today at '+ moment(recipient.lastActive).format(' h:mm a')
       
 
       }  </p>

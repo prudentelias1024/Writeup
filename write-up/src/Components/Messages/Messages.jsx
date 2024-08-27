@@ -5,7 +5,6 @@ import MessageRoom from './MessageRoom';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {io} from 'socket.io-client'
 import { actions } from '../../store';
 
 const Messages = () => {
