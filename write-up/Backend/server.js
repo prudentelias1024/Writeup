@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const mailgen = require('mailgen')
 const Podcast = require('./podcastSchema')
+
 //Schemas
 const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
@@ -208,6 +209,25 @@ io.on('connection',(socket) => {
         socket.join(roomId)
     })
     
+    socket.on('mark_as_delivered', ({messageId}) => {
+        Messages.findOneAndUpdate({_id: messageId}, {$set: {delivered: true, delivered_on: moment()}   }, {new:true}).exec((err,doc) => {
+            if(err){throw err}
+            if(doc){
+             socket.emit('marked_as_delivered', doc)   
+            }
+    })
+
+    })
+
+    socket.on('mark_as_read', ({messageId}) => {
+        Messages.findOneAndUpdate({_id: messageId}, {$set: {seen:true, seen_on: moment()   }}, {new: true}).exec((err,doc) => {
+            if(err){throw err}
+            if(doc){
+                socket.emit('marked_as_read', doc)
+            }
+        })
+    })
+
     socket.on('leave-one-v-one', ({ roomId }) => {
         socket.leave(roomId);
         console.log(`User ${socket.user.username} left room: ${roomId}`);

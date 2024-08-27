@@ -19,15 +19,20 @@ const messagesSchema = new mongoose.Schema({
   
     sent: {
         type: Boolean,
-        required: false
+        required: false,
+        default: true
+   
     },
     delivered: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
+   
     },
     seen: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
     },
     
     sent_on : {

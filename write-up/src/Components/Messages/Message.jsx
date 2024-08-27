@@ -41,7 +41,7 @@ export default function Message({convo,  setConversations, roomPermission,setRec
       <img src={recipient.public_picture} alt={recipient.name} className='rounded-full h-10 w-10 lg:h-12 lg:w-12 mr-[1em] '  />
      
        
-      <div className="flex flex-col lg:w-full overflow-x-hidden ">  
+      <div className="flex flex-col w-full lg:w-full overflow-x-hidden ">  
       <div className="flex flex-row gap-1 mt-2 ml-[0.25em]  w-max ">
       <p className="font-[Avenir] overflow-ellipsis w-fit font-bold text-sm -ml-1 -mt-1.5">{recipient.name}</p>
       <p className="font-[Avenir] overflow-ellipsis overflow-hidden w-fit max-w-[8em] text-[#a0a0a0] text-xs font-semibold -mt-1" >@{recipient.username}</p>
@@ -53,7 +53,7 @@ export default function Message({convo,  setConversations, roomPermission,setRec
         <div className='last_message relative '>
       <p className="text-[#a2a2a2] font-semibold text-sm"></p>
 
-      <BsDot  className='text-4xl absolute right-0 lg:left-[6.25em] lg:top-[0.4em] -mt-[.75em] text-blue-500'/>
+      <BsDot  className='text-4xl absolute right-0 lg:left-[7.25em] lg:top-[0.4em] -mt-[.75em] text-blue-500'/>
        </div> 
        
         :

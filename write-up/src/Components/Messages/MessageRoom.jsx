@@ -70,19 +70,19 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     
     <div className={openMobileRoom == true || enterRoom == true?
        " lg:flex flex-col ml-[1em] overflow-y-auto  lg:ml-[-10em] pt-[1.5em]":
-       " hidden lg:flex flex-col ml-[1em] overflow-y-auto   lg:ml-[-10em] pt-[1.5em]"
+       " hidden lg:flex flex-col ml-[1em] overflow-y-auto  lg:ml-[-10em] pt-[1.5em]"
     }>
         
      
         <div className="flex flex-row gap-1">
        <IoMdArrowRoundBack onClick={backToMessageList}
-         className='text-3xl mt-2 mr-3'
+         className=' text-xl lg:text-3xl mt-2 mr-3'
          ></IoMdArrowRoundBack>
-    <img src={recipient.public_picture} alt={recipient.name} className='rounded-full h-12 w-12 mr-[1em] '  />
+    <img src={recipient.public_picture} alt={recipient.name} className='rounded-full h-[2.5em]  w-[2.5em] lg:h-12 lg:w-12 mr-[1em] '  />
     <div>
 
-      <p className="font-[Avenir] font-semibold">{recipient.name}</p>
-      <p className="font-[Avenir] text-[#a0a0a0] font-semibold">Last seen  {
+      <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 lg font-semibold">{recipient.name}</p>
+      <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 text-[#a0a0a0] font-semibold">Last seen  {
       moment().diff(recipient.lastActive, 'day') > 1?
     
        'on ' +  moment(recipient.lastActive).format('MMM DD YYYY h:mm a') :
@@ -96,8 +96,8 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     
     </div>
     <div className="flex flex-col text-center lg:pr-[20em] pt-[2em] lg:pt-[5em] gap-2 -indent-8">
-    <img src={recipient.public_picture} alt={recipient.name} className='rounded-full m-auto h-20 w-20  '  />
-    <p className="font-[Avenir] font-semibold">{recipient.name}</p>
+    <img src={recipient.public_picture} alt={recipient.name} className='rounded-full m-auto lg:h-20 lg:w-20  '  />
+    <p className="font-[Avenir] text-base font-semibold">{recipient.name}</p>
     <p className="font-[Avenir] text-[#a0a0a0] font-semibold">@{recipient.username}</p>
     <p className="font-[Avenir] font-semibold ">{recipient.bio}</p>
     
@@ -111,9 +111,9 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
      allMessages !== null ?
       allMessages.map((message,index) => {
        if(message.sender == user._id){
-       return <SentMessage key={index} text={message.text}/>
+       return <SentMessage key={index} socket={socket} messageSetter={allMessages} allMessages={setAllMessages} message={message} />
        } else {
-        return <ReceivedMessage key={index} text={message.text}/> 
+        return <ReceivedMessage key={index} socket={socket}  messageSetter={allMessages} allMessages={setAllMessages} message={message}/> 
 
        }
       }): ''
@@ -125,6 +125,7 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
    
     </div>
     <MessageInput 
+    socket={socket}
     recipient={recipient} 
     
     message={allMessages}
