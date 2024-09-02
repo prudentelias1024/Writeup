@@ -110,7 +110,7 @@ const Login = () => {
           <div className="flex flex-col gap-[1em] w-[100%]">
             <p className="text-[Sen] font-semibold text-lg ">Email</p>
             <input
-              type="text"
+              type="email"
               name="email"
               className="p-4 border rounded-lg text-[Outfit] "
               placeholder="Enter your Email"
@@ -138,15 +138,13 @@ const Login = () => {
           </button>
         </div>
 
-        <div className="flex flex-row gap-3 m-auto mt-9 mb-72">
-          <p className="font-[Sen] text-sm lg:text-xl">
-            Already Have an Account??
-          </p>
+        <div className="flex flex-row gap-2 m-auto mt-9 mb-72">
+          <p className="font-[Sen] text-sm lg:text-xl">No account yet?</p>
           <Link
             to="/signup"
             className="text-sm lg:text-xl lg:ml-3 font-[Sen]  text-blue-500"
           >
-            Sign up
+            Signup
           </Link>
         </div>
       </div>
