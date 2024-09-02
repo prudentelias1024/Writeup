@@ -232,7 +232,9 @@ function App() {
         }
           updateLastVisitation()
        
-      }
+        
+        }
+      
       , []);
   
   return (

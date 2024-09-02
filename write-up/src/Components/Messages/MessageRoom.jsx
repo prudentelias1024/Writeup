@@ -9,6 +9,7 @@ import { actions } from '../../store'
 import { SocketContext } from '../../socketProvider'
 export default function MessageRoom({  recipient, conversationId, updateConvo , setRecipient}) {
  const [allMessages, setAllMessages] = useState(null)
+ const [typingStatus, setTypingStatus] = useState(null)
  const [recipientActiveStatus, setRecipientActiveStatus] = useState('')
   const {user,URL, openMobileRoom, currentChatRecipient, enterRoom, closeRoom} = useSelector(state => state)
   const dispatch = useDispatch()
@@ -26,6 +27,7 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     }
     useEffect(() => { 
       setAllMessages(null)
+      
       socket.on('send-message', (new_message) => {
         console.log(new_message)
         setAllMessages(message => [...message, new_message])
@@ -35,7 +37,6 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
       socket.on('online', ({recipientStatus}) => {
         setRecipientActiveStatus(recipientStatus)
       })
-
       socket.on('get-conversations', (convo) => {
         console.log(convo)
         updateConvo(convo)
@@ -95,13 +96,14 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
 
       <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 lg font-semibold">{recipient.name}</p>
       <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 text-[#a0a0a0] font-semibold">  {
+      typingStatus == null?
       recipientActiveStatus == 'Online'? recipientActiveStatus:
      moment().diff(recipient.lastActive, 'day') > 1?
     
        'Last seen on ' +  moment(recipient.lastActive).format('MMM DD YYYY h:mm a') :
       
       'Last seen today at '+ moment(recipient.lastActive).format(' h:mm a')
-      
+      : typingStatus
 
       }  </p>
 
@@ -140,9 +142,9 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     <MessageInput 
     socket={socket}
     recipient={recipient} 
-    
+    setTypingStatus={setTypingStatus}
     message={allMessages}
-    
+    roomId={conversationId}
     setMessage={setAllMessages} 
     
     conversationId={conversationId} />

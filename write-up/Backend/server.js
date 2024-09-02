@@ -209,15 +209,26 @@ io.on('connection',(socket) => {
     socket.join(GLOBAL_ROOM)
     global_room.push(socket.user._id)
 
+    socket.on('typing', ({roomId}) => {
+        socket.to(roomId).emit('user_typing', {message: 'typing'})
+        setTimeout(() => {
+            socket.to(roomId).emit('releaseTyping')
+           
+        }, 5000); 
+    })
     socket.on('unactive', () => {
+        console.log('A user just left....')
         User.findOneAndUpdate({_id: socket.user._id }, 
             {$set: { lastActive: moment()}}
         )
+        const index = global_room.findIndex((id) => id == socket.user._id )
+        global_room[index] = null
+        console.log('global room: ' +global_room)
     } )
+
 
     socket.on('check_recipient_activeness', ({userId}) => {
         const index = global_room.findIndex((id) => id == userId )
-        console.log('index :'+index)
         if(index !== -1){
             socket.emit('recipient_status',{recipientStatus: 'Online'})
         } else {
