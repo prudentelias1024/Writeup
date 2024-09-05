@@ -244,21 +244,11 @@ io.on('connection',(socket) => {
         socket.join(roomId)
     })
     
-    socket.on('mark_as_delivered', ({messageId}) => {
-        Messages.findOneAndUpdate({_id: messageId}, {$set: {delivered: true, delivered_on: moment()}   }, {new:true}).exec((err,doc) => {
-            if(err){throw err}
-            if(doc){
-             socket.emit('marked_as_delivered', doc)   
-            }
-    })
-
-    })
-
-    socket.on('mark_as_read', ({messageId}) => {
+    socket.on('mark_as_read', ({messageId, roomId}) => {
         Messages.findOneAndUpdate({_id: messageId}, {$set: {seen:true, seen_on: moment()   }}, {new: true}).exec((err,doc) => {
             if(err){throw err}
             if(doc){
-                socket.emit('marked_as_read', doc)
+                socket.to(roomId).emit('marked_as_read', doc)
             }
         })
     })
@@ -293,12 +283,15 @@ io.on('connection',(socket) => {
 
    
 
+
     socket.on('send_message', async(data) => {
         console.log(data)
         const newMessage = new  Messages({
             receiver: data.receiver,
             sender: data.sender,
             text: data.text,
+            delivered: true, 
+            delivered_on: moment()
           
         })
         await newMessage.save()

@@ -3,7 +3,7 @@ import { IoCheckmarkDone, IoCheckmark } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import {io} from 'socket.io-client'
 import moment from 'moment'
-export default function ReceivedMessage({message, socket,  messageSetter, allMessages}) {
+export default function ReceivedMessage({message, socket, conversationId,  messageSetter, allMessages}) {
   const [msg, setMsg] = useState(message)
   const {user} = useSelector(state => state)
  
@@ -11,7 +11,9 @@ export default function ReceivedMessage({message, socket,  messageSetter, allMes
     useEffect(() => {
       if ( message.seen == false) {
       
-      socket.emit('mark_as_read',{messageId: message._id})
+      socket.emit('mark_as_read',{messageId: message._id, 
+        roomId: conversationId
+      })
 
       socket.on('marked_as_read', (updatedMessage) => {
         console.log(updatedMessage);

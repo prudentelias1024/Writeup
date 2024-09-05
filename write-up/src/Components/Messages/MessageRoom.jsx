@@ -126,9 +126,9 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
      allMessages !== null ?
       allMessages.map((message,index) => {
        if(message.sender == user._id){
-       return <SentMessage key={index} socket={socket} messageSetter={allMessages} allMessages={setAllMessages} message={message} />
+       return <SentMessage key={index} socket={socket} messageSetter={allMessages} conversationId={conversationId}  allMessages={setAllMessages} message={message} />
        } else {
-        return <ReceivedMessage key={index} socket={socket}  messageSetter={allMessages} allMessages={setAllMessages} message={message}/> 
+        return <ReceivedMessage key={index} socket={socket}  messageSetter={allMessages} conversationId={conversationId} allMessages={setAllMessages} message={message}/> 
 
        }
       }): ''
