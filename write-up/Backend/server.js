@@ -203,11 +203,11 @@ io.use((socket,next) => {
 })
 
 const GLOBAL_ROOM = 'inkup'
+const MESSAGES_ROOM = 'msg'
 //sockets 
-const global_room = []
+const message_room = []
 io.on('connection',(socket) => {
-    socket.join(GLOBAL_ROOM)
-    global_room.push(socket.user._id)
+   
 
     socket.on('typing', ({roomId}) => {
         socket.to(roomId).emit('user_typing', {message: 'typing'})
@@ -216,33 +216,49 @@ io.on('connection',(socket) => {
            
         }, 5000); 
     })
-    socket.on('unactive', () => {
+    socket.on('unactive', ({roomId}) => {
         console.log('A user just left....')
         User.findOneAndUpdate({_id: socket.user._id }, 
             {$set: { lastActive: moment()}}
-        )
-        const index = global_room.findIndex((id) => id == socket.user._id )
-        global_room[index] = null
-        console.log('global room: ' +global_room)
+        ).exec((err,user) => {
+            socket.to(roomId).emit('recipient_inactive',{recipientStatus: user.lastActive})
+        })
     } )
+   
 
+    socket.on('check_recipient_activeness', ({userId, roomId}) => {
+        console.log(message_room)
+        if (message_room.indexOf(userId) != -1) {
+                console.log('Online')
+                io.to(roomId).emit('recipient_status',{recipientStatus: 'Online'})
+            } else {
+                User.findOne({_id: userId}).exec((err,doc) => {
+                    io.to(roomId).emit('recipient_status', {recipientStatus: doc.lastActive})
+                })
+            } 
+        
 
-    socket.on('check_recipient_activeness', ({userId}) => {
-        const index = global_room.findIndex((id) => id == userId )
-        if(index !== -1){
-            socket.emit('recipient_status',{recipientStatus: 'Online'})
-        } else {
-            socket.emit('recipient_status',{recipientStatus: 'Offline' })
-        }
-
-
+    
     })
 
 
-    socket.on('join-one-v-one', ({roomId}) => {
+    socket.on('join-one-v-one', ({roomId, userId}) => {
+        if (message_room.indexOf(socket.user.id.toString()) == -1) {
+            socket.join(MESSAGES_ROOM)
+            message_room.push(socket.user._id.toString())
+        }
+        
         console.log(`${socket.user.username} joined room ${roomId}`)
         socket.join(roomId)
+
+        
+       
+        
+
+    
+       
     })
+
     
     socket.on('mark_as_read', ({messageId, roomId}) => {
         Messages.findOneAndUpdate({_id: messageId}, {$set: {seen:true, seen_on: moment()   }}, {new: true}).exec((err,doc) => {
@@ -254,8 +270,11 @@ io.on('connection',(socket) => {
     })
 
     socket.on('leave-one-v-one', ({ roomId }) => {
-        socket.leave(roomId);
+         let user_index = message_room.indexOf(socket.user._id)
+        message_room.splice(user_index,1)
+        console.log(message_room)
         console.log(`User ${socket.user.username} left room: ${roomId}`);
+        
     });
 
     socket.on('get_messages', async(data) =>

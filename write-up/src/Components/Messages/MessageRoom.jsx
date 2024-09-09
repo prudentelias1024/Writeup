@@ -10,6 +10,7 @@ import { SocketContext } from '../../socketProvider'
 export default function MessageRoom({  recipient, conversationId, updateConvo , setRecipient}) {
  const [allMessages, setAllMessages] = useState(null)
  const [typingStatus, setTypingStatus] = useState(null)
+ console.log(recipient)
  const [recipientActiveStatus, setRecipientActiveStatus] = useState('')
   const {user,URL, openMobileRoom, currentChatRecipient, enterRoom, closeRoom} = useSelector(state => state)
   const dispatch = useDispatch()
@@ -27,7 +28,10 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     }
     useEffect(() => { 
       setAllMessages(null)
-      
+      if(recipient != null){
+
+        setRecipientActiveStatus(recipient.lastActive)
+      }
       socket.on('send-message', (new_message) => {
         console.log(new_message)
         setAllMessages(message => [...message, new_message])
@@ -43,30 +47,32 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
        
       })
       if (enterRoom && conversationId !== null) {
+        socket.emit('join-one-v-one', {roomId: conversationId, userId: recipient._id })
       socket.emit('get_messages', {sender: user._id, receiver: recipient})
-      socket.emit('check_recipient_activeness',{userId: recipient._id})
+      socket.emit('check_recipient_activeness',{userId: recipient._id, roomId: conversationId})
 
       socket.on('recipient_status',({recipientStatus}) =>{
-       if(recipientStatus == 'Online'){
-         setRecipientActiveStatus(recipientStatus)
+         
+        setRecipientActiveStatus(recipientStatus)
 
-       } else {
-         setRecipientActiveStatus(recipient.lastActive)
-       }
-      })
+    })
       socket.on('get-messages', (data) => {
         console.log(data)
         setAllMessages(data)
         console.log(data)
         console.log(user)
          })
-        socket.emit('join-one-v-one', {roomId: conversationId })
+       
 
         }
      
+        socket.on('recipient_inactive', ({recipientStatus}) => {
+          console.log(recipientStatus)
+          setRecipientActiveStatus(recipientStatus)
+        })
  
        return () => {
-      
+        socket.emit('unactive',{roomId: conversationId})
         socket.off('leave-one-v-one',{roomId: conversationId})
         socket.off('get-messages')
         socket.off('send-message')
@@ -98,11 +104,11 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
       <p className="font-[Avenir] text-sm -ml-[0.5em] lg:ml-0 text-[#a0a0a0] font-semibold">  {
       typingStatus == null?
       recipientActiveStatus == 'Online'? recipientActiveStatus:
-     moment().diff(recipient.lastActive, 'day') > 1?
+     moment().diff(recipientActiveStatus, 'day') > 1?
     
-       'Last seen on ' +  moment(recipient.lastActive).format('MMM DD YYYY h:mm a') :
+       'Last seen on ' +  moment(recipientActiveStatus).format('MMM DD YYYY h:mm a') :
       
-      'Last seen today at '+ moment(recipient.lastActive).format(' h:mm a')
+      'Last seen today at '+ moment(recipientActiveStatus).format(' h:mm a')
       : typingStatus
 
       }  </p>
