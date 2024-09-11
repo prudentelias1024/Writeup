@@ -37,6 +37,7 @@ import ReelsFullContent from './Components/PreviewPosts/ReelsFullContent';
 import Messages from './Components/Messages/Messages';
 import Bookmarks from './Components/Bookmarks/bookmarks';
 import NotisTimeline from './Components/Notifications/notisTimeline';
+import GroupCreator  from './Components/Messages/GroupCreator'
 import { SocketContext } from './socketProvider';
 function App() {
        
@@ -271,6 +272,7 @@ function App() {
       <Route path='/search/results' element={<SearchPage/>}/>
       <Route path='/faq' element={<FAQ/>}/>
       <Route path='/admin' element={<AdminDashboard/>} />
+      <Route path='message/createGroup' element={<GroupCreator/>} />
       <Route path='/podcasts' element={<Podcasts/>} />
       <Route path='/post/edit/:draftId' element={<PostEditor/>} />
        <Route path='/addPodcast' element={<CreatePodcast/>} />

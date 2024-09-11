@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react'
 import Message from './Message'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {io} from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
 import {actions} from '../../store/index'
@@ -10,11 +10,15 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
   const {URL, user, openMobileRoom, refreshConvos} = useSelector(state => state)
   const [convo , setConvo] = useState([])
   const dispatch = useDispatch()
+  const navigate = useNavigate()
  const socket = io(URL, {
   auth: {
     token: localStorage.getItem('token')
   }
   })
+    // const sendToGroupCreator = () => {
+    //   navigate('/message/groupCreator')
+    // }
   useEffect(() => {
     if(user != null){
 
@@ -42,7 +46,13 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
     <div className={
       !openMobileRoom ? 
      "flex flex-col  w-full overflow-y-auto lg:w-fit" :"hidden" } >
-    <p className='relative lg:ml-[63m]  lg:mt-[1.5em] ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Messages</p>
+      <div className="flex flex-row justify-between">
+
+      <p className='relative lg:ml-[63m]  lg:mt-[1.5em] ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Messages</p>
+
+      <Link to='/message/createGroup' className='cursor-pointer relative lg:ml-[63m]  lg:mt-[2.25em] mt-[1.5em] text-blue-500 ml-[1em] my-[.5em] font-bold font-[Avenir] text-sm '>Create Group</Link> 
+
+      </div>
    
     <div className='flex flex-col gap-[.5em] '>
     {

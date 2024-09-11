@@ -1926,6 +1926,11 @@ video {
   width: 13em;
 }
 
+.w-1\/4
+{
+  width: 25%;
+}
+
 .min-w-max
 {
   min-width: -webkit-max-content;
@@ -3218,6 +3223,11 @@ video {
   color: rgb(45 45 45 / var(--tw-text-opacity));
 }
 
+.text-\[Maven\]
+{
+  color: Maven;
+}
+
 .underline
 {
   -webkit-text-decoration-line: underline;
@@ -4357,6 +4367,11 @@ video {
   .lg\:ml-\[35em\]
 {
     margin-left: 35em;
+  }
+
+  .lg\:mt-\[2\.25em\]
+{
+    margin-top: 2.25em;
   }
 
   .lg\:block
