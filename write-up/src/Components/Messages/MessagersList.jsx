@@ -50,7 +50,7 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
 
       <p className='relative lg:ml-[63m]  lg:mt-[1.5em] ml-[1em] my-[.5em] font-bold font-[Avenir] text-lg '>Messages</p>
 
-      <Link to='/message/createGroup' className='cursor-pointer relative lg:ml-[63m]  lg:mt-[2.25em] mt-[1.5em] text-blue-500 ml-[1em] my-[.5em] font-bold font-[Avenir] text-sm '>Create Group</Link> 
+      <Link to='/message/createGroup' className='cursor-pointer relative lg:ml-[63m] mr-[1.5em] lg:mt-[2.25em] mt-[1em] text-blue-500 ml-[1em] my-[.5em] font-bold font-[Avenir] text-sm '>Create Group</Link> 
 
       </div>
    

@@ -56,7 +56,7 @@ export default function ProfileVitals({user, setUser, total}) {
     }
     const startConversation = async() => {
        
-        const res = await (await axios.post(`${URL}/api/conversation` ,{receiver:user._id, sender: currentUser._id },{headers: {Authorization: localStorage.getItem('token') }})).data
+        const res = await (await axios.post(`${URL}/api/p2p/conversation` ,{receiver:user._id, sender: currentUser._id },{headers: {Authorization: localStorage.getItem('token') }})).data
         console.log(res)
         if(res.status == 200){
         console.log(res.conversation_id)

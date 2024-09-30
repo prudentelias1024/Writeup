@@ -16,6 +16,7 @@ const User = require('./usersSchema')
 const notifications   = require('./notificationsSchema')
 const Messages = require('./messageSchema')
 const Conversations = require('./conversationSchema')
+const GroupConversations = require('./groupConversationSchema')
 const bookmarks = require('./bookmarkSchema')
 const Comments = require('./commentsSchema')
 const jwt = require('jsonwebtoken')
@@ -448,7 +449,7 @@ let interestedUserPosts = []
 
 // Messages
 
-app.post('/api/conversation', verify, async(req,res) => {
+app.post('/api/p2p/conversation', verify, async(req,res) => {
     //check if it exists
     console.log(req.body);
         Conversations.findOne({participants: {$all: [req.body.receiver, req.body.sender]}}).exec(async(err,doc) => {
@@ -467,8 +468,35 @@ app.post('/api/conversation', verify, async(req,res) => {
        
        }
     })
+    })
 
-   
+//Group Convo
+app.post('/api/group/conversation', verify, async(req,res) => {
+    //check if it exists
+    console.log(req.body);
+        GroupConversations.findOne({participants: {$in: [req.user._id]}}).exec(async(err,doc) => {
+        console.log('Conversations found...')
+       if(err){throw err}
+       if(!doc){
+        const groupConversation = new GroupConversations({
+            participants: req.body.participants,    
+            admin: req.body.admin,
+            name: req.body.name,
+            icon: req.body.icon
+            
+        })
+
+        await groupConversation.save()
+        res.send({status:200,conversation_id:groupConversation._id})
+       } else{
+       res.send({status:409,conversation_id:doc._id})
+       
+       }
+    })
+
+
+
+
 
 })
 app.get('/api/conversations/:id', verify, async(req,res) => {
