@@ -63,17 +63,20 @@ export default function GroupCreator() {
    }
   const createGroup = async() => {
     setIsLoading(true)
+    groupMembers.push(user._id)
+    
     const res =  await (await axios.post(`${URL}/api/group/conversation`, {
       participants: groupMembers,
-      admin: user._id,
+      admin: [user._id],
       name: nameRef.current.value,
       icon: groupImage,
 
-    })).data
-    
+
+    }, {headers: {Authorization: localStorage.getItem('token')}})).data
+    console.log(res)
       if(res.status == 200){
         setIsLoading(false)
-        navigate('/message')
+        navigate('/messages')
       
        }
     

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import UserNav from '../Navbar/UserNav';
 import MessagersList from './MessagersList';
 import MessageRoom from './MessageRoom';
+import GroupMessageRoom from './GroupMessageRoom';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -9,7 +10,7 @@ import { actions } from '../../store';
 
 const Messages = () => {
   
-  const {URL, user, closeRoom, enterRoom, roomChanges} = useSelector(state => state)
+  const {URL, user, closeRoom, enterRoom, enterGroupRoom, closeGroupRoom, roomChanges} = useSelector(state => state)
   const [conversations , setConversations] = useState(null)
   const [messages , setMessages] = useState(null)
   const [recipient, setRecipient] = useState(false)
@@ -19,7 +20,7 @@ const Messages = () => {
  
   const location = useLocation()
     
-  console.log(location.state)  
+  console.log(enterGroupRoom, closeGroupRoom, conversations)  
     
         return (
         <>
@@ -28,11 +29,13 @@ const Messages = () => {
         <div className='lg:grid lg:grid-cols-2  lg:ml-[7em] lg:w-full'>
        
         <MessagersList setRecipient={setRecipient}  setConversations={setConversations}/>
+
+        {/* //For P2p Conversation */}
         {
          //Click from conversation list
-          (enterRoom  && conversations !== null) && (closeRoom == false) ?
+          (enterRoom  && conversations._id !== null) && (closeRoom == false) ?
 
-          <MessageRoom updateConvo={setConversations}  recipient={recipient} conversationId={conversations} setRecipient={setRecipient}  />:
+          <MessageRoom updateConvo={setConversations}  recipient={recipient} conversationId={conversations._id} setRecipient={setRecipient}  />:
 
 
           //loading using message icon
@@ -41,6 +44,17 @@ const Messages = () => {
             :
             //loading using URL
         <MessageRoom  recipient={null} conversationId={location.state == undefined || location.state == null ? null : location.state.convo_id} />
+        }
+
+        {/* //For group  */}
+        
+       { 
+          (enterGroupRoom  && conversations._id !== null) && (closeGroupRoom == false) ?
+
+          <GroupMessageRoom updateConvo={setConversations}   conversation={conversations}   />
+            :
+       ''    
+        // <GroupMessageRoom   conversation={location.state == undefined || location.state == null ? null : location.state.convo_id} /> 
         }
     </div>
 

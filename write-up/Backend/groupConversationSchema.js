@@ -20,6 +20,11 @@ const groupConversationSchema = new mongoose.Schema({
       type: String,
       required:true  
     },
+    description: {
+      type: String,
+      required:true  
+    },
+
     icon: {
       type: String,
       required:true  
@@ -33,7 +38,11 @@ const groupConversationSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    
+    type: {
+        type: String,
+        required: true,
+        default: ()=> 'group'
+    }
 }, { timestamps: true });
 
 

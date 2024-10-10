@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { actions } from '../../store'
 import { IoIosBackspace } from 'react-icons/io'
 import { BsDot } from "react-icons/bs";
-export default function Message({convo,  setConversations, roomPermission,setRecip}) {
-  const [recipient, setRecipient] = useState(null)
+export default function GroupMessage({convo,  setConversations, roomPermission}) {
   const navigate = useNavigate()
   const {user, roomChanges} = useSelector(state => state)
   const dispatch = useDispatch()
@@ -13,9 +12,8 @@ export default function Message({convo,  setConversations, roomPermission,setRec
   const openRoom = () => {
    
    setConversations(convo)
-   setRecip(recipient)
-   dispatch(actions.updateCloseRoom(false))
-   dispatch(actions.updateEnterRoom(true))
+   dispatch(actions.updateCloseGroupRoom(false))
+   dispatch(actions.updateEnterGroupRoom(true))
    
     const isMobile = window.innerWidth <= 768;
    if (isMobile){
@@ -24,29 +22,18 @@ export default function Message({convo,  setConversations, roomPermission,setRec
       } 
   }
   useEffect(() => {
-    
+}, [convo])
 
-     if(convo.participants[0]._id == user._id){
-      setRecipient(convo.participants[1])
-    } else{
-      setRecipient(convo.participants[0])
-    }
-    console.log(recipient)
-  }, [convo])
-
-  if(recipient !== null){
    return (
     <div onClick={openRoom} className='hover:bg-[#f4f4f4] hover:scale-[.5em] w-full py-[1em] px-[.5em] lg:px-[2em]'>
      <div className="flex flex-row">
-      <img src={recipient.public_picture} alt={recipient.name} className='rounded-full h-10 w-10 lg:h-12 lg:w-12 mr-[1em] '  />
-     
+      <img src={convo.icon} alt={convo.name} className='rounded-full h-10 w-10 lg:h-12 lg:w-12 mr-[1em] '  />
        
       <div className="flex flex-col w-full lg:w-full overflow-x-hidden ">  
       <div className="flex flex-row gap-1 mt-2 ml-[0.25em]  w-max ">
-      <p className="font-[Avenir] overflow-ellipsis w-fit font-bold text-sm -ml-1 -mt-1.5">{recipient.name}</p>
-      <p className="font-[Avenir] overflow-ellipsis overflow-hidden w-fit max-w-[8em] text-[#a0a0a0] text-xs font-semibold -mt-1" >@{recipient.username}</p>
-      <p className="font-[Avenir]  text-[#a0a0a0] text-xs  font-semibold -mt-1">5h</p>
+      <p className="font-[Avenir] overflow-ellipsis w-fit font-bold text-sm -ml-1 -mt-1.5">{convo.name}</p>
       </div>
+
       {
         convo.lastMessage == undefined?
      
@@ -74,5 +61,5 @@ export default function Message({convo,  setConversations, roomPermission,setRec
       </div>
     </div>
   )
-}
+
 }

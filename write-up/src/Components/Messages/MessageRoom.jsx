@@ -19,7 +19,7 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
     
     const backToMessageList = () => {
 
-      socket.emit('leave-one-v-one',{roomId: conversationId})
+      socket.emit('leave-room',{roomId: conversationId})
       dispatch(actions.updateMobileRoom(false))
       dispatch(actions.updateCloseRoom(true))
       // setAllMessages(null)
@@ -32,7 +32,7 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
 
         setRecipientActiveStatus(recipient.lastActive)
       }
-      socket.on('send-message', (new_message) => {
+      socket.on('send-p2p-message', (new_message) => {
         console.log(new_message)
         setAllMessages(message => [...message, new_message])
        
@@ -146,6 +146,8 @@ export default function MessageRoom({  recipient, conversationId, updateConvo , 
    
     </div>
     <MessageInput 
+    
+    roomType='p2p'
     socket={socket}
     recipient={recipient} 
     setTypingStatus={setTypingStatus}

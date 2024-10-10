@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import {io} from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
 import {actions} from '../../store/index'
+import GroupMessageRoom from './GroupMessageRoom'
+import GroupMessage from './GroupMessage'
 
 export default function MessagersList({openRoom, setRecipient, setConversations}) {
  
@@ -23,12 +25,39 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
     if(user != null){
 
       console.log(user);
-      socket.emit('get_conversations', {user: user._id})
-      socket.on('get-conversations',(conversation) => {
-        setConvo(conversation)
-        console.log(convo)
+
+      socket.emit('get_all_conversations', {user: user._id})
+      
+      socket.on('get-all-conversations',(allConversations) => {
+        console.log(allConversations)
+        setConvo(allConversations)
         actions.updateRefreshConvo(false)
       })
+    
+      // socket.emit('get_p2p_conversations', {user: user._id})
+
+      // socket.emit('get_group_conversations', {user: user._id}
+
+      // )
+
+      // socket.on('get-p2p-conversations',(conversation) => {
+      //   setConvo([...conversation, ...convo])
+      //   console.log(convo)
+      //   actions.updateRefreshConvo(false)
+      // })
+    
+      // socket.on('get-group-conversations',(conversation) => {
+      //     if(conversation.length >0){
+      //     setConvo([...conversation, ...convo])
+
+      //   } 
+
+      //   console.log(convo)
+      //   actions.updateRefreshConvo(false)
+      // })
+    
+    
+    
     }
 
     
@@ -60,7 +89,7 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
       
 
     convo.map((conversation, index) => {
-      console.log(conversation)
+      if(conversation.type == 'p2p'){
       return   <Message 
        key={index}
 
@@ -74,7 +103,20 @@ export default function MessagersList({openRoom, setRecipient, setConversations}
         
        setRecip={setRecipient}
        />
-     
+      } else {
+        return   <GroupMessage 
+        key={index}
+ 
+        setConversations={setConversations}
+ 
+        roomPermission={openRoom} 
+        
+        convo={conversation}
+        
+      
+         
+        />
+      }
   
     }): 
     

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import { IoIosImage, IoIosSend } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from "../../store/index";
-export default function MessageInput({ recipient, roomId, conversationId, setTypingStatus, socket}) {
+export default function MessageInput({roomType, recipient, roomId, conversationId, setTypingStatus, socket}) {
   const dispatch = useDispatch()
   const updateTypingStatus = () => {
    socket.emit('typing', {roomId})
@@ -32,7 +32,15 @@ export default function MessageInput({ recipient, roomId, conversationId, setTyp
   const sendMessage = (e) => {
     e.preventDefault()
     const text = messageTextRef.current.value
-    socket.emit('send_message',  {sender: user._id, receiver: recipient._id, text: text, roomId: conversationId })
+    if(roomType == 'group'){
+
+      socket.emit('send_group_message',  {sender: user._id, text: text, roomId: conversationId, is_a_reply: false})
+
+    }else{
+
+      socket.emit('send_p2p_message',  {sender: user._id, receiver: recipient._id, text: text, roomId: conversationId })
+    }
+
     messageTextRef.current.value = ''
      }
      actions.updateRefreshConvo(true)

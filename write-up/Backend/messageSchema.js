@@ -16,7 +16,14 @@ const messagesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-  
+    replies: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Messages', 
+     
+
+        }
+    ],
     sent: {
         type: Boolean,
         required: false,

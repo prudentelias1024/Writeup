@@ -10,6 +10,7 @@ const mailgen = require('mailgen')
 const Podcast = require('./podcastSchema')
 
 //Schemas
+const GroupMessages = require('./GroupMessagesSchema')
 const PublishedPosts = require('./publishedPostSchema')
 const DraftPosts = require('./draftPostSchema')
 const User = require('./usersSchema')
@@ -209,7 +210,26 @@ const MESSAGES_ROOM = 'msg'
 const message_room = []
 io.on('connection',(socket) => {
    
+    //Hybrid functions (P2p and group)
+    socket.on('get_all_conversations', async(data) => {
+        let allConversations = []
 
+        Conversations.find({participants: {$in: [data.user]}}).populate('participants').populate('lastMessage').sort({ lastMessageTimestamp: -1 }).exec((err,conversations) => {
+            if(err){throw err}
+            allConversations = [...conversations]
+        })
+       
+        GroupConversations.find({participants: {$in: [data.user]}}).populate('participants').populate('admins').populate('lastMessage').sort({ lastMessageTimestamp: -1 }).exec((err,groupConvo) => {
+    
+            if(err){throw err}
+            allConversations = [...allConversations, ...groupConvo]
+            console.log('Convo_length',allConversations.length)
+          socket.emit('get-all-conversations', allConversations)
+        })
+
+    
+    })
+    
     socket.on('typing', ({roomId}) => {
         socket.to(roomId).emit('user_typing', {message: 'typing'})
         setTimeout(() => {
@@ -217,6 +237,18 @@ io.on('connection',(socket) => {
            
         }, 5000); 
     })
+
+    socket.on('leave-room', ({ roomId }) => {
+        let user_index = message_room.indexOf(socket.user._id)
+       message_room.splice(user_index,1)
+       console.log(message_room)
+       console.log(`User ${socket.user.username} left room: ${roomId}`);
+   
+   });
+
+
+//   Peer to peer functions
+
     socket.on('unactive', ({roomId}) => {
         console.log('A user just left....')
         User.findOneAndUpdate({_id: socket.user._id }, 
@@ -251,12 +283,6 @@ io.on('connection',(socket) => {
         
         console.log(`${socket.user.username} joined room ${roomId}`)
         socket.join(roomId)
-
-        
-       
-        
-
-    
        
     })
 
@@ -270,13 +296,7 @@ io.on('connection',(socket) => {
         })
     })
 
-    socket.on('leave-one-v-one', ({ roomId }) => {
-         let user_index = message_room.indexOf(socket.user._id)
-        message_room.splice(user_index,1)
-        console.log(message_room)
-        console.log(`User ${socket.user.username} left room: ${roomId}`);
-        
-    });
+  
 
     socket.on('get_messages', async(data) =>
     {
@@ -304,7 +324,7 @@ io.on('connection',(socket) => {
    
 
 
-    socket.on('send_message', async(data) => {
+    socket.on('send_p2p_message', async(data) => {
         console.log(data)
         const newMessage = new  Messages({
             receiver: data.receiver,
@@ -320,25 +340,84 @@ io.on('connection',(socket) => {
         console.log('convo:',convo)
 
         console.log(data.roomId)
-        io.to(data.roomId).emit('send-message',newMessage )  
+        io.to(data.roomId).emit('send-p2p-message',newMessage )  
         io.to(data.roomId).emit('get-conversations',convo)
     }) 
   
   
-    
-    socket.on('get_conversations', async(data) => {
+  
+    socket.on('get_p2p_conversations', async(data) => {
         Conversations.find({participants: {$in: [data.user]}}).populate('participants').populate('lastMessage').sort({ lastMessageTimestamp: -1 }).exec((err,conversations) => {
             // console.log(conversations)
             if(err){throw err}
-              socket.emit('get-conversations', conversations)
+              socket.emit('get-p2p-conversations', conversations)
         })
         
     })
 
    
-    // socket.on('disconnect', () => {
-    //     console.log('user disconnected:', socket.id);
-    // });
+//    Group conversation function 
+    
+socket.on('get_group_conversations', async(data) => {
+    console.log(data.user)
+    GroupConversations.find({participants: {$in: [data.user]}}).populate('participants').populate('admins').populate('lastMessage').sort({ lastMessageTimestamp: -1 }).exec((err,conversations) => {
+        console.log('Group',conversations)
+        if(err){throw err}
+          socket.emit('get-group-conversations', conversations)
+    })
+    
+})
+
+
+socket.on('get_group_messages', async(data) =>
+    {
+        console.log('data',data)
+        GroupMessages.find({convo_id: data.convo_id}).sort({sent_on: 1}).exec((err,messages) => {
+            if(err){throw err}
+            if(messages){
+                console.log('message '+messages)
+                socket.emit('get-group-messages',messages)
+            }
+        })
+    })
+
+   
+
+
+  
+
+socket.on('send_group_message', async(data) => {
+    const newMessage = new  GroupMessages({
+       sender: data.sender,
+       text: data.text,
+       convo_id: data.convo_id
+
+    })
+    await newMessage.save()
+    if(data.is_a_reply){
+        GroupMessages.findOneAndUpdate({_id: data.prevMsgId},{replies: {$in: newMessage._id}}).exec()
+    }
+
+    let convo = await  Conversations.findOneAndUpdate({participants: {$in: data.sender}}, {$set : {lastMessage: newMessage._id }}).populate('lastMessage')
+
+    io.to(data.roomId).emit('send-group-message',newMessage )  
+    io.to(data.roomId).emit('get-group-conversations',convo)
+}) 
+
+
+
+socket.on('join-group-convo', ({roomId}) => {
+    socket.join(roomId)      
+})
+
+socket.on('leave-group-convo', ({ roomId }) => {
+    let user_index = message_room.indexOf(socket.user._id)
+   message_room.splice(user_index,1)
+   console.log(message_room)
+   console.log(`User ${socket.user.username} left room: ${roomId}`);
+   
+});
+    
 })
 
 //Middleware

@@ -18,6 +18,11 @@ const conversationSchema = new mongoose.Schema({
     status: {
      type: String,
      required: true   
+    },
+    type: {
+        type: String,
+        required: true,
+        default: ()=> 'p2p'
     }
    
 }, { timestamps: true });
