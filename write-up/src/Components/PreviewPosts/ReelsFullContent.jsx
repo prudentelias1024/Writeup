@@ -12,9 +12,8 @@ import UserNav from '../Navbar/UserNav';
 export default function ReelsFullContent() {
 
   const params = useParams()
-    const {user} = useSelector(state => state)
     
-    const {URL} = useSelector(state => state)
+    const {URL,aiURL,user} = useSelector(state => state)
     const [reel, setReel] = useState(null)
     useEffect(() => {
         console.log(URL)
@@ -52,7 +51,7 @@ export default function ReelsFullContent() {
 
         <ImageReel reelUpdater={setReel} reel={reel} key={reel.postId} URL={process.env.REACT_APP_PRODUCTION_URL} /> 
         <hr />
-        <AddComment reelUpdater={setReel} post={reel} user={user} url={URL} />
+        <AddComment reelUpdater={setReel} post={reel} user={user} url={URL} aiURL={aiURL} />
         <hr />
         <div className="flex flex-col">
 

@@ -4,8 +4,14 @@ import axios from 'axios'
 import {v4} from 'uuid'
 
 import { useSelector } from 'react-redux'
-export default function AddComment({reelUpdater,post,user,url}) {
+
+
+//Parent: ReelsFullCoutent
+
+
+export default function AddComment({reelUpdater,post,user,url,aiURL}) {
     const [formReset, setFormReset] = useState(false)
+    const [safeReply, setSafeReply] = useState(null)
     const quillRef = useRef()
     let modules = {
         toolbar: [
@@ -20,7 +26,9 @@ export default function AddComment({reelUpdater,post,user,url}) {
         console.log(comment);
       }
       const commentPost = async(user,postId,name,author, commentWords) => {
-        console.log(quillRef.current.value)
+        const safe = await (await axios.post(`${aiURL}/api/postSafety`, {text:quillRef.current.value})).data.safe
+        if(safe){
+         console.log(quillRef.current.value)
         setCommented(true)
         let  res = await(await axios.post(`${url}/reel/comment`,{
           postId: v4(),
@@ -37,13 +45,21 @@ export default function AddComment({reelUpdater,post,user,url}) {
         quillRef.current.value = ''
         let commentNotification = await(await axios.post(`${url}/api/notification/comment`, {postId:postId,post_name:name,author:author}, {headers: {Authorization: localStorage.getItem('token')}})).data 
         
-        } 
+        } else{
+          setSafeReply("Can't post reply. It contains some unallowed words !")
+        }
+      } 
    
      const [comment, setComment] = useState()
      const [commented, setCommented] = useState(false)
   return (
 
         <div className="comments -z-1 lg:relative fixed w-full ml-[0em] my-[1.5em] bottom-0 h-[3em] pb-[1em]">
+             {
+                    safeReply !== null?
+                    <p className="text-red-500 text-center mt-[1em] font-[Sen]">{safeReply}</p>:
+                    ''
+                }
             <div className='add_comment  w-full  py-[1em]  pl-[1em] pr-[1em]  flex flex-row mb-[5em] lg:ml-[0em]'>
             <img className='w-[3em] m-auto h-[3em] object-cover rounded-full' src={user.public_picture} alt={user.name} />
 

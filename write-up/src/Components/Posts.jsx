@@ -26,12 +26,13 @@ export default function Posts(){
     const {justPublishedReels} = useSelector(state => state)
     const {podcasts} = useSelector(state => state)
     const {user} = useSelector(state => state) 
-    const {URL} = useSelector(state => state)
+    const {URL, aiURL} = useSelector(state => state)
     const getRecommendedUser = async() => {
       const  all_user = await(await axios.get(`${URL}/api/users`,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(user)
       // const recommendedUser = await(await axios.post(`https://inkup-ai.onrender.com/api/recommendUser`, {all_profile: all_user, user:user},{headers: {Authorization: localStorage.getItem('token')}})).data
-      const recommendedUser = await(await axios.post(`http://localhost:8000/api/recommendUser`, {all_profile: all_user, user:user})).data
+
+      const recommendedUser = await(await axios.post(`${aiURL}/api/recommendUser`, {all_profile: all_user, user:user})).data
       console.log(recommendedUser)
       setRecommendedUser(recommendedUser)
     }

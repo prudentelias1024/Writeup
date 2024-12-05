@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'',user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false, closeRoom: false, enterRoom:false, enterGroupRoom:false, closeGroupRoom:false,  currentChatRecipient: null},
+    initialState: {URL:'', aiURL: '', user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:'Add Text Reels', showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false, closeRoom: false, enterRoom:false, enterGroupRoom:false, closeGroupRoom:false,  currentChatRecipient: null},
     reducers: {
       updateChatRecipient(state,action){
         state.currentChatRecipient = action.payload
@@ -70,6 +70,9 @@ const userSlice = createSlice({
       },
       updateURL(state,action){
         state.URL = action.payload
+      },
+      updateAiURL(state,action){
+        state.aiURL = action.payload
       },
       setShowModal(state,action){
         state.showModal = action.payload

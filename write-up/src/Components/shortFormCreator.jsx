@@ -16,12 +16,12 @@ import _ from 'lodash'
 import { ThreeDots } from 'react-loader-spinner';
 
 const ShortFormCreator = () => {
-    const  [URL,setURL] = useState("http://localhost:5000")
+    // const  [URL,setURL] = useState("http://localhost:5000")
     const [disableAddMore, setDisableAddMore] = useState(false)
     const [formReset, setFormReset] = useState(false)
     const [postable, setPostable] = useState(false)
     const {user, reelsPlaceholder, showPollCreator, cancelImageStatus} = useSelector(state => state)
-    const {reels} = useSelector(state => state)
+    const {reels, URL, aiURL} = useSelector(state => state)
     const tagsRef = useRef()
     const quillRef = useRef()
     const formRef = useRef(null)
@@ -37,6 +37,7 @@ const ShortFormCreator = () => {
     const [optionFour,setOptionFour] = useState('')
     const reelImageRef = useRef()
     const [imageReelURL, setImageReelURL] = useState(null)
+    const [safetyError, setSafetyError] = useState(null)
     const [tagsError,setTagsError] = useState(
         
         {
@@ -46,6 +47,7 @@ const ShortFormCreator = () => {
     numberInTagsErrors: [],
     specialCharacterInTagsErrors: [],
     muchTagsError: ''
+    
       
         })
 
@@ -86,9 +88,14 @@ const ShortFormCreator = () => {
     
         
     const handleShortContent = async(event) => {
-      dispatch(actions.updatePosting(true))
       event.preventDefault()
-       
+
+      //checks if the post is safe enough
+      const safe = await (await axios.post(`${aiURL}/api/postSafety`, {text:quillRef.current.value})).data.safe
+        if(safe){
+            dispatch(actions.updatePosting(true))
+    
+        
           let reel = await (await axios.post(`${URL}/reels/create`,
          {
          postId: v4(),
@@ -116,7 +123,12 @@ const ShortFormCreator = () => {
         formRef.current.reset()
         dispatch(actions.setShowPollCreator(false))
            
+    } else{
+        setSafetyError("Can't post ink! It contains unallowed words ")
     }
+}
+
+
     const addMorePollOption = () => {
         console.log(compToDuplicate)
         const componentToDuplicate = <PollInput index={4}  optionHandler={handleOptionFour}/>
@@ -178,7 +190,12 @@ const ShortFormCreator = () => {
             
         
     return (
-            <div className=' border-t-[1px] bg-white font-[Sen] lg:mt-0  pb-[1em] px-[.5em] gap-[1em] h-fit'>
+            <div className=' border-t-[1px] bg-white font-[Sen] lg:mt-[0em]  pb-[1em] px-[.5em] gap-[1em] h-fit'>
+                {
+                    safetyError !== null?
+                    <p className="text-red-500 text-center mt-[1em] font-[Sen]">{safetyError}</p>:
+                    ''
+                }
                   <form ref={formRef}>
                     
             <img src={user.public_picture} alt={user.name} className="h-[2.5em] w-[2.5em] mt-[1em] rounded-full" />  

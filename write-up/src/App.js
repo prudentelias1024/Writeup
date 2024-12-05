@@ -206,11 +206,14 @@ function App() {
        
         if (process.env.NODE_ENV == 'production') {
           dispatch(actions.updateURL("https://inkup-api.onrender.com"))
+          dispatch(actions.updateAiURL("https://inkup-api.onrender.com"))
           URL = "https://inkup-api.onrender.com"
 
         }else{
           
           dispatch(actions.updateURL("http://localhost:5000"))
+          dispatch(actions.updateAiURL("http://localhost:8000"))
+    
           URL =  "http://localhost:5000" 
         }
     
