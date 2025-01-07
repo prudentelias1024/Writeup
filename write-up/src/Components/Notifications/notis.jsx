@@ -1,32 +1,34 @@
-import React , {useEffect, useState} from 'react'
+import React , {useContext, useEffect, useState} from 'react'
 import { IoIosNotifications } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import io from 'socket.io-client'
 
+import { SocketContext } from '../../socketProvider'
 export default function Notis() {
-
-  useEffect(() => {
-    if (user.notis.length == 0) {
-      setMostRecentNotis('')
-    } else {
-      setMostRecentNotis(user.notis[0].name)
-      
-    }
-  }, [])
-  
-    const {user} = useSelector((state => state) )
-    const {URL} = useSelector(state=>state)
-    const socket = io(URL)
+ const socket = useContext(SocketContext);
  
-    const [mostRecentNotis, setMostRecentNotis] = useState('')
+//  const {user} = useSelector((state => state) )
+ const [user,setUser] = useState([])
+ const {URL} = useSelector(state=>state)
+ 
+ const [mostRecentNotis, setMostRecentNotis] = useState('')
+ 
+   useEffect(() => {
+     socket.on('new_notis_post', user)
+     if (user.length == 0) {
+       setMostRecentNotis('')
+     } else {
+       setMostRecentNotis(user.reverse[0].name)
+     }
+   }, [socket])
+
       return (
     <div className='flex flex-row lg:flex-row gap-3 lg:border-[.2px]  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%]  bg-white p-[.5em] pl-0  lg:pl-[2em]'>
       
     <Link  to="/notis/timeline"   className='flex flex-col l'>
     
-        {user.notis &&
-          user.notis.length > 0 ?
+        {user &&
+          user.length > 0 ?
           <>
     <div className='flex flex-row gap-[.5em]  '>
         <IoIosNotifications className='text-3xl mr-2 ml-2  mt-[1em] text-blue-500 ' />
@@ -34,7 +36,7 @@ export default function Notis() {
         <div className="notis flex flex-row gap-[.5em] ml-[0em] mt-[.75em]">
           
         {
-          user.notis.map((user_in_notis) => {
+          user.map((user_in_notis) => {
             return    <img src={user_in_notis.public_picture}  className='h-[30px] w-[30px] lg:w-[2em] lg:h-[2em]  lg:mt-[1em] rounded-full' />
     
           })       

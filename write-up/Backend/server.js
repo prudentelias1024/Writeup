@@ -57,6 +57,122 @@ const io = socketIo(server, {
 // # │ │ │ │ │ │
 // # │ │ │ │ │ │
 // # * * * * * *
+
+//functions
+
+const createReels = async(req,res) => {
+        console.log(req.body)
+        const  {username,name,email} = req.user
+        let publishedBefore = false
+         reels.find({author: req.user._id}, (err,doc) => {
+            if(err){throw err}
+            if(doc){
+                if(doc.length > 0){
+                    publishedBefore = true
+                } else {
+                    publishedBefore = false
+                }
+            }
+        })
+        let modOptions = []
+        req.body.options.map((option) => {
+        modOptions.push({pollname: option, vote: 0})
+    })
+     let newReels = new reels({
+        verifiedAuthor: req.user.verified,
+        authorPremiumPlan: req.user.premiumPlan,
+        author: req.user._id,
+        created: moment(),
+        text: req.body.text,
+        options: modOptions,
+        tags: req.body.tags.split('#'),
+        type: req.body.type,
+        postId: req.body.postId,
+        reelImageURL: req.body.reelImageURL
+    
+     })
+     newReels.save()
+     User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
+        if(err){
+            throw err
+        }
+        if(doc){
+            console.log(doc)
+        }
+    })
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        
+        auth: {
+            user: 'inkup1024@gmail.com',
+            pass: 'aomlttxqzzwfplnh'
+            
+        }
+        ,
+        tls: {
+    rejectUnauthorized: false
+    }
+    
+      })
+    
+      let message = {
+        from: "'Inkup' <Inkup1024@gmail.com>", //my email address
+        to: `${req.user.email}`,
+        subject: ` Thank you for sharing your creativity on Reels! Explore the power of long-form content.
+        `,
+        text: 'Article Published',
+        attachment: [{
+            filename: 'inkup.png',
+            path: '/inkup.png',
+            cid: 'inkup.png'
+        }],
+        html: `
+       
+    Dear ${name},
+    
+     <p style='font-family: Sen; font-size: 1.5em;'> <br>We hope this email finds you filled with inspiration and creative energy. We wanted to take a moment to express our heartfelt appreciation for your contribution to our community by sharing captivating Reels. Your talent and unique perspective have truly made a difference and have captivated the hearts and minds of many.
+    </p> 
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    We admire your ability to craft engaging content within the short and snappy format of Reels. Your creativity shines through, and it's evident that you have a natural knack for capturing attention in those brief moments. Your dedication to sharing valuable and entertaining content has not gone unnoticed, and we are incredibly grateful to have you as a part of our vibrant community.
+    </p>
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    While Reels provide an excellent platform for quick and impactful creation, we would also love to encourage you to explore the power of long-form content. By creating and sharing longer content, you open up even more opportunities to showcase your talent, provide in-depth insights, and connect with your audience on a deeper level.
+    </p>
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    Long-form content allows you to dive into subjects that require more time and attention, enabling you to share your expertise, tell compelling stories, or explore topics in greater detail. This format presents a unique chance to engage your audience in a more immersive and enriching way, and we believe your skills will shine just as brightly in this space.
+    </p>
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    We understand that transitioning from the brevity of Reels to longer-form content might feel like a challenge, but we assure you that it's a journey worth embarking upon. Our community is eager to experience your creativity in a new light, and we are confident that your dedication and talent will continue to resonate with your followers.
+    </p>
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    Please don't hesitate to reach out to us if you need any support, guidance, or ideas as you explore long-form content. We are here to help you every step of the way and provide you with the resources you need to make this transition seamless and successful.
+    </p>
+    
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    Thank you again for being an integral part of our creative community and for sharing your remarkable talent through Reels. We look forward to witnessing your continued growth and success as you embark on the exciting adventure of long-form content.
+    </p>
+    <br><p style='font-family: Sen; font-size: 1.5em;'>
+    Warm regards,
+    <br>
+    ${name}`
+    }
+    
+    if(publishedBefore == false){
+    
+        let messageId =  await  (await transporter.sendMail(message)).messageId
+        console.log(`An E-mail has been sent to: ${email} with message id: ${messageId}`)
+        
+    }
+    
+    reels.find({postId: req.body.postId}).populate('author').exec((err,reel) => {
+        if(err){throw err}
+        if(reel){
+            res.send({status: 200, reel:reel})
+        }
+    })
+ return req.user    
+}
+
 cron.schedule('0 0 12 * * ', () => {
     console.log('Running .......')
 User.find().select('lastPosted lastPosteNotified name email').exec((err,users) => {
@@ -208,7 +324,20 @@ const GLOBAL_ROOM = 'inkup'
 const MESSAGES_ROOM = 'msg'
 //sockets 
 const message_room = []
+const users = { }
 io.on('connection',(socket) => {
+    users[socket.user._id] = socket.id
+    socket.on('post_reels', async(data) => {
+    user = createReels()   
+    
+    //find users who has added them to their notifications list
+    notis = user.notis
+    notis.forEach((noti) => {
+        socket.to(users[noti._id]).emit('new_notis_post',user)
+    })
+
+
+    })
    
     //Hybrid functions (P2p and group)
     socket.on('get_all_conversations', async(data) => {
@@ -229,6 +358,8 @@ io.on('connection',(socket) => {
 
     
     })
+
+
     
     socket.on('typing', ({roomId}) => {
         socket.to(roomId).emit('user_typing', {message: 'typing'})
@@ -1466,115 +1597,7 @@ app.post('/reel/unrepost',verify,async(req,res) => {
 
 })
 app.post('/reels/create', verify, async(req,res) => {
-    console.log(req.body)
-    const  {username,name,email} = req.user
-    let publishedBefore = false
-     reels.find({author: req.user._id}, (err,doc) => {
-        if(err){throw err}
-        if(doc){
-            if(doc.length > 0){
-                publishedBefore = true
-            } else {
-                publishedBefore = false
-            }
-        }
-    })
-    let modOptions = []
-    req.body.options.map((option) => {
-    modOptions.push({pollname: option, vote: 0})
-})
- let newReels = new reels({
-    verifiedAuthor: req.user.verified,
-    authorPremiumPlan: req.user.premiumPlan,
-    author: req.user._id,
-    created: moment(),
-    text: req.body.text,
-    options: modOptions,
-    tags: req.body.tags.split('#'),
-    type: req.body.type,
-    postId: req.body.postId,
-    reelImageURL: req.body.reelImageURL
-
- })
- newReels.save()
- User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
-    if(err){
-        throw err
-    }
-    if(doc){
-        console.log(doc)
-    }
-})
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    
-    auth: {
-        user: 'inkup1024@gmail.com',
-        pass: 'aomlttxqzzwfplnh'
-        
-    }
-    ,
-    tls: {
-rejectUnauthorized: false
-}
-
-  })
-
-  let message = {
-    from: "'Inkup' <Inkup1024@gmail.com>", //my email address
-    to: `${req.user.email}`,
-    subject: ` Thank you for sharing your creativity on Reels! Explore the power of long-form content.
-    `,
-    text: 'Article Published',
-    attachment: [{
-        filename: 'inkup.png',
-        path: '/inkup.png',
-        cid: 'inkup.png'
-    }],
-    html: `
-   
-Dear ${name},
-
- <p style='font-family: Sen; font-size: 1.5em;'> <br>We hope this email finds you filled with inspiration and creative energy. We wanted to take a moment to express our heartfelt appreciation for your contribution to our community by sharing captivating Reels. Your talent and unique perspective have truly made a difference and have captivated the hearts and minds of many.
-</p> 
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-We admire your ability to craft engaging content within the short and snappy format of Reels. Your creativity shines through, and it's evident that you have a natural knack for capturing attention in those brief moments. Your dedication to sharing valuable and entertaining content has not gone unnoticed, and we are incredibly grateful to have you as a part of our vibrant community.
-</p>
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-While Reels provide an excellent platform for quick and impactful creation, we would also love to encourage you to explore the power of long-form content. By creating and sharing longer content, you open up even more opportunities to showcase your talent, provide in-depth insights, and connect with your audience on a deeper level.
-</p>
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-Long-form content allows you to dive into subjects that require more time and attention, enabling you to share your expertise, tell compelling stories, or explore topics in greater detail. This format presents a unique chance to engage your audience in a more immersive and enriching way, and we believe your skills will shine just as brightly in this space.
-</p>
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-We understand that transitioning from the brevity of Reels to longer-form content might feel like a challenge, but we assure you that it's a journey worth embarking upon. Our community is eager to experience your creativity in a new light, and we are confident that your dedication and talent will continue to resonate with your followers.
-</p>
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-Please don't hesitate to reach out to us if you need any support, guidance, or ideas as you explore long-form content. We are here to help you every step of the way and provide you with the resources you need to make this transition seamless and successful.
-</p>
-
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-Thank you again for being an integral part of our creative community and for sharing your remarkable talent through Reels. We look forward to witnessing your continued growth and success as you embark on the exciting adventure of long-form content.
-</p>
-<br><p style='font-family: Sen; font-size: 1.5em;'>
-Warm regards,
-<br>
-${name}`
-}
-
-if(publishedBefore == false){
-
-    let messageId =  await  (await transporter.sendMail(message)).messageId
-    console.log(`An E-mail has been sent to: ${email} with message id: ${messageId}`)
-    
-}
-
-reels.find({postId: req.body.postId}).populate('author').exec((err,reel) => {
-    if(err){throw err}
-    if(reel){
-        res.send({status: 200, reel:reel})
-    }
-})
+    createReels(req,res)    
 })
 
 app.post('/post/create', verify, async(req,res) => {
