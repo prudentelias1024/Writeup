@@ -61,7 +61,8 @@ const io = socketIo(server, {
 //functions
 
 const createReels = async(req,res) => {
-        console.log(req.body)
+        let post_reels = null
+        console.log('body:', req.body)
         const  {username,name,email} = req.user
         let publishedBefore = false
          reels.find({author: req.user._id}, (err,doc) => {
@@ -167,10 +168,10 @@ const createReels = async(req,res) => {
     reels.find({postId: req.body.postId}).populate('author').exec((err,reel) => {
         if(err){throw err}
         if(reel){
-            res.send({status: 200, reel:reel})
+           post_reels = reel
         }
     })
- return req.user    
+ return req.user, post_reels 
 }
 
 cron.schedule('0 0 12 * * ', () => {
@@ -326,18 +327,34 @@ const MESSAGES_ROOM = 'msg'
 const message_room = []
 const users = { }
 io.on('connection',(socket) => {
+
+
     users[socket.user._id] = socket.id
-    socket.on('post_reels', async(data) => {
-    user = createReels()   
     
+    socket.on('post_reels', async(data) => {
+    
+    console.log(data)
+    data.user = socket.user
+    data.body = data
+    const {user,reels}  = createReels(data)   
+    
+    console.log(user)
+    socket.emit('reels_posted',reels)
     //find users who has added them to their notifications list
-    notis = user.notis
+    notis = socket.user.notis
     notis.forEach((noti) => {
         socket.to(users[noti._id]).emit('new_notis_post',user)
     })
 
 
     })
+
+    // socket.on('check_notis', (user) => {
+    //     const missed_notis = []
+    //     user.notis.forEach((user) => {
+    //         reels.find({})
+    //     })
+    // })
    
     //Hybrid functions (P2p and group)
     socket.on('get_all_conversations', async(data) => {
@@ -1597,7 +1614,8 @@ app.post('/reel/unrepost',verify,async(req,res) => {
 
 })
 app.post('/reels/create', verify, async(req,res) => {
-    createReels(req,res)    
+    user, reel = createReels(req) 
+    res.send({status: 200, reel:reel})   
 })
 
 app.post('/post/create', verify, async(req,res) => {

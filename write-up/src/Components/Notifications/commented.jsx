@@ -46,7 +46,7 @@ const Commented = ({notification}) => {
     <img src={notification.message[0].user[2].public_picture} alt={notification.message[0].user[0].name} className='h-[30px] w-[30px] lg:w-[2em]  lg:mt-[1em] rounded-full' />
 
     <div className='[.125em]'>
-  <Link className=' font-bold font-[Sen] text-xs inline-flex flex-wrap gap-[0.2em] ' to={notification.message[0].user[1].link}>
+  <Link className=' font-bold font-[Sen] text-xs inline-flex flex-wrap gap-[0.2em] ' to={notification.message[0].user[1].link.split('@')[1]}>
     <p className='inline-flex'> 
     {notification.message[0].user[0].name}  {  notification.actionUserVerified? <HiBadgeCheck  className="text-lg text-blue-500 m"  />: ''} </p>
      <p>commented on your post </p> 

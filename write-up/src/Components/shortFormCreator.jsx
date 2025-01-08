@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MdOutlinePoll } from 'react-icons/md';
 import { CiImageOn } from 'react-icons/ci';
 import {MdCancel} from 'react-icons/md'
@@ -14,8 +14,10 @@ import { storage } from '../firebase';
 import mock from '../mock.jpg'
 import _ from 'lodash'
 import { ThreeDots } from 'react-loader-spinner';
-
+import {SocketContext} from '../socketProvider' 
 const ShortFormCreator = () => {
+    const socket = useContext(SocketContext)
+
     // const  [URL,setURL] = useState("http://localhost:5000")
     const [disableAddMore, setDisableAddMore] = useState(false)
     const [formReset, setFormReset] = useState(false)
@@ -83,7 +85,17 @@ const ShortFormCreator = () => {
     } 
 
     useEffect(() => {
-        
+        socket.on('new_notis_post',(reel) => {
+            if(reel){
+                let prevReels = _.cloneDeep(reels)
+                prevReels.push(reel[0])
+               let  newReels = prevReels.reverse()
+               console.log(newReels)
+                dispatch(actions.updateReels(newReels))
+                dispatch(actions.updatePosting(false))
+    
+            }
+        })
     }, [])
     
         
@@ -91,41 +103,47 @@ const ShortFormCreator = () => {
       event.preventDefault()
 
       //checks if the post is safe enough
-      const safe = await (await axios.post(`${aiURL}/api/postSafety`, {text:quillRef.current.value})).data.safe
-        if(safe){
-            dispatch(actions.updatePosting(true))
+      
+    //   const safe = await (await axios.post(`${aiURL}/api/postSafety`, {text:quillRef.current.value})).data.safe
+       
+      // if(safe){
+        dispatch(actions.updatePosting(true))
     
         
-          let reel = await (await axios.post(`${URL}/reels/create`,
-         {
-         postId: v4(),
-         tags: tags,
-         type: showPollCreator == true? 'poll' : 'image',
-         text: quillRef.current.value,
-         options: optionFour == ''? [optionOne,optionTwo,optionThree]: [optionOne,optionTwo,optionThree, optionFour] ,
-         reelImageURL: imageReelURL !== null ?imageReelURL : ''
+        //   let reel = await (await axios.post(`${URL}/reels/create`,
+        //  {
+        //  postId: v4(),
+        //  tags: tags,
+        //  type: showPollCreator == true? 'poll' : 'image',
+        //  text: quillRef.current.value,
+        //  options: optionFour == ''? [optionOne,optionTwo,optionThree]: [optionOne,optionTwo,optionThree, optionFour] ,
+        //  reelImageURL: imageReelURL !== null ?imageReelURL : ''
 
-        }, {
-            headers:{Authorization: localStorage.getItem('token')
-        }})).data
+        // }, {
+        //     headers:{Authorization: localStorage.getItem('token')
+        // }})).data
+
+
+       const reel =  socket.emit('post_reels', {
+             postId: v4(),
+             tags: tags,
+             type: showPollCreator == true? 'poll' : 'image',
+             text: quillRef.current.value,
+             options: optionFour == ''? [optionOne,optionTwo,optionThree]: [optionOne,optionTwo,optionThree, optionFour] ,
+             reelImageURL: imageReelURL !== null ?imageReelURL : ''
+    
+            })
+            
         setFormReset(true)
         console.log(reel)
-        if(reel.reel){
-            let prevReels = _.cloneDeep(reels)
-            prevReels.push(reel.reel[0])
-           let  newReels = prevReels.reverse()
-           console.log(newReels)
-            dispatch(actions.updateReels(newReels))
-            dispatch(actions.updatePosting(false))
-
-        }
+   
         quillRef.current.getEditor().setText('')
         formRef.current.reset()
         dispatch(actions.setShowPollCreator(false))
            
-    } else{
-        setSafetyError("Can't post ink! It contains unallowed words ")
-    }
+    // } else{
+    //     setSafetyError("Can't post ink! It contains unallowed words ")
+    // }
 }
 
 
