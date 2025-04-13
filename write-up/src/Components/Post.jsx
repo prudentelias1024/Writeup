@@ -59,7 +59,7 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
      return (
         
            <div classname="relative">
-           <BsThreeDots onClick={toggleAction} className=' bg-white relative lg:left-[27.5em] ' />
+           <BsThreeDots onClick={toggleAction} className=' bg-white relative lg:left-[27.5em] left-[90%] my-[1em]' />
 
              {
                    openPostAction && post.author.username == user.username?

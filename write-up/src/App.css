@@ -1615,6 +1615,11 @@ video {
   margin-left: -7em;
 }
 
+.mb-\[1\.5em\]
+{
+  margin-bottom: 1.5em;
+}
+
 .block
 {
   display: block;
