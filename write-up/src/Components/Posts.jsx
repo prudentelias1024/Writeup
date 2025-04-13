@@ -85,6 +85,7 @@ export default function Posts(){
         <div ref={inksRef} onClick={handleInksContentDisplay} className="content  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]   ">
           <p className="font-[Sen] text-center text-sm font-semibold ">Inks</p>
         </div> :
+        
         <div ref={inksRef} onClick={handleInksContentDisplay} className="content  w-1/2  p-[1em]   ">
           <p className="font-[Sen] text-center text-sm font-semibold ">Inks</p>
         </div> 

@@ -1381,13 +1381,30 @@ app.delete('/draft/:id', verify, (req,res) => {
 
 app.delete('/post/:id', verify, (req,res) => {
     PublishedPosts.deleteOne({postId:req.params.id}, (err,doc) => {
+        console.log(req.params.id)
         if(err){throw err}
         if(doc){
-            res.send('Content successfully deleted').status(200)
+            console.log('deleted...')
+            res.send({status:200})
         }
 
     })
 })
+
+//delete reels
+
+app.delete('/reels/:id', verify, (req,res) => {
+    reels.deleteOne({postId:req.params.id}, (err,doc) => {
+        if(err){throw err}
+        if(doc){
+            console.log('..deeleeteddd')
+            res.send({reels: doc, status: 200})
+        }
+
+    })
+})
+
+
 
 app.get('/reels', (req,res) => {
     reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',

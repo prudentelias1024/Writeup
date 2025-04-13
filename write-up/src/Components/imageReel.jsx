@@ -3,17 +3,50 @@ import AuthorInfo from './Post/AuthorInfo'
 import mock from './mock.jpg'
 import { Reactions } from './Post/Reactions'
 import Tag from './Post/Tag'
+import { BsThreeDots } from "react-icons/bs";
 import {  Link} from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { BiRepost } from 'react-icons/bi'
 import { InReactions } from './Post/InReactions'
+import { AiFillDelete } from "react-icons/ai";
+import { IoPencil } from "react-icons/io5";
+import axios from "axios";
+import { actions } from "../store/index";
 
 export default function ImageReel({reel,reelUpdate}) {
+  const dispatch = useDispatch()
+  const {URL, aiURL} = useSelector(state => state)
   const [viewed,setViewed] = useState(false)
+  const [openPostAction, setOpenPostAction] = useState(false)
   const [reposted,setReposted] = useState(false)
   const [post, setPost] = useState(reel)
+  
+  const toggleAction = () => {
+     if(openPostAction == false){
+      setOpenPostAction(true)
+      
+    } else {
+       setOpenPostAction(false)
+
+     }
+    }
+
+    const deletePost = async(postId) => {
+     
+      const  res = await(await axios.delete(`${URL}/reels/${postId}`,{headers: {Authorization: localStorage.getItem('token')}})).data
+
+      if(res.status == 200){
+        //refresh the post and update in UI using most preferably socket or api-ly
+          const reels = await (await axios.get(`${URL}/api/user/reels/my`,  {headers: {Authorization:  localStorage.getItem('token')}})).data
+           
+         dispatch(actions.updateReels([...reels]))
+        
+      }
+    }
+
+
     const commentRef = useRef()
     const {user} = useSelector(state => state)
     const  checkReposted = (reposters) => {
@@ -45,8 +78,32 @@ export default function ImageReel({reel,reelUpdate}) {
   return (
     <>
     
-   <div className=' bg-white w-full h-fit lg:border lg:pr-[4em] mt-[1em]  pt-[1em] '>
     
+   <div className=' bg-white w-full h-fit lg:border lg:pr-[4em] mt-[1em]  pt-[1em] '>
+       <BsThreeDots onClick={toggleAction} className='relative lg:left-[27.5em] left-[90%]' />
+       {
+        openPostAction && post.author.username == user.username?
+
+       <div className="post_action border p-3 rounded-lg w-fit flex flex-col gap-[.5em] absolute  lg:left-[53%] right-[0%]">
+
+
+          <div  className="flex flex-row gap-[.25em] cursor-pointer">
+          <IoPencil className="text-blue-500 text-base mt-[.25em] "/>
+          <p className='font-[Sen] text-blue-500 text-base'>Edit Post</p>
+          </div>
+         
+         <hr></hr>
+
+          <div onClick={() => {deletePost(post.postId)}} className="flex flex-row gap-[.25em] cursor-pointer  " >
+          <AiFillDelete className="text-red-500 text-base mt-[.25em] "/>
+          <p className='font-[Sen] text-red-500 text-base'>Delete Post</p>
+          </div>
+         
+
+</div>
+
+:''
+       }
    {reposted ? <div className=' inline-flex w-full'>
     <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
     <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: '' 

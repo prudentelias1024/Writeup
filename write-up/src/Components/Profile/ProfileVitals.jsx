@@ -85,7 +85,7 @@ export default function ProfileVitals({user, setUser, total}) {
    return (
     <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[1.5em] relative flex-col lg:mt-[1em] lg:w-1/2 lg:ml-[1em]  lg:pt-[1em]">
     <div  className="activity_info flex flex-row justify-evenly lg:ml-[5em]">
-        <img className='rounded-full w-[3.5em] h-[3.5em] lg:w-[7em] lg:h-[7em]' src={user.public_picture} alt={user.name}  />
+        <img className='rounded-full w-[2.5em] h-[2.5em] lg:w-[5em] lg:h-[5em]' src={user.public_picture} alt={user.name}  />
            <div className="post_activity text-center">
                <p className='text-2xl font-[Sen] font-bold '> {total ? total : 0}</p>
                <p className='text-xs'>Posts</p>
@@ -103,28 +103,28 @@ export default function ProfileVitals({user, setUser, total}) {
            </Link >
         </div>
     
-       <div className="flex flex-col mt-[.75em] relative lg:left-[1em] left-[2em] lg:ml-[8em]">
+       <div className="flex flex-col mt-[1.5em] relative lg:left-[1em] left-[2em] lg:ml-[8em]">
 
         <div className='flex flex-row '>
-        <div className='-ml-[1em]'> 
-        <div className='inline-flex relative left-auto w-full'>
-        <p className="  text-sm font-bold font-[Avenir] text-[#616161]  lg:text-2xl lg:mt-[1em] lg:-ml-[1em] -ml-[.5em] w-max">{user.name}</p>
+        <div className='lg:ml-[.5em] -ml-[1em]'> 
+        <div className='inline-flex relative  left-auto w-full'>
+        <p className="  text-sm font-bold font-[Avenir] text-[#616161]  lg:text-xl lg:mt-[1em] lg:-ml-[1em] -ml-[.5em] w-max">{user.name}</p>
         {user.verified ==true?
-        <HiBadgeCheck className="text-xl text-blue-500 lg:mt-[1.5em] mt-0"/>: ''
+        <HiBadgeCheck className="text-lg text-blue-500 lg:mt-[1.3em] mt-0.5 ml-1"/>: ''
     }
         </div> 
-        <p className=" relative left-auto text-xs lg:text-xl font-[Avenir] mt-[0.5em] lg:mt-[.5em] text-[#a2a2a2] font-semibold lg:-ml-[1.25em]   -ml-[.5em]  mb-[1em] ">@{user.username}</p>
+        <p className=" relative left-auto text-xs lg:text-lg font-[Avenir] mt-[0.5em] lg:mt-[.5em] text-[#a2a2a2] font-semibold lg:-ml-[1.25em]   -ml-[.5em]  mb-[1em] ">@{user.username}</p>
         </div>
  
     </div>
-        <p className=" relative left-auto text-xs font-[Avenir] w-[90%] lg:w-fit text-[#aaa] font-semibold  mb-[1em] -ml-[2em] -mt-[.5em] lg:text-xl">{user.bio ?user.bio: ''}</p>
+        <p className=" relative left-auto text-xs font-[Avenir] w-[90%] lg:w-fit text-[#aaa] font-semibold  mb-[1em] -ml-[1em] -mt-[.5em] lg:text-lg">{user.bio ?user.bio: ''}</p>
         <div>
 
         <div className='flex flex-row gap-[.5em] -ml-[1.5em] lg:-ml-[2.5em]'>
         {user.location ? 
         <div className='inline-flex flex-row gap-[.25em]'>
             <CiLocationOn className="text-[#333] text-base lg:text-2xl" /> 
-        <p className='text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-xl'>{user.location}</p> 
+        <p className='text-sm font-[Avenir] w-[90%] text-[#aaa] font-semibold  mb-[1em] lg:text-lg'>{user.location}</p> 
         </div> : ''
 }
 {
@@ -132,7 +132,7 @@ export default function ProfileVitals({user, setUser, total}) {
 
         <div className='inline-flex flex-row w-[15em] lg:w-full overflow-hidden text-ellipsis  gap-[.25em]'>
             <AiOutlineLink className="text-blue-500 text-lg lg:text-2xl " /> 
-        <a href={user.websiteUrl.startsWith('https://')? user.websiteUrl :"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-xl'>{user.websiteUrl}</a> 
+        <a href={user.websiteUrl.startsWith('https://')? user.websiteUrl :"https://"+user.websiteUrl} target='_blank' rel='noopener norefferer' className='text-sm font-[Avenir] w-[90%] text-blue-500 font-semibold  mb-[1em] lg:text-lg'>{user.websiteUrl}</a> 
         </div> : ''
 }        
         </div>
@@ -144,7 +144,7 @@ export default function ProfileVitals({user, setUser, total}) {
          
          user.following.some((person) => person.username == currentUser.username) && 
          currentUser.following.some((person) => person.username == user.username) ?
-         <p className='text-xs lg:text-sm text-[#a2a2a2] font-[Sen] font-bold mt-[.5em] lg:mt-[0em] ml-[1em] p-2 rounded-sm w-fit bg-[#e7e7e7]  lg:ml-[7.5em] '>You follow each other</p>: 
+         <p className='text-xs lg:text-xs text-[#a2a2a2] font-[Sen] font-bold mt-[.5em] lg:mt-[0em] ml-[em] p-2 rounded-sm w-fit bg-[#e7e7e7]  lg:ml-[8.5em] '>You follow each other</p>: 
          
          user.following.some((person) => person.username == currentUser.username) ?
          <p className='text-xs text-[#a2a2a2] font-[Sen] font-bold  mt-[-2.5em] ml-[1.5em] p-2 rounded-sm w-fit bg-[#e7e7e7]  pb-[1em]'> Follows you</p> :''
@@ -177,7 +177,7 @@ currentUser !== null && user.username == currentUser.username   ?
         <HiBell onClick={turnOffNotification}  className='text-xl lg:text-3xl absolute lg:mt-[.75em] mt-[.25em] lg:ml-[.75em] right-[7em] ' />
         :
 
-        <HiOutlineBell onClick={turnOnNotification}  className='text-xl lg:text-3xl lg:mt-[.75em] mt-[2.5em] absolute lg:ml-[.75em] ml-[.5em]' />
+        <HiOutlineBell onClick={turnOnNotification}  className='text-xl lg:text-3xl absolute lg:mt-[.75em] mt-[.25em] lg:ml-[.75em] right-[7em] ' />
         
         
     
