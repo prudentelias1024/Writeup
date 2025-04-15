@@ -80,7 +80,7 @@ export default function ImageReel({reel,reelUpdate}) {
     
     
    <div className=' bg-white w-full h-fit lg:border lg:pr-[4em] mt-[1em]  pt-[1em] '>
-       <BsThreeDots onClick={toggleAction} className='relative lg:left-[27.5em] left-[90%]' />
+       <BsThreeDots onClick={toggleAction} className='relative lg:left-[105%] left-[90%]' />
        {
         openPostAction && post.author.username == user.username?
 
@@ -131,18 +131,21 @@ export default function ImageReel({reel,reelUpdate}) {
                   }
                  
                   </div>
+
                   <Link to={'/reels/'+post.postId} >
-                 < ReactQuill   value={post.text}
+                 
+                 
+                 < ReactQuill value={post.text}
                   readOnly={true}
                   theme={"bubble"}
-                  style={{fontFamily: 'Sen'}}
-               className='font-[Outfit] px-[1em] text-start ml-[1em] w-fit mx-[1.25em] leading-8 whitespace-normal font-extrabold text-3xl  my-[.5em] lg:text-3xl lg:mb-[.5em] pr-[1.25em]  '/>
+                  style={{fontFamily: 'Outfit'}}
+               className='font-[Outfit] text-[#454444]  mb-0 px-[1em] text-start ml-[1em] w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1.5em]  lg:text-3xl lg:-mt-[1.5em] pr-[1.25em] -mt-[1.5em]  '/>
                   
                   <img src={post.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     
                     </Link>
             
-                <Reactions setReposted={setReposted} reelUpdater={setPost} post={post} posttype={'reel'} remove={false}/>
+                <Reactions setReposted={setReposted} reelUpdater={setPost} post={post} posttype={'reel'} remove={false} additionalStyles={" lg:ml-[4.5em] ml-[3.75em] mt-[.25em] "}/>
                
    </div>
    

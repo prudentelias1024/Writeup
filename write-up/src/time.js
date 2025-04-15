@@ -4,17 +4,17 @@ export const time = (date) => {
   let now =   moment()
   let text;
   let diffInSeconds = now.diff(date, 'seconds')
-     text = diffInSeconds + ' seconds ago'
+     text = diffInSeconds + ' s'
     //minutes
     if ( diffInSeconds >= 60 && diffInSeconds <= 3600) {
         diffInSeconds = now.diff(date, 'minute')
-        text = diffInSeconds+ ' minutes ago'
+        text = diffInSeconds+ ' m'
     
     }  else if (diffInSeconds >= 3601  && diffInSeconds <= 86399) {
         //days
        diffInSeconds = now.diff(date, 'hour')
        
-       text = diffInSeconds+ ' hours ago'
+       text = diffInSeconds+ 'hr'
    
  
    }   else if (diffInSeconds >= 86400 && diffInSeconds <= 604799) {
@@ -22,9 +22,9 @@ export const time = (date) => {
         diffInSeconds = now.diff(date, 'day')
         if(diffInSeconds == 1){
             
-            text = diffInSeconds+ ' day ago'
+            text = diffInSeconds+ 'd'
         }else{
-        text = diffInSeconds+ ' days ago'
+        text = diffInSeconds+ 'ds'
         }
   
     } else if (diffInSeconds > 604800) {
@@ -32,9 +32,9 @@ export const time = (date) => {
         diffInSeconds = now.diff(date, 'week')
         if (diffInSeconds == 1) {
             
-            text = diffInSeconds+ ' week ago'
+            text = diffInSeconds+ 'wk'
         } else {
-            text = diffInSeconds+ ' weeks ago'
+            text = diffInSeconds+ 'wks'
             
         }
     
@@ -43,18 +43,18 @@ export const time = (date) => {
         //months
         diffInSeconds = now.diff(date, 'month')
         if (diffInSeconds == 1) {
-        text = diffInSeconds+ ' month ago'
+        text = diffInSeconds+ 'mth'
         } else {
-            text = diffInSeconds+ ' months ago'
+            text = diffInSeconds+ 'mths'
         }
     
     }  else if (diffInSeconds > 31536000 ) {
         //year
         diffInSeconds = now.diff(date, 'years')
         if (diffInSeconds == 1) {
-        text = diffInSeconds+ ' year ago'
+        text = diffInSeconds+ 'yr'
     } else {
-        text = diffInSeconds+ ' years ago'
+        text = diffInSeconds+ 'yrs'
         }
     
     }

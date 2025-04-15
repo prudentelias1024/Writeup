@@ -13,10 +13,15 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
         }, 500);
     }, [timePosted]);
     return(
-        <div className=' lg:pl-[2em] pr-[1.5em] mt-3 ml-[1em] lg:ml-0 mb-3 flex flex-row gap-2'>
-         <div className="flex flex-row ">
 
-        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[3em] lg:h-[3em] rounded-full object-cover' /> 
+        <div className=' lg:pl-[2em] pr-[1.5em] mt-3 ml-[1em] lg:ml-0 mb-3 flex flex-row gap-2 w-max'>
+
+         <div className="flex flex-row  ">
+
+        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover ml-[.5em]  ' /> 
+        
+        {/* for collaborated posts */}
+
        {
         collaborators && collaborators.length > 0?
         collaborators.map((collaborator,index) => {
@@ -26,31 +31,63 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
         : ''
   }  </div>
 
-        <div className=''>
-                <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]":
-                "text-[#171717]  author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]" 
-            }  > {
+       {/* normal post (one author) */}
+
+
+        <div className='flex flex-row w-full ml-[.5em] mt-[.25em] '>
+
+           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-md font-bold   lg:text-sm font-[Sora]":
+        
+                "text-[#171717]  author_title flex flex-row gap-1 text-md font-bold   lg:text-sm font-[Sora]" 
+            }  > 
+                <p className="w-max">
+
+            {
                 user !== null ?
                 author.name !== user.name ?
+                
                 author.name: 'You':
-                 author.name} {author.verified?
-                  <HiBadgeCheck  className="text-xl text-blue-500 mt-1"  />: ''}</Link>
+                author.name
+                
+            } 
                  
-                <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles +" author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]" : 
-                " text-[#171717] author_title flex flex-row gap-1 text-md font-bold   lg:text-xl font-[Sora]"}>  {
+            </p>
+                 
+            {author.verified?
+                  <HiBadgeCheck  className="text-base text-blue-500 mt-[.2em]"  />: ''
+                  
+            }
+
+         
+            <p className={additionalStyles ? additionalStyles + "text-medium text-xs font-bold -mt-[.1em]  lg:text-sm  font-[Maven]" : 
+                
+                "text-[#717171] text-medium text-sm font-bold lg:-mt-[.1em] lg:text-sm -mt-[0em]  font-[Maven]"}> @{author.username}</p>
+  
+                
+            </Link>
+                 
+            <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles +" author_title flex flex-row gap-1 text-md font-bold   lg:text-base font-[Sora]" : 
+                " text-[#171717] author_title flex flex-row gap-1 text-md font-bold   lg:text-base font-[Sora]"}> 
+                
+             {
 
                     collaborators && collaborators.length > 0 ? collaborators.map((collaborator,index) => {
                         return (
                         author.name !== collaborator.name  ?
                        "&" + collaborator.name:  '& You' &&
-                        collaborator.verified? <HiBadgeCheck  className="text-xl text-blue-500 mt-0"  />: ''
+                        collaborator.verified? <HiBadgeCheck  className="text-base text-blue-500 mt-0"  />: ''
                         )        
                     }): ''
                 }
                 
                 </Link>
 
-                <p className={additionalStyles ? additionalStyles + "text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em]  font-[Maven]" : "text-[#717171] text-medium text-xs font-bold lg:mt-[.125em] lg:text-sm -mt-[.25em]  font-[Maven]"}> {timePosted}</p>
+               
+
+              
+                <p className={additionalStyles ? additionalStyles + "text-medium text-xs font-bold lg:mt-[.12em] lg:text-sm -mt-[.25em]  font-[Maven ml-[.5em]" :
+                    
+                    "text-[#717171] text-medium text-sm font-bold lg:-mt-[.125em] lg:text-sm mt-[.025em]   ml-[.5em]  font-[Maven]"}>  {timePosted}</p>
                 </div>
         </div>
         

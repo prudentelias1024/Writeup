@@ -217,8 +217,9 @@ const ShortFormCreator = () => {
                   <form ref={formRef}>
                     
             <img src={user.public_picture} alt={user.name} className="h-[2.5em] w-[2.5em] mt-[1em] rounded-full" />  
-            <div className="creator flex flex-col font-[Sen]">
-            <ReactQuill onChange={checkPost}  className='w-[30em] font-[Sen] placeholder:font-[Sen]'  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Sen', paddingLeft: '2.5em',  background: "white", height: '100%', width: '100%'}} />
+            <div className="creator flex flex-col font-[Outfit]">
+
+            <ReactQuill onChange={checkPost}  className='w-[30em] font-[Outfit] placeholder:font-[Outfit]  '  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Outfit',  paddingLeft: '2.5em',  background: "white", height: '100%', width: '100%'}} />
          
                  <input type="file" onChange={handleReelImageUpload} ref={reelImageRef} className='opacity-0' />
                {cancelImageStatus == false? '':   <div>
