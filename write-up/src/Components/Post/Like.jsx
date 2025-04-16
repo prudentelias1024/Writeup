@@ -57,10 +57,10 @@ export function Like({likes,postId,username,setReel,posttype,additionalStyles}){
         
        if (liked == false) {
       return (
-        <div className="flex flex-row gap-3">
-        <FaRegHeart onClick={(event) => {likePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl bg-white":"text-xl text-red-500"}/> 
+        <div className="flex flex-row gap-1">
+        <FaRegHeart onClick={(event) => {likePost(postId)}} className={additionalStyles ? additionalStyles + "text-lg bg-white":"mt-[.1em] text-[#a4a4a4]  "}/> 
         <div className="flex gap-2">
-        <p className="font-[Outfit] text-red-500 -mt-[.09em]">
+        <p className=" text-[#a4a4a4] -mt-[.15em]">
             {
                likes.length
             } 
@@ -72,7 +72,7 @@ export function Like({likes,postId,username,setReel,posttype,additionalStyles}){
        } else {
          return(
             <div className="flex flex-row gap-3">
-            <FaHeart onClick={(event) => {unlikePost(postId)}} className={additionalStyles ? additionalStyles + "text-xl":"text-xl text-red-500"}/> 
+            <FaHeart onClick={(event) => {unlikePost(postId)}} className={additionalStyles ? additionalStyles + "text-base":"text-xl text-red-500"}/> 
             <div className="flex gap-2">
             <p className="font-[Outfit] text-red-500 -mt-[.09em]">
                 {

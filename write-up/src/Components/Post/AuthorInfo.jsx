@@ -14,11 +14,11 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
     }, [timePosted]);
     return(
 
-        <div className=' lg:pl-[2em] pr-[1.5em] mt-3 ml-[1em] lg:ml-0 mb-3 flex flex-row gap-2 w-max'>
+        <div className=' lg:pl-[2em] pr-[1.5em] mt-3 ml-0 lg:ml-0 mb-3 flex flex-row gap-2 w-max'>
 
          <div className="flex flex-row  ">
 
-        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover ml-[.5em]  ' /> 
+        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover ml-[.7em] mt-[0.3em]  ' /> 
         
         {/* for collaborated posts */}
 
@@ -36,9 +36,9 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
 
         <div className='flex flex-row w-full ml-[.5em] mt-[.25em] '>
 
-           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-md font-bold   lg:text-sm font-[Sora]":
+           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-[.7em] font-bold   lg:text-sm ":
         
-                "text-[#171717]  author_title flex flex-row gap-1 text-md font-bold   lg:text-sm font-[Sora]" 
+                "text-[#171717]  author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
             }  > 
                 <p className="w-max">
 
@@ -54,14 +54,14 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
             </p>
                  
             {author.verified?
-                  <HiBadgeCheck  className="text-base text-blue-500 mt-[.2em]"  />: ''
+                  <HiBadgeCheck  className="text-xs text-blue-500 mt-[.2em]"  />: ''
                   
             }
 
          
-            <p className={additionalStyles ? additionalStyles + "text-medium text-xs font-bold -mt-[.1em]  lg:text-sm  font-[Maven]" : 
+            <p className={additionalStyles ? additionalStyles + "text-medium text-[0.75em] font-bold -mt-[.1em]  lg:text-sm  " : 
                 
-                "text-[#717171] text-medium text-sm font-bold lg:-mt-[.1em] lg:text-sm -mt-[0em]  font-[Maven]"}> @{author.username}</p>
+                "text-[#717171] text-medium text-xs font-bold lg:-mt-[.1em] lg:text-sm -mt-[0em] text-[.75em] "}> @{author.username}</p>
   
                 
             </Link>
@@ -85,9 +85,9 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
                
 
               
-                <p className={additionalStyles ? additionalStyles + "text-medium text-xs font-bold lg:mt-[.12em] lg:text-sm -mt-[.25em]  font-[Maven ml-[.5em]" :
+                <p className={additionalStyles ? additionalStyles + " text-[.55em] font-bold lg:mt-[.12em] lg:text-sm mt-[.2em] ml-[.5em]" :
                     
-                    "text-[#717171] text-medium text-sm font-bold lg:-mt-[.125em] lg:text-sm mt-[.025em]   ml-[.5em]  font-[Maven]"}>  {timePosted}</p>
+                    " text-[#717171] text-medium text-[.55em] font-bold lg:-mt-[.125em] lg:text-sm mt-[.2em]   ml-[.5em]  "}>  {timePosted}</p>
                 </div>
         </div>
         

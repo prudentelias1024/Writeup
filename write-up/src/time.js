@@ -8,7 +8,7 @@ export const time = (date) => {
     //minutes
     if ( diffInSeconds >= 60 && diffInSeconds <= 3600) {
         diffInSeconds = now.diff(date, 'minute')
-        text = diffInSeconds+ ' m'
+        text = diffInSeconds+ 'm'
     
     }  else if (diffInSeconds >= 3601  && diffInSeconds <= 86399) {
         //days

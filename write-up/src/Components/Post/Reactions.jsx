@@ -12,8 +12,8 @@ export function Reactions({post, remove, posttype, setReposted, additionalStyles
     const [reel, setReel ] = useState(post)
     // const user = {username: 'elias1024', name:'Prudent Elias'}
     return(
-        <div className={remove + additionalStyles  + " flex flex-row justify-between w-full  ml-[2.5em]  md:ml-[1em]  lg:ml-[2em] lg:pr-[2em] mb-[1em] lg:mt-3 max-lg:ml-auto lg:mb-4"}>
-        <div className="grid grid-cols-5 w-full ml-[1em] pr-[1em] ">
+        <div className={remove + additionalStyles  + " flex flex-row w-full  ml-[2.5em]  md:ml-[1em]  lg:ml-[2em] lg:pr-[2em] mb-[1em] lg:mt-3  lg:mb-4  "}>
+        <div className="grid grid-cols-5  gap-[2em] justify-between  w-full ml-[1.3em] pr-[1em] ">
         
         <Impressions count={reel.viewedBy}  username={user !== null ?user.username :''}/>
 
@@ -25,11 +25,8 @@ export function Reactions({post, remove, posttype, setReposted, additionalStyles
         
         <Comments setReel={setReel} comments={reel.comments} postId={reel.postId} username={user !== null ?user.username :''} />
 
-        <Bookmark setReel={setReel} posttype={posttype} bookmarks={reel.bookmarks} postId={reel.postId} username={user !== null ?user.username :''}/>
-        {/* <div className='-mt-1 flex flex-row gap-1'>
-                <FaRegEye  className=' text-black-500 text-2xl'/>
-                <p className="total font-[Outfit]">{reel.views} </p>  <p className="hidden lg:block">Views</p>
-                </div> */}
+        {/* <Bookmark setReel={setReel} posttype={posttype} bookmarks={reel.bookmarks} postId={reel.postId} username={user !== null ?user.username :''}/>
+        */}
                 
 
        </div> 

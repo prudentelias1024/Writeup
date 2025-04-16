@@ -89,14 +89,14 @@ export default function ImageReel({reel,reelUpdate}) {
 
           <div  className="flex flex-row gap-[.25em] cursor-pointer">
           <IoPencil className="text-blue-500 text-base mt-[.25em] "/>
-          <p className='font-[Sen] text-blue-500 text-base'>Edit Post</p>
+          <p className=' text-blue-500 text-base'>Edit Post</p>
           </div>
          
          <hr></hr>
 
           <div onClick={() => {deletePost(post.postId)}} className="flex flex-row gap-[.25em] cursor-pointer  " >
           <AiFillDelete className="text-red-500 text-base mt-[.25em] "/>
-          <p className='font-[Sen] text-red-500 text-base'>Delete Post</p>
+          <p className=' text-red-500 text-base'>Delete Post</p>
           </div>
          
 
@@ -106,7 +106,7 @@ export default function ImageReel({reel,reelUpdate}) {
        }
    {reposted ? <div className=' inline-flex w-full'>
     <BiRepost className='text-md mt-[.5em] ml-[1.25em] text-[#cecece]'/>
-    <p className="font-[Sen] text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: '' 
+    <p className=" text-sm text-[#cecece] ml-[5%] mt-[0.5em] font-bold">You reposted</p> </div>: '' 
    } 
      
              {/* {      viewed ?                   
@@ -138,14 +138,18 @@ export default function ImageReel({reel,reelUpdate}) {
                  < ReactQuill value={post.text}
                   readOnly={true}
                   theme={"bubble"}
-                  style={{fontFamily: 'Outfit'}}
-               className='font-[Outfit] text-[#454444]  mb-0 px-[1em] text-start ml-[1em] w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1.5em]  lg:text-3xl lg:-mt-[1.5em] pr-[1.25em] -mt-[1.5em]  '/>
+                  style={{fontFamily: ' Sen'}}
+
+               className=' text-[#454444]  mb-0 px-[1em] text-start ml-[.5em] w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1.5em]  lg:text-3xl lg:-mt-[1.5em] pr-[1.25em] -mt-[2em]  '/>
                   
-                  <img src={post.coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
+                  <img src={post.
+                    
+                    
+                    coverImageURL} className=" w-[100%] h-[45%] object-cover  rounded-sm " alt="" />
                     
                     </Link>
             
-                <Reactions setReposted={setReposted} reelUpdater={setPost} post={post} posttype={'reel'} remove={false} additionalStyles={" lg:ml-[4.5em] ml-[3.75em] mt-[.25em] "}/>
+                <Reactions setReposted={setReposted} reelUpdater={setPost} post={post} posttype={'reel'} remove={false} additionalStyles={" lg:ml-[4.5em] ml-[3.5em] mt-[.25em] "}/>
                
    </div>
    

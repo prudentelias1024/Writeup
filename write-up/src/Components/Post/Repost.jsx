@@ -50,7 +50,7 @@ export default function Repost({reposts,post,setReel,setRepostedDisplay,postId,u
     const [reposted,setReposted] = useState(false)
     if (reposted === true) {
    return(
-        <div className="flex flex-row gap-3  ">
+        <div className="flex flex-row gap-1  ">
         <BiRepost onClick={(event) => undoRepost(post,postId)} className="text-2xl mt-[-.1em]  text-green-500 "/> 
         <p className="font-[Sen] text-green-500 -mt-[.09em]">{
            reposts.length
@@ -61,7 +61,7 @@ export default function Repost({reposts,post,setReel,setRepostedDisplay,postId,u
     )
     } else {
         return(
-            <div className="flex flex-row gap-3  text-[#a4a4a4]">
+            <div className="flex flex-row gap-1  text-[#a4a4a4]">
         <BiRepost onClick={(event) => repost(post,postId)} className="text-2xl text-[#a4a4a4] mt-[-.1em]    "/> 
         <p className="font-[Sen] text-[#a4a4a4] -mt-[.09em]">{
            reposts.length
