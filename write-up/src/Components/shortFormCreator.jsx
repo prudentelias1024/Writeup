@@ -208,7 +208,7 @@ const ShortFormCreator = () => {
             
         
     return (
-            <div className=' border-t-[1px] bg-white font-[Sen] lg:mt-[0em]  pb-[1em] px-[.5em] gap-[1em] h-fit'>
+            <div className=' border-[1px] bg-white  dark:bg-[#000] dark:text-white font-[Sen] lg:mt-[0em]  pb-[1em] px-[.5em] gap-[1em] h-fit'>
                 {
                     safetyError !== null?
                     <p className="text-red-500 text-center mt-[1em] font-[Sen]">{safetyError}</p>:
@@ -219,7 +219,7 @@ const ShortFormCreator = () => {
             <img src={user.public_picture} alt={user.name} className="h-[2.5em] w-[2.5em] mt-[1em] rounded-full" />  
             <div className="creator flex flex-col font-[Outfit]">
 
-            <ReactQuill onChange={checkPost}  className='w-[30em] font-[Outfit] placeholder:font-[Outfit]  '  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{color: 'black', fontFamily: 'Outfit',  paddingLeft: '2.5em',  background: "white", height: '100%', width: '100%'}} />
+            <ReactQuill onChange={checkPost}  className='bg-white text-black  dark:bg-[#000] dark:text-white w-[30em] font-[Sen] placeholder:font-[Sen] placeholder:text-[#717171] '  ref={quillRef} modules={modules}  placeholder={reelsPlaceholder} theme='bubble'  style={{ fontFamily: 'Sen',  paddingLeft: '2.5em',   height: '100%', width: '100%'}} />
          
                  <input type="file" onChange={handleReelImageUpload} ref={reelImageRef} className='opacity-0' />
                {cancelImageStatus == false? '':   <div>

@@ -39,10 +39,14 @@ import Bookmarks from './Components/Bookmarks/bookmarks';
 import NotisTimeline from './Components/Notifications/notisTimeline';
 import GroupCreator  from './Components/Messages/GroupCreator'
 import { SocketContext } from './socketProvider';
+import Display from './Components/Settings/display';
+import useDarkSide from './Components/usedark';
+import EditProfile from './Components/Settings/editProfile';
 function App() {
        
-        let URL
-        const user = useSelector((state) => state.user)
+      let URL
+      const user = useSelector((state) => state.user)
+      const [colorTheme, setTheme] = useDarkSide()
       const dispatch = useDispatch()
       const navigate = useNavigate()
       const socket = useContext(SocketContext)
@@ -203,6 +207,9 @@ function App() {
        dispatch(actions.updateBookmarkedPosts(bookmarked_post))
      }
       useEffect(() => {
+       //theme
+
+
        
         if (process.env.NODE_ENV == 'production') {
           dispatch(actions.updateURL("https://inkup-api.onrender.com"))
@@ -239,11 +246,11 @@ function App() {
         
         }
       
-      , []);
+      , [colorTheme]);
   
   return (
     <>
-    <div className="overflow-x-hidden bg-white">
+    <div className="overflow-x-hidden absolute bg-white dark:bg-[#000] dark:text-white w-full h-full">
       
     <Routes>
 
@@ -255,7 +262,14 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/bookmarks' element={<Bookmarks/>}/>
       <Route path='/trends' element={<Trends/>}/>
+
+
       <Route path='/settings' element={<Settings/>}/>
+      <Route path='/settings/display' element={<Display/>}/>
+      <Route path='/settings/edit_profile' element={<EditProfile/>}/>
+
+
+
       <Route path='/notis/timeline' element={<NotisTimeline/>}/>
       <Route path='/login'  element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>

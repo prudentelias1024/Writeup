@@ -36,8 +36,8 @@ export default function SuggestedPeople({people}) {
         }, [])
     
   return (
-    <div className='flex flex-row justify-between lg:w-[50%] lg:ml-[7em]'>
-     <Link to={'/'+people.username} className="flex flex-row justify-between border-b-[1px] w-full">
+    <div className='flex flex-row justify-between lg:w-[50%] lg:ml-[7em] border-b-[1px]'>
+     <Link to={'/'+people.username} className="flex flex-row justify-between  w-full">
      <div className="flex flex-row ml-[.5em]  py-[1em]">
         <img src={people.public_picture} className='h-9 w-9 rounded-full'/>
         <div className="profile ml-[.5em] flex flex-col gap-[.25em] ">
@@ -58,7 +58,7 @@ export default function SuggestedPeople({people}) {
 
             user && user.username == people.username ? <div></div> :
         user && user.following.length !== 0 && user.following.some((followee) => followee.username == people.username)?
-        <button onClick={unfollow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1.5em] border-black  text-xs px-[1em] rounded-md py-[.5em] border font-bold'>Following</button>:
+        <button onClick={unfollow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1.5em] border-black  dark:bg-[#000] dark:border-[#717171] text-xs px-[1em] rounded-md py-[.5em] border font-bold'>Following</button>:
         <button onClick={follow} className='font-[Sen] w-fit h-fit  relative right-[0em] mr-[.5em] top-[1em] bg-blue-500 text-white text-xs px-[1.5em] rounded-md py-[.5em] border font-bold'>Follow</button>
         }
 

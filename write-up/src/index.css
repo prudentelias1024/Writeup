@@ -14,9 +14,13 @@ p {
     font-family: Sen;
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import "tailwindcss"; */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @font-face {
     font-family: Pacifico;
     src: url('./fonts/Pacifico-Regular.ttf');

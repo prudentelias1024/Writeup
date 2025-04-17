@@ -8,18 +8,20 @@ import Input from '../Input';
 import  NavBar  from "../NavBar";
 import { BsPenFill, BsPersonBadge } from 'react-icons/bs';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import UserNav from '../Navbar/UserNav';
 const EditProfile = () => {
-  const user = useSelector((state) => state.user)
-  const {URL} = useSelector((state) => state)
+  const {URL,user} = useSelector((state) => state)
   const navigate = useNavigate()
   const dispatch = useDispatch()
    useEffect(() => {
-    
+   
     console.log(user)
+    
     setProfileChanges({name: user.name,email: user.email,username: user.username,websiteUrl: user.websiteUrl,location: user.location,bio:user.bio})
     console.log(profileChanges)
    }
    ,[user])
+
     const [ profileChanges, setProfileChanges] = useState({})
     
   
@@ -59,16 +61,16 @@ const EditProfile = () => {
    
     }
     return (
-        <>
-        <NavBar/>
+
+        <div classname='hidden lg:block p-0 lg:ml-[-15em] w-full' >
         <div className='edit top-4  lg:top-32 lg:before:relative text-sm'>
               <div className=''>
-              <img className=' h-full rounded-full mx-auto my-[1em]' src={user.public_picture} alt={user.name}   />
+              {/* <img className=' h-full rounded-full mx-auto my-[1em]' src={user.public_picture} alt={user.name}   /> */}
               {/* <AiOutlineUserAdd className='left-[50%]  text-black relative top-[-1.5em] text-2xl' />                 */}
               </div>
-            <form className="flex flex-col lg:gap-[3em] gap-[2em]  lg:ml-[20em] ">
+            <form className="flex flex-col lg:gap-[3em] gap-[2em] pt-[4em] lg:ml-[20em] ">
                 
-            {/* <div className="user lg:ml-[1.5em] pt-5 p-4 lg:rounded-lg bg-white  lg:w-3/4"> */}
+            {/* <div className="user lg:ml-[1.5em] pt-5 p-4 lg:rounded-lg bg-white dark:bg-[#000] dark:text-white dark:bg-[#000] dark:text-white  lg:w-3/4"> */}
             <div className='w-full flex flex-row justify-between'>
              <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={profileChanges.name }/>
              <Input handleChanges={handleChanges} label="Email" placeholder="Update Name" value={profileChanges.email}/>
@@ -93,7 +95,7 @@ const EditProfile = () => {
          <button onClick={submitChanges} className='w-[95%] mx-auto  lg:relative  lg:mb-[2em] rounded-md py-[.5em] font-bold bg-blue-500 text-white lg:w-3/4 font-[Maven]  lg:ml-[1em]  '>Save Profile </button>
             </form>
         </div>
-        </>
+        </div>
     );
 }
 

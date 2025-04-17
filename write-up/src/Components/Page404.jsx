@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 
 const Page404 = () => {
     return (
-        <div className='flex flex-col bg-white '>
+        <div className='flex flex-col bg-white  dark:bg-[#000] dark:text-white '>
             <NavBar/>
     
         <div className="404">

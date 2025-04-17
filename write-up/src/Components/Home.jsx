@@ -18,7 +18,7 @@ export default function Home(){
         <>
          
         {/* <NavBar /> */}
-        <div className=' flex flex-row gap-3 w-full overflow-x-hidden lg:overflow-x-hidden lg:pl-[10em] '>
+        <div className='dark:bg-[#000000] dark:text-[#71767B] flex flex-row gap-3 w-full overflow-x-hidden lg:overflow-x-hidden lg:pl-[10em] '>
         <UserNav  />
           
         

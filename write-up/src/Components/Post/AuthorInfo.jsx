@@ -14,7 +14,7 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
     }, [timePosted]);
     return(
 
-        <div className=' lg:pl-[2em] pr-[1.5em] mt-3 ml-0 lg:ml-0 mb-3 flex flex-row gap-2 w-max'>
+        <div className=' lg:pl-[1em] pr-[1.5em] mt-3 ml-0 lg:ml-0 mb-3 flex flex-row gap-2 w-max'>
 
          <div className="flex flex-row  ">
 
@@ -38,7 +38,7 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
 
            <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-[.7em] font-bold   lg:text-sm ":
         
-                "text-[#171717]  author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
+                "text-[#171717] dark:text-white  author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
             }  > 
                 <p className="w-max">
 

@@ -59,7 +59,7 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
      return (
         
            <div classname="relative">
-           <BsThreeDots onClick={toggleAction} className=' bg-white relative lg:left-[91%] left-[90%] my-[1em]' />
+           <BsThreeDots onClick={toggleAction} className=' bg-white   dark:bg-[#000] dark:text-white relative lg:left-[91%] left-[90%] my-[1em]' />
 
              {
                    openPostAction && post.author.username == user.username?
@@ -87,7 +87,7 @@ export default function Post({post, removeReactions, showCoverImage, readingTime
                   }
 
 
-            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white w-full border-b-[1px] pt-[1em]   lg:p-[1em]'} >
+            <Link to={`/p/@${post.author.username}/${post.postId}`} state={post} className={additionalStyles +  ' bg-white  dark:bg-[#000] dark:text-white w-full border-b-[1px] pt-[1em]   lg:p-[1em]'} >
            
             {
              post.coverImageURL &&  post.coverImageURL!== '' ?            

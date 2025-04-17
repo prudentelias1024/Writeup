@@ -79,7 +79,7 @@ export default function ImageReel({reel,reelUpdate}) {
     <>
     
     
-   <div className=' bg-white w-full h-fit lg:border lg:pr-[4em] mt-[1em]  pt-[1em] '>
+   <div className=' bg-white dark:bg-[#000] dark:text-white w-full h-fit lg:border lg:pr-[4em] mt-[0em]  pt-[1em] '>
        <BsThreeDots onClick={toggleAction} className='relative lg:left-[105%] left-[90%]' />
        {
         openPostAction && post.author.username == user.username?
@@ -140,7 +140,7 @@ export default function ImageReel({reel,reelUpdate}) {
                   theme={"bubble"}
                   style={{fontFamily: ' Sen'}}
 
-               className=' text-[#454444]  mb-0 px-[1em] text-start ml-[.5em] w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1.5em]  lg:text-3xl lg:-mt-[1.5em] pr-[1.25em] -mt-[2em]  '/>
+               className=' text-[#454444] dark:text-white   mb-0 px-[1em] text-start ml-[.5em] w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1em]  lg:text-3xl lg:-mt-[1.7em] pr-[1.25em] -mt-[2em]  '/>
                   
                   <img src={post.
                     
@@ -156,7 +156,7 @@ export default function ImageReel({reel,reelUpdate}) {
 
    </div>
 
-{/* <div className="comment__box flex flex-row justify-evenly bg-white py-[.5em] mb-[2em] rounded-lg">
+{/* <div className="comment__box flex flex-row justify-evenly bg-white dark:bg-[#000] dark:text-white py-[.5em] mb-[2em] rounded-lg">
     <img src={mock} alt={user.name} className='h-[2.5em] w-[2.5em] rounded-full' />
     <input ref={commentRef} type="text" className='w-[75%]   rounded-md h-[2em] mt-[.25em] ml-[-.25em] font-[Outfit] mb-[0em] font-bold placeholder:font-bold border-2' />
     <button onClick={handleComment} className='font-[Outfit] text-blue-500'>Send</button>

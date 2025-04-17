@@ -29,7 +29,7 @@ export default function Notis() {
    }, [socket, user])
 
       return (
-    <div className='flex flex-row lg:flex-row gap-3 lg:border-[.2px]  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%]  bg-white p-[.5em] pl-0  lg:pl-[2em]'>
+    <div className='flex flex-row lg:flex-row gap-3 lg:border-[.2px]  w-[115%] border-b-[1px] border-t-[1px] lg:w-[60%] dark:border-[#515151]  bg-white  dark:bg-[#000] dark:text-white p-[.5em] pl-0  lg:pl-[2em]'>
       
     <Link  to="/notis/timeline"   className='flex flex-col l'>
     

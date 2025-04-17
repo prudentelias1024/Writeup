@@ -134,7 +134,7 @@ const Profile = () => {
           content={user.name+ (user.username)+ 'on Inkup'}/>
 
         </Helmet>
-        <div className="lg:ml-[10em] mx-auto w-full overflow-x-hidden flex flex-col gap-[.5em] mt-[.5em] bg-white">    
+        <div className="lg:ml-[10em] mx-auto w-full overflow-x-hidden flex flex-col gap-[.5em] mt-[.5em] bg-white dark:bg-[#000] dark:text-white">    
      
         {
           posts && reels ?

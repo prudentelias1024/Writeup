@@ -9,10 +9,11 @@ import { actions } from "../../store";
 import axios from "axios";
 import { locale } from "moment";
 import MobileSearch from "./mobileSearch";
-
+import { MdOutlineSettings } from "react-icons/md";
 import { HiBadgeCheck } from 'react-icons/hi';
-// import { io } from "socket.io-client";
-import { FaRegBookmark } from "react-icons/fa";
+
+// import { FaRegBookmark } from "react-icons/fa";
+
 export default function UserNav(){
    const {URL} = useSelector(state => state)
     const { user, showMobileSearch} = useSelector((state) => state)
@@ -77,7 +78,7 @@ export default function UserNav(){
         <>
        {
       
-             <div className=" lg:fixed lg:flex-col lg:h-full  lg:mt-[2.5em] lg:w-fit lg:justify-between flex flex-row justify-around w-full p-[.5em] py-[1em] z-100 border-t bg-white  fixed bottom-[0em]">
+             <div className=" dark:bg-[#000] dark:text-white lg:fixed lg:flex-col lg:h-full  lg:mt-[2.5em] lg:w-fit lg:justify-between flex flex-row justify-around w-full p-[.5em] py-[1em] z-100 border-t bg-white  fixed bottom-[0em]">
                 
             <Link to="/" >
             <AiOutlineHome className="text-3xl mt-1 block "  />
@@ -88,9 +89,6 @@ export default function UserNav(){
             <VscFlame className="text-3xl mt-1 block "  />
             </Link>
 
-            <Link to="/Bookmarks" >
-            <FaRegBookmark className="text-2xl mt-1  hidden lg:block "  />
-            </Link>
 
             <Link to='/search'>
             <IoIosSearch onClick={handleMobileSearch}   className=" text-3xl mt-[.125em]"/>  
@@ -114,6 +112,11 @@ export default function UserNav(){
         }
             
             </Link>
+
+            <Link to="/Settings" >
+            <MdOutlineSettings  className="text-2xl mt-1  hidden lg:block "  />
+            </Link>
+
           <Link to='/Profile'>
             <img src={user.public_picture} alt={user.name} className='rounded-full h-8 w-8  mr-[1em] '  />
           </Link>

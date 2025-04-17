@@ -83,7 +83,7 @@ export default function ProfileVitals({user, setUser, total}) {
         window.location.replace(link)
     }
    return (
-    <div className=" bg-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[1.5em] relative flex-col lg:mt-[1em] lg:w-1/2 lg:ml-[1em]  lg:pt-[1em]">
+    <div className=" bg-white dark:bg-[#000] dark:text-white mb-[6em] pt-[2em] w-[100%] ml-[0em]  rounded-xl lg:top-[1.5em] relative flex-col lg:mt-[1em] lg:w-1/2 lg:ml-[1em]  lg:pt-[1em]">
     <div  className="activity_info flex flex-row justify-evenly lg:ml-[5em]">
         <img className='rounded-full w-[2.5em] h-[2.5em] lg:w-[5em] lg:h-[5em]' src={user.public_picture} alt={user.name}  />
            <div className="post_activity text-center">

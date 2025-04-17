@@ -30,6 +30,7 @@ export default function Posts(){
     const getRecommendedUser = async() => {
       const  all_user = await(await axios.get(`${URL}/api/users`,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(user)
+      
       // const recommendedUser = await(await axios.post(`https://inkup-ai.onrender.com/api/recommendUser`, {all_profile: all_user, user:user},{headers: {Authorization: localStorage.getItem('token')}})).data
 
       const recommendedUser = await(await axios.post(`${aiURL}/api/recommendUser`, {all_profile: all_user, user:user})).data
@@ -77,7 +78,7 @@ export default function Posts(){
        }
     
    return(
-    <div className="flex flex-col md:mr-[3em] md:ml-[5em] mb-[3em] gap-0 pt-[0em] w-full  lg:pt-[1em]  lg:w-[50%] lg:mt-[0em]  lg:ml-[2em]">
+    <div className="flex flex-col md:mr-[3em] md:ml-[5em] mb-[3em] gap-0 pt-[0em] w-full  lg:pt-[1em]  lg:w-[50%] lg:mt-[0em]  dark:bg-[#000] dark:text-white lg:ml-[2em]">
       <div className="flex flex-row w-full">
         {
         inkClicked ?

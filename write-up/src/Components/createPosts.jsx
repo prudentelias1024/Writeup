@@ -527,7 +527,7 @@ muchTagsError: ''
       
         <div className="create ">
             {loading == true ?  
-            <div className='relative ml-[-7.5em] lg:m-0 bg-white flex flex-col'>
+            <div className='relative ml-[-7.5em] lg:m-0 bg-white  dark:bg-[#000] dark:text-white flex flex-col'>
                 
                       <BounceLoader
                       color="#cbcbcbeb"
@@ -554,7 +554,7 @@ muchTagsError: ''
  {/* <div className=" fixed border w-full top-0 pb-4 lg:ml-14">
       <p className="font-[Pacifico]   text-3xl mt-4 ml-4 font-extrabold lg:mt-5  lg:ml-52 ">Ink Up</p>
   </div> */}
-        <div className='text-editor bg-white text-black  flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
+        <div className='text-editor bg-white  text-black  dark:bg-[#000] dark:text-white flex flex-col border w-[95%] m-auto lg:w-3/5  lg:ml-[20em] lg:mt-[5em] rounded-xl'>
         <Link to='/addPodcast' className='font-[Outfit] text-xl relative top-[-2em] text-blue-500 text-bold'>or add Podcast?</Link>
         {draftId !== undefined ? 
         
@@ -591,18 +591,21 @@ muchTagsError: ''
           {
              draft !== undefined &&  draft.title !== ''?
             <input onChange={handlePostTitle}  ref={titleRef} name='title' placeholder='Add Post Title '
-              defaultValue={draft.title}    className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
-                  <input onChange={handlePostTitle} ref={titleRef} name='title' placeholder='Add Post Title '
-                  className="rounded-md pl-[.5em] outline-none   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> 
+              defaultValue={draft.title}    className="rounded-md pl-[.5em] outline-none  dark:bg-[#000] dark:text-white   font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> :
+                
+              
+              <input onChange={handlePostTitle} ref={titleRef} name='title' placeholder='Add Post Title '
+                  className="rounded-md pl-[.5em] outline-none  dark:bg-[#000] dark:text-white  font-[Outfit]  w-full font-bold placeholder:font-[Outfit] placeholder:font-bold text-3xl h-[3em] lg:pl-[2.5em]" /> 
 
             
           }
        {
         draft !== undefined && draft.tag !== ''? 
        <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                  defaultValue={ draft.tags.join(' ')}  className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" /> :
+                  defaultValue={ draft.tags.join(' ')}  className="rounded-md bg-white dark:bg-[#000] dark:text-white pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" /> :
+
        <input ref={tagsRef} onChange={handlePostTags} name='tags' placeholder='Add up to 4 tags '
-                 className="rounded-md pl-[.5em] outline-none   font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
+                 className="rounded-md pl-[.5em] outline-none  bg-white dark:bg-[#000] dark:text-white font-[Sora]  w-full font-bold placeholder:font-[Sora] placeholder:font-extralight text-xl text-gray-400 h-[3em] lg:pl-[3em]" />
 }
         { tagsError.alphabetErrors && tagsError.alphabetErrors.length > 0 ?   tagsError.alphabetErrors.map((tagsErr) => {
             return <> <p  className='ml-[3.5em] font-[Maven] text-md font-bold text-red-500 mb-[1em]'>{tagsErr}</p> <br /> </>
@@ -634,14 +637,15 @@ muchTagsError: ''
             
         }) : ''
     }
-        <ReactQuill defaultValue={defaultValue} handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{color: 'black', fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', background: "white", height: '100%', width: '100%'}} />
+        <ReactQuill className='bg-white dark:bg-[#000] dark:text-white text-black' defaultValue={defaultValue} handlers={modules.handlers} ref={quillRef} modules={modules} onChange={handlePostBody} placeholder='Start Inking' theme='bubble'  style={{ fontFamily: 'Outfit', paddingLeft: '1em', paddingBottom: '30em', height: '100%', width: '100%'}} />
      {
         draft !== undefined  && draft.collaborators.length > 0 ?
-        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  defaultValue={draft.collaborators.map(collaborator => {return( "@"+collaborator.username)}).join(' ')} name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
-        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
+        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person'  defaultValue={draft.collaborators.map(collaborator => {return( "@"+collaborator.username)}).join(' ')} name="collaborators" className=' bg-white dark:bg-[#000] dark:text-white mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />: 
+
+        <input  onKeyUp={suggestPeople} ref={collabRef} type="text"  placeholder='Add Collaborators @person' name="collaborators" className='bg-white dark:bg-[#000] dark:text-white mt-[10em] w-full text-blue-500 font-bold font-[Outfit] pl-[1em] h-[2em]' />
      }
         </div>
-        <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black z-50 rounded-lg w-[95%] ml-2 lg:w-[60%] lg:ml-[20em]">
+        <div className="live__results flex flex-col gap-[.5em] bg-white shadow-md text-black  dark:bg-[#000] dark:text-white z-50 rounded-lg w-[95%] ml-2 lg:w-[60%] lg:ml-[20em]">
            {
             suggestedUsers && suggestedUsers !== null ?
             suggestedUsers.map((suggestedUser,index) => {
