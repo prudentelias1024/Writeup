@@ -18,7 +18,7 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
 
          <div className="flex flex-row  ">
 
-        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover ml-[.7em] mt-[0.3em]  ' /> 
+        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover mx-[1em] mt-[0.3em]  ' /> 
         
         {/* for collaborated posts */}
 
