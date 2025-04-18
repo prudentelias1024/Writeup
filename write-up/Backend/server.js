@@ -674,6 +674,21 @@ let interestedUserPosts = []
     return interestedUserPosts
 }
 
+//User Settings
+app.post('/api/settings/display',verify, async(req,res) => {
+    User.findOneAndUpdate({username: req.user.username}, {$set: {displaySettings: req.body.mode}}, {new:true} , (err,doc) => {
+        if(err){
+            throw err
+        } else{
+            console.log(doc.displaySettings)
+        }
+
+})
+})
+
+
+
+
 // Messages
 
 app.post('/api/p2p/conversation', verify, async(req,res) => {

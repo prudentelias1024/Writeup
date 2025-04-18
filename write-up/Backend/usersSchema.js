@@ -42,6 +42,7 @@ const user = new mongoose.Schema({
     googleId: {type:String},
     twitterId: {type:String},
     githubId: {type:String},
-    verified: {type:Boolean,default: () => false }
+    verified: {type:Boolean,default: () => false },
+    displaySettings: {type:String}
 })
 module.exports = mongoose.model("Users", user)

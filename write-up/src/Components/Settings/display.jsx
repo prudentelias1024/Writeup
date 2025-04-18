@@ -3,10 +3,10 @@ import UserNav from '../Navbar/UserNav'
 import DisplaySettings from './DisplaySettings'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '../../store'
-
+import axios from 'axios'
 export default function Display() {
   
-    const {darkMode, lightMode} = useSelector(state => state)
+    const {darkMode, lightMode, URL} = useSelector(state => state)
     const dispatch = useDispatch()
     
     const toggleMode = () => {
@@ -15,17 +15,20 @@ export default function Display() {
 
             root.classList.add("light");
             root.classList.remove("dark");
-    
+           
            dispatch(actions.updateLightMode(true))
            dispatch(actions.updateDarkMode(false))
-            localStorage.setItem("theme", "light")
+           axios.post(`${URL}/api/settings/display`,{mode: 'light'},  {headers: {Authorization: localStorage.getItem('token') }})
+
+            // localStorage.setItem("theme", "light")
         } else {
             root.classList.add("dark");
             root.classList.remove("light");
             dispatch(actions.updateLightMode(false))
             dispatch(actions.updateDarkMode(true))
-            
-            localStorage.setItem("theme", "dark")
+            axios.post(`${URL}/api/settings/display`,{mode: 'dark'},  {headers: {Authorization: localStorage.getItem('token') }})
+          
+            // localStorage.setItem("theme", "dark")
         }
     
     }

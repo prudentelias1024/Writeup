@@ -125,6 +125,17 @@ function App() {
             isAdmin = false
            }
            dispatch(actions.updateUser({...info, isAdmin: isAdmin}))
+           if(user.displaySettings == 'dark'){
+
+            dispatch(actions.updateLightMode(false))
+            dispatch(actions.updateDarkMode(true))
+            
+           } else {
+
+             dispatch(actions.updateLightMode(true))
+             dispatch(actions.updateDarkMode(false))
+            
+           }   
        
        }
        const getPosts = async() => {

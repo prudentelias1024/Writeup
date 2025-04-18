@@ -1,5 +1,4 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { MdLightMode } from 'react-icons/md'
 
 const userSlice = createSlice({
     name: 'user',
