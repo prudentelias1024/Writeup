@@ -5,8 +5,8 @@ export default function useDarkSide() {
 	const {darkMode, lightMode, user} = useSelector(state => state)
 
 
-	const [theme, setTheme] = useState(localStorage.theme);
-	const colorTheme = lightMode === true ? "light" : "dark";
+	const [theme, setTheme] = useState(user.displaySettings);
+	const colorTheme = darkMode === true ? "light" : "dark";
 
 	useEffect(() => {
 		const root = window.document.documentElement;
