@@ -4,7 +4,7 @@ import Poll from "./poll";
 import ImageReel from './imageReel';
 import moment from 'moment';
 import ShortFormCreator from "./shortFormCreator";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { actions } from "../store";
 import Podcast from "./Podcast";
 import { Link } from "react-router-dom";
@@ -12,10 +12,14 @@ import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import BioMatcher from "./BioMatcher";
 import axios from "axios";
+import { SocketContext } from '../socketProvider'
+
+
 export default function Posts(){
     const reelsRef = useRef()
     const podcastRef = useRef()
     const dispatch = useDispatch()
+    const socket = useContext(SocketContext);
     const inksRef = useRef()
     const [inkClicked, setInkClicked] = useState(false)                                                                                                                                                          
     const [reelsClicked, setReelClicked] = useState(false)
@@ -38,6 +42,11 @@ export default function Posts(){
       setRecommendedUser(recommendedUser)
     }
     useEffect(() => {
+      socket.on('reels_posted',(updatedReels) => {
+        console.log(updatedReels)
+        dispatch(actions.updateReels(updatedReels))
+      })
+
       getRecommendedUser()
       if(justPublishedReels == true){
           reelsRef.current.click()
@@ -48,7 +57,8 @@ export default function Posts(){
         
       }
       console.log(reels)
-    }, [])
+    }, [socket])
+
     if (posts == null) {
          
     } else {
@@ -119,7 +129,6 @@ export default function Posts(){
          {
           reelsClicked == true? 
            reels && reels.length > 0 && reels.map((reel) => {
-            console.log(reel)
              if(reel.type == "poll"){
                 return <Link to={'/reels/'+reel.postId}>
                       <Poll reel={reel} key={reel.postId} /> 

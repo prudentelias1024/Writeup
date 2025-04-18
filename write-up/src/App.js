@@ -51,8 +51,10 @@ function App() {
       const navigate = useNavigate()
       const socket = useContext(SocketContext)
       const getReels = async() => {
-        let reels = await (await axios.get(`${URL}/reels`)).data; 
+        let reels = await (await axios.get(`${URL}/reels`)).data.reel; 
         // console.log(reels)
+        console.log(reels)
+        
         let options = []
         reels.map((reel) => {
 
@@ -125,7 +127,8 @@ function App() {
             isAdmin = false
            }
            dispatch(actions.updateUser({...info, isAdmin: isAdmin}))
-           if(user.displaySettings == 'dark'){
+           
+           if(info.displaySettings == 'dark'){
 
             dispatch(actions.updateLightMode(false))
             dispatch(actions.updateDarkMode(true))

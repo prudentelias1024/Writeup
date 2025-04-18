@@ -59,6 +59,10 @@ const io = socketIo(server, {
 // # * * * * * *
 
 //functions
+const getAllReels = () => {
+   
+       
+}
 
 const createReels = async(req,res) => {
         let post_reels = null
@@ -93,6 +97,8 @@ const createReels = async(req,res) => {
     
      })
      newReels.save()
+
+     //update last seen
      User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
         if(err){
             throw err
@@ -165,14 +171,23 @@ const createReels = async(req,res) => {
         
     }
     
-    reels.find({postId: req.body.postId}).populate('author').exec((err,reel) => {
-        if(err){throw err}
-        if(reel){
-           post_reels = reel
-        }
-    })
- return req.user, post_reels 
+    reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+        populate:{path: 'author'}}).exec((err,reels) => {
+    
+            if(err) {throw err}
+            if(reels){
+                allReels = [...reels]
+                
+            }
+        })
+    
+   
+    
+ console.log('reels',reels)
+ return req.user, reels 
 }
+
+
 
 cron.schedule('0 0 12 * * ', () => {
     console.log('Running .......')
@@ -336,10 +351,22 @@ io.on('connection',(socket) => {
     console.log(data)
     data.user = socket.user
     data.body = data
-    const {user,reels}  = createReels(data)   
+    const {user, reel}  = createReels(data)   
+
+    setTimeout(() => {
+        
+    reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+        populate:{path: 'author'}}).exec((err,reels) => {
     
-    console.log(user)
-    socket.emit('reels_posted',reels)
+            if(err) {throw err}
+            if(reels){
+                socket.emit('reels_posted',reels)
+                console.log(reels[0])
+                
+            }
+        })
+   
+    }, 5000);
     //find users who has added them to their notifications list
     notis = socket.user.notis
     notis.forEach((noti) => {
@@ -1409,7 +1436,7 @@ app.delete('/post/:id', verify, (req,res) => {
 //delete reels
 
 app.delete('/reels/:id', verify, (req,res) => {
-    reels.deleteOne({postId:req.params.id}, (err,doc) => {
+    reels.deleteOne({postId:req.params.id}, {new:true},(err,doc) => {
         if(err){throw err}
         if(doc){
             console.log('..deeleeteddd')
@@ -1423,12 +1450,15 @@ app.delete('/reels/:id', verify, (req,res) => {
 
 app.get('/reels', (req,res) => {
     reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
-    populate:{path: 'author'}}).exec((err,reels) => {
-        if(err) {throw err}
-        if(reels){
-            res.send(reels)
-        }
-    })
+        populate:{path: 'author'}}).exec((err,reels) => {
+    
+            if(err) {throw err}
+            if(reels){
+               res.send({status: 200, reel:reels}) 
+                
+            }
+        })
+   
 })
 
 app.post('/reel/unlike', verify, (req,res) => {

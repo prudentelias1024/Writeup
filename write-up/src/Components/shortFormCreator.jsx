@@ -92,7 +92,7 @@ const ShortFormCreator = () => {
                let  newReels = prevReels.reverse()
                console.log(newReels)
                 dispatch(actions.updateReels(newReels))
-                dispatch(actions.updatePosting(false))
+                // dispatch(actions.updatePosting(false))
     
             }
         })
@@ -107,7 +107,7 @@ const ShortFormCreator = () => {
     //   const safe = await (await axios.post(`${aiURL}/api/postSafety`, {text:quillRef.current.value})).data.safe
        
       // if(safe){
-        dispatch(actions.updatePosting(true))
+        // dispatch(actions.updatePosting(true))
     
         
         //   let reel = await (await axios.post(`${URL}/reels/create`,
@@ -268,6 +268,7 @@ const ShortFormCreator = () => {
 
                 " font-bold bg-blue-200 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"} >Post
                 </button>:
+                
                 <button onClick={(event) => {handleShortContent(event)}} className={showPollCreator  ? "font-bold bg-blue-500 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em] relative left-[11em]" :
 
                 " font-bold bg-blue-500 px-[1em]  lg:px-[2em] rounded-full text-white py-[.5em] lg:py-[.75em] mt-2  lg:ml-[5em]"}>Post
