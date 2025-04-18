@@ -140,7 +140,7 @@ export default function ImageReel({reel,reelUpdate}) {
                   theme={"bubble"}
                   style={{fontFamily: ' Sen'}}
 
-               className=' text-[#454444] dark:text-white   mb-0 px-[1em] text-start ml-[.7em] w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1em]  lg:text-3xl lg:-mt-[1.7em] pr-[1.25em] -mt-[2em]  '/>
+               className=' text-[#454444] dark:text-white w-full  mb-0 px-[1em] text-start ml-[.7em] lg:w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1em]  lg:text-3xl lg:-mt-[1.7em] pr-[1.25em] -mt-[2em]  '/>
                   
                   <img src={post.
                     

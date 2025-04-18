@@ -18,7 +18,7 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
 
          <div className="flex flex-row  ">
 
-        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover mx-[1em] mt-[0.3em]  ' /> 
+        <img src={author.public_picture} className='w-[2.5em]  h-[2.5em] lg:w-[2.5em] lg:h-[2.5em] rounded-full object-cover mr-[0.9em] ml-[.6em] mt-[0.3em]  ' /> 
         
         {/* for collaborated posts */}
 
@@ -34,11 +34,11 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
        {/* normal post (one author) */}
 
 
-        <div className='flex flex-row w-full ml-[.5em] mt-[.25em] '>
+        <div className='flex flex-row w-full ml-[1.4em] mt-[.25em] '>
 
-           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-[.7em] font-bold   lg:text-sm ":
+           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-[.7em] font-bold  lg:ml-0 -ml-[1em] lg:text-sm ":
         
-                "text-[#171717] dark:text-white  author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
+                "text-[#171717] dark:text-white lg:ml-0 -ml-[1em] author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
             }  > 
                 <p className="w-max">
 
