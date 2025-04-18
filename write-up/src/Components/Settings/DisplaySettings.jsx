@@ -13,7 +13,7 @@ export default function DisplaySettings({additionalStyle}) {
         navigate('/settings/edit_profile')
     }
   return (
-        <div className={additionalStyle == undefined? "lg:w-[25%]  flex flex-col lg:ml-[10em] pt-[1em]  pl-[1em] lg:pl-0": additionalStyle + " flex flex-col lg:ml-[10em] pt-[1em]  pl-[1em] lg:pl-0"}>
+        <div className={additionalStyle == undefined? "lg:w-[25%] w-full flex flex-col lg:ml-[10em] pt-[1em]  pl-[1em] lg:pl-0": additionalStyle + " w-full flex flex-col lg:ml-[10em] pt-[1em]  pl-[1em] lg:pl-0"}>
 
         <p className='text-2xl font-[Sen] font-bold'>Settings</p>
 
