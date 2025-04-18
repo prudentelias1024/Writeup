@@ -86,7 +86,7 @@ export default function UserNav(){
                 
                 
             <Link to="/trends" >
-            <VscFlame className="text-3xl mt-1 block "  />
+            <VscFlame className="text-3xl mt-1 hidden lg:block "  />
             </Link>
 
 
@@ -114,7 +114,7 @@ export default function UserNav(){
             </Link>
 
             <Link to="/Settings" >
-            <MdOutlineSettings  className="text-2xl mt-1  hidden lg:block "  />
+            <MdOutlineSettings  className="text-2xl mt-1   "  />
             </Link>
 
           <Link to='/Profile'>
