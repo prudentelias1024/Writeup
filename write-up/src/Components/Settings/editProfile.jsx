@@ -71,7 +71,7 @@ const EditProfile = () => {
                  </div>
 
         <div className=' edit top-4 lg:w-[50%] ml-[1em] lg:top-4 mb-[10em] lg:mb-[0em] text-sm'>
-        <p className='text-2xl mt-[0em] font-[Sen] font-bold ml-[0em]'>Edit Profile</p>
+        <p className='text-2xl lg:mt-[1em]  mt-[0em] font-[Sen] font-bold ml-[0em]'>Edit Profile</p>
         
               {/* <div className=''>
               <img className=' h-full rounded-full mx-auto my-[1em]' src={user.public_picture} alt={user.name}   />

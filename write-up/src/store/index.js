@@ -1,9 +1,19 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { MdLightMode } from 'react-icons/md'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {URL:'', aiURL: '', user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:"What's going on?", showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false, closeRoom: false, enterRoom:false, enterGroupRoom:false, closeGroupRoom:false,  currentChatRecipient: null},
+    initialState: {URL:'', aiURL: '', user:null,navStatus:false,showMobileSearch:false,posts:[],notifications: [], publishedCount: {},bookmarkedPosts: null, showModal: false, tempDraft: {}, tempPost: {}, tempCollaborators: [], tempCollaboratorsName: '', drafts: [], reelsPlaceholder:"What's going on?", showPollCreator: false, cancelImageStatus: false, reels: [], podcasts: [], myReels: [], myPosts:[], loadingShortFormCreator:false, notis: [], refreshConvos: false, openMobileRoom: false, closeRoom: false, enterRoom:false, enterGroupRoom:false, closeGroupRoom:false,  currentChatRecipient: null
+    ,darkMode:false, lightMode:false
+  
+  },
     reducers: {
+      updateDarkMode(state,action){
+        state.darkMode = action.payload
+      },
+      updateLightMode(state,action){
+        state.lightMode = action.payload
+      },
       updateChatRecipient(state,action){
         state.currentChatRecipient = action.payload
       },

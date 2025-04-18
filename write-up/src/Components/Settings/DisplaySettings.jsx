@@ -18,7 +18,7 @@ export default function DisplaySettings({additionalStyle}) {
         <p className='text-2xl font-[Sen] font-bold'>Settings</p>
 
         <div onClick={sendToEditProfile} className="flex flex-row mt-[2em] hover:bg-[#ebebeb] dark:hover:bg-[#121212] -ml-[0.5em] p-[0.5em] justify-between">
-            <p className='text-xl font-medium w-[90%] cursor-pointer'> Edit your Profile</p>
+            <p className='text-xl font-medium w-[90%]  cursor-pointer'> Edit your Profile</p>
             <FaAngleRight className='text-2xl text-[#71767B]
             mt-1 w-[10%]' />
         </div>

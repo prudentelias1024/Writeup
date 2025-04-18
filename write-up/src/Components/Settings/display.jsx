@@ -1,26 +1,30 @@
 import React, { useState } from 'react'
 import UserNav from '../Navbar/UserNav'
 import DisplaySettings from './DisplaySettings'
+import { useDispatch, useSelector } from 'react-redux'
+import { actions } from '../../store'
 
 export default function Display() {
-    const [darkmode, setDarkMode] = useState(false)
-    const [lightmode, setLightMode] = useState(true)
+  
+    const {darkMode, lightMode} = useSelector(state => state)
+    const dispatch = useDispatch()
+    
     const toggleMode = () => {
         const root = window.document.documentElement
-        if (darkmode === true) {
+        if (darkMode === true) {
 
             root.classList.add("light");
             root.classList.remove("dark");
     
-            setLightMode(true)
-            setDarkMode(false)
+           dispatch(actions.updateLightMode(true))
+           dispatch(actions.updateDarkMode(false))
             localStorage.setItem("theme", "light")
         } else {
             root.classList.add("dark");
             root.classList.remove("light");
+            dispatch(actions.updateLightMode(false))
+            dispatch(actions.updateDarkMode(true))
             
-            setLightMode(false)
-            setDarkMode(true)
             localStorage.setItem("theme", "dark")
         }
     
@@ -46,7 +50,7 @@ export default function Display() {
 
                  <div className="light_mode lg:w-[10em] w-[100%] border flex flex-row p-2 gap-2 bg-[#fff] border-blue-500 text-black rounded-md">
 
-                     <input type="checkbox" checked={lightmode} onChange={toggleMode}/>
+                     <input type="checkbox" checked={lightMode} onChange={toggleMode}/>
                      <p className='text-lg font-[Sen] font-bold'>Light mode</p>
                 
                  </div>
@@ -54,7 +58,7 @@ export default function Display() {
                  
                  <div className="dark_mode lg:w-[10em] w-[100%] border flex flex-row p-2 gap-2 bg-[#000] text-white rounded-md">
 
-                 <input type="checkbox" checked={darkmode} onChange={toggleMode}/>
+                 <input type="checkbox" checked={darkMode} onChange={toggleMode}/>
                  <p className='text-lg font-[Sen] font-bold'>Dark mode</p>
                 
                  </div>
