@@ -9,6 +9,7 @@ import  NavBar  from "../NavBar";
 import { BsPenFill, BsPersonBadge } from 'react-icons/bs';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import UserNav from '../Navbar/UserNav';
+import DisplaySettings from './DisplaySettings';
 const EditProfile = () => {
   const {URL,user} = useSelector((state) => state)
   const navigate = useNavigate()
@@ -61,16 +62,25 @@ const EditProfile = () => {
    
     }
     return (
+  <div className='lg:ml-[7em]'>
+         <UserNav />
+     <div className='lg:flex lg:flex-row '>
 
-        <div classname='hidden lg:block p-0 lg:ml-[-15em] w-full' >
-        <div className='edit top-4  lg:top-32 lg:before:relative text-sm'>
-              <div className=''>
-              {/* <img className=' h-full rounded-full mx-auto my-[1em]' src={user.public_picture} alt={user.name}   /> */}
-              {/* <AiOutlineUserAdd className='left-[50%]  text-black relative top-[-1.5em] text-2xl' />                 */}
-              </div>
-            <form className="flex flex-col lg:gap-[3em] gap-[2em] pt-[4em] lg:ml-[20em] ">
+             <div className='hidden lg:block lg:w-[35%] mr-[5em] '>
+                 <DisplaySettings additionalStyle={"lg:w-[70%]"}/>
+                 </div>
+
+        <div className=' edit top-4 lg:w-[50%] ml-[1em] lg:top-4 mb-[10em] lg:mb-[0em] text-sm'>
+        <p className='text-2xl mt-[0em] font-[Sen] font-bold ml-[0em]'>Edit Profile</p>
+        
+              {/* <div className=''>
+              <img className=' h-full rounded-full mx-auto my-[1em]' src={user.public_picture} alt={user.name}   />
+              <AiOutlineUserAdd className='left-[50%] dark:text-white text-black relative top-[-1.5em] text-2xl' />                
+              </div> */}
+
+
+            <form className="z-0  flex flex-col w-full lg:gap-[3em] gap-[2em] pt-[4em] lg:ml-[0em] ">
                 
-            {/* <div className="user lg:ml-[1.5em] pt-5 p-4 lg:rounded-lg bg-white dark:bg-[#000] dark:text-white dark:bg-[#000] dark:text-white  lg:w-3/4"> */}
             <div className='w-full flex flex-row justify-between'>
              <Input handleChanges={handleChanges}  label="Name" placeholder="Update Name" value={profileChanges.name }/>
              <Input handleChanges={handleChanges} label="Email" placeholder="Update Name" value={profileChanges.email}/>
@@ -92,10 +102,12 @@ const EditProfile = () => {
             
              {/* </div> */}
             
-         <button onClick={submitChanges} className='w-[95%] mx-auto  lg:relative  lg:mb-[2em] rounded-md py-[.5em] font-bold bg-blue-500 text-white lg:w-3/4 font-[Maven]  lg:ml-[1em]  '>Save Profile </button>
+         <button onClick={submitChanges} className='w-[95%] mx-auto  lg:relative  lg:mb-[2em] rounded-md py-[.5em] font-bold bg-blue-500 text-white lg:full font-[Maven]  lg:ml-[1em]  '>Save Profile </button>
             </form>
         </div>
         </div>
+        </div>
+       
     );
 }
 

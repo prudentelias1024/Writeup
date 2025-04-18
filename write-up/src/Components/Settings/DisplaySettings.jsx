@@ -2,18 +2,18 @@ import React from 'react'
 import { FaAngleRight } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function DisplaySettings() {
+export default function DisplaySettings({additionalStyle}) {
     const navigate = useNavigate()
     
     const sendToDisplay = () => {
-        navigate('display')
+        navigate('/settings/display')
     }
 
     const sendToEditProfile = () => {
-        navigate('edit_profile')
+        navigate('/settings/edit_profile')
     }
   return (
-        <div className='flex flex-col lg:ml-[10em] pt-[1em] lg:w-[40%] w-full pl-[1em] lg:pl-0'>
+        <div className={additionalStyle == undefined? "lg:w-[25%]  flex flex-col lg:ml-[10em] pt-[1em]  pl-[1em] lg:pl-0": additionalStyle + " flex flex-col lg:ml-[10em] pt-[1em]  pl-[1em] lg:pl-0"}>
 
         <p className='text-2xl font-[Sen] font-bold'>Settings</p>
 

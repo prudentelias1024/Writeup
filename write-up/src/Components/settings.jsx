@@ -5,14 +5,14 @@ import UserNav from './Navbar/UserNav';
 
 const Settings = () => {
     return (
-        <>
-           <UserNav className="lg:ml-[7em]"/>
+        <div  className="lg:ml-[7em]">
+           <UserNav/>
      
         <div className='flex flex-row w-full'>
             <DisplaySettings />
             {/* <EditProfile /> */}
         </div>
-        </>
+        </div>
     );
 }
 
