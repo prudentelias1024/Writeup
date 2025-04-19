@@ -4,9 +4,8 @@ import { useSelector } from "react-redux";
 export default function useDarkSide() {
 	const {darkMode, lightMode, user} = useSelector(state => state)
 
-	const userSettings = user == null ? 'light' : user.displaySettings
-	console.log(userSettings)
-	const [theme, setTheme] = useState(userSettings);
+	
+	const [theme, setTheme] = useState(user.displaySettings);
 	const colorTheme = darkMode === true ? "light" : "dark";
 
 	useEffect(() => {
