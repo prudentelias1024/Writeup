@@ -35,13 +35,15 @@ export default function ImageReel({reel,reelUpdate}) {
 
     const deletePost = async(postId) => {
      
-      const  res = await(await axios.delete(`${URL}/reels/${postId}`,{headers: {Authorization: localStorage.getItem('token')}})).data
+      const  res = await(await axios.delete(`${URL}/api/reels/${postId}`,{headers: {Authorization: localStorage.getItem('token')}})).data
 
       if(res.status == 200){
         //refresh the post and update in UI using most preferably socket or api-ly
-          const reels = await (await axios.get(`${URL}/api/user/reels/my`,  {headers: {Authorization:  localStorage.getItem('token')}})).data
-           
-         dispatch(actions.updateReels([...reels]))
+          const reels = await (await axios.get(`${URL}/api/reels`,  {headers: {Authorization:  localStorage.getItem('token')}})).data
+          
+          const updatedReels = reels.reel
+           console.log(updatedReels)
+         dispatch(actions.updateReels([...updatedReels]))
         
       }
     }
@@ -140,7 +142,7 @@ export default function ImageReel({reel,reelUpdate}) {
                   theme={"bubble"}
                   style={{fontFamily: ' Sen'}}
 
-               className=' text-[#454444] dark:text-white w-full  mb-0 px-[1em] text-start ml-[.7em] lg:w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1em]  lg:text-3xl lg:-mt-[1.7em] pr-[1.25em] -mt-[2em]  '/>
+               className=' text-[#454444] dark:text-white w-fit  mb-0 px-[1em] text-start ml-[.7em] lg:w-fit mx-[1.25em] leading-8 whitespace-normal font-normal text-3xl lg:ml-[1.25em]  lg:text-3xl lg:-mt-[1.7em] pr-[1.25em] -mt-[2em]  '/>
                   
                   <img src={post.
                     

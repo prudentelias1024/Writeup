@@ -51,7 +51,7 @@ function App() {
       const navigate = useNavigate()
       const socket = useContext(SocketContext)
       const getReels = async() => {
-        let reels = await (await axios.get(`${URL}/reels`)).data.reel; 
+        let reels = await (await axios.get(`${URL}/api/reels`)).data.reel; 
         // console.log(reels)
         console.log(reels)
         

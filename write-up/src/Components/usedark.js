@@ -2,22 +2,26 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function useDarkSide() {
-	const {darkMode, lightMode, user} = useSelector(state => state)
-
+		
+	const { user} = useSelector(state => state)
 	
-	const [theme, setTheme] = useState(user.displaySettings);
-	const colorTheme = darkMode === true ? "light" : "dark";
+	const [theme, setTheme] = useState();
+
+	let colorTheme = theme === "dark" ? "light" : "dark";
 
 	useEffect(() => {
-		const root = window.document.documentElement;
-		if(root !== undefined){
-
-			root.classList.remove(colorTheme);
-			root.classList.add(theme);
-		}
-
+			if(user !== null){
+				setTheme(user.displaySettings)
+			}
+			
+			const root = window.document.documentElement;
+			if(root !== undefined){
+				root.classList.add(theme);
+				root.classList.remove(colorTheme);
+			}
 		
-	}, [theme, colorTheme]);
+		
+	}, [user]);
 
 	return [colorTheme, setTheme];
 }

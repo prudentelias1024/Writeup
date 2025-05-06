@@ -110,7 +110,7 @@ const ShortFormCreator = () => {
         // dispatch(actions.updatePosting(true))
     
         
-        //   let reel = await (await axios.post(`${URL}/reels/create`,
+        //   let reel = await (await axios.post(`${URL}api/reels/create`,
         //  {
         //  postId: v4(),
         //  tags: tags,

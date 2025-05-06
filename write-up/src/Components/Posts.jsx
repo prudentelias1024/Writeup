@@ -6,7 +6,9 @@ import moment from 'moment';
 import ShortFormCreator from "./shortFormCreator";
 import { useContext, useEffect, useRef, useState } from "react";
 import { actions } from "../store";
+import Refresh from './Refresh'
 import Podcast from "./Podcast";
+import _ from 'lodash'
 import { Link } from "react-router-dom";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
@@ -31,6 +33,8 @@ export default function Posts(){
     const {podcasts} = useSelector(state => state)
     const {user} = useSelector(state => state) 
     const {URL, aiURL} = useSelector(state => state)
+    const [displayRefresher, setDisplayRefresher] = useState(false)
+
     const getRecommendedUser = async() => {
       const  all_user = await(await axios.get(`${URL}/api/users`,{headers: {Authorization: localStorage.getItem('token')}})).data
       console.log(user)
@@ -42,10 +46,26 @@ export default function Posts(){
       setRecommendedUser(recommendedUser)
     }
     useEffect(() => {
+
+      socket.on('display-refresher', (state) => {
+        setDisplayRefresher(state)
+      })
+
       socket.on('reels_posted',(updatedReels) => {
         console.log(updatedReels)
         dispatch(actions.updateReels(updatedReels))
       })
+
+      socket.on('app-refresh',(queued_reels) => {
+      console.log(queued_reels)
+      let prevReels = _.cloneDeep(reels)
+      prevReels.push(queued_reels)
+      let  newReels = prevReels.reverse()
+      dispatch(actions.updateReels(newReels))
+      setDisplayRefresher(false)
+      })
+
+      
 
       getRecommendedUser()
       if(justPublishedReels == true){
@@ -89,6 +109,9 @@ export default function Posts(){
     
    return(
     <div className="flex flex-col md:mr-[3em] md:ml-[5em] mb-[3em] gap-0 pt-[0em] w-full  lg:pt-[1em]  lg:w-[50%] lg:mt-[0em]  dark:bg-[#000] dark:text-white lg:ml-[2em]">
+      
+     
+
       <div className="flex flex-row w-full">
         {
         inkClicked ?
@@ -111,6 +134,7 @@ export default function Posts(){
             <p className="font-[Sen] text-center text-sm font-semibold ">Reels</p>
             </div>
 }
+
         {/* {
     podcastClicked?
     <div ref={podcastRef} onClick={handlePodcastsDisplay} className="podcast cursor-none  w-1/2 text-blue-500 underline underline-offset-[1em] p-[1em]  ">
@@ -124,6 +148,13 @@ export default function Posts(){
             </div>
 } */}
       </div>
+        
+        {
+          displayRefresher ?
+          <Refresh/>: ''
+        }
+
+
      { reelsClicked == true ? <ShortFormCreator/>: ''}
    
          {

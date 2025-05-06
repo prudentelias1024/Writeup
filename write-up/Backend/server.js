@@ -65,8 +65,9 @@ const getAllReels = () => {
 }
 
 const createReels = async(req,res) => {
-        let post_reels = null
-        console.log('body:', req.body)
+        let post_id = null
+        let user = req.user
+
         const  {username,name,email} = req.user
         let publishedBefore = false
          reels.find({author: req.user._id}, (err,doc) => {
@@ -96,8 +97,8 @@ const createReels = async(req,res) => {
         reelImageURL: req.body.reelImageURL
     
      })
-     newReels.save()
-
+     post_id = (await newReels.save())._id
+   
      //update last seen
      User.findOneAndUpdate({email: email}, {$set :{lastPosted: new Date}}, (err,doc) => {
         if(err){
@@ -171,20 +172,10 @@ const createReels = async(req,res) => {
         
     }
     
-    reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
-        populate:{path: 'author'}}).exec((err,reels) => {
     
-            if(err) {throw err}
-            if(reels){
-                allReels = [...reels]
-                
-            }
-        })
     
-   
     
- console.log('reels',reels)
- return req.user, reels 
+ return {  user, post_id }
 }
 
 
@@ -310,7 +301,7 @@ User.find().select('lastPosted lastPosteNotified name email').exec((err,users) =
 
 //socket middleware for socket authentication
 io.use((socket,next) => {
-   
+ 
     if(socket.handshake.auth.token == null || socket.handshake.auth.token == undefined){
         return next(new Error('Authentication error'));
    
@@ -338,11 +329,12 @@ io.use((socket,next) => {
 
 const GLOBAL_ROOM = 'inkup'
 const MESSAGES_ROOM = 'msg'
+const postQueue = []
 //sockets 
 const message_room = []
 const users = { }
-io.on('connection',(socket) => {
-
+io.on('connection',async(socket) => {
+   
 
     users[socket.user._id] = socket.id
     
@@ -351,23 +343,42 @@ io.on('connection',(socket) => {
     console.log(data)
     data.user = socket.user
     data.body = data
-    const {user, reel}  = createReels(data)   
+    const {user, post_id} = await createReels(data)
 
-    setTimeout(() => {
-        
-    reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
-        populate:{path: 'author'}}).exec((err,reels) => {
     
-            if(err) {throw err}
-            if(reels){
-                socket.emit('reels_posted',reels)
-                console.log(reels[0])
+    //Uncomment or delete when perfectly implemented
+
+    // setTimeout(() => {
+        
+    // reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+    //     populate:{path: 'author'}}).exec((err,reels) => {
+    
+    //         if(err) {throw err}
+    //         if(reels){
+    //             socket.emit('reels_posted',reels)
                 
-            }
-        })
+    //         }
+    //     })
    
-    }, 5000);
+    // }, 5000);
+
+
+
+
+    //send them to the Queue
+    postQueue.push(post_id)
+    if(postQueue.length >= 2){
+        socket.emit('display-refresher',true)
+    }    
+
+
+
+
+    
+
+
     //find users who has added them to their notifications list
+    
     notis = socket.user.notis
     notis.forEach((noti) => {
         socket.to(users[noti._id]).emit('new_notis_post',user)
@@ -383,6 +394,28 @@ io.on('connection',(socket) => {
     //     })
     // })
    
+    socket.on('app_refresh', () => {
+        const queuedPost = []
+
+        //Get all post in queue 
+        // 
+        postQueue.forEach((id) => {
+            reels.findById(id).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
+                populate:{path: 'author'}}).exec((err,reel) => {
+                    if(reel){
+                        queuedPost.push(reel)
+                    }
+
+                    })
+
+        })  
+     setTimeout(() => {
+        
+         socket.emit('app-refresh', queuedPost)
+     }, 2000);
+    })
+
+
     //Hybrid functions (P2p and group)
     socket.on('get_all_conversations', async(data) => {
         let allConversations = []
@@ -707,7 +740,7 @@ app.post('/api/settings/display',verify, async(req,res) => {
         if(err){
             throw err
         } else{
-            console.log(doc.displaySettings)
+            console.log('display mode:',doc.displaySettings)
         }
 
 })
@@ -1435,7 +1468,7 @@ app.delete('/post/:id', verify, (req,res) => {
 
 //delete reels
 
-app.delete('/reels/:id', verify, (req,res) => {
+app.delete('/api/reels/:id', verify, (req,res) => {
     reels.deleteOne({postId:req.params.id}, {new:true},(err,doc) => {
         if(err){throw err}
         if(doc){
@@ -1448,7 +1481,7 @@ app.delete('/reels/:id', verify, (req,res) => {
 
 
 
-app.get('/reels', (req,res) => {
+app.get('/api/reels', (req,res) => {
     reels.find().sort({_id: -1}).populate('author').populate('likes').populate('reposts').populate({path: 'comments',
         populate:{path: 'author'}}).exec((err,reels) => {
     
@@ -1501,7 +1534,7 @@ app.post('/reel/like', verify, (req,res) => {
  })
  
 //Update Poll
-app.put('/reels/poll/:id', verify, async(req,res) => {
+app.put('/api/reels/poll/:id', verify, async(req,res) => {
     
     reels.findOneAndUpdate({reelId: req.body.reelId}, req.body,{new:true}, (err,doc)=> {
         if (err) {
@@ -1628,7 +1661,7 @@ app.get('/podcasts',async(req,res) => {
 
 /** CRUD Operation for Reels */
 
-app.get('/reels/:postId',verify,async(req,res) => {
+app.get('/api/reels/:postId',verify,async(req,res) => {
     reels.find({postId: req.params.postId}).populate('author').populate('likes').populate({path: 'comments',
     populate:{path: 'author'}}).exec((err,reels) => {
         if(err){throw err}
@@ -1675,7 +1708,7 @@ app.post('/reel/unrepost',verify,async(req,res) => {
 
 
 })
-app.post('/reels/create', verify, async(req,res) => {
+app.post('/api/reels/create', verify, async(req,res) => {
     user, reel = createReels(req) 
     res.send({status: 200, reel:reel})   
 })

@@ -34,11 +34,11 @@ export default function AuthorInfo({author,timestamp, collaborators, additionalS
        {/* normal post (one author) */}
 
 
-        <div className='flex flex-row w-full ml-[1.4em] mt-[.25em] '>
+        <div className='flex flex-row w-full lg:ml-[.2em] ml-[1.4em] mt-[.25em] '>
 
-           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title flex flex-row  text-[.7em] font-bold  lg:ml-0 -ml-[1em] lg:text-sm ":
+           <Link to={"/"+ author.username } className={additionalStyles ? additionalStyles + "author_title  flex flex-row  text-[.7em] font-bold  lg:-ml-[1.5em] -ml-[1em] lg:text-sm ":
         
-                "text-[#171717] dark:text-white lg:ml-0 -ml-[1em] author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
+                "text-[#171717] dark:text-white lg:ml-[.1em] -ml-[1em] author_title flex flex-row gap-1 text-[0.7em] font-bold   lg:text-sm " 
             }  > 
                 <p className="w-max">
 

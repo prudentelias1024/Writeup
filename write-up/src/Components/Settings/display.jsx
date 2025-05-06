@@ -10,25 +10,24 @@ export default function Display() {
     const dispatch = useDispatch()
     
     const toggleMode = () => {
-        const root = window.document.documentElement
-        if (darkMode === true) {
-
-            root.classList.add("light");
+        const root = window.document.documentElement;
+	    if (darkMode === true) {
             root.classList.remove("dark");
+            root.classList.add("light");
            
            dispatch(actions.updateLightMode(true))
            dispatch(actions.updateDarkMode(false))
            axios.post(`${URL}/api/settings/display`,{mode: 'light'},  {headers: {Authorization: localStorage.getItem('token') }})
 
-            // localStorage.setItem("theme", "light")
         } else {
-            root.classList.add("dark");
+             console.log('true')
             root.classList.remove("light");
+            root.classList.add("dark");
+
             dispatch(actions.updateLightMode(false))
             dispatch(actions.updateDarkMode(true))
             axios.post(`${URL}/api/settings/display`,{mode: 'dark'},  {headers: {Authorization: localStorage.getItem('token') }})
           
-            // localStorage.setItem("theme", "dark")
         }
     
     }
